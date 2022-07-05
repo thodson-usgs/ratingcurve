@@ -7,7 +7,8 @@ import patsy #just dmatrix
 
 import aesara.tensor as at
 #import theano.tensor as at
-from ratingcurve.transforms import LogZTransform
+#from rating.transforms import LogZTransform
+from transforms import LogZTransform
 
 
 class CustomModel(Model):
@@ -45,7 +46,7 @@ class SplineRatingModel(RatingModel):
         # transform q
         self.q_obs = q
         self.q_transform = LogZTransform(q)
-        y = self.q_transform.transform(self.q_obs)
+        self.y = self.q_transform.transform(self.q_obs)
         
         self.knots = knots
         self.B = dmatrix
@@ -61,140 +62,176 @@ class SplineRatingModel(RatingModel):
         mu = pm.Deterministic("mu", pm.math.dot(np.asarray(self.B, order="F"), w.T))
         #sigma = pm.Exponential("sigma", 1)
         sigma = pm.HalfCauchy("sigma", 1)
-        D = pm.Normal("D", mu, sigma, observed=y, dims="obs")
+        D = pm.Normal("D", mu, sigma, observed=self.y, dims="obs")
        
     
-class SegmentRatingModelOLD(RatingModel):
+
+import pymc as pm
+from pymc import Model
+
+from transforms import LogZTransform
+
+import aesara
+import aesara.tensor as at
+
+
+
+class SegmentedRatingModel2(RatingModel):
     ''' transform y
-        assume strong priors on breaks
+        assume uniform priors on breaks
+        ALTERNATE PARAMETERIZATION
     '''
     #def __init__(self, log_q, design, knots=5, mean=0, sd=1, name='', model=None):
     def __init__(self,
                  q,
                  h,
-                 breaks,
-                 breaks_sigma,
+                 segments,
+                 prior={'distribution':'uniform'},
+                 q_sigma=None,
                  name='',
                  model=None):
+        
         super().__init__(name, model)
         
+        self.segments = segments
+        self.prior = prior 
         # transform q
         self.q_obs = q
         self.q_transform = LogZTransform(self.q_obs)
-        y = self.q_transform.transform(self.q_obs)
-        
-        # transform h (CHANGE TRANSFORM)
-        self.h_obs = h
-        bps = np.append(breaks, 200.0).reshape(-1,1)#.reshape(1,-1)
-        bps_sigma = np.append(breaks_sigma, 0.1).reshape(-1,1)#.reshape(1,-1)
-        
-        h0_offset = np.ones_like(bps)
-        h0_offset[0] = 0
-        
-        #self.h_transform = LogZTransform(self.h)
-        #x = self.h_transform.transform(self.h_obs)
-        
-        
-        
-        COORDS = {"obs" : np.arange(len(y)), "splines": np.arange(len(breaks))}
-        self.add_coords(COORDS)
-        
-        #priors
-        
-        #spline weights are positive; should we preference 0 or 1?
-        #this is the power term so we have good prior based on physics
-        #alternative a and w could be multinormal as in Reitan
-        w = pm.HalfCauchy("w", beta=5, dims="splines") #beta=1
-        a = pm.Normal("a", mu=0, sigma=10) #sigma=1
-        #w = pm.Normal("w", mu=2.08, sigma=0.3, dims="splines")
-        #import pdb; pdb.set_trace()
-        #hs = pm.Normal('hs', mu=self.breaks, sigma=self.breaks_sigma)
-        #import pdb; pdb.set_trace()
-        hs = pm.Normal('hs', mu=bps, sigma=bps_sigma, shape=bps.shape)
-        
-        #h_s_prior = pm.Normal('h_s', mu=1, sd=1, shape=segments)
-        h0 = hs - h0_offset
-        
-        #hs = pm.Normal("hs"
-        #h0 = pm.Deterministic("h0", 
-        
-        # XXX revise if we transform h
-        bo = at.switch( at.le(h, hs[:,:-1]), 0.0, at.log(h-h0))
-        b1 = at.switch( at.gt(h, hs[:,1:]), bo, at.log(hs[:,1:]-h0))
-        #bo = at.switch( at.le(h, hs[:,:-1]), 0.0, at.log(h-h0))
-        #b1 = at.switch( at.le(h, hs[:,1:]), bo, at.log(hs[:,1:]-h0))
-        #bo = at.switch( at.le(h, hs[:,:-1]), 0, at.log(h-h0[:,1:]))
-        #b1 = at.switch( at.le(h, hs[:,1:]), bo, at.log(hs[:,1:]-h0[:,1:]))
-        B = aesara.function([h], b1)
-        
-        
-        mu = pm.Deterministic("mu", a + at.dot(B(h), w.T))
-        #mu = pm.Deterministic("mu", pm.math.dot(np.asarray(self.B, order="F"), w.T))
-        #sigma = pm.Exponential("sigma", 1)
-        
-        sigma = pm.HalfCauchy("sigma", 1)
-        D = pm.Normal("D", mu, sigma, observed=y, dims="obs")
-        
-class SegmentRatingModel(RatingModel):
-    ''' transform y
-        assume strong priors on breaks
-    '''
-    #def __init__(self, log_q, design, knots=5, mean=0, sd=1, name='', model=None):
-    def __init__(self,
-                 q,
-                 h,
-                 breaks,
-                 breaks_sigma,
-                 name='',
-                 model=None):
-        super().__init__(name, model)
-        
-        # transform q
-        self.q_obs = q
-        self.q_transform = LogZTransform(self.q_obs)
-        y = self.q_transform.transform(self.q_obs)
-        
-        # transform h (CHANGE TRANSFORM)
-        self.h_obs = h
-        #bps = np.append(breaks, 200.0).reshape(1,-1)
-        #bps_sigma = np.append(breaks_sigma, 0.1).reshape(1,-1)
-        
-        h0_offset = np.ones_like(breaks)
-        h0_offset[0] = 0
-        
-        #self.h_transform = LogZTransform(self.h)
-        #x = self.h_transform.transform(self.h_obs)
-        
-        
-        
-        COORDS = {"obs" : np.arange(len(y)), "splines": np.arange(len(breaks))}
-        self.add_coords(COORDS)
-        
-        #priors
-        hs = pm.Normal("hs", mu=breaks, sigma=breaks_sigma, shape=(3,))
-        #spline weights are positive; should we preference 0 or 1?
-        #this is the power term so we have good prior based on physics
-        #alternative a and w could be multinormal as in Reitan
-        w = pm.HalfCauchy("w", beta=5, dims="splines") #beta=1
-        a = pm.Normal("a", mu=0, sigma=10) #sigma=1
-        
-        #h_s_prior = pm.Normal('h_s', mu=1, sd=1, shape=segments)
-        h0 = hs - h0_offset
-        
-        #indexing functions
-        #test = at.switch( at.
-        
+        self.y = self.q_transform.transform(self.q_obs)
+        self.q_sigma = q_sigma
        
-        # XXX revise if we transform h 
-        bo = at.switch( at.le(h, hs[:,:-1]), 0, at.log(h-h0))
-        b1 = at.switch( at.le(h, hs[:,1:]), bo, at.log(hs[:,1:]-h0))
-        B = aesara.function([h], b1)
+        #XXX verify this is correct
+        if q_sigma is not None:
+            self.y_sigma = self.q_sigma / self.q_obs.std()
+        else:
+            self.y_sigma = 0
+        
+        self.h_obs = h
+        
+        self._inf = [np.inf]
+        #self._inf = [np.array(99999.0)] #TESTING
+        
+        # clipping boundary
+        clips = np.zeros(self.segments)
+        #clips[0] = -np.inf
+        clips[0] = -100
+        self._clips = at.constant(clips)
+        
+        # create h0 offsets
+        self._h0_offsets = np.ones(segments)
+        self._h0_offsets[0] = 0
         
         
-        mu = pm.Deterministic("mu", a + at.dot(B(h), w.T))
-        #mu = pm.Deterministic("mu", pm.math.dot(np.asarray(self.B, order="F"), w.T))
-        #sigma = pm.Exponential("sigma", 1)
+        self.COORDS = {"obs" : np.arange(len(self.y)), "splines":np.arange(segments)}
         
-        sigma = pm.HalfCauchy("sigma", 1)
-        D = pm.Normal("D", mu, sigma, observed=y, dims="obs")
+        #compute initval
+        self._hs_lower_bounds = np.zeros(self.segments) + self.h_obs.min()
+        self._hs_lower_bounds[0] = 0
         
+        self._hs_upper_bounds = np.zeros(self.segments) + self.h_obs.max()
+        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 #XXX HACK
+        
+        # set random init on unit interval then scale based on bounds
+        self._init_hs = np.random.rand(self.segments) \
+                         * (self._hs_upper_bounds - self._hs_lower_bounds) \
+                         + self._hs_lower_bounds
+        
+        self._init_hs = np.sort(self._init_hs) # not necessary?
+        
+        self.compile_model()
+        #return self.compile_model()
+       
+    def set_normal_prior(self):
+        '''
+        prior={type='normal', mu=[], sigma=[]}
+        '''
+        with Model(coords=self.COORDS) as model:
+            hs_ = pm.TruncatedNormal('hs_', 
+                                 mu = self.prior['mu'],
+                                 sigma = self.prior['sigma'],
+                                 lower=self._hs_lower_bounds,
+                                 upper=self._hs_upper_bounds,
+                                 shape=self.segments,
+                                 initval=self._init_hs) # define a function to compute
+            
+            hs = pm.Deterministic('hs', at.sort(hs_))
+            
+        return hs
+
+    def set_uniform_prior(self):
+        '''
+        prior={distribution:'uniform'}
+        '''
+        with Model(coords=self.COORDS) as model:
+            hs_ = pm.Uniform('hs_', 
+                                 lower=self._hs_lower_bounds,
+                                 upper=self._hs_upper_bounds,
+                                 shape=self.segments,
+                                 initval=self._init_hs) # define a function to compute
+            
+            hs = pm.Deterministic('hs', at.sort(hs_))
+            
+        return hs
+
+    
+    def set_beta_prior(self):
+        '''
+        XXX NOT WORKING YEST
+        XXX MAKE SEGMENTS VARIABLE
+        prior={distribution:'uniform'}
+        '''
+        with Model(coords=self.COORDS) as model:
+            hs_ = pm.Beta('hs_',
+                          alpha=np.array([0.5, 2.0, 1.0]),
+                          beta=np.array([0.5, 1.0, 2.0]),
+                          shape=self.segments,
+                          initval=self._init_hs) # define a function to compute
+            
+            scaled = at.sort(hs_) * (self._hs_upper_bounds - self._hs_lower_bounds) + self._hs_lower_bounds
+            hs = pm.Deterministic('hs', scaled)
+            
+            
+        return hs
+ 
+    
+    def compile_model(self):
+        with Model(coords=self.COORDS) as model:
+            
+            w = pm.Normal("w", mu=0, sigma=3, dims="splines")
+            a = pm.Normal("a", mu=0, sigma=5)
+            
+            #TODO move this logic into set_prior?
+            if self.prior['distribution']=='normal':
+                hs = self.set_normal_prior()
+            
+            elif self.prior['distribution']=='beta':
+                hs = self.set_beta_prior()
+                
+            else:
+                hs = self.set_uniform_prior()
+           
+            #pm.Potential('minimum', at.switch(hs[1]>h_min, 0, -np.inf))
+            #pm.Potential('maximum', at.switch(hs[-1]<h_max, 0, -np.inf)) #REMOVE
+            if self.segments > 1:
+                h0 = hs - self._h0_offsets
+                b = pm.Deterministic('b',
+                                      at.switch( at.le(self.h_obs, hs), self._clips , at.log(self.h_obs-h0)) )
+                
+                mu = pm.Deterministic("mu", a + at.dot(b, w))
+                
+            # XXX: so far this else does nothing 
+            else:
+                b = pm.Deterministic('b', at.log(self.h_obs-hs))
+                mu = pm.Deterministic("mu", a + at.dot(b, w))
+                
+            # Can we use weighted regression instead?
+            # https://discourse.pymc.io/t/how-to-perform-weighted-inference/1825
+            if self.q_sigma is not None:
+                sigma_obs = pm.Normal("sigma_obs", mu=0, sigma=self.y_sigma.flatten())
+                mu += sigma_obs
+                
+            sigma = pm.HalfCauchy("sigma", beta=1) #initval=0.01
+            D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs") #was self.y.flatten()
+            
+        #self.test = model
