@@ -2,11 +2,10 @@ import pymc as pm
 from pymc import Model
 
 import numpy as np
-
 import patsy #just dmatrix
 
-import aesara.tensor as at
 #import theano.tensor as at
+import aesara.tensor as at
 #from rating.transforms import LogZTransform
 from transforms import LogZTransform
 
@@ -66,17 +65,7 @@ class SplineRatingModel(RatingModel):
        
     
 
-import pymc as pm
-from pymc import Model
-
-from transforms import LogZTransform
-
-import aesara
-import aesara.tensor as at
-
-
-
-class SegmentedRatingModel2(RatingModel):
+class SegmentedRatingModel(RatingModel):
     ''' transform y
         assume uniform priors on breaks
         ALTERNATE PARAMETERIZATION
@@ -101,10 +90,19 @@ class SegmentedRatingModel2(RatingModel):
         self.y = self.q_transform.transform(self.q_obs)
         self.q_sigma = q_sigma
        
-        #XXX verify this is correct
+        ##XXX verify this is correct
+        #if q_sigma is not None:
+        #    self.y_sigma = self.q_sigma / self.q_obs.std()
+        #else:
+        #    self.y_sigma = 0
+        # convert uncertainty to weights
         if q_sigma is not None:
-            self.y_sigma = self.q_sigma / self.q_obs.std()
+            self.y_sigma = self.q_sigma / self.q_obs.std() #XXX 
+            self._w = self.q_obs.var() / self.q_sigma**2
+            self._w = self._w.flatten()
+            
         else:
+            self._w = 1
             self.y_sigma = 0
         
         self.h_obs = h
@@ -153,6 +151,7 @@ class SegmentedRatingModel2(RatingModel):
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
                                  shape=self.segments,
+                                 #testval=self._init_hs) # define a function to compute
                                  initval=self._init_hs) # define a function to compute
             
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -168,6 +167,7 @@ class SegmentedRatingModel2(RatingModel):
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
                                  shape=self.segments,
+                                 #testval=self._init_hs) # define a function to compute
                                  initval=self._init_hs) # define a function to compute
             
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -187,6 +187,7 @@ class SegmentedRatingModel2(RatingModel):
                           beta=np.array([0.5, 1.0, 2.0]),
                           shape=self.segments,
                           initval=self._init_hs) # define a function to compute
+                          #testval=self._init_hs) # define a function to compute
             
             scaled = at.sort(hs_) * (self._hs_upper_bounds - self._hs_lower_bounds) + self._hs_lower_bounds
             hs = pm.Deterministic('hs', scaled)
@@ -211,8 +212,6 @@ class SegmentedRatingModel2(RatingModel):
             else:
                 hs = self.set_uniform_prior()
            
-            #pm.Potential('minimum', at.switch(hs[1]>h_min, 0, -np.inf))
-            #pm.Potential('maximum', at.switch(hs[-1]<h_max, 0, -np.inf)) #REMOVE
             if self.segments > 1:
                 h0 = hs - self._h0_offsets
                 b = pm.Deterministic('b',
@@ -225,13 +224,20 @@ class SegmentedRatingModel2(RatingModel):
                 b = pm.Deterministic('b', at.log(self.h_obs-hs))
                 mu = pm.Deterministic("mu", a + at.dot(b, w))
                 
-            # Can we use weighted regression instead?
-            # https://discourse.pymc.io/t/how-to-perform-weighted-inference/1825
-            if self.q_sigma is not None:
-                sigma_obs = pm.Normal("sigma_obs", mu=0, sigma=self.y_sigma.flatten())
-                mu += sigma_obs
+            ## Can we use weighted regression instead?
+            ## https://discourse.pymc.io/t/how-to-perform-weighted-inference/1825
+            #if self.q_sigma is not None:
+            #    sigma_obs = pm.Normal("sigma_obs", mu=0, sigma=self.y_sigma.flatten())
+            #    mu += sigma_obs
                 
             sigma = pm.HalfCauchy("sigma", beta=1) #initval=0.01
-            D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs") #was self.y.flatten()
+            #D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs")
             
-        #self.test = model
+            #if self.q_sigma is not None:
+            #    w = 1 / self.y_sigma
+            #w = 1
+            #pymc4 version
+            xxx = pm.logp(pm.Normal.dist(mu=mu, sigma=sigma), self.y.flatten())
+            #xxx = pm.Normal.dist(mu=mu, sigma=sigma).logp(self.y.flatten())
+            y_ = pm.Potential('Y_obs', self._w * xxx)
+            #D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs")
