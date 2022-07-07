@@ -22,7 +22,16 @@ class ZTransform(Transform):
     def untransform(self, x):
         return x*self._std + self._mean
 
+class UnitTransform(Transform):
+    def __init__(self, x):
+        self._max = np.nanmax(x, axis=0)
     
+    def transform(self, x):
+        return x/self._max
+
+    def untransform(self, x):
+        return x*self._max
+
 class LogZTransform(ZTransform):
     """
     Handle negative values

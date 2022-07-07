@@ -1,0 +1,32 @@
+sources:
+  
+  simulated_rating:
+    description: 'Simulated 3-segment rating curve'
+    driver: csv
+    args:
+      urlpath: 'https://raw.githubusercontent.com/thodson-usgs/rating-function-uncertainty/data/simulated_rating.csv'
+      
+  chalk_artificial:
+    description: 'Single segment rating curve'
+    driver: csv
+    args:
+      urlpath: 'https://raw.githubusercontent.com/thodson-usgs/rating-function-uncertainty/data/chalk_artificial.csv'
+      
+  provo_natural:
+    description: 'Single segment rating curve'
+    driver: csv
+    args:
+      urlpath: 'https://raw.githubusercontent.com/thodson-usgs/rating-function-uncertainty/data/provo_natural.csv'
+
+  co_channel:
+    description: 'Single segment rating curve'
+    driver: csv
+    args:
+      urlpath: 'https://raw.githubusercontent.com/thodson-usgs/rating-function-uncertainty/data/co_channel.csv'
+      
+  green_channel:
+    description: 'Two segment rating curve'
+    driver: csv
+    args:
+      urlpath: 'https://raw.githubusercontent.com/thodson-usgs/rating-function-uncertainty/data/green_channel.csv'
+ 
