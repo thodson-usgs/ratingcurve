@@ -18,7 +18,7 @@ def plot_power_law_rating(model, trace, colors = ('tab:blue', 'tab:orange'), ax=
     figure, axes
     """
     if ax is None:
-        fig, axes = plt.subplots(1, figsize(5,5))
+        fig, axes = plt.subplots(1, figsize=(5,5))
     
     q_obs = model.q_obs.flatten()
     h_obs = model.h_obs.flatten()

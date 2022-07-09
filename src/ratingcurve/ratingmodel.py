@@ -6,6 +6,7 @@ import patsy #just dmatrix
 
 import aesara.tensor as at
 from .transforms import LogZTransform
+from .plotting import plot_power_law_rating
 #from transforms import LogZTransform
 
 
@@ -24,10 +25,10 @@ class RatingModel(Model):
     def setup(self, likelihood, prior):
         pass
     
-    def fit(self):
-        with model:
-            mean_field = pm.fit(method="advi")
-        # or pm.fit(method, model=self.model)
+    def fit(self, method="advi"):
+        #with model:
+        #    mean_field = pm.fit(method="advi")
+        mean_field = pm.fit(method=method, model=self.model)
     
     def sample(self, n_samples, n_tune):
         with model:
@@ -193,6 +194,8 @@ class SegmentedRatingModel(RatingModel):
             
         return hs
  
+    def plot(self):
+        plot_power_law_rating(self, trace, colors = ('tab:blue', 'tab:orange'), ax=None)
     
     def compile_model(self):
         with Model(coords=self.COORDS) as model:

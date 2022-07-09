@@ -1,0 +1,11 @@
+pyproject.toml
+setup.cfg
+setup.py
+src/ratingcurve/__init__.py
+src/ratingcurve/plotting.py
+src/ratingcurve/ratingmodel.py
+src/ratingcurve/transforms.py
+src/ratingcurve.egg-info/PKG-INFO
+src/ratingcurve.egg-info/SOURCES.txt
+src/ratingcurve.egg-info/dependency_links.txt
+src/ratingcurve.egg-info/top_level.txt
