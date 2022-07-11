@@ -199,6 +199,8 @@ class SegmentedRatingModel(RatingModel):
     
     def compile_model(self):
         with Model(coords=self.COORDS) as model:
+            # TESING XXX
+            h = pm.MutableData("h", self.h_obs)
             
             w = pm.Normal("w", mu=0, sigma=3, dims="splines")
             a = pm.Normal("a", mu=0, sigma=5)
@@ -213,9 +215,12 @@ class SegmentedRatingModel(RatingModel):
             else:
                 hs = self.set_uniform_prior()
            
-            h0 = hs - self._h0_offsets
+            h0 = hs - self._h0_offsets # better convergence
+            # TESTING
             b = pm.Deterministic('b',
-                                  at.switch( at.le(self.h_obs, hs), self._clips , at.log(self.h_obs-h0)) )
+                                  at.switch( at.le(h, hs), self._clips , at.log(h-h0)) )
+            #b = pm.Deterministic('b',
+            #                      at.switch( at.le(self.h_obs, hs), self._clips , at.log(self.h_obs-h0)) )
             
             mu = pm.Deterministic("mu", a + at.dot(b, w))
                 

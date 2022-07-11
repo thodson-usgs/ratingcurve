@@ -37,7 +37,7 @@ def plot_power_law_rating(model, trace, colors = ('tab:blue', 'tab:orange'), ax=
     
     _plot_gagings(h_obs, q_obs, q_sigma, ax=axes)
     
-    _plot_powerlaw_rating(a, w, hs,
+    _plot_powerlaw_rating(trace,
                           h_min=h_obs.min(),
                           h_max=h_obs.max(),
                           transform=model.q_transform,
@@ -67,33 +67,47 @@ def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
         
     ax.errorbar(y=h_obs, x=q_obs, xerr=q_sigma, fmt="o")
         
-
-def _plot_powerlaw_rating(a, w, hs, h_min, h_max, transform=None, ax=None):
-    ''' TODO REvise to numpy with np.where
-    TODO or create function that is reused in rating model
+   
+def _plot_powerlaw_rating(trace, h_min, h_max, transform=None, ax=None):
+    ''' TODO Revise
+    This function is hack. Should be able to generate posterior predictions directly,
+    but this version of pymc seems to have bug. Revisit.
     '''
     
     if ax is None:
         fig, ax = plt.subplots(1, figsize=(5,5))
+        
+    a = trace.posterior['a'].values
+    w = trace.posterior['w'].values
+    hs = trace.posterior['hs'].values
     
-    inf = at.constant([np.inf])
+    chain = trace.posterior['chain'].shape[0]
+    draw = trace.posterior['draw'].shape[0]
     
-    clips_array = np.zeros(len(hs))
+    inf = np.ones((chain, draw, 1)) + np.inf
+    
+    clips_array = np.zeros(hs.shape[2])
     clips_array[0] = -np.inf
-    clips = at.constant(clips_array)
+    clips = clips_array
     # TODO log distribute
-    h = np.linspace(h_min, h_max,100).reshape(-1,1)
-    
-    hsi = at.concatenate([hs, inf])[1:]
-    h0_offset = np.ones(len(hs))
+    h = np.linspace(h_min, h_max, 100).reshape(-1,1) #TODO control via parameter
+    h_tile = np.tile(h, draw).reshape(-1,draw,chain)
+
+    h0_offset = np.ones(hs.shape[2])
     h0_offset[0] = 0
-    
     h0 = hs - h0_offset
     
-    b1 = at.switch( at.le(h, hs), clips , at.log(h-h0))
-    mu = (a + at.dot(b1, w)).eval()
+    #b1 = at.switch( at.le(h, hs), clips , at.log(h-h0))
+    b1 = np.where( h_tile <= hs, clips , np.log(h_tile-h0))
+
+    mu = a + (b1*w).sum(axis=2)
      
     if transform:
         mu = transform.untransform(mu)
-        
-    ax.plot(mu, h, color='black')
+    
+    alpha = 0.05
+    q_mean = mu.mean(axis=1)
+    q_u = np.quantile(mu, 1-alpha/2, axis=1) 
+    q_l = np.quantile(mu, alpha/2, axis=1)
+    ax.plot(q_mean, h, color='black')
+    ax.fill_betweenx(h.flatten(), x1=q_u, x2=q_l, color='lightgray')
