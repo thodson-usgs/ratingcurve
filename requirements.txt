@@ -1,1 +1,2 @@
 pymc>=4.0.1
+inktake
