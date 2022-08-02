@@ -3,6 +3,26 @@ import matplotlib
 import matplotlib.pyplot as plt
 import aesara.tensor as at
 
+def plot_spline_rating(model, trace, colors = ('tab:blue', 'tab:orange'), ax=None):
+    if ax is None:
+        fig, axes = plt.subplots(1, figsize=(5,5))
+        
+    q_obs = model.q_obs
+    h_obs = model.h_obs
+    q_sigma = None
+    
+    _plot_gagings(h_obs, q_obs, q_sigma, ax=axes)
+    
+    _plot_spline_rating(trace=trace,
+                        model=model,
+                        h_min=h_obs.min(),
+                        h_max=h_obs.max(),
+                        ax=axes
+                       )
+    
+    axes.set_ylabel('Stage')
+    axes.set_xlabel('Discharge')
+   
 
 def plot_power_law_rating(model, trace, colors = ('tab:blue', 'tab:orange'), ax=None):
     """
@@ -27,10 +47,11 @@ def plot_power_law_rating(model, trace, colors = ('tab:blue', 'tab:orange'), ax=
     else:
         q_sigma = None
     #q_obs = model.q_transform.transform(q_obs)
-    
-    a = trace.posterior['a'].mean(dim=['chain','draw']).data
-    w = trace.posterior['w'].mean(dim=['chain','draw']).data
-    hs = trace.posterior['hs'].mean(dim=['chain','draw']).data
+   
+    # this seems obsolete                                   
+    #a = trace.posterior['a'].mean(dim=['chain','draw']).data
+    #w = trace.posterior['w'].mean(dim=['chain','draw']).data
+    #hs = trace.posterior['hs'].mean(dim=['chain','draw']).data
     
     _plot_transitions(trace.posterior['hs'],
                       0, q_obs.max(), ax=axes)
@@ -111,3 +132,27 @@ def _plot_powerlaw_rating(trace, h_min, h_max, transform=None, ax=None):
     q_l = np.quantile(mu, alpha/2, axis=1)
     ax.plot(q_mean, h, color='black')
     ax.fill_betweenx(h.flatten(), x1=q_u, x2=q_l, color='lightgray')
+
+    
+def _plot_spline_rating(trace, model, h_min, h_max, ax=None):
+        
+    if ax is None:
+        fig, ax = plt.subplots(1, figsize=(5,5))
+        
+    w = trace.posterior['w'].values.squeeze()
+    chain = trace.posterior['chain'].shape[0]
+    draw = trace.posterior['draw'].shape[0]
+ 
+    h = np.linspace(h_min, h_max, 100) #XXX something wrong here; can't increase h_max
+    B = model.d_transform(h)
+    mu = np.dot(B, w.T)
+    
+    mu = model.q_transform.untransform(mu)
+    #mu = (B*w).sum(axis=2)
+    
+    alpha = 0.05
+    q_mean = mu.mean(axis=1)
+    q_u = np.quantile(mu, 1-alpha/2, axis=1) 
+    q_l = np.quantile(mu, alpha/2, axis=1)
+    ax.plot(q_mean, h, color='black')
+    ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')

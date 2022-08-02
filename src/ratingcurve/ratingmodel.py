@@ -33,37 +33,21 @@ class RatingModel(Model):
     def sample(self, n_samples, n_tune):
         with model:
             trace = pm.sample(50000)
-  
+            
 
-class SplineRatingModel(RatingModel):
-    ''' transform y, and compute D untransformed
-    '''
-    #def __init__(self, log_q, design, knots=5, mean=0, sd=1, name='', model=None):
-    def __init__(self, q, dmatrix, knots, mean=0, sd=1, name='', model=None):
-        super().__init__(name, model)
-        
-        # transform q
-        self.q_obs = q
-        self.q_transform = LogZTransform(q)
-        self.y = self.q_transform.transform(self.q_obs)
-        
+class Dmatrix():
+    def __init__(self, knots, degree, form):
+        self.form = f"{form}(stage, knots=knots, degree={degree}, include_intercept=True) - 1"
         self.knots = knots
-        self.B = dmatrix
-        knot_dims = np.arange(self.B.shape[1])
-        
-        COORDS = {"obs" : np.arange(len(y)), "splines": np.arange(self.B.shape[1])}
-        self.add_coords(COORDS)
-        #self.add_coord("splines", values=np.arange(self.B.shape[1]))
-        
-        #a = pm.Normal("a", 0 , 1)
-        w = pm.Normal("w", mu=mean, sd=sd, dims="splines")
-        #mu = pm.Deterministic("mu", a + pm.math.dot(np.asarray(self.B, order="F"), w.T))
-        mu = pm.Deterministic("mu", pm.math.dot(np.asarray(self.B, order="F"), w.T))
-        #sigma = pm.Exponential("sigma", 1)
-        sigma = pm.HalfCauchy("sigma", 1)
-        D = pm.Normal("D", mu, sigma, observed=self.y, dims="obs")
-       
     
+    def transform(self, stage):
+        return patsy.dmatrix(self.form, {"stage": stage, "knots": self.knots[1:-1]})
+    
+def compute_knots(minimum, maximum, n):
+    ''' Return list of knots
+    '''
+    return np.linspace(minimum, maximum, n)
+        
 
 class SegmentedRatingModel(RatingModel):
     ''' transform y
@@ -238,3 +222,38 @@ class SegmentedRatingModel(RatingModel):
             xxx = pm.logp(pm.Normal.dist(mu=mu, sigma=sigma), self.y.flatten())
             y_ = pm.Potential('Y_obs', self._w * xxx)
             #D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs")
+
+            
+class SplineRatingModel(RatingModel):
+    ''' transform y, and compute D untransformed
+    '''
+    def __init__(self, q, h, knots, mean=0, sd=1, name='', model=None):
+        super().__init__(name, model)
+        #TODO redefine priors
+        # transform q
+        self.q_obs = q
+        self.h_obs = h
+        self.q_transform = LogZTransform(self.q_obs)
+        self.y = self.q_transform.transform(self.q_obs)
+        #self.q_sigma = q_sigma
+        self.knots = knots
+        self._d_matrix = Dmatrix(knots, 3, 'bs')
+        self.d_transform = self._d_matrix.transform #XXX rename?
+ 
+        #self.B = pm.MutableData("B", self.d_transform(h))
+        self.B = self.d_transform(h)
+        B = pm.MutableData("B", self.B)
+        knot_dims = np.arange(self.B.shape[1])
+        
+        COORDS = {"obs" : np.arange(len(self.y)), "splines": np.arange(self.B.shape[1])}
+        self.add_coords(COORDS)
+        #self.add_coord("splines", values=np.arange(self.B.shape[1]))
+        
+        #a = pm.Normal("a", 0 , 1)
+        w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
+        #mu = pm.Deterministic("mu", pm.math.dot(np.asarray(self.B, order="F"), w.T))
+        mu = pm.Deterministic("mu", pm.math.dot(B, w.T))
+        
+        sigma = pm.HalfCauchy("sigma", 1)
+        D = pm.Normal("D", mu, sigma, observed=self.y, dims="obs")
+            
