@@ -7,9 +7,9 @@ Use `ratingcurve` to fit streamflow ratings with a segmented power law,
 which is the the most common type rating model used by USGS.
 
 The general form of the equation is:
-```math
-log(Q) = a + \sum b_i \log(x - x_{o,i}) H_i(x - x_{o,i})
-```
+
+$$\log(Q) = a + \sum b_i \log(x - x_{o,i}) H_i(x - x_{o,i})$$
+
 where
 $Q$ is discharge,  
 $a$ and $b$ are model parameters,  
