@@ -1,2 +1,0 @@
-pymc>=4.0.1
-intake
