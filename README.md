@@ -77,10 +77,10 @@ We typically don't care how that table was generated,
 we just want to know the predicted discharge for a given stage. 
 
 
-1. To develop a rating, select a set of observations ($q_1$, $s_1$) and weights $w_1$, fit a rating model and  discretize to yield $\hat q_1$.
+1. To develop a rating, select a set of observations $(q_1, s_1)$ and weights $w_1$, fit a rating model and  discretize to yield $\hat q_1$.
 
-1. At a later point in time, develop a new rating from another (perhaps overlapping) set of observations ($q_2$, $s_2$, $w_2$) and discretize as $\hat q_2$.
+1. At a later point in time, develop a new rating from another (perhaps overlapping) set of observations $(q_2, s_2, w_2)$ and discretize as $\hat q_2$.
 
-1. As we accrue more ratings, we form a matrix $q_{ij}$, where $i$ is the rating and $j$ is the stage index. Flow at a particular time and stage ($t$, $s$) is estimated by interpolating between elements in this matrix.
+1. As we accrue more ratings, we form a matrix $q_{ij}$, where $i$ is the rating and $j$ is the stage index. Flow at a particular time and stage  $(t, s)$ is estimated by interpolating between elements in this matrix.
 
 1. After many ratings, we can compute shift uncertainty at each stage $q_{,j}$.
