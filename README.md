@@ -1,19 +1,20 @@
 # ratingcurve
-A python library for fitting stage-discharge rating curves.
+*A python library for fitting stage-discharge rating curves.*
+
+[![DOI](https://zenodo.org/badge/484096335.svg)](https://zenodo.org/badge/latestdoi/484096335)
 
 Use `ratingcurve` to fit streamflow ratings with a segmented power law,
 which is the the most common type rating model used by USGS.
 
 The general form of the equation is:
-
-\begin{align}
-    log(Q) = a + \sum b_i\log(x - x_{o,i})H_i(x - x_{o,i})
-\end{align}
+```math
+log(Q) = a + \sum b_i \log(x - x_{o,i}) H_i(x - x_{o,i})
+```
 where
 $Q$ is discharge,  
 $a$ and $b$ are model parameters,  
 $x$ is stage,  
-$x_{o,i}$ is the $i$th breakpoint, and  
+$x_{o,i}$ is the $i$-th breakpoint, and  
 $H$ is the Heaviside function.  
 In a standard linear model $b$ represents the slope of the function with respect the input.
 In the segmented power law $b_o$ is the slope and each subsequent $b_i$ are adjustment to the base slope for each segment.
