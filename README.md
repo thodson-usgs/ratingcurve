@@ -34,8 +34,19 @@ python -m ipykernel install --user --name=ratingcurve
 ```
 
 ## Getting Started
-The `segmented-power-law-demo.ipynb` notebook demonstrates how to use the package,
-but a simple example is given below.
+The [`segmented-power-law-demo.ipynb`](https://github.com/thodson-usgs/ratingcurve/blob/main/notebooks/segmented-power-law-demo.ipynb)
+notebook demonstrates basic use of the package.
+To run the notebook click the Google Colab badge \
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/master/notebooks/segmented-power-law-demo.ipynb)
+
+or to run the notebook locally
+```sh
+conda activate base # or your jupyter lab environment
+jupyter lab
+```
+then open the notebook and select the `ratingcurve` kernel that was installed earlier.
+
+A simple example is given below.
 
 ```python
 from ratingcurve.ratingmodel import SegmentedRatingModel
