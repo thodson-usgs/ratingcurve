@@ -10,7 +10,12 @@ def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None)
 
     q_obs = model.q_obs
     h_obs = model.h_obs
-    q_sigma = None
+    
+    if model.q_sigma is not None:
+        q_sigma = model.q_sigma
+    else:
+        q_sigma = None
+
 
     _plot_gagings(h_obs, q_obs, q_sigma, ax=axes)
 
@@ -81,9 +86,13 @@ def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
         fig, ax = plt.subplots(1, figsize=(5, 5))
 
     if q_sigma is not None:
-        q_sigma = q_sigma * 1.96
+        sigma_2 = 1.96 * (np.exp(q_sigma) - 1)*q_obs
+    
+    else:
+        sigma_2 = 0
+        #q_sigma = q_sigma * 1.96
 
-    ax.errorbar(y=h_obs, x=q_obs, xerr=q_sigma, fmt="o")
+    ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o")
 
 
 def _plot_powerlaw_rating(trace, h_min, h_max, transform=None, ax=None):

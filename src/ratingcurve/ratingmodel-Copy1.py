@@ -58,7 +58,8 @@ class SegmentedRatingModel(RatingModel):
                  h,
                  segments,
                  prior={'distribution':'uniform'},
-                 q_sigma=None,
+                 q_sigma=1,
+                 #q_sigma=None,
                  name='',
                  model=None):
 
@@ -67,36 +68,26 @@ class SegmentedRatingModel(RatingModel):
         self.segments = segments
         self.prior = prior 
         # transform q
-        self.q_obs = q
+        self.h_obs = h.flatten()
+        self.q_obs = q #flatten()
         self.q_transform = LogZTransform(self.q_obs)
         self.y = self.q_transform.transform(self.q_obs)
-        #self.q_sigma = q_sigma
-
-        # #XXX verify this is correct
-        # if q_sigma is not None:
-        #     self.y_sigma = self.q_sigma / self.q_obs.std()
-        # else:
-        #     self.y_sigma = 0
-
-        # convert uncertainty to weights
+        
+        # convert q_sigma to percentage, then log
         if q_sigma is None:
-            self.q_sigma = 0
-            
+            self.q_sigma = 1
+        
         else:
-            self.q_sigma = np.log(1 + q_sigma/q)
-
-        #else:
-        #    self._w = 1
-        #    self.y_sigma = 0
-
-        self.h_obs = h
+            self.q_sigma = np.log( 1 + q_sigma/q)
+            self.q_sigma = self.q_sigma.flatten()
+            
 
         self._inf = [np.inf]
 
         # clipping boundary
         clips = np.zeros(self.segments)
         clips[0] = -np.inf
-        # clips[0] = -1000 #TODO verify whether this should be inf
+        #clips[0] = -1000 #TODO verify whether this should be inf
         self._clips = at.constant(clips)
 
         # create h0 offsets
@@ -136,7 +127,6 @@ class SegmentedRatingModel(RatingModel):
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
                                  shape=self.segments,
-                                 #testval=self._init_hs) # define a function to compute
                                  initval=self._init_hs) # define a function to compute
 
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -152,7 +142,6 @@ class SegmentedRatingModel(RatingModel):
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
                                  shape=self.segments,
-                                 #testval=self._init_hs) # define a function to compute
                                  initval=self._init_hs) # define a function to compute
 
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -171,21 +160,16 @@ class SegmentedRatingModel(RatingModel):
                           beta=np.array([0.5, 1.0, 2.0]),
                           shape=self.segments,
                           initval=self._init_hs) # define a function to compute
-                          #testval=self._init_hs) # define a function to compute
 
             scaled = at.sort(hs_) * (self._hs_upper_bounds - self._hs_lower_bounds) + self._hs_lower_bounds
             hs = pm.Deterministic('hs', scaled)
 
         return hs
 
-    #def plot(self):
-    #    plot_power_law_rating(self, trace, colors = ('tab:blue', 'tab:orange'), ax=None)
 
     def compile_model(self):
         with Model(coords=self.COORDS) as model:
-            # TESING XXX
             h = pm.MutableData("h", self.h_obs)
-
             w = pm.Normal("w", mu=0, sigma=3, dims="splines")    
             a = pm.Normal("a", mu=0, sigma=5)
 
@@ -203,34 +187,17 @@ class SegmentedRatingModel(RatingModel):
             b = pm.Deterministic('b',
                                   at.switch( at.le(h, hs), self._clips , at.log(h-h0)) )
 
-            sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
-            #mu = pm.Deterministic("mu", a + at.dot(b, w))
-            mu = pm.Normal("mu", a + at.dot(b, w), sigma.flatten(), observed=self.y.flatten())
-
-
-            ## Can we use weighted regression instead?
-            ## https://discourse.pymc.io/t/how-to-perform-weighted-inference/1825
-            #if self.q_sigma is not None:
-            #    sigma_obs = pm.Normal("sigma_obs", mu=0, sigma=self.y_sigma.flatten())
-            #    mu += sigma_obs
-
-            #sigma = pm.HalfCauchy("sigma", beta=1) #initval=0.01
-            #D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs")
-
-            #if self.q_sigma is not None:
-            #    w = 1 / self.y_sigma
-            #w = 1
-            #pymc4 version
-            #xxx = pm.logp(pm.Normal.dist(mu=mu, sigma=sigma), self.y.flatten())
-            #y_ = pm.Potential('Y_obs', self._w * xxx)
-            #D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs")
+            sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma # add obs uncertainty
+            #sigma_m = pm.HalfCauchy("sigma_m", beta=1)
+            #sigma = pm.Deterministic("sigma", sigma_m + self.q_sigma)
+            mu = pm.Normal("mu", a + at.dot(b, w), sigma, observed=self.y.flatten())
 
 
 class SplineRatingModel(RatingModel):
     ''' transform y, and compute D untransformed
     '''
 
-    def __init__(self, q, h, knots, q_sigma=None, mean=0, sd=1, name='', model=None):
+    def __init__(self, q, h, knots, mean=0, sd=1, name='', model=None):
         super().__init__(name, model)
         #TODO redefine priors
         # transform q
@@ -238,13 +205,6 @@ class SplineRatingModel(RatingModel):
         self.h_obs = h
         self.q_transform = LogZTransform(self.q_obs)
         self.y = self.q_transform.transform(self.q_obs)
-        
-        if q_sigma is None:
-            self.q_sigma = 0
-            
-        else:
-            self.q_sigma = np.log(1 + q_sigma/q)
-
         #self.q_sigma = q_sigma
         self.knots = knots
         self._d_matrix = Dmatrix(knots, 3, 'bs')
@@ -262,15 +222,10 @@ class SplineRatingModel(RatingModel):
         #a = pm.Normal("a", 0 , 1)
         w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
         #mu = pm.Deterministic("mu", pm.math.dot(np.asarray(self.B, order="F"), w.T))
-        #mu = pm.Deterministic("mu", pm.math.dot(B, w.T))
+        mu = pm.Deterministic("mu", pm.math.dot(B, w.T))
 
-        #sigma = pm.HalfCauchy("sigma", 1)
-        #D = pm.Normal("D", mu, sigma, observed=self.y, dims="obs")
-        
-        sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
-            #mu = pm.Deterministic("mu", a + at.dot(b, w))
-        mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
-
+        sigma = pm.HalfCauchy("sigma", 1)
+        D = pm.Normal("D", mu, sigma, observed=self.y, dims="obs")
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)
