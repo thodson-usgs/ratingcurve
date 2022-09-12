@@ -10,7 +10,6 @@ from .plotting import plot_power_law_rating, plot_spline_rating
 
 
 class CustomModel(Model):
-    # 1) override init
     def __init__(self, mean=0, sd=1, name='', model=None):
         super().__init__(name, model)
         pm.Normal('v2', mu=mean, sigma=sd)
@@ -49,9 +48,7 @@ def compute_knots(minimum, maximum, n):
 
 
 class SegmentedRatingModel(RatingModel):
-    ''' transform y
-        assume uniform priors on breaks
-        ALTERNATE PARAMETERIZATION
+    ''' Multi-segment rating model using Heaviside parameterization.
     '''
     def __init__(self,
                  q,
@@ -61,6 +58,18 @@ class SegmentedRatingModel(RatingModel):
                  q_sigma=None,
                  name='',
                  model=None):
+        ''' Create a multi-segement rating model
+        
+        Parameters
+        ----------
+        q, h: array_like
+            Input arrays of discharge (q) and gage height (h) observations.
+        q_sigma : array_like
+            Input array of discharge uncertainty in units of discharge.
+        segments : int
+            Number of segments in the rating.
+        prior : dict
+        '''
 
         super().__init__(name, model)
 
@@ -70,24 +79,13 @@ class SegmentedRatingModel(RatingModel):
         self.q_obs = q
         self.q_transform = LogZTransform(self.q_obs)
         self.y = self.q_transform.transform(self.q_obs)
-        #self.q_sigma = q_sigma
 
-        # #XXX verify this is correct
-        # if q_sigma is not None:
-        #     self.y_sigma = self.q_sigma / self.q_obs.std()
-        # else:
-        #     self.y_sigma = 0
-
-        # convert uncertainty to weights
+        # transform observational uncertainty to log scale
         if q_sigma is None:
             self.q_sigma = 0
-            
         else:
             self.q_sigma = np.log(1 + q_sigma/q)
 
-        #else:
-        #    self._w = 1
-        #    self.y_sigma = 0
 
         self.h_obs = h
 
@@ -96,7 +94,6 @@ class SegmentedRatingModel(RatingModel):
         # clipping boundary
         clips = np.zeros(self.segments)
         clips[0] = -np.inf
-        # clips[0] = -1000 #TODO verify whether this should be inf
         self._clips = at.constant(clips)
 
         # create h0 offsets
@@ -136,7 +133,6 @@ class SegmentedRatingModel(RatingModel):
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
                                  shape=self.segments,
-                                 #testval=self._init_hs) # define a function to compute
                                  initval=self._init_hs) # define a function to compute
 
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -152,8 +148,7 @@ class SegmentedRatingModel(RatingModel):
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
                                  shape=self.segments,
-                                 #testval=self._init_hs) # define a function to compute
-                                 initval=self._init_hs) # define a function to compute
+                                 initval=self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
@@ -170,16 +165,13 @@ class SegmentedRatingModel(RatingModel):
                           alpha=np.array([0.5, 2.0, 1.0]),
                           beta=np.array([0.5, 1.0, 2.0]),
                           shape=self.segments,
-                          initval=self._init_hs) # define a function to compute
-                          #testval=self._init_hs) # define a function to compute
+                          initval=self._init_hs)
 
             scaled = at.sort(hs_) * (self._hs_upper_bounds - self._hs_lower_bounds) + self._hs_lower_bounds
             hs = pm.Deterministic('hs', scaled)
 
         return hs
 
-    #def plot(self):
-    #    plot_power_law_rating(self, trace, colors = ('tab:blue', 'tab:orange'), ax=None)
 
     def compile_model(self):
         with Model(coords=self.COORDS) as model:
@@ -204,71 +196,52 @@ class SegmentedRatingModel(RatingModel):
                                   at.switch( at.le(h, hs), self._clips , at.log(h-h0)) )
 
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
-            #mu = pm.Deterministic("mu", a + at.dot(b, w))
             mu = pm.Normal("mu", a + at.dot(b, w), sigma.flatten(), observed=self.y.flatten())
 
 
-            ## Can we use weighted regression instead?
-            ## https://discourse.pymc.io/t/how-to-perform-weighted-inference/1825
-            #if self.q_sigma is not None:
-            #    sigma_obs = pm.Normal("sigma_obs", mu=0, sigma=self.y_sigma.flatten())
-            #    mu += sigma_obs
-
-            #sigma = pm.HalfCauchy("sigma", beta=1) #initval=0.01
-            #D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs")
-
-            #if self.q_sigma is not None:
-            #    w = 1 / self.y_sigma
-            #w = 1
-            #pymc4 version
-            #xxx = pm.logp(pm.Normal.dist(mu=mu, sigma=sigma), self.y.flatten())
-            #y_ = pm.Potential('Y_obs', self._w * xxx)
-            #D = pm.Normal("D", mu, sigma, observed=self.y.flatten(), dims="obs")
-
-
 class SplineRatingModel(RatingModel):
-    ''' transform y, and compute D untransformed
+    ''' Natural spline rating model
     '''
 
     def __init__(self, q, h, knots, q_sigma=None, mean=0, sd=1, name='', model=None):
+        ''' Create a natural spline rating model
+        
+        Parameters
+        ----------
+        q, h: array_like
+            Input arrays of discharge (q) and stage (h) observations.
+        q_sigma : array_like
+            Input array of discharge uncertainty in units of discharge.
+        knots : arrak_like
+            Stage value locations of the spline knots.
+        '''
         super().__init__(name, model)
-        #TODO redefine priors
         # transform q
         self.q_obs = q
         self.h_obs = h
         self.q_transform = LogZTransform(self.q_obs)
         self.y = self.q_transform.transform(self.q_obs)
-        
+       
+        # transform observational uncertainty to log scale
         if q_sigma is None:
             self.q_sigma = 0
-            
         else:
             self.q_sigma = np.log(1 + q_sigma/q)
 
-        #self.q_sigma = q_sigma
         self.knots = knots
         self._d_matrix = Dmatrix(knots, 3, 'bs')
         self.d_transform = self._d_matrix.transform #XXX rename?
 
-        #self.B = pm.MutableData("B", self.d_transform(h))
         self.B = self.d_transform(h)
         B = pm.MutableData("B", self.B)
         knot_dims = np.arange(self.B.shape[1])
 
         COORDS = {"obs" : np.arange(len(self.y)), "splines": np.arange(self.B.shape[1])}
         self.add_coords(COORDS)
-        #self.add_coord("splines", values=np.arange(self.B.shape[1]))
 
-        #a = pm.Normal("a", 0 , 1)
         w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
-        #mu = pm.Deterministic("mu", pm.math.dot(np.asarray(self.B, order="F"), w.T))
-        #mu = pm.Deterministic("mu", pm.math.dot(B, w.T))
 
-        #sigma = pm.HalfCauchy("sigma", 1)
-        #D = pm.Normal("D", mu, sigma, observed=self.y, dims="obs")
-        
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
-            #mu = pm.Deterministic("mu", a + at.dot(b, w))
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
 
