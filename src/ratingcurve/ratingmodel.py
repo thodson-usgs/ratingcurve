@@ -154,24 +154,6 @@ class SegmentedRatingModel(RatingModel):
 
         return hs
 
-    def set_beta_prior(self):
-        '''
-        XXX NOT WORKING YEST
-        XXX MAKE SEGMENTS VARIABLE
-        prior={distribution:'uniform'}
-        '''
-        with Model(coords=self.COORDS) as model:
-            hs_ = pm.Beta('hs_',
-                          alpha=np.array([0.5, 2.0, 1.0]),
-                          beta=np.array([0.5, 1.0, 2.0]),
-                          shape=self.segments,
-                          initval=self._init_hs)
-
-            scaled = at.sort(hs_) * (self._hs_upper_bounds - self._hs_lower_bounds) + self._hs_lower_bounds
-            hs = pm.Deterministic('hs', scaled)
-
-        return hs
-
 
     def compile_model(self):
         with Model(coords=self.COORDS) as model:
