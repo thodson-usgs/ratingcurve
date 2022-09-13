@@ -92,25 +92,25 @@ class SegmentedRatingModel(RatingModel):
         self._inf = [np.inf]
 
         # clipping boundary
-        clips = np.zeros(self.segments)
+        clips = np.zeros((self.segments,1))
         clips[0] = -np.inf
         self._clips = at.constant(clips)
 
         # create h0 offsets
-        self._h0_offsets = np.ones(segments)
+        self._h0_offsets = np.ones((self.segments,1))
         self._h0_offsets[0] = 0
 
         self.COORDS = {"obs" : np.arange(len(self.y)), "splines":np.arange(segments)}
 
         # compute initval
-        self._hs_lower_bounds = np.zeros(self.segments) + self.h_obs.min()
+        self._hs_lower_bounds = np.zeros((self.segments,1)) + self.h_obs.min()
         self._hs_lower_bounds[0] = 0
 
-        self._hs_upper_bounds = np.zeros(self.segments) + self.h_obs.max()
+        self._hs_upper_bounds = np.zeros((self.segments,1)) + self.h_obs.max()
         self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 #XXX HACK
 
         # set random init on unit interval then scale based on bounds
-        self._init_hs = np.random.rand(self.segments) \
+        self._init_hs = np.random.rand(self.segments,1) \
                          * (self._hs_upper_bounds - self._hs_lower_bounds) \
                          + self._hs_lower_bounds
 
@@ -132,7 +132,7 @@ class SegmentedRatingModel(RatingModel):
                                  sigma = self.prior['sigma'],
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
-                                 shape=self.segments,
+                                 shape=(self.segments,1),
                                  initval=self._init_hs) # define a function to compute
 
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -147,7 +147,7 @@ class SegmentedRatingModel(RatingModel):
             hs_ = pm.Uniform('hs_', 
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
-                                 shape=self.segments,
+                                 shape=(self.segments,1),
                                  initval=self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -178,7 +178,49 @@ class SegmentedRatingModel(RatingModel):
                                   at.switch( at.le(h, hs), self._clips , at.log(h-h0)) )
 
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
-            mu = pm.Normal("mu", a + at.dot(b, w), sigma.flatten(), observed=self.y.flatten())
+            mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
+            
+    def table(self, trace, h_min = None, h_max=None):
+        ''' TODO Revise
+        '''
+        if h_min is None or h_max is None:
+            h_min = self.h_obs.min()
+            h_max = self.h_obs.max()
+        # alternatively approach
+        #h = np.linspace(hmin, hmax, 100)
+        #with rating:
+        #    rating.set_data('h', h)
+        #    out = pm.sample_posterior_predictive(trace)
+    
+        a = trace.posterior['a'].values
+        w = trace.posterior['w'].values
+        hs = trace.posterior['hs'].values
+    
+        chain = trace.posterior['chain'].shape[0]
+        draw = trace.posterior['draw'].shape[0]
+    
+        inf = np.ones((chain, draw, 1)) + np.inf
+        #import pdb; pdb.set_trace()
+        clips = np.zeros((hs.shape[2], 1))
+        clips = -np.inf
+        #clips = clips_array
+        # TODO log distribute
+        h = np.linspace(h_min, h_max, 100)#.reshape(A1, 1) #TODO control via parameter
+        #import pdb; pdb.set_trace()
+        h_tile = np.tile(h, draw).reshape(draw, chain, 1, -1)
+    
+        h0_offset = np.ones((hs.shape[2], 1))
+        h0_offset[0] = 0
+        h0 = hs - h0_offset
+    
+        #b1 = at.switch( at.le(h, hs), clips , at.log(h-h0))
+        b1 = np.where(h_tile<=hs, clips, np.log(h_tile-h0))
+    
+        mu = a + (b1*w).sum(axis=2)
+    
+        mu = transform.untransform(mu)
+        return mu
+
 
 
 class SplineRatingModel(RatingModel):
