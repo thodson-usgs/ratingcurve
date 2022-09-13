@@ -215,7 +215,7 @@ class SegmentedRatingModel(RatingModel):
         
         self._table = DataFrame({'discharge':q.mean(axis=1).flatten(),
                                  'stage' : h,
-                                 'sigma2' :np.exp(sigma * 1.96).flatten()})
+                                 'sigma' :np.exp(sigma).flatten()})
         return self._table
 
 
@@ -286,7 +286,8 @@ class SplineRatingModel(RatingModel):
         
         self._table = DataFrame({'discharge':q.mean(axis=1).flatten(),
                                  'stage' : h,
-                                 'sigma2' :np.exp(sigma * 1.96).flatten()})
+                                 #'sigma2' :np.exp(sigma * 1.96).flatten()})
+                                 'sigma' :np.exp(sigma).flatten()})
         return self._table
         
 

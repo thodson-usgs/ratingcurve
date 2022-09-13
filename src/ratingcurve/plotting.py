@@ -110,34 +110,9 @@ def _plot_rating(discharge_table, ax=None):
 
     h = discharge_table['stage']
     q = discharge_table['discharge']
-    sigma2 = discharge_table['sigma2']
+    sigma = discharge_table['sigma']
     ax.plot(q, h, color='black')
-    q_u = q * sigma2
-    q_l = q / sigma2 
+    q_u = q * (sigma)**1.96 # this should be  2 sigma
+    q_l = q / (sigma)**1.96
     ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
 
-
-def _plot_spline_rating(trace, model, h_min, h_max, ax=None):
-    ''' TODO
-    '''
-
-    if ax is None:
-        fig, ax = plt.subplots(1, figsize=(5,5))
-
-    w = trace.posterior['w'].values.squeeze()
-    chain = trace.posterior['chain'].shape[0]
-    draw = trace.posterior['draw'].shape[0]
-
-    h = np.linspace(h_min, h_max, 100) #XXX something wrong here; can't increase h_max
-    B = model.d_transform(h)
-    mu = np.dot(B, w.T)
-
-    mu = model.q_transform.untransform(mu)
-    # mu = (B*w).sum(axis=2)
-
-    alpha = 0.05
-    q_mean = mu.mean(axis=1)
-    q_u = np.quantile(mu, 1-alpha/2, axis=1) 
-    q_l = np.quantile(mu, alpha/2, axis=1)
-    ax.plot(q_mean, h, color='black')
-    ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
