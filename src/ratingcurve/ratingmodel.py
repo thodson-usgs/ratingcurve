@@ -1,6 +1,8 @@
 import pymc as pm
 from pymc import Model
 
+from pandas import DataFrame
+
 import numpy as np
 import aesara.tensor as at
 from patsy import dmatrix
@@ -157,69 +159,64 @@ class SegmentedRatingModel(RatingModel):
 
     def compile_model(self):
         with Model(coords=self.COORDS) as model:
-            # TESING XXX
             h = pm.MutableData("h", self.h_obs)
-
             w = pm.Normal("w", mu=0, sigma=3, dims="splines")    
             a = pm.Normal("a", mu=0, sigma=5)
 
-            #TODO move this logic into set_prior?
+            # set prior on break pionts
             if self.prior['distribution']=='normal':
                 hs = self.set_normal_prior()
-
-            elif self.prior['distribution']=='beta':
-                hs = self.set_beta_prior()
-
             else:
                 hs = self.set_uniform_prior()
 
-            h0 = hs - self._h0_offsets # better convergence
+            h0 = hs - self._h0_offsets
             b = pm.Deterministic('b',
                                   at.switch( at.le(h, hs), self._clips , at.log(h-h0)) )
 
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
             
-    def table(self, trace, h_min = None, h_max=None):
-        ''' TODO Revise
+    def table(self, trace, h=None):
+        ''' TODO verify sigma computation
         '''
-        if h_min is None or h_max is None:
+        if h is None:
             h_min = self.h_obs.min()
             h_max = self.h_obs.max()
+            h = np.linspace(h_min, h_max, 100)
         # alternatively approach
         #h = np.linspace(hmin, hmax, 100)
         #with rating:
         #    rating.set_data('h', h)
         #    out = pm.sample_posterior_predictive(trace)
-    
-        a = trace.posterior['a'].values
-        w = trace.posterior['w'].values
-        hs = trace.posterior['hs'].values
-    
+        
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
     
+        a = trace.posterior['a'].values.reshape(chain, draw, 1)
+        w = trace.posterior['w'].values.reshape(chain, draw, -1, 1)
+        hs = trace.posterior['hs'].values
+    
+    
         inf = np.ones((chain, draw, 1)) + np.inf
-        #import pdb; pdb.set_trace()
         clips = np.zeros((hs.shape[2], 1))
-        clips = -np.inf
-        #clips = clips_array
-        # TODO log distribute
-        h = np.linspace(h_min, h_max, 100)#.reshape(A1, 1) #TODO control via parameter
-        #import pdb; pdb.set_trace()
-        h_tile = np.tile(h, draw).reshape(draw, chain, 1, -1)
+        clips[0] = -np.inf
+        h_tile = np.tile(h, draw).reshape(chain, draw, 1, -1)
     
         h0_offset = np.ones((hs.shape[2], 1))
         h0_offset[0] = 0
         h0 = hs - h0_offset
-    
-        #b1 = at.switch( at.le(h, hs), clips , at.log(h-h0))
+        # optimize with np.clip?
         b1 = np.where(h_tile<=hs, clips, np.log(h_tile-h0))
+        q_z = a + (b1*w).sum(axis=2)
+        
+        sigma = q_z.std(axis=1)
     
-        mu = a + (b1*w).sum(axis=2)
-    
-        mu = transform.untransform(mu)
-        return mu
+        q = self.q_transform.untransform(q_z)
+        
+        self._table = DataFrame({'discharge':q.mean(axis=1).flatten(),
+                                 'stage' : h,
+                                 'sigma2' :np.exp(sigma * 1.96).flatten()})
+        return self._table
 
 
 
@@ -268,6 +265,30 @@ class SplineRatingModel(RatingModel):
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
+
+    def table(self, trace, h=None):
+        ''' TODO verify sigma computation
+        '''
+        if h is None:
+            h_min = self.h_obs.min()
+            h_max = self.h_obs.max()
+            h = np.linspace(h_min, h_max, 100)
+            
+        w = trace.posterior['w'].values.squeeze()
+        chain = trace.posterior['chain'].shape[0]
+        draw = trace.posterior['draw'].shape[0]
+    
+        B = self.d_transform(h)
+        q_z = np.dot(B, w.T)
+        q = self.q_transform.untransform(q_z)
+        sigma = q_z.std(axis=1)
+        
+        
+        self._table = DataFrame({'discharge':q.mean(axis=1).flatten(),
+                                 'stage' : h,
+                                 'sigma2' :np.exp(sigma * 1.96).flatten()})
+        return self._table
+        
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)

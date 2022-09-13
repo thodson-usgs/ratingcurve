@@ -19,12 +19,14 @@ def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None)
 
     _plot_gagings(h_obs, q_obs, q_sigma, ax=axes)
 
-    _plot_spline_rating(trace=trace,
-                        model=model,
-                        h_min=h_obs.min(),
-                        h_max=h_obs.max(),
-                        ax=axes
-                       )
+    rating_table = model.table(trace)
+    _plot_rating(rating_table, ax=axes)
+    #_plot_spline_rating(trace=trace,
+    #                    model=model,
+    #                    h_min=h_obs.min(),
+    #                    h_max=h_obs.max(),
+    #                    ax=axes
+    #                   )
 
     axes.set_ylabel('Stage')
     axes.set_xlabel('Discharge')
@@ -46,10 +48,10 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
     if ax is None:
         fig, axes = plt.subplots(1, figsize=(5,5))
 
-    q_obs = model.q_obs.flatten()
-    h_obs = model.h_obs.flatten()
+    q_obs = model.q_obs#.flatten()
+    h_obs = model.h_obs#.flatten()
     if model.q_sigma is not None:
-        q_sigma = model.q_sigma.flatten()
+        q_sigma = model.q_sigma#.flatten()
     else:
         q_sigma = None
 
@@ -59,12 +61,14 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
                       0, q_obs.max(), ax=axes)
 
     _plot_gagings(h_obs, q_obs, q_sigma, ax=axes)
-
-    _plot_powerlaw_rating(trace,
-                          h_min=h_obs.min(),
-                          h_max=h_obs.max(),
-                          transform=model.q_transform,
-                          ax=axes)
+    
+    rating_table = model.table(trace)
+    _plot_rating(rating_table, ax=axes)
+    #_plot_powerlaw_rating(trace,
+    #                      h_min=h_obs.min(),
+    #                      h_max=h_obs.max(),
+    #                      transform=model.q_transform,
+    #                      ax=axes)
 
     # label
     axes.set_ylabel('Stage')
@@ -95,7 +99,7 @@ def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
     ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o")
 
 
-def _plot_powerlaw_rating(trace, h_min, h_max, transform=None, ax=None):
+def _plot_rating(discharge_table, ax=None):
     ''' TODO Revise
     This function is hack. Should be able to generate posterior predictions directly,
     but this version of pymc seems to have bug. Revisit.
@@ -104,40 +108,13 @@ def _plot_powerlaw_rating(trace, h_min, h_max, transform=None, ax=None):
     if ax is None:
         fig, ax = plt.subplots(1, figsize=(5,5))
 
-    a = trace.posterior['a'].values
-    w = trace.posterior['w'].values
-    hs = trace.posterior['hs'].values
-
-    chain = trace.posterior['chain'].shape[0]
-    draw = trace.posterior['draw'].shape[0]
-
-    inf = np.ones((chain, draw, 1)) + np.inf
-
-    clips_array = np.zeros(hs.shape[2])
-    clips_array[0] = -np.inf
-    clips = clips_array
-    # TODO log distribute
-    h = np.linspace(h_min, h_max, 100).reshape(-1, 1) #TODO control via parameter
-    h_tile = np.tile(h, draw).reshape(-1, draw, chain)
-
-    h0_offset = np.ones(hs.shape[2])
-    h0_offset[0] = 0
-    h0 = hs - h0_offset
-
-    #b1 = at.switch( at.le(h, hs), clips , at.log(h-h0))
-    b1 = np.where(h_tile<=hs, clips, np.log(h_tile-h0))
-
-    mu = a + (b1*w).sum(axis=2)
-
-    if transform:
-        mu = transform.untransform(mu)
-
-    alpha = 0.05
-    q_mean = mu.mean(axis=1)
-    q_u = np.quantile(mu, 1-alpha/2, axis=1) 
-    q_l = np.quantile(mu, alpha/2, axis=1)
-    ax.plot(q_mean, h, color='black')
-    ax.fill_betweenx(h.flatten(), x1=q_u, x2=q_l, color='lightgray')
+    h = discharge_table['stage']
+    q = discharge_table['discharge']
+    sigma2 = discharge_table['sigma2']
+    ax.plot(q, h, color='black')
+    q_u = q * sigma2
+    q_l = q / sigma2 
+    ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
 
 
 def _plot_spline_rating(trace, model, h_min, h_max, ax=None):
