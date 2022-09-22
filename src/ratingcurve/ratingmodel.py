@@ -4,6 +4,7 @@ from pymc import Model
 from pandas import DataFrame
 
 import numpy as np
+import math
 import aesara.tensor as at
 from patsy import dmatrix
 
@@ -180,9 +181,11 @@ class SegmentedRatingModel(RatingModel):
         ''' TODO verify sigma computation
         '''
         if h is None:
-            h_min = self.h_obs.min()
-            h_max = self.h_obs.max()
-            h = np.linspace(h_min, h_max, 100)
+            extend = 1.1
+            h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
+            #h_min = self.h_obs.min()
+            #h_max = self.h_obs.max()
+            #h = np.linspace(h_min, h_max, 100)
         # alternatively approach
         #h = np.linspace(hmin, hmax, 100)
         #with rating:
@@ -216,6 +219,8 @@ class SegmentedRatingModel(RatingModel):
         self._table = DataFrame({'discharge':q.mean(axis=1).flatten(),
                                  'stage' : h,
                                  'sigma' :np.exp(sigma).flatten()})
+        
+        self._table = self._table.round({'discharge':2, 'stage':2, 'sigma':4})
         return self._table
 
 
@@ -269,10 +274,14 @@ class SplineRatingModel(RatingModel):
     def table(self, trace, h=None):
         ''' TODO verify sigma computation
         '''
+        extend = 1.1
+        
         if h is None:
-            h_min = self.h_obs.min()
-            h_max = self.h_obs.max()
-            h = np.linspace(h_min, h_max, 100)
+            extend = 1.1
+            h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
+            #h_min = self.h_obs.min()
+            #h_max = self.h_obs.max()
+            #h = np.linspace(h_min, h_max, 100)
             
         w = trace.posterior['w'].values.squeeze()
         chain = trace.posterior['chain'].shape[0]
@@ -288,8 +297,41 @@ class SplineRatingModel(RatingModel):
                                  'stage' : h,
                                  #'sigma2' :np.exp(sigma * 1.96).flatten()})
                                  'sigma' :np.exp(sigma).flatten()})
+        
+        self._table = self._table.round({'discharge':2, 'stage':2, 'sigma':4})
         return self._table
         
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)
+
+        
+def stage_range(h_min:float, h_max:float, decimals:int=2, step:float=0.01):
+    """ Returns a range of stage values.
+    """
+    start = round_decimals(h_min, decimals, direction='down')
+    stop = round_decimals(h_max, decimals, direction='up')
+                
+    return np.arange(start, stop, step)
+       
+    
+def round_decimals(number:float, decimals:int=2, direction:str=None):
+    """
+    Returns a value rounded a specific number of decimal places.
+    """
+    if not isinstance(decimals, int):
+        raise TypeError("decimal places must be an integer")
+    elif decimals < 0:
+        raise ValueError("decimal places has to be 0 or more")
+    elif decimals == 0:
+        return math.ceil(number)
+
+    factor = 10 ** decimals
+    
+    if direction is None:
+        f = round
+    elif direction == 'up':
+        f = math.ceil
+    elif direction == 'down':
+        f = math.floor
+    return f(number * factor) / factor
