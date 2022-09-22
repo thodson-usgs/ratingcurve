@@ -6,11 +6,12 @@
 Use `ratingcurve` to fit streamflow ratings with a segmented power law,
 which is the the most common type rating model used by USGS.
 
-The segmented power law is defined as:
+The segmented power law is parameterized as:
 
-\begin{align}
+$$
     \log(Q) = a + \sum_{i=1}^{n} b_i \log(x - x_{o,i}) H_i(x - x_{o,i})
-\end{align}
+$$
+
 where
 $Q$ is a vector discharge, \
 $n$ is the number of breakpoints in the rating, \
@@ -71,6 +72,8 @@ with powerrating:
     
 powerrating.plot(trace)
 ```
+![example plot](https://github.com/thodson-usgs/ratingcurve/blob/main/paper/green_example.png?raw=true)
+
 
 ##  Development
 The included notebook demonstrates fitting stage-discharge ratingings using a segmented power law and cubic spline.
