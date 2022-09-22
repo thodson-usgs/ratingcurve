@@ -6,17 +6,18 @@
 Use `ratingcurve` to fit streamflow ratings with a segmented power law,
 which is the the most common type rating model used by USGS.
 
-The general form of the equation is:
+The segmented power law is defined as:
 
-$$\log(Q) = a + \sum_{i=1}^{n} b_i \log(x - x_{o,i}) H_i(x - x_{o,i})$$
-
+\begin{align}
+    \log(Q) = a + \sum_{i=1}^{n} b_i \log(x - x_{o,i}) H_i(x - x_{o,i})
+\end{align}
 where
 $Q$ is a vector discharge, \
 $n$ is the number of breakpoints in the rating, \
 $a$ and $b$ are model parameters, \
 $x$ is a vector of stage observations, \
 $x_o$ is a vector of breakpoints, and \
-$H$ is the Heaviside function.
+$H$ is the Heaviside function. 
 
 In a standard linear model $b$ represents the slope of the function with respect the input.
 In the segmented power law $b_o$ is the slope and each subsequent $b_i$ are adjustment to the base slope for each segment.
@@ -53,14 +54,16 @@ from ratingcurve.ratingmodel import SegmentedRatingModel
 
 # load tutorial data
 df = tutorial.open_dataset('green_channel')
-h_obs = df['stage'].values.reshape(-1, 1)
-q_obs = df['q'].values.reshape(-1, 1)
+
 
 # setup model
 segments = 2
-powerrating = SegmentedRatingModel(q_obs, h_obs,  segments=segments,
-                                   prior = {'distribution':'uniform'})
 
+powerrating = SegmentedRatingModel(q=df['q'],
+                                   h=df['stage'], 
+                                   q_sigma=df['q_sigma'],
+                                   segments=segments)
+                                   
 # fit model, then simulate the rating
 with powerrating:
     mean_field = pm.fit(n=150_000)
