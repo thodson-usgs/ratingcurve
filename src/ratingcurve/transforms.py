@@ -11,7 +11,7 @@ class Transform:
 
 
 class ZTransform(Transform):
-    """
+    """ Z-transforms data to have zero mean and unit variance.
     """
 
     def __init__(self, x):
@@ -26,6 +26,8 @@ class ZTransform(Transform):
 
 
 class UnitTransform(Transform):
+    """ Transforms data to the unit (0 to 1) interval.
+    """
     def __init__(self, x):
         self._max = np.nanmax(x, axis=0)
 
@@ -37,25 +39,32 @@ class UnitTransform(Transform):
 
 
 class LogZTransform(ZTransform):
-    """
-    Handle negative values
+    """ Logtransform then takes z-score.
+    
     """
 
     def __init__(self, x):
-
+        """ Create a LogZTransform for x.
+        """
         log_x = np.log(x)
         super().__init__(log_x)
 
     def transform(self, x):
+        """ Apply transform to x.
+        """
         log_x = np.log(x)
         return super().transform(log_x)
 
     def untransform(self, z=None):
+        """ Apply reverse tranformation to x.
+        """
         log_x = super().untransform(z)
         return np.exp(log_x)
 
 
 class Dmatrix(Transform):
+    """
+    """
     def __init__(self, knots, degree, form):
         self.form = f"{form}(stage, knots=knots, degree={degree}, include_intercept=True) - 1"
         self.knots = knots
