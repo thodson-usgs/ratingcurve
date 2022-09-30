@@ -274,14 +274,12 @@ class SplineRatingModel(RatingModel):
     def table(self, trace, h=None):
         ''' TODO verify sigma computation
         '''
-        extend = 1.1
-        
         if h is None:
-            extend = 1.1
-            h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
-            #h_min = self.h_obs.min()
-            #h_max = self.h_obs.max()
-            #h = np.linspace(h_min, h_max, 100)
+            extend = 1
+            #h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
+            h_min = self.h_obs.min()
+            h_max = self.h_obs.max()
+            h = np.linspace(h_min, h_max, 100)
             
         w = trace.posterior['w'].values.squeeze()
         chain = trace.posterior['chain'].shape[0]

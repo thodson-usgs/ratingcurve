@@ -5,8 +5,15 @@ import aesara.tensor as at
 
 
 def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None):
+    """
+    Plots sline power law rating model
+    
+    Returns
+    -------
+    figure, axes
+    """
     if ax is None:
-        fig, axes = plt.subplots(1, figsize=(5, 5))
+        fig, ax = plt.subplots(1, figsize=(5, 5))
 
     q_obs = model.q_obs
     h_obs = model.h_obs
@@ -17,63 +24,55 @@ def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None)
         q_sigma = None
 
 
-    _plot_gagings(h_obs, q_obs, q_sigma, ax=axes)
+    _plot_gagings(h_obs, q_obs, q_sigma, ax=ax)
 
     rating_table = model.table(trace)
-    _plot_rating(rating_table, ax=axes)
-    #_plot_spline_rating(trace=trace,
-    #                    model=model,
-    #                    h_min=h_obs.min(),
-    #                    h_max=h_obs.max(),
-    #                    ax=axes
-    #                   )
+    _plot_rating(rating_table, ax=ax)
 
-    axes.set_ylabel('Stage')
-    axes.set_xlabel('Discharge')
+    ax.set_ylabel('Stage')
+    ax.set_xlabel('Discharge')
 
 
 def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None):
     """
     Plots segmented power law rating model
+    
+    Parameters
     ----------
     model : pymc model object
     trace : trace returned by model
     h_obs :
     q_obs :
     colors : list with 2 colornames
+    
     Returns
     -------
     figure, axes
     """
     if ax is None:
-        fig, axes = plt.subplots(1, figsize=(5,5))
+        fig, ax = plt.subplots(1, figsize=(5,5))
 
-    q_obs = model.q_obs#.flatten()
-    h_obs = model.h_obs#.flatten()
+    q_obs = model.q_obs
+    h_obs = model.h_obs
+    
     if model.q_sigma is not None:
         q_sigma = model.q_sigma#.flatten()
     else:
         q_sigma = None
 
-    # q_obs = model.q_transform.transform(q_obs)
 
     _plot_transitions(trace.posterior['hs'],
-                      0, q_obs.max(), ax=axes)
+                      0, q_obs.max(), ax=ax)
 
-    _plot_gagings(h_obs, q_obs, q_sigma, ax=axes)
+    _plot_gagings(h_obs, q_obs, q_sigma, ax=ax)
     
     rating_table = model.table(trace)
-    _plot_rating(rating_table, ax=axes)
-    #_plot_powerlaw_rating(trace,
-    #                      h_min=h_obs.min(),
-    #                      h_max=h_obs.max(),
-    #                      transform=model.q_transform,
-    #                      ax=axes)
+    _plot_rating(rating_table, ax=ax)
 
     # label
-    axes.set_ylabel('Stage')
-    axes.set_xlabel('Discharge')
-
+    ax.set_ylabel('Stage')
+    ax.set_xlabel('Discharge')
+    
 
 def _plot_transitions(hs, q_min, q_max, ax=None):
     alpha = 0.05
