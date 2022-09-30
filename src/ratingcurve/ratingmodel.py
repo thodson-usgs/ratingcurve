@@ -1,12 +1,12 @@
 import pymc as pm
 from pymc import Model
 
-from pandas import DataFrame
+from pandas import DataFrame, Series
 
 import numpy as np
 import math
 import aesara.tensor as at
-from patsy import dmatrix
+from patsy import dmatrix, build_design_matrices
 
 from .transforms import LogZTransform
 from .plotting import plot_power_law_rating, plot_spline_rating
@@ -36,12 +36,16 @@ class RatingModel(Model):
 
 
 class Dmatrix():
-    def __init__(self, knots, degree, form):
-        self.form = f"{form}(stage, knots=knots, degree={degree}, include_intercept=True) - 1"
-        self.knots = knots
+    def __init__(self, stage, df, form='cr'):
+        temp = dmatrix(f"{form}(stage, df={df}) - 1", {"stage":stage})
+        self.design_info = temp.design_info
+        #self.knots = knots
 
     def transform(self, stage):
-        return dmatrix(self.form, {"stage": stage, "knots": self.knots[1:-1]})
+        return np.asarray(build_design_matrices([self.design_info], {"stage":stage})).squeeze()
+            
+        #return dmatrix(self.form)
+        #return dmatrix(self.form, {"stage": stage, "knots": self.knots[1:-1]})
 
 
 def compute_knots(minimum, maximum, n):
@@ -229,7 +233,7 @@ class SplineRatingModel(RatingModel):
     ''' Natural spline rating model
     '''
 
-    def __init__(self, q, h, knots, q_sigma=None, mean=0, sd=1, name='', model=None):
+    def __init__(self, q, h, q_sigma=None, mean=0, sd=1, df=5, name='', model=None):
         ''' Create a natural spline rating model
         
         Parameters
@@ -254,13 +258,11 @@ class SplineRatingModel(RatingModel):
         else:
             self.q_sigma = np.log(1 + q_sigma/q)
 
-        self.knots = knots
-        self._d_matrix = Dmatrix(knots, 3, 'bs')
-        self.d_transform = self._d_matrix.transform #XXX rename?
+        self._dmatrix = Dmatrix(self.h_obs, df, 'cr')
+        self.d_transform = self._dmatrix.transform
 
         self.B = self.d_transform(h)
         B = pm.MutableData("B", self.B)
-        knot_dims = np.arange(self.B.shape[1])
 
         COORDS = {"obs" : np.arange(len(self.y)), "splines": np.arange(self.B.shape[1])}
         self.add_coords(COORDS)
@@ -275,26 +277,23 @@ class SplineRatingModel(RatingModel):
         ''' TODO verify sigma computation
         '''
         if h is None:
-            extend = 1
-            #h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
+            extend = 1.1
             h_min = self.h_obs.min()
             h_max = self.h_obs.max()
-            h = np.linspace(h_min, h_max, 100)
+            h = Series( np.linspace(h_min, h_max * extend, 100) )
             
         w = trace.posterior['w'].values.squeeze()
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
-    
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
         q = self.q_transform.untransform(q_z)
         sigma = q_z.std(axis=1)
         
-        
-        self._table = DataFrame({'discharge':q.mean(axis=1).flatten(),
+        self._table = DataFrame({'discharge': Series(q.mean(axis=1)),
                                  'stage' : h,
                                  #'sigma2' :np.exp(sigma * 1.96).flatten()})
-                                 'sigma' :np.exp(sigma).flatten()})
+                                 'sigma' : Series( np.exp(sigma))})
         
         self._table = self._table.round({'discharge':2, 'stage':2, 'sigma':4})
         return self._table
