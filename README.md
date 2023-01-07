@@ -1,5 +1,5 @@
 # ratingcurve
-*A python library for fitting stage-discharge rating curves.*
+*A Python library for fitting stage-discharge rating curves.*
 
 [![DOI](https://zenodo.org/badge/484096335.svg)](https://zenodo.org/badge/latestdoi/484096335)
 
