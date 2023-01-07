@@ -1,3 +1,40 @@
 [build-system]
-requires = ["setuptools>=42"]
+requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "ratingcurve"
+description = "A python library for fitting stage-discharge rating curves."
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["USGS", "streamflow", "rating curve"]
+license = {file = "LICENSE.md"}
+maintainers = [
+  {name = "Timothy Hodson", email = "thodson@usgs.gov"},
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+
+dependencies = [
+    "pymc",
+    "patsy",
+    "intake",
+    "typing"
+]
+
+dynamic = ["version"]
+
+[tool.setuptools]
+packages = ["ratingcurve"]
+
+[project.optional-dependencies]
+test = [
+  "pytest > 5.0.0",
+  "pytest-cov[all]"
+]
+
+
+[project.urls]
+homepage = "https://github.com/thodson-usgs/ratingcurve"
+repository = "https://github.com/thodson-usgs/ratingcurve.git"
