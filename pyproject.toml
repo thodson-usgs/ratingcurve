@@ -2,7 +2,6 @@
 requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
-
 [project]
 name = "ratingcurve"
 description = "A python library for fitting stage-discharge rating curves."
@@ -25,6 +24,13 @@ dependencies = [
 ]
 
 dynamic = ["version"]
+
+[options]
+package_dir=
+    =src
+
+[options.packages.find]
+where=src
 
 [tool.setuptools]
 packages = ["ratingcurve"]
