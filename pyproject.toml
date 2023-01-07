@@ -2,6 +2,7 @@
 requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
+
 [project]
 name = "ratingcurve"
 description = "A python library for fitting stage-discharge rating curves."
@@ -34,7 +35,8 @@ test = [
   "pytest-cov[all]"
 ]
 
-
 [project.urls]
 homepage = "https://github.com/thodson-usgs/ratingcurve"
 repository = "https://github.com/thodson-usgs/ratingcurve.git"
+
+[tool.setuptools_scm]
