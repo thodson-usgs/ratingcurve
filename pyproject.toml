@@ -25,13 +25,6 @@ dependencies = [
 
 dynamic = ["version"]
 
-[options]
-package_dir=
-    =src
-
-[options.packages.find]
-where=src
-
 [tool.setuptools]
 packages = ["ratingcurve"]
 
