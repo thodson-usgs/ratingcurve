@@ -1,3 +1,5 @@
+"""Plotting functions
+"""
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
@@ -7,7 +9,7 @@ import aesara.tensor as at
 def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None):
     """
     Plots sline power law rating model
-    
+
     Returns
     -------
     figure, axes
@@ -17,7 +19,7 @@ def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None)
 
     q_obs = model.q_obs
     h_obs = model.h_obs
-    
+
     if model.q_sigma is not None:
         q_sigma = model.q_sigma
     else:
@@ -36,7 +38,7 @@ def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None)
 def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None):
     """
     Plots segmented power law rating model
-    
+
     Parameters
     ----------
     model : pymc model object
@@ -44,7 +46,7 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
     h_obs :
     q_obs :
     colors : list with 2 colornames
-    
+
     Returns
     -------
     figure, axes
@@ -54,7 +56,7 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
 
     q_obs = model.q_obs
     h_obs = model.h_obs
-    
+
     if model.q_sigma is not None:
         q_sigma = model.q_sigma#.flatten()
     else:
@@ -65,14 +67,14 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
                       0, q_obs.max(), ax=ax)
 
     _plot_gagings(h_obs, q_obs, q_sigma, ax=ax)
-    
+
     rating_table = model.table(trace)
     _plot_rating(rating_table, ax=ax)
 
     # label
     ax.set_ylabel('Stage')
     ax.set_xlabel('Discharge')
-    
+
 
 def _plot_transitions(hs, q_min, q_max, ax=None):
     alpha = 0.05

@@ -1,10 +1,9 @@
-import pymc as pm
-from pymc import Model
-
+import math
+import numpy as np
 from pandas import DataFrame, Series
 
-import numpy as np
-import math
+import pymc as pm
+from pymc import Model
 import aesara.tensor as at
 from patsy import dmatrix, build_design_matrices
 
@@ -23,12 +22,15 @@ class RatingModel(Model):
     def __init__(self, name='', model=None):
         super().__init__(name, model)
 
+
     def setup(self, likelihood, prior):
         pass
+
 
     def fit(self, method="advi", n=150_000):
         mean_field = pm.fit(method=method, n=n, model=self.model)
         return mean_field
+
 
     def sample(self, n_samples, n_tune):
         with model:
@@ -43,9 +45,6 @@ class Dmatrix():
 
     def transform(self, stage):
         return np.asarray(build_design_matrices([self.design_info], {"stage":stage})).squeeze()
-            
-        #return dmatrix(self.form)
-        #return dmatrix(self.form, {"stage": stage, "knots": self.knots[1:-1]})
 
 
 def compute_knots(minimum, maximum, n):
@@ -66,7 +65,7 @@ class SegmentedRatingModel(RatingModel):
                  name='',
                  model=None):
         ''' Create a multi-segement rating model
-        
+
         Parameters
         ----------
         q, h: array_like
@@ -125,6 +124,7 @@ class SegmentedRatingModel(RatingModel):
 
         self.compile_model()
 
+
     def plot(self, trace, ax=None):
         plot_power_law_rating(self, trace, ax=ax)
 
@@ -145,6 +145,7 @@ class SegmentedRatingModel(RatingModel):
             hs = pm.Deterministic('hs', at.sort(hs_))
 
         return hs
+
 
     def set_uniform_prior(self):
         '''
@@ -180,7 +181,8 @@ class SegmentedRatingModel(RatingModel):
 
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
-            
+
+
     def table(self, trace, h=None):
         ''' TODO verify sigma computation
         '''
@@ -195,38 +197,36 @@ class SegmentedRatingModel(RatingModel):
         #with rating:
         #    rating.set_data('h', h)
         #    out = pm.sample_posterior_predictive(trace)
-        
+
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
-    
+
         a = trace.posterior['a'].values.reshape(chain, draw, 1)
         w = trace.posterior['w'].values.reshape(chain, draw, -1, 1)
         hs = trace.posterior['hs'].values
-    
-    
+
+
         inf = np.ones((chain, draw, 1)) + np.inf
         clips = np.zeros((hs.shape[2], 1))
         clips[0] = -np.inf
         h_tile = np.tile(h, draw).reshape(chain, draw, 1, -1)
-    
+
         h0_offset = np.ones((hs.shape[2], 1))
         h0_offset[0] = 0
         h0 = hs - h0_offset
         # optimize with np.clip?
         b1 = np.where(h_tile<=hs, clips, np.log(h_tile-h0))
         q_z = a + (b1*w).sum(axis=2)
-        
+
         sigma = q_z.std(axis=1)
-    
         q = self.q_transform.untransform(q_z)
-        
+
         self._table = DataFrame({'discharge':q.mean(axis=1).flatten(),
                                  'stage' : h,
                                  'sigma' :np.exp(sigma).flatten()})
-        
+
         self._table = self._table.round({'discharge':2, 'stage':2, 'sigma':4})
         return self._table
-
 
 
 class SplineRatingModel(RatingModel):
@@ -251,7 +251,7 @@ class SplineRatingModel(RatingModel):
         self.h_obs = h
         self.q_transform = LogZTransform(self.q_obs)
         self.y = self.q_transform.transform(self.q_obs)
-       
+
         # transform observational uncertainty to log scale
         if q_sigma is None:
             self.q_sigma = 0
@@ -281,7 +281,7 @@ class SplineRatingModel(RatingModel):
             h_min = self.h_obs.min()
             h_max = self.h_obs.max()
             h = Series( np.linspace(h_min, h_max * extend, 100) )
-            
+
         w = trace.posterior['w'].values.squeeze()
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
@@ -289,20 +289,20 @@ class SplineRatingModel(RatingModel):
         q_z = np.dot(B, w.T)
         q = self.q_transform.untransform(q_z)
         sigma = q_z.std(axis=1)
-        
+
         self._table = DataFrame({'discharge': Series(q.mean(axis=1)),
                                  'stage' : h,
                                  #'sigma2' :np.exp(sigma * 1.96).flatten()})
                                  'sigma' : Series( np.exp(sigma))})
-        
+
         self._table = self._table.round({'discharge':2, 'stage':2, 'sigma':4})
         return self._table
-        
+
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)
 
-        
+
 def stage_range(h_min:float, h_max:float, decimals:int=2, step:float=0.01):
     """ Returns a range of stage values.
     """
@@ -310,8 +310,8 @@ def stage_range(h_min:float, h_max:float, decimals:int=2, step:float=0.01):
     stop = round_decimals(h_max, decimals, direction='up')
                 
     return np.arange(start, stop, step)
-       
-    
+
+
 def round_decimals(number:float, decimals:int=2, direction:str=None):
     """
     Returns a value rounded a specific number of decimal places.
@@ -324,7 +324,7 @@ def round_decimals(number:float, decimals:int=2, direction:str=None):
         return math.ceil(number)
 
     factor = 10 ** decimals
-    
+
     if direction is None:
         f = round
     elif direction == 'up':
@@ -332,3 +332,4 @@ def round_decimals(number:float, decimals:int=2, direction:str=None):
     elif direction == 'down':
         f = math.floor
     return f(number * factor) / factor
+
