@@ -38,12 +38,12 @@ class RatingModel(Model):
 
 class Dmatrix():
     def __init__(self, stage, df, form='cr'):
-        temp = dmatrix(f"{form}(stage, df={df}) - 1", {"stage":stage})
+        temp = dmatrix(f"{form}(stage, df={df}) - 1", {"stage": stage})
         self.design_info = temp.design_info
-        #self.knots = knots
+        # self.knots = knots
 
     def transform(self, stage):
-        return np.asarray(build_design_matrices([self.design_info], {"stage":stage})).squeeze()
+        return np.asarray(build_design_matrices([self.design_info], {"stage": stage})).squeeze()
 
 
 def compute_knots(minimum, maximum, n):
@@ -59,7 +59,7 @@ class SegmentedRatingModel(RatingModel):
                  q,
                  h,
                  segments,
-                 prior={'distribution':'uniform'},
+                 prior={'distribution': 'uniform'},
                  q_sigma=None,
                  name='',
                  model=None):
@@ -96,7 +96,7 @@ class SegmentedRatingModel(RatingModel):
         self._inf = [np.inf]
 
         # clipping boundary
-        clips = np.zeros((self.segments,1))
+        clips = np.zeros((self.segments, 1))
         clips[0] = -np.inf
         self._clips = at.constant(clips)
 
@@ -107,18 +107,18 @@ class SegmentedRatingModel(RatingModel):
         self.COORDS = {"obs" : np.arange(len(self.y)), "splines":np.arange(segments)}
 
         # compute initval
-        self._hs_lower_bounds = np.zeros((self.segments,1)) + self.h_obs.min()
+        self._hs_lower_bounds = np.zeros((self.segments, 1)) + self.h_obs.min()
         self._hs_lower_bounds[0] = 0
 
-        self._hs_upper_bounds = np.zeros((self.segments,1)) + self.h_obs.max()
-        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 #XXX If possible, don't hard code
+        self._hs_upper_bounds = np.zeros((self.segments, 1)) + self.h_obs.max()
+        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6  # XXX If possible, don't hard code
 
         # set random init on unit interval then scale based on bounds
-        self._init_hs = np.random.rand(self.segments,1) \
-                         * (self._hs_upper_bounds - self._hs_lower_bounds) \
-                         + self._hs_lower_bounds
+        self._init_hs = np.random.rand(self.segments, 1) \
+                        * (self._hs_upper_bounds - self._hs_lower_bounds) \
+                        + self._hs_lower_bounds
 
-        self._init_hs = np.sort(self._init_hs) # not necessary?
+        self._init_hs = np.sort(self._init_hs)  # not necessary?
 
         self.compile_model()
 
@@ -135,7 +135,7 @@ class SegmentedRatingModel(RatingModel):
                                  sigma = self.prior['sigma'],
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
-                                 shape=(self.segments,1),
+                                 shape=(self.segments, 1),
                                  initval=self._init_hs) # define a function to compute
 
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -150,7 +150,7 @@ class SegmentedRatingModel(RatingModel):
             hs_ = pm.Uniform('hs_',
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
-                                 shape=(self.segments,1),
+                                 shape=(self.segments, 1),
                                  initval=self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
@@ -171,7 +171,7 @@ class SegmentedRatingModel(RatingModel):
 
             h0 = hs - self._h0_offsets
             b = pm.Deterministic('b',
-                                  at.switch( at.le(h, hs), self._clips , at.log(h-h0)) )
+                                  at.switch(at.le(h, hs), self._clips, at.log(h-h0)))
 
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
@@ -197,7 +197,6 @@ class SegmentedRatingModel(RatingModel):
         a = trace.posterior['a'].values.reshape(chain, draw, 1)
         w = trace.posterior['w'].values.reshape(chain, draw, -1, 1)
         hs = trace.posterior['hs'].values
-
 
         inf = np.ones((chain, draw, 1)) + np.inf
         clips = np.zeros((hs.shape[2], 1))
@@ -257,7 +256,7 @@ class SplineRatingModel(RatingModel):
         self.B = self.d_transform(h)
         B = pm.MutableData("B", self.B)
 
-        COORDS = {"obs" : np.arange(len(self.y)), "splines": np.arange(self.B.shape[1])}
+        COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(self.B.shape[1])}
         self.add_coords(COORDS)
 
         w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
@@ -272,7 +271,7 @@ class SplineRatingModel(RatingModel):
             extend = 1.1
             h_min = self.h_obs.min()
             h_max = self.h_obs.max()
-            h = Series( np.linspace(h_min, h_max * extend, 100) )
+            h = Series(np.linspace(h_min, h_max * extend, 100))
 
         w = trace.posterior['w'].values.squeeze()
         chain = trace.posterior['chain'].shape[0]
@@ -283,19 +282,19 @@ class SplineRatingModel(RatingModel):
         sigma = q_z.std(axis=1)
 
         self._table = DataFrame({'discharge': Series(q.mean(axis=1)),
-                                 'stage' : h,
-                                 #'sigma2' :np.exp(sigma * 1.96).flatten()})
-                                 'sigma' : Series( np.exp(sigma))})
+                                 'stage': h,
+                                 #'sigma2': np.exp(sigma * 1.96).flatten()})
+                                 'sigma': Series(np.exp(sigma))})
 
-        self._table = self._table.round({'discharge':2, 'stage':2, 'sigma':4})
+        self._table = self._table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
         return self._table
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)
 
 
-def stage_range(h_min:float, h_max:float, decimals:int=2, step:float=0.01):
-    """ Returns a range of stage values.
+def stage_range(h_min: float, h_max: float, decimals: int=2, step:float=0.01):
+    """Returns a range of stage values.
     """
     start = round_decimals(h_min, decimals, direction='down')
     stop = round_decimals(h_max, decimals, direction='up')
@@ -303,7 +302,7 @@ def stage_range(h_min:float, h_max:float, decimals:int=2, step:float=0.01):
     return np.arange(start, stop, step)
 
 
-def round_decimals(number:float, decimals:int=2, direction:str=None):
+def round_decimals(number: float, decimals: int=2, direction: str=None):
     """
     Returns a value rounded a specific number of decimal places.
     """
