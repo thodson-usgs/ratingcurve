@@ -25,12 +25,10 @@ class ZTransform(Transform):
         self._mean = np.nanmean(x, axis=0)
         self._std = np.nanstd(x, axis=0)
 
-
     def transform(self, x):
         """Transform to z score (standardize x)
         """
         return (x - self._mean)/self._std
-
 
     def untransform(self, x):
         """Transform from z score back to original units.
@@ -46,12 +44,10 @@ class UnitTransform(Transform):
         """
         self._max = np.nanmax(x, axis=0)
 
-
     def transform(self, x):
         """Transform to unit interval
         """
         return x/self._max
-
 
     def untransform(self, x):
         """Transform from unit interval back to original units.
@@ -69,7 +65,6 @@ class LogZTransform(ZTransform):
         log_x = np.log(x)
         super().__init__(log_x)
 
-
     def transform(self, x):
         """Transform to log z-score
 
@@ -77,7 +72,6 @@ class LogZTransform(ZTransform):
         """
         log_x = np.log(x)
         return super().transform(log_x)
-
 
     def untransform(self, z=None):
         """Reverse log z-score transformation.
