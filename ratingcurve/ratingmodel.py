@@ -101,10 +101,10 @@ class SegmentedRatingModel(RatingModel):
         self._clips = at.constant(clips)
 
         # create h0 offsets
-        self._h0_offsets = np.ones((self.segments,1))
+        self._h0_offsets = np.ones((self.segments, 1))
         self._h0_offsets[0] = 0
 
-        self.COORDS = {"obs" : np.arange(len(self.y)), "splines":np.arange(segments)}
+        self.COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(segments)}
 
         # compute initval
         self._hs_lower_bounds = np.zeros((self.segments, 1)) + self.h_obs.min()
@@ -133,10 +133,10 @@ class SegmentedRatingModel(RatingModel):
             hs_ = pm.TruncatedNormal('hs_',
                                  mu = self.prior['mu'],
                                  sigma = self.prior['sigma'],
-                                 lower=self._hs_lower_bounds,
-                                 upper=self._hs_upper_bounds,
-                                 shape=(self.segments, 1),
-                                 initval=self._init_hs) # define a function to compute
+                                 lower = self._hs_lower_bounds,
+                                 upper = self._hs_upper_bounds,
+                                 shape = (self.segments, 1),
+                                 initval = self._init_hs) # define a function to compute
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
@@ -148,10 +148,10 @@ class SegmentedRatingModel(RatingModel):
         '''
         with Model(coords=self.COORDS) as model:
             hs_ = pm.Uniform('hs_',
-                                 lower=self._hs_lower_bounds,
-                                 upper=self._hs_upper_bounds,
-                                 shape=(self.segments, 1),
-                                 initval=self._init_hs)
+                                 lower = self._hs_lower_bounds,
+                                 upper = self._hs_upper_bounds,
+                                 shape = (self.segments, 1),
+                                 initval = self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
@@ -213,11 +213,11 @@ class SegmentedRatingModel(RatingModel):
         sigma = q_z.std(axis=1)
         q = self.q_transform.untransform(q_z)
 
-        self._table = DataFrame({'discharge':q.mean(axis=1).flatten(),
-                                 'stage' : h,
-                                 'sigma' :np.exp(sigma).flatten()})
+        self._table = DataFrame({'discharge': q.mean(axis=1).flatten(),
+                                 'stage': h,
+                                 'sigma': np.exp(sigma).flatten()})
 
-        self._table = self._table.round({'discharge':2, 'stage':2, 'sigma':4})
+        self._table = self._table.round({'discharge: 2, 'stage': 2, 'sigma': 4})
         return self._table
 
 
@@ -293,7 +293,7 @@ class SplineRatingModel(RatingModel):
         plot_spline_rating(self, trace, ax=ax)
 
 
-def stage_range(h_min: float, h_max: float, decimals: int=2, step:float=0.01):
+def stage_range(h_min: float, h_max: float, decimals: int = 2, step: float = 0.01):
     """Returns a range of stage values.
     """
     start = round_decimals(h_min, decimals, direction='down')
