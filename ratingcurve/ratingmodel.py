@@ -35,7 +35,7 @@ class RatingModel(Model):
 
 
     def sample(self, n_samples, n_tune):
-        with model:
+        with self.model:
             trace = pm.sample(50_000)
 
 
