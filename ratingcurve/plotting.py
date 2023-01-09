@@ -75,7 +75,7 @@ def _plot_transitions(hs, ax=None):
     hs_lower = hs.quantile(alpha/2, dim=['chain', 'draw']).data
     hs_upper = hs.quantile(1 - alpha/2, dim=['chain', 'draw']).data
 
-    [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)
+    [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)]
     [ax.axhline(u, color='grey', linestyle='dotted') for u in hs_u]
 
 
