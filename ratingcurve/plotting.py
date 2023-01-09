@@ -1,9 +1,7 @@
 """Plotting functions"""
 
 import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
-import aesara.tensor as at
 
 
 def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None):
@@ -63,8 +61,7 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
         q_sigma = None
 
 
-    _plot_transitions(trace.posterior['hs'],
-                      0, q_obs.max(), ax=ax)
+    _plot_transitions(trace.posterior['hs'], ax=ax)
 
     _plot_gagings(h_obs, q_obs, q_sigma, ax=ax)
 
@@ -76,7 +73,7 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
     ax.set_xlabel('Discharge')
 
 
-def _plot_transitions(hs, q_min, q_max, ax=None):
+def _plot_transitions(hs, ax=None):
     alpha = 0.05
     hs_u = hs.mean(dim=['chain', 'draw']).data
     hs_lower = hs.quantile(alpha/2, dim=['chain', 'draw']).data
