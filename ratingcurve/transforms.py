@@ -44,7 +44,6 @@ class UnitTransform(Transform):
 
 class LogZTransform(ZTransform):
     """ Logtransform then takes z-score.
-    
     """
 
     def __init__(self, x):
@@ -78,4 +77,3 @@ class Dmatrix(Transform):
 
     def transform(self, stage):
         return patsy.dmatrix(self.form, {"stage": stage, "knots": self.knots[1:-1]})
-

@@ -1,4 +1,6 @@
 pymc>=4.1.1
+pandas
+aesara
 patsy
 aiohttp
 intake

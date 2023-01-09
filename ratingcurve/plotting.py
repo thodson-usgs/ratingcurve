@@ -82,7 +82,7 @@ def _plot_transitions(hs, q_min, q_max, ax=None):
     hs_lower = hs.quantile(alpha/2, dim=['chain', 'draw']).data
     hs_upper = hs.quantile(1 - alpha/2, dim=['chain', 'draw']).data
 
-    [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)]
+    [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)
     [ax.axhline(u, color='grey', linestyle='dotted') for u in hs_u]
 
 
@@ -116,4 +116,3 @@ def _plot_rating(discharge_table, ax=None):
     q_u = q * (sigma)**1.96 # this should be  2 sigma
     q_l = q / (sigma)**1.96
     ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
-

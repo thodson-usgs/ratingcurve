@@ -80,7 +80,7 @@ class SegmentedRatingModel(RatingModel):
         super().__init__(name, model)
 
         self.segments = segments
-        self.prior = prior 
+        self.prior = prior
         # transform q
         self.q_obs = q
         self.q_transform = LogZTransform(self.q_obs)
@@ -113,7 +113,7 @@ class SegmentedRatingModel(RatingModel):
         self._hs_lower_bounds[0] = 0
 
         self._hs_upper_bounds = np.zeros((self.segments,1)) + self.h_obs.max()
-        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 #XXX HACK
+        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 #XXX If possible, don't hard code
 
         # set random init on unit interval then scale based on bounds
         self._init_hs = np.random.rand(self.segments,1) \
@@ -134,7 +134,7 @@ class SegmentedRatingModel(RatingModel):
         prior={type='normal', mu=[], sigma=[]}
         '''
         with Model(coords=self.COORDS) as model:
-            hs_ = pm.TruncatedNormal('hs_', 
+            hs_ = pm.TruncatedNormal('hs_',
                                  mu = self.prior['mu'],
                                  sigma = self.prior['sigma'],
                                  lower=self._hs_lower_bounds,
@@ -152,7 +152,7 @@ class SegmentedRatingModel(RatingModel):
         prior={distribution:'uniform'}
         '''
         with Model(coords=self.COORDS) as model:
-            hs_ = pm.Uniform('hs_', 
+            hs_ = pm.Uniform('hs_',
                                  lower=self._hs_lower_bounds,
                                  upper=self._hs_upper_bounds,
                                  shape=(self.segments,1),
@@ -166,7 +166,7 @@ class SegmentedRatingModel(RatingModel):
     def compile_model(self):
         with Model(coords=self.COORDS) as model:
             h = pm.MutableData("h", self.h_obs)
-            w = pm.Normal("w", mu=0, sigma=3, dims="splines")    
+            w = pm.Normal("w", mu=0, sigma=3, dims="splines")
             a = pm.Normal("a", mu=0, sigma=5)
 
             # set prior on break pionts
@@ -235,7 +235,7 @@ class SplineRatingModel(RatingModel):
 
     def __init__(self, q, h, q_sigma=None, mean=0, sd=1, df=5, name='', model=None):
         ''' Create a natural spline rating model
-        
+
         Parameters
         ----------
         q, h: array_like
@@ -308,7 +308,7 @@ def stage_range(h_min:float, h_max:float, decimals:int=2, step:float=0.01):
     """
     start = round_decimals(h_min, decimals, direction='down')
     stop = round_decimals(h_max, decimals, direction='up')
-                
+
     return np.arange(start, stop, step)
 
 
@@ -332,4 +332,3 @@ def round_decimals(number:float, decimals:int=2, direction:str=None):
     elif direction == 'down':
         f = math.floor
     return f(number * factor) / factor
-

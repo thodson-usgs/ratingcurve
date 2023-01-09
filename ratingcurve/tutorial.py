@@ -23,4 +23,3 @@ def open_dataset(name):
     cat = intake.open_catalog(CATALOG_URL)
     df = cat[name].read()
     return df
-
