@@ -24,15 +24,12 @@ class RatingModel(Model):
     def __init__(self, name='', model=None):
         super().__init__(name, model)
 
-
     def setup(self, likelihood, prior):
         pass
-
 
     def fit(self, method="advi", n=150_000):
         mean_field = pm.fit(method=method, n=n, model=self.model)
         return mean_field
-
 
     def sample(self, n_samples, n_tune):
         with self.model:
@@ -50,13 +47,13 @@ class Dmatrix():
 
 
 def compute_knots(minimum, maximum, n):
-    ''' Return list of knots
+    '''Return list of knots
     '''
     return np.linspace(minimum, maximum, n)
 
 
 class SegmentedRatingModel(RatingModel):
-    ''' Multi-segment rating model using Heaviside parameterization.
+    '''Multi-segment rating model using Heaviside parameterization.
     '''
     def __init__(self,
                  q,
@@ -94,7 +91,6 @@ class SegmentedRatingModel(RatingModel):
         else:
             self.q_sigma = np.log(1 + q_sigma/q)
 
-
         self.h_obs = h
 
         self._inf = [np.inf]
@@ -126,10 +122,8 @@ class SegmentedRatingModel(RatingModel):
 
         self.compile_model()
 
-
     def plot(self, trace, ax=None):
         plot_power_law_rating(self, trace, ax=ax)
-
 
     def set_normal_prior(self):
         '''
@@ -148,7 +142,6 @@ class SegmentedRatingModel(RatingModel):
 
         return hs
 
-
     def set_uniform_prior(self):
         '''
         prior={distribution:'uniform'}
@@ -163,7 +156,6 @@ class SegmentedRatingModel(RatingModel):
             hs = pm.Deterministic('hs', at.sort(hs_))
 
         return hs
-
 
     def compile_model(self):
         with Model(coords=self.COORDS) as model:
@@ -184,9 +176,8 @@ class SegmentedRatingModel(RatingModel):
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
-
     def table(self, trace, h=None):
-        ''' TODO verify sigma computation
+        '''TODO verify sigma computation
         '''
         if h is None:
             extend = 1.1
@@ -232,11 +223,11 @@ class SegmentedRatingModel(RatingModel):
 
 
 class SplineRatingModel(RatingModel):
-    ''' Natural spline rating model
+    '''Natural spline rating model
     '''
 
     def __init__(self, q, h, q_sigma=None, mean=0, sd=1, df=5, name='', model=None):
-        ''' Create a natural spline rating model
+        '''Create a natural spline rating model
 
         Parameters
         ----------
@@ -274,7 +265,6 @@ class SplineRatingModel(RatingModel):
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
-
     def table(self, trace, h=None):
         ''' TODO verify sigma computation
         '''
@@ -299,7 +289,6 @@ class SplineRatingModel(RatingModel):
 
         self._table = self._table.round({'discharge':2, 'stage':2, 'sigma':4})
         return self._table
-
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)
