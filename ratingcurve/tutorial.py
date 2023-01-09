@@ -1,3 +1,5 @@
+"""Tutorial datasets"""
+
 import intake
 
 

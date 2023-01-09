@@ -1,3 +1,5 @@
+"""Data transformations to improve optimization"""
+
 import numpy as np
 import patsy
 

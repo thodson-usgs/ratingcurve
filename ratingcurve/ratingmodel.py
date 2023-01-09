@@ -1,3 +1,5 @@
+"""Streamflow rating models"""
+
 import math
 import numpy as np
 from pandas import DataFrame, Series
