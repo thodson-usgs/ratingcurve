@@ -217,7 +217,7 @@ class SegmentedRatingModel(RatingModel):
                                  'stage': h,
                                  'sigma': np.exp(sigma).flatten()})
 
-        self._table = self._table.round({'discharge: 2, 'stage': 2, 'sigma': 4})
+        self._table = self._table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
         return self._table
 
 

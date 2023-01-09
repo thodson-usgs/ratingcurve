@@ -89,7 +89,6 @@ class Dmatrix(Transform):
         self.form = f"{form}(stage, knots=knots, degree={degree}, include_intercept=True) - 1"
         self.knots = knots
 
-
     def transform(self, stage):
         """Transform (Unused)
         """
