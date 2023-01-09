@@ -1,8 +1,6 @@
 # ratingcurve
 *A Python library for fitting stage-discharge rating curves.*
 
-[![DOI](https://zenodo.org/badge/484096335.svg)](https://zenodo.org/badge/latestdoi/484096335)
-
 Use `ratingcurve` to fit streamflow ratings with a segmented power law,
 which is the the most common type rating model used by USGS.
 
