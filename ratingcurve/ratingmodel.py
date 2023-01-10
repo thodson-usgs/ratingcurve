@@ -130,14 +130,13 @@ class SegmentedRatingModel(RatingModel):
         prior={type='normal', mu=[], sigma=[]}
         '''
         with Model(coords=self.COORDS) as model:
-            hs_ = pm.TruncatedNormal(
-                'hs_',
-                 mu=self.prior['mu'],
-                 sigma=self.prior['sigma'],
-                 lower=self._hs_lower_bounds,
-                 upper=self._hs_upper_bounds,
-                 shape=(self.segments, 1),
-                 initval=self._init_hs)
+            hs_ = pm.TruncatedNormal('hs_',
+                                     mu=self.prior['mu'],
+                                     sigma=self.prior['sigma'],
+                                     lower=self._hs_lower_bounds,
+                                     upper=self._hs_upper_bounds,
+                                     shape=(self.segments, 1),
+                                     initval=self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
@@ -148,12 +147,11 @@ class SegmentedRatingModel(RatingModel):
         prior={distribution:'uniform'}
         '''
         with Model(coords=self.COORDS) as model:
-            hs_ = pm.Uniform(
-                'hs_',
-                 lower=self._hs_lower_bounds,
-                 upper=self._hs_upper_bounds,
-                 shape=(self.segments, 1),
-                 initval=self._init_hs)
+            hs_ = pm.Uniform('hs_',
+                             lower=self._hs_lower_bounds,
+                             upper=self._hs_upper_bounds,
+                             shape=(self.segments, 1),
+                             initval=self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
@@ -191,7 +189,6 @@ class SegmentedRatingModel(RatingModel):
         w = trace.posterior['w'].values.reshape(chain, draw, -1, 1)
         hs = trace.posterior['hs'].values
 
-        inf = np.ones((chain, draw, 1)) + np.inf
         clips = np.zeros((hs.shape[2], 1))
         clips[0] = -np.inf
         h_tile = np.tile(h, draw).reshape(chain, draw, 1, -1)
@@ -265,8 +262,6 @@ class SplineRatingModel(RatingModel):
             h = Series(np.linspace(h_min, h_max * extend, 100))
 
         w = trace.posterior['w'].values.squeeze()
-        chain = trace.posterior['chain'].shape[0]
-        draw = trace.posterior['draw'].shape[0]
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
         q = self.q_transform.untransform(q_z)
@@ -293,7 +288,7 @@ def stage_range(h_min: float, h_max: float, decimals: int = 2, step: float = 0.0
     return np.arange(start, stop, step)
 
 
-def round_decimals(number: float, decimals: int=2, direction: str=None):
+def round_decimals(number: float, decimals: int = 2, direction: str = None):
     """
     Returns a value rounded a specific number of decimal places.
     """
