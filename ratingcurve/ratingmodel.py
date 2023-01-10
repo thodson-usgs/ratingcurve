@@ -80,7 +80,6 @@ class SegmentedRatingModel(RatingModel):
 
         self.segments = segments
         self.prior = prior
-        # transform q
         self.q_obs = q
         self.q_transform = LogZTransform(self.q_obs)
         self.y = self.q_transform.transform(self.q_obs)
@@ -130,13 +129,14 @@ class SegmentedRatingModel(RatingModel):
         prior={type='normal', mu=[], sigma=[]}
         '''
         with Model(coords=self.COORDS) as model:
-            hs_ = pm.TruncatedNormal('hs_',
-                                 mu = self.prior['mu'],
-                                 sigma = self.prior['sigma'],
-                                 lower = self._hs_lower_bounds,
-                                 upper = self._hs_upper_bounds,
-                                 shape = (self.segments, 1),
-                                 initval = self._init_hs) # define a function to compute
+            hs_ = pm.TruncatedNormal(
+                      'hs_',
+                      mu = self.prior['mu'],
+                      sigma = self.prior['sigma'],
+                      lower = self._hs_lower_bounds,
+                      upper = self._hs_upper_bounds,
+                      shape = (self.segments, 1),
+                      initval = self._init_hs) # define a function to compute
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
@@ -148,10 +148,10 @@ class SegmentedRatingModel(RatingModel):
         '''
         with Model(coords=self.COORDS) as model:
             hs_ = pm.Uniform('hs_',
-                                 lower = self._hs_lower_bounds,
-                                 upper = self._hs_upper_bounds,
-                                 shape = (self.segments, 1),
-                                 initval = self._init_hs)
+                             lower = self._hs_lower_bounds,
+                             upper = self._hs_upper_bounds,
+                             shape = (self.segments, 1),
+                             initval = self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
