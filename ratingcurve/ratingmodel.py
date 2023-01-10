@@ -55,14 +55,15 @@ def compute_knots(minimum, maximum, n):
 class SegmentedRatingModel(RatingModel):
     '''Multi-segment rating model using Heaviside parameterization.
     '''
-    def __init__(self,
-                 q,
-                 h,
-                 segments,
-                 prior={'distribution': 'uniform'},
-                 q_sigma=None,
-                 name='',
-                 model=None):
+    def __init__(
+        self,
+        q,
+        h,
+        segments,
+        prior={'distribution': 'uniform'},
+        q_sigma=None,
+        name='',
+        model=None):
         ''' Create a multi-segement rating model
 
         Parameters
@@ -80,7 +81,6 @@ class SegmentedRatingModel(RatingModel):
 
         self.segments = segments
         self.prior = prior
-        # transform q
         self.q_obs = q
         self.q_transform = LogZTransform(self.q_obs)
         self.y = self.q_transform.transform(self.q_obs)
@@ -115,8 +115,8 @@ class SegmentedRatingModel(RatingModel):
 
         # set random init on unit interval then scale based on bounds
         self._init_hs = np.random.rand(self.segments, 1) \
-                        * (self._hs_upper_bounds - self._hs_lower_bounds) \
-                        + self._hs_lower_bounds
+            * (self._hs_upper_bounds - self._hs_lower_bounds) \
+            + self._hs_lower_bounds
 
         self._init_hs = np.sort(self._init_hs)  # not necessary?
 
@@ -131,12 +131,12 @@ class SegmentedRatingModel(RatingModel):
         '''
         with Model(coords=self.COORDS) as model:
             hs_ = pm.TruncatedNormal('hs_',
-                                 mu = self.prior['mu'],
-                                 sigma = self.prior['sigma'],
-                                 lower = self._hs_lower_bounds,
-                                 upper = self._hs_upper_bounds,
-                                 shape = (self.segments, 1),
-                                 initval = self._init_hs) # define a function to compute
+                                     mu=self.prior['mu'],
+                                     sigma=self.prior['sigma'],
+                                     lower=self._hs_lower_bounds,
+                                     upper=self._hs_upper_bounds,
+                                     shape=(self.segments, 1),
+                                     initval=self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
@@ -148,10 +148,10 @@ class SegmentedRatingModel(RatingModel):
         '''
         with Model(coords=self.COORDS) as model:
             hs_ = pm.Uniform('hs_',
-                                 lower = self._hs_lower_bounds,
-                                 upper = self._hs_upper_bounds,
-                                 shape = (self.segments, 1),
-                                 initval = self._init_hs)
+                             lower=self._hs_lower_bounds,
+                             upper=self._hs_upper_bounds,
+                             shape=(self.segments, 1),
+                             initval=self._init_hs)
 
             hs = pm.Deterministic('hs', at.sort(hs_))
 
@@ -164,14 +164,13 @@ class SegmentedRatingModel(RatingModel):
             a = pm.Normal("a", mu=0, sigma=5)
 
             # set prior on break pionts
-            if self.prior['distribution']=='normal':
+            if self.prior['distribution'] == 'normal':
                 hs = self.set_normal_prior()
             else:
                 hs = self.set_uniform_prior()
 
             h0 = hs - self._h0_offsets
-            b = pm.Deterministic('b',
-                                  at.switch(at.le(h, hs), self._clips, at.log(h-h0)))
+            b = pm.Deterministic('b', at.switch(at.le(h, hs), self._clips, at.log(h-h0)))
 
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
@@ -182,14 +181,6 @@ class SegmentedRatingModel(RatingModel):
         if h is None:
             extend = 1.1
             h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
-            #h_min = self.h_obs.min()
-            #h_max = self.h_obs.max()
-            #h = np.linspace(h_min, h_max, 100)
-        # alternatively approach
-        #h = np.linspace(hmin, hmax, 100)
-        #with rating:
-        #    rating.set_data('h', h)
-        #    out = pm.sample_posterior_predictive(trace)
 
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
@@ -198,7 +189,6 @@ class SegmentedRatingModel(RatingModel):
         w = trace.posterior['w'].values.reshape(chain, draw, -1, 1)
         hs = trace.posterior['hs'].values
 
-        inf = np.ones((chain, draw, 1)) + np.inf
         clips = np.zeros((hs.shape[2], 1))
         clips[0] = -np.inf
         h_tile = np.tile(h, draw).reshape(chain, draw, 1, -1)
@@ -206,8 +196,7 @@ class SegmentedRatingModel(RatingModel):
         h0_offset = np.ones((hs.shape[2], 1))
         h0_offset[0] = 0
         h0 = hs - h0_offset
-        # optimize with np.clip?
-        b1 = np.where(h_tile<=hs, clips, np.log(h_tile-h0))
+        b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
         q_z = a + (b1*w).sum(axis=2)
 
         sigma = q_z.std(axis=1)
@@ -238,7 +227,6 @@ class SplineRatingModel(RatingModel):
             Stage value locations of the spline knots.
         '''
         super().__init__(name, model)
-        # transform q
         self.q_obs = q
         self.h_obs = h
         self.q_transform = LogZTransform(self.q_obs)
@@ -274,8 +262,6 @@ class SplineRatingModel(RatingModel):
             h = Series(np.linspace(h_min, h_max * extend, 100))
 
         w = trace.posterior['w'].values.squeeze()
-        chain = trace.posterior['chain'].shape[0]
-        draw = trace.posterior['draw'].shape[0]
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
         q = self.q_transform.untransform(q_z)
@@ -302,7 +288,7 @@ def stage_range(h_min: float, h_max: float, decimals: int = 2, step: float = 0.0
     return np.arange(start, stop, step)
 
 
-def round_decimals(number: float, decimals: int=2, direction: str=None):
+def round_decimals(number: float, decimals: int = 2, direction: str = None):
     """
     Returns a value rounded a specific number of decimal places.
     """
