@@ -196,7 +196,7 @@ class SegmentedRatingModel(RatingModel):
         h0_offset = np.ones((hs.shape[2], 1))
         h0_offset[0] = 0
         h0 = hs - h0_offset
-        b1 = np.where(h_tile<=hs, clips, np.log(h_tile-h0))
+        b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
         q_z = a + (b1*w).sum(axis=2)
 
         sigma = q_z.std(axis=1)
