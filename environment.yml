@@ -1,13 +1,9 @@
 name: ratingcurve
 channels:
   - conda-forge
-  - anaconda
 dependencies:
-  - ipykernel
-  - pymc>=4.1.1
+  - pymc>=5.5.0
+  - pytensor
   - patsy
   - aiohttp
   - intake
-  - pip:
-    - git+https://github.com/thodson-usgs/ratingcurve.git
-      #- -e git+https://github.com/thodson-usgs/ratingcurve.git
