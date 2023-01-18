@@ -6,7 +6,7 @@ from pandas import DataFrame, Series
 
 import pymc as pm
 from pymc import Model
-import aesara.tensor as at
+import pytensor.tensor as at
 from patsy import dmatrix, build_design_matrices
 
 from .transforms import LogZTransform
