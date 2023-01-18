@@ -1,10 +1,8 @@
 name: ratingcurve
 channels:
   - conda-forge
-  - anaconda
 dependencies:
-  - ipykernel
-  - pymc
+  - pymc>=5.5.0
   - pytensor
   - patsy
   - aiohttp
