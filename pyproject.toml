@@ -20,8 +20,7 @@ dependencies = [
     "pymc >= 5.0.0",
     "patsy",
     "aiohttp",
-    "intake",
-    "typing"
+    "intake"
 ]
 
 dynamic = ["version"]
