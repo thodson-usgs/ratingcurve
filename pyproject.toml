@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ratingcurve"
-description = "A python library for fitting stage-discharge rating curves."
+description = "A library for fitting multi-segment stage-discharge rating curves."
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 keywords = ["USGS", "streamflow", "rating curve"]
 license = {file = "LICENSE.md"}
 maintainers = [
@@ -17,8 +17,9 @@ classifiers = [
 ]
 
 dependencies = [
-    "pymc",
+    "pymc >= 5.0.0",
     "patsy",
+    "aiohttp",
     "intake",
     "typing"
 ]
