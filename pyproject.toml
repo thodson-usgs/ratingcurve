@@ -39,3 +39,4 @@ homepage = "https://github.com/thodson-usgs/ratingcurve"
 repository = "https://github.com/thodson-usgs/ratingcurve.git"
 
 [tool.setuptools_scm]
+write_to = "ratingcurve/_version.py"
