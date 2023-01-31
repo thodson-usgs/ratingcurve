@@ -8,6 +8,8 @@ import pymc as pm
 from pymc import Model
 import pytensor.tensor as at
 
+from arviz import InferenceData
+
 from .transform import LogZTransform, Dmatrix
 from .plot import plot_power_law_rating, plot_spline_rating
 
@@ -34,6 +36,15 @@ class Rating(Model):
         table = self.predict(trace, h)
 
         return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
+    
+    def rating_plot(self, trace: InferenceData, ax=None):
+        """TODO Decorator controlling style of rating plots
+        """
+        if ax is None:
+            fig, ax = plt.subplots(1, figsize=(5, 5))
+
+        ax.set_ylabel('Stage')
+        ax.set_xlabel('Discharge')
 
     def predict(self) -> DataFrame:
         raise NotImplementedError
@@ -60,7 +71,7 @@ class PowerLawRating(Rating):
         q_sigma=None,
         name='',
         model=None):
-        ''' Create a multi-segment power law rating model
+        """Create a multi-segment power law rating model
 
         Parameters
         ----------
@@ -72,7 +83,7 @@ class PowerLawRating(Rating):
             Number of segments in the rating.
         prior : dict
             Prior knowledge of breakpoint locations.
-        '''
+        """
 
         super().__init__(name, model)
 
@@ -123,9 +134,11 @@ class PowerLawRating(Rating):
         plot_power_law_rating(self, trace, ax=ax)
 
     def set_normal_prior(self):
-        '''
+        """Normal prior for breakpoints
+
+        Sets an expected value for each breakpoint (mu) with uncertainty (sigma).
         prior={type='normal', mu=[], sigma=[]}
-        '''
+        """
         with Model(coords=self.COORDS) as model:
             hs_ = pm.TruncatedNormal('hs_',
                                      mu=self.prior['mu'],
@@ -140,9 +153,12 @@ class PowerLawRating(Rating):
         return hs
 
     def set_uniform_prior(self):
-        '''
+        """Uniform prior for breakpoints
+
+        Make no prior assumption about the location of the breakpoints, only their number.
+
         prior={distribution:'uniform'}
-        '''
+        """
         with Model(coords=self.COORDS) as model:
             hs_ = pm.Uniform('hs_',
                              lower=self._hs_lower_bounds,
@@ -172,7 +188,7 @@ class PowerLawRating(Rating):
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
-    def predict(self, trace, h):
+    def predict(self, trace: InferenceData, h):
         """TODO verify sigma computation
         """
         chain = trace.posterior['chain'].shape[0]
@@ -242,8 +258,10 @@ class SplineRating(Rating):
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
-    def predict(self, trace, h):
-        """Predict discharge 
+    def predict(self, trace: InferenceData, h):
+        """Predict discharge given stage
+
+
         """
         w = trace.posterior['w'].values.squeeze()
         B = self.d_transform(h)
@@ -260,7 +278,7 @@ class SplineRating(Rating):
 
 
 def stage_range(h_min: float, h_max: float, step: float = 0.01):
-    """Returns a range of stage values.
+    """Returns a range of stage values
 
     Parameters
     ----------
@@ -273,7 +291,14 @@ def stage_range(h_min: float, h_max: float, step: float = 0.01):
     return np.arange(start, stop, step)
 
 
-def compute_knots(minimum, maximum, n):
+def compute_knots(minimum: float, maximum: float, n: int):
     """Return list of knots
+
+    Parameters
+    ----------
+    minimum, maximum : float
+
+    n : int
+        Number of knots
     """
     return np.linspace(minimum, maximum, n)
