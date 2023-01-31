@@ -24,10 +24,27 @@ class Rating(Model):
         with self.model:
             trace = pm.sample(50_000)
 
-    def table(self):
+    def table(self, trace, h=None, step=0.01) -> DataFrame:
+        """Return stage-discharge rating table
+        """
+        if h is None:
+            extend = 1.1
+            h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=step)
+
+        table = self.predict(trace, h)
+
+        return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
+
+    def predict(self) -> DataFrame:
         raise NotImplementedError
 
-    def predict(self):
+    def save(self, filename: str) -> None:
+        raise NotImplementedError
+
+    @staticmethod
+    def load(filename: str) -> Model:
+        """Load a saved model
+        """
         raise NotImplementedError
 
 
@@ -155,13 +172,9 @@ class PowerLawRating(Rating):
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
-    def table(self, trace, h=None):
+    def predict(self, trace, h):
         """TODO verify sigma computation
         """
-        if h is None:
-            extend = 1.1
-            h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
-
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
 
@@ -182,12 +195,9 @@ class PowerLawRating(Rating):
         sigma = q_z.std(axis=1)
         q = self.q_transform.untransform(q_z)
 
-        self._table = DataFrame({'discharge': q.mean(axis=1).flatten(),
-                                 'stage': h,
-                                 'sigma': np.exp(sigma).flatten()})
-
-        self._table = self._table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
-        return self._table
+        return DataFrame({'discharge': q.mean(axis=1).flatten(),
+                          'stage': h,
+                          'sigma': np.exp(sigma).flatten()})
 
 
 class SplineRating(Rating):
@@ -232,25 +242,18 @@ class SplineRating(Rating):
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
-    def table(self, trace, h=None, extend=1.1):
-        """TODO verify sigma computation
+    def predict(self, trace, h):
+        """Predict discharge 
         """
-        if h is None:
-            h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
-
         w = trace.posterior['w'].values.squeeze()
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
         q = self.q_transform.untransform(q_z)
         sigma = q_z.std(axis=1)
         
-        self._table = DataFrame({'discharge': Series(q.mean(axis=1)),
-                                 'stage': h,
-                                 #'sigma2': np.exp(sigma * 1.96).flatten()})
-                                 'sigma': Series(np.exp(sigma))})
-
-        self._table = self._table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
-        return self._table
+        return DataFrame({'discharge': Series(q.mean(axis=1)),
+                          'stage': h,
+                          'sigma': Series(np.exp(sigma))})
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)
