@@ -1,7 +1,7 @@
 """Data transformations to improve optimization"""
 
 import numpy as np
-import patsy
+from patsy import dmatrix, build_design_matrices
 
 
 class Transform:
@@ -80,16 +80,13 @@ class LogZTransform(ZTransform):
         return np.exp(log_x)
 
 
-class Dmatrix(Transform):
-    """Transform for spline design matrix (Unused)
+class Dmatrix():
+    """Transform for spline design matrix
     """
-    def __init__(self, knots, degree, form):
-        """Create a Dmatrix object (Unused)
-        """
-        self.form = f"{form}(stage, knots=knots, degree={degree}, include_intercept=True) - 1"
-        self.knots = knots
+    def __init__(self, stage, df, form='cr'):
+        temp = dmatrix(f"{form}(stage, df={df}) - 1", {"stage": stage})
+        self.design_info = temp.design_info
+        # self.knots = knots
 
     def transform(self, stage):
-        """Transform (Unused)
-        """
-        return patsy.dmatrix(self.form, {"stage": stage, "knots": self.knots[1:-1]})
+        return np.asarray(build_design_matrices([self.design_info], {"stage": stage})).squeeze()

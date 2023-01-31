@@ -7,25 +7,16 @@ from pandas import DataFrame, Series
 import pymc as pm
 from pymc import Model
 import pytensor.tensor as at
-from patsy import dmatrix, build_design_matrices
 
-from .transforms import LogZTransform
-from .plotting import plot_power_law_rating, plot_spline_rating
+from arviz import InferenceData
 
-
-class CustomModel(Model):
-    def __init__(self, mean=0, sd=1, name='', model=None):
-        super().__init__(name, model)
-        pm.Normal('v2', mu=mean, sigma=sd)
-        pm.Normal('v4', mu=mean, sigma=sd)
+from .transform import LogZTransform, Dmatrix
+from .plot import plot_power_law_rating, plot_spline_rating
 
 
-class RatingModel(Model):
+class Rating(Model):
     def __init__(self, name='', model=None):
         super().__init__(name, model)
-
-    def setup(self, likelihood, prior):
-        pass
 
     def fit(self, method="advi", n=150_000):
         mean_field = pm.fit(method=method, n=n, model=self.model)
@@ -35,26 +26,42 @@ class RatingModel(Model):
         with self.model:
             trace = pm.sample(50_000)
 
+    def table(self, trace, h=None, step=0.01) -> DataFrame:
+        """Return stage-discharge rating table
+        """
+        if h is None:
+            extend = 1.1
+            h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=step)
 
-class Dmatrix():
-    def __init__(self, stage, df, form='cr'):
-        temp = dmatrix(f"{form}(stage, df={df}) - 1", {"stage": stage})
-        self.design_info = temp.design_info
-        # self.knots = knots
+        table = self.predict(trace, h)
 
-    def transform(self, stage):
-        return np.asarray(build_design_matrices([self.design_info], {"stage": stage})).squeeze()
+        return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
+    
+    def rating_plot(self, trace: InferenceData, ax=None):
+        """TODO Decorator controlling style of rating plots
+        """
+        if ax is None:
+            fig, ax = plt.subplots(1, figsize=(5, 5))
+
+        ax.set_ylabel('Stage')
+        ax.set_xlabel('Discharge')
+
+    def predict(self) -> DataFrame:
+        raise NotImplementedError
+
+    def save(self, filename: str) -> None:
+        raise NotImplementedError
+
+    @staticmethod
+    def load(filename: str) -> Model:
+        """Load a saved model
+        """
+        raise NotImplementedError
 
 
-def compute_knots(minimum, maximum, n):
-    '''Return list of knots
-    '''
-    return np.linspace(minimum, maximum, n)
-
-
-class SegmentedRatingModel(RatingModel):
-    '''Multi-segment rating model using Heaviside parameterization.
-    '''
+class PowerLawRating(Rating):
+    """Multi-segment power law rating using Heaviside parameterization.
+    """
     def __init__(
         self,
         q,
@@ -64,7 +71,7 @@ class SegmentedRatingModel(RatingModel):
         q_sigma=None,
         name='',
         model=None):
-        ''' Create a multi-segement rating model
+        """Create a multi-segment power law rating model
 
         Parameters
         ----------
@@ -75,7 +82,8 @@ class SegmentedRatingModel(RatingModel):
         segments : int
             Number of segments in the rating.
         prior : dict
-        '''
+            Prior knowledge of breakpoint locations.
+        """
 
         super().__init__(name, model)
 
@@ -126,9 +134,13 @@ class SegmentedRatingModel(RatingModel):
         plot_power_law_rating(self, trace, ax=ax)
 
     def set_normal_prior(self):
-        '''
-        prior={type='normal', mu=[], sigma=[]}
-        '''
+        """Normal prior for breakpoints
+
+        Sets an expected value for each breakpoint (mu) with uncertainty (sigma).
+        This can be very helpful when convergence is poor.
+
+        prior={'distribution': 'normal', 'mu': [], 'sigma': []}
+        """
         with Model(coords=self.COORDS) as model:
             hs_ = pm.TruncatedNormal('hs_',
                                      mu=self.prior['mu'],
@@ -143,9 +155,12 @@ class SegmentedRatingModel(RatingModel):
         return hs
 
     def set_uniform_prior(self):
-        '''
+        """Uniform prior for breakpoints
+
+        Make no prior assumption about the location of the breakpoints, only their number.
+
         prior={distribution:'uniform'}
-        '''
+        """
         with Model(coords=self.COORDS) as model:
             hs_ = pm.Uniform('hs_',
                              lower=self._hs_lower_bounds,
@@ -163,7 +178,7 @@ class SegmentedRatingModel(RatingModel):
             w = pm.Normal("w", mu=0, sigma=3, dims="splines")
             a = pm.Normal("a", mu=0, sigma=5)
 
-            # set prior on break pionts
+            # set prior on break points
             if self.prior['distribution'] == 'normal':
                 hs = self.set_normal_prior()
             else:
@@ -175,13 +190,9 @@ class SegmentedRatingModel(RatingModel):
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
-    def table(self, trace, h=None):
-        '''TODO verify sigma computation
-        '''
-        if h is None:
-            extend = 1.1
-            h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=0.01)
-
+    def predict(self, trace: InferenceData, h):
+        """TODO verify sigma computation
+        """
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
 
@@ -202,20 +213,17 @@ class SegmentedRatingModel(RatingModel):
         sigma = q_z.std(axis=1)
         q = self.q_transform.untransform(q_z)
 
-        self._table = DataFrame({'discharge': q.mean(axis=1).flatten(),
-                                 'stage': h,
-                                 'sigma': np.exp(sigma).flatten()})
-
-        self._table = self._table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
-        return self._table
+        return DataFrame({'discharge': q.mean(axis=1).flatten(),
+                          'stage': h,
+                          'sigma': np.exp(sigma).flatten()})
 
 
-class SplineRatingModel(RatingModel):
-    '''Natural spline rating model
-    '''
+class SplineRating(Rating):
+    """Natural spline rating model
+    """
 
     def __init__(self, q, h, q_sigma=None, mean=0, sd=1, df=5, name='', model=None):
-        '''Create a natural spline rating model
+        """Create a natural spline rating model
 
         Parameters
         ----------
@@ -225,7 +233,7 @@ class SplineRatingModel(RatingModel):
             Input array of discharge uncertainty in units of discharge.
         knots : arrak_like
             Stage value locations of the spline knots.
-        '''
+        """
         super().__init__(name, model)
         self.q_obs = q
         self.h_obs = h
@@ -252,59 +260,50 @@ class SplineRatingModel(RatingModel):
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
-    def table(self, trace, h=None):
-        ''' TODO verify sigma computation
-        '''
-        if h is None:
-            extend = 1.1
-            h_min = self.h_obs.min()
-            h_max = self.h_obs.max()
-            h = Series(np.linspace(h_min, h_max * extend, 100))
+    def predict(self, trace: InferenceData, h):
+        """Predict discharge given stage
 
+
+        """
         w = trace.posterior['w'].values.squeeze()
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
         q = self.q_transform.untransform(q_z)
         sigma = q_z.std(axis=1)
-
-        self._table = DataFrame({'discharge': Series(q.mean(axis=1)),
-                                 'stage': h,
-                                 #'sigma2': np.exp(sigma * 1.96).flatten()})
-                                 'sigma': Series(np.exp(sigma))})
-
-        self._table = self._table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
-        return self._table
+        
+        return DataFrame({'discharge': Series(q.mean(axis=1)),
+                          'stage': h,
+                          'sigma': Series(np.exp(sigma))})
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)
 
 
-def stage_range(h_min: float, h_max: float, decimals: int = 2, step: float = 0.01):
-    """Returns a range of stage values.
+def stage_range(minimum: float, maximum: float, step: float = 0.01):
+    """Returns a range of stage values
+
+    To compute the range, round down (up) to the nearest step for 
+    the minumum (maximum). 
+
+    Parameters
+    ----------
+    h_min, h_max : float
+        Minimum and maximum stage (h) observations.
     """
-    start = round_decimals(h_min, decimals, direction='down')
-    stop = round_decimals(h_max, decimals, direction='up')
+    start = minimum - (minimum % step)
+    stop = maximum + (maximum % step)
 
     return np.arange(start, stop, step)
 
 
-def round_decimals(number: float, decimals: int = 2, direction: str = None):
-    """
-    Returns a value rounded a specific number of decimal places.
-    """
-    if not isinstance(decimals, int):
-        raise TypeError("decimal places must be an integer")
-    elif decimals < 0:
-        raise ValueError("decimal places has to be 0 or more")
-    elif decimals == 0:
-        return math.ceil(number)
+def compute_knots(minimum: float, maximum: float, n: int):
+    """Return list of spline knots
 
-    factor = 10 ** decimals
+    Parameters
+    ----------
+    minimum, maximum : float
 
-    if direction is None:
-        f = round
-    elif direction == 'up':
-        f = math.ceil
-    elif direction == 'down':
-        f = math.floor
-    return f(number * factor) / factor
+    n : int
+        Number of knots
+    """
+    return np.linspace(minimum, maximum, n)
