@@ -137,7 +137,9 @@ class PowerLawRating(Rating):
         """Normal prior for breakpoints
 
         Sets an expected value for each breakpoint (mu) with uncertainty (sigma).
-        prior={type='normal', mu=[], sigma=[]}
+        This can be very helpful when convergence is poor.
+
+        prior={'distribution': 'normal', 'mu': [], 'sigma': []}
         """
         with Model(coords=self.COORDS) as model:
             hs_ = pm.TruncatedNormal('hs_',
