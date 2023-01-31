@@ -277,22 +277,25 @@ class SplineRating(Rating):
         plot_spline_rating(self, trace, ax=ax)
 
 
-def stage_range(h_min: float, h_max: float, step: float = 0.01):
+def stage_range(minimum: float, maximum: float, step: float = 0.01):
     """Returns a range of stage values
+
+    To compute the range, round down (up) to the nearest step for 
+    the minumum (maximum). 
 
     Parameters
     ----------
     h_min, h_max : float
         Minimum and maximum stage (h) observations.
     """
-    start = h_min - (h_min % step)
-    stop = h_max + (h_max % step)
+    start = minimum - (minimum % step)
+    stop = maximum + (maximum % step)
 
     return np.arange(start, stop, step)
 
 
 def compute_knots(minimum: float, maximum: float, n: int):
-    """Return list of knots
+    """Return list of spline knots
 
     Parameters
     ----------

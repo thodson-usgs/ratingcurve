@@ -93,7 +93,7 @@ def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
     ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o")
 
 
-def _plot_rating(discharge_table, ax=None):
+def _plot_rating(rating_table, ax=None):
     '''TODO Revise
     This function is hack. Should be able to generate posterior predictions directly,
     but this version of pymc seems to have bug. Revisit.
@@ -102,9 +102,9 @@ def _plot_rating(discharge_table, ax=None):
     if ax is None:
         fig, ax = plt.subplots(1, figsize=(5, 5))
 
-    h = discharge_table['stage']
-    q = discharge_table['discharge']
-    sigma = discharge_table['sigma']
+    h = rating_table['stage']
+    q = rating_table['discharge']
+    sigma = rating_table['sigma']
     ax.plot(q, h, color='black')
     q_u = q * (sigma)**1.96  # this should be 2 sigma
     q_l = q / (sigma)**1.96
