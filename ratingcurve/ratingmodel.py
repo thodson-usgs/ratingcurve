@@ -1,14 +1,18 @@
 """Streamflow rating models"""
+from __future__ import annotations
 
 import math
 import numpy as np
+
 from pandas import DataFrame, Series
+from typing import TYPE_CHECKING
 
 import pymc as pm
 from pymc import Model
 import pytensor.tensor as at
 
-from arviz import InferenceData
+if TYPE_CHECKING:
+    from arviz import InferenceData
 
 from .transform import LogZTransform, Dmatrix
 from .plot import plot_power_law_rating, plot_spline_rating
@@ -37,15 +41,6 @@ class Rating(Model):
 
         return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
     
-    def rating_plot(self, trace: InferenceData, ax=None):
-        """TODO Decorator controlling style of rating plots
-        """
-        if ax is None:
-            fig, ax = plt.subplots(1, figsize=(5, 5))
-
-        ax.set_ylabel('Stage')
-        ax.set_xlabel('Discharge')
-
     def predict(self) -> DataFrame:
         raise NotImplementedError
 
