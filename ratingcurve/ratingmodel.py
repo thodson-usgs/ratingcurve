@@ -1,14 +1,18 @@
 """Streamflow rating models"""
+from __future__ import annotations
 
 import math
 import numpy as np
+
 from pandas import DataFrame, Series
+from typing import TYPE_CHECKING
 
 import pymc as pm
 from pymc import Model
 import pytensor.tensor as at
 
-from arviz import InferenceData
+if TYPE_CHECKING:
+    from arviz import InferenceData
 
 from .transform import LogZTransform, Dmatrix
 from .plot import plot_power_law_rating, plot_spline_rating

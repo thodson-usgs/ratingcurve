@@ -1,10 +1,22 @@
 """Plotting functions"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
 
 import numpy as np
 import matplotlib.pyplot as plt
 
+from matplotlib.ticker import FuncFormatter
 
-def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None):
+
+if TYPE_CHECKING:
+    from .ratingmodel import Rating
+    from arviz import InferenceData
+
+
+DEFAULT_FIGSIZE = (5,5)
+
+
+def plot_spline_rating(rating: Rating, trace: InferenceData, ax=None):
     """Plots sline power law rating model
 
     Returns
@@ -12,26 +24,24 @@ def plot_spline_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None)
     figure, axes
     """
     if ax is None:
-        fig, ax = plt.subplots(1, figsize=(5, 5))
+        fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
-    q_obs = model.q_obs
-    h_obs = model.h_obs
+    q_obs = rating.q_obs
+    h_obs = rating.h_obs
 
-    if model.q_sigma is not None:
-        q_sigma = model.q_sigma
+    if rating.q_sigma is not None:
+        q_sigma = rating.q_sigma
     else:
         q_sigma = None
 
     _plot_gagings(h_obs, q_obs, q_sigma, ax=ax)
 
-    rating_table = model.table(trace)
-    _plot_rating(rating_table, ax=ax)
+    _plot_rating(rating.table(trace), ax=ax)
 
-    ax.set_ylabel('Stage')
-    ax.set_xlabel('Discharge')
+    _format_rating_plot(ax)
 
 
-def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=None):
+def plot_power_law_rating(rating: Rating, trace: InferenceData, ax=None):
     """Plots segmented power law rating model
 
     Parameters
@@ -47,13 +57,13 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
     figure, axes
     """
     if ax is None:
-        fig, ax = plt.subplots(1, figsize=(5, 5))
+        fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
-    q_obs = model.q_obs
-    h_obs = model.h_obs
+    q_obs = rating.q_obs
+    h_obs = rating.h_obs
 
-    if model.q_sigma is not None:
-        q_sigma = model.q_sigma
+    if rating.q_sigma is not None:
+        q_sigma = rating.q_sigma
     else:
         q_sigma = None
 
@@ -61,15 +71,14 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
 
     _plot_gagings(h_obs, q_obs, q_sigma, ax=ax)
 
-    rating_table = model.table(trace)
-    _plot_rating(rating_table, ax=ax)
+    _plot_rating(rating.table(trace), ax=ax)
 
-    # label
-    ax.set_ylabel('Stage')
-    ax.set_xlabel('Discharge')
+    _format_rating_plot(ax)
 
 
 def _plot_transitions(hs, ax=None):
+    """Plot transitions (breakpoints)
+    """
     alpha = 0.05
     hs_u = hs.mean(dim=['chain', 'draw']).data
     hs_lower = hs.quantile(alpha/2, dim=['chain', 'draw']).data.flatten()
@@ -81,7 +90,7 @@ def _plot_transitions(hs, ax=None):
 
 def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
     if ax is None:
-        fig, ax = plt.subplots(1, figsize=(5, 5))
+        fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
     if q_sigma is not None:
         sigma_2 = 1.96 * (np.exp(q_sigma) - 1)*q_obs
@@ -94,13 +103,14 @@ def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
 
 
 def _plot_rating(rating_table, ax=None):
-    '''TODO Revise
-    This function is hack. Should be able to generate posterior predictions directly,
-    but this version of pymc seems to have bug. Revisit.
-    '''
+    """"Plot rating table with uncertainty
+
+    TODO This function is hack. Should be able to generate posterior predictions directly,
+    but this version of pymc seems to have bug.
+    """
 
     if ax is None:
-        fig, ax = plt.subplots(1, figsize=(5, 5))
+        fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
     h = rating_table['stage']
     q = rating_table['discharge']
@@ -109,3 +119,12 @@ def _plot_rating(rating_table, ax=None):
     q_u = q * (sigma)**1.96  # this should be 2 sigma
     q_l = q / (sigma)**1.96
     ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
+
+
+def _format_rating_plot(ax):
+    """Format rating plot
+    """
+    ax.set_ylabel('Stage')
+    ax.set_xlabel('Discharge')
+
+    ax.get_xaxis().set_major_formatter(FuncFormatter(lambda x, p: format(int(x), ',')))
