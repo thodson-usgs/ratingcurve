@@ -41,15 +41,6 @@ class Rating(Model):
 
         return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
     
-    def rating_plot(self, trace: InferenceData, ax=None):
-        """TODO Decorator controlling style of rating plots
-        """
-        if ax is None:
-            fig, ax = plt.subplots(1, figsize=(5, 5))
-
-        ax.set_ylabel('Stage')
-        ax.set_xlabel('Discharge')
-
     def predict(self) -> DataFrame:
         raise NotImplementedError
 

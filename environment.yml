@@ -5,5 +5,3 @@ dependencies:
   - pymc>=5.0.0
   - pytensor
   - patsy
-  - aiohttp
-  - intake
