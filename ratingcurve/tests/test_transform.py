@@ -23,7 +23,7 @@ class TestLogZTransform:
     def test_transform(self):
         x = np.array([1, 2, 3, 4, 5])
         lz = LogZTransform(x)
-        assert np.allclose(lz.transform(x), array([-1.68450008, -0.46506562,  0.24825781,  0.75436884,  1.14693905]))
+        assert np.allclose(lz.transform(x), np.array([-1.68450008, -0.46506562,  0.24825781,  0.75436884,  1.14693905]))
         assert np.allclose(lz.untransform(lz.transform(x)), x)
 
 
