@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 
 from matplotlib.ticker import FuncFormatter
 
-
 if TYPE_CHECKING:
     from .ratingmodel import Rating
     from arviz import InferenceData

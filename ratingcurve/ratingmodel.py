@@ -2,26 +2,31 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from arviz import InferenceData
-    from numpy.typing import ArrayLike
-
-import math
 import numpy as np
-
-from pandas import DataFrame, Series
-
 import pymc as pm
-from pymc import Model
 import pytensor.tensor as at
 
+from pymc import Model
+from pandas import DataFrame, Series
 
 from .transform import LogZTransform, Dmatrix
 from .plot import plot_power_law_rating, plot_spline_rating
 
+if TYPE_CHECKING:
+    from arviz import InferenceData
+    from numpy.typing import ArrayLike
 
 class Rating(Model):
+    """Abstract base class for rating models
+    """
     def __init__(self, name='', model=None):
+        """Initialize rating model
+
+        Parameters
+        ----------
+        name : str
+          Name that will be used as prefix for names of all random variables defined within model
+        """
         super().__init__(name, model)
 
     def fit(self, method="advi", n=150_000):
@@ -43,10 +48,33 @@ class Rating(Model):
 
         return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
     
-    def predict(self) -> DataFrame:
+    def predict(self, trace: InferenceData, h: ArrayLike):
+        """Predicts values of new data with a trained rating model
+
+        Parameters
+        ----------
+        trace : arviz.InferenceData
+          Arviz ``InferenceData`` object containing posterior samples of model parameters.
+        h : array_like
+          Stages at which to predict discharge.
+        """
+        raise NotImplementedError
+
+    def plot(self, trace: InferenceData, ax=None):
+        """Plot rating
+
+        Parameters
+        ----------
+        trace : arviz.InferenceData
+          Arviz ``InferenceData`` object containing posterior samples of model parameters.
+        ax : matplotlib axes object, default None
+          An axes of the current figure
+        """
         raise NotImplementedError
 
     def save(self, filename: str) -> None:
+        """Save model to file
+        """
         raise NotImplementedError
 
     @staticmethod
@@ -128,6 +156,15 @@ class PowerLawRating(Rating):
         self._setup_powerlaw()
 
     def plot(self, trace, ax=None):
+        """Plot rating
+
+        Parameters
+        ----------
+        trace : arviz.InferenceData
+          Arviz ``InferenceData`` object containing posterior samples of model parameters.
+        ax : matplotlib axes object, default None
+          An axes of the current figure
+        """
         plot_power_law_rating(self, trace, ax=ax)
 
     def set_normal_prior(self):
@@ -194,7 +231,8 @@ class PowerLawRating(Rating):
 
         Parameters
         ----------
-        trace : InferenceData
+        trace : arviz.InferenceData
+          Arviz ``InferenceData`` object containing posterior samples of model parameters.
         h : array_like
           Stages at which to predict discharge.
         """
@@ -270,7 +308,8 @@ class SplineRating(Rating):
 
         Parameters
         ----------
-        trace : InferenceData
+        trace : arviz.InferenceData
+          Arviz ``InferenceData`` object containing posterior samples of model parameters.
         h : array_like
           Stages at which to predict discharge.
         """
