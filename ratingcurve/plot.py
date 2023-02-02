@@ -9,15 +9,22 @@ from matplotlib.ticker import FuncFormatter
 
 
 if TYPE_CHECKING:
-    from .ratingmodel import Rating
+    from .ratingmodel import Rating, PowerLawRating, SplineRating
     from arviz import InferenceData
 
 
 DEFAULT_FIGSIZE = (5,5)
 
 
-def plot_spline_rating(rating: Rating, trace: InferenceData, ax=None):
+def plot_spline_rating(rating: SplineRating, trace: InferenceData, ax=None):
     """Plots sline power law rating model
+
+    Parameters
+    ----------
+    rating : SplineRating
+        Spline rating model
+    trace : ArviZ InferenceData
+    ax : matplotlib axes
 
     Returns
     -------
@@ -41,16 +48,14 @@ def plot_spline_rating(rating: Rating, trace: InferenceData, ax=None):
     _format_rating_plot(ax)
 
 
-def plot_power_law_rating(rating: Rating, trace: InferenceData, ax=None):
+def plot_power_law_rating(rating: PowerLawRating, trace: InferenceData, ax=None):
     """Plots segmented power law rating model
 
     Parameters
     ----------
-    model : pymc model object
-    trace : trace returned by model
-    h_obs :
-    q_obs :
-    colors : list with 2 colornames
+    rating : PowerLawRating
+    trace : ArviZ InferenceData
+    ax : matplotlib axes
 
     Returns
     -------
@@ -76,8 +81,13 @@ def plot_power_law_rating(rating: Rating, trace: InferenceData, ax=None):
     _format_rating_plot(ax)
 
 
-def _plot_transitions(hs, ax=None):
+def _plot_transitions(hs, ax):
     """Plot transitions (breakpoints)
+
+    Parameters
+    ----------
+    hs : xarray DataArray
+    ax : matplotlib axes
     """
     alpha = 0.05
     hs_u = hs.mean(dim=['chain', 'draw']).data
@@ -89,6 +99,18 @@ def _plot_transitions(hs, ax=None):
 
 
 def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
+    """Plot gagings with uncertainty
+
+    Parameters
+    ----------
+    h_obs : array-like
+        Stage observations.
+    q_obs : array-like
+        Discharge observations.
+    q_sigma : array-like, optional
+        Discharge uncertainty (1 sigma)
+    ax : matplotlib axes, optional
+    """
     if ax is None:
         fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
@@ -106,6 +128,11 @@ def _plot_rating(rating_table, ax=None):
 
     TODO This function is hack. Should be able to generate posterior predictions directly,
     but this version of pymc seems to have bug.
+
+    Parameters
+    ----------
+    rating_table : pandas DataFrame
+    ax : matplotlib axes, optional
     """
 
     if ax is None:
@@ -122,6 +149,10 @@ def _plot_rating(rating_table, ax=None):
 
 def _format_rating_plot(ax):
     """Format rating plot
+
+    Parameters
+    ----------
+    ax : matplotlib axes
     """
     ax.set_ylabel('Stage')
     ax.set_xlabel('Discharge')

@@ -34,6 +34,20 @@ class Rating(Model):
 
     def table(self, trace, h=None, step=0.01) -> DataFrame:
         """Return stage-discharge rating table
+
+        Parameters
+        ----------
+        trace : ArviZ InferenceData
+            Trace from MCMC sampling
+        h : array_like
+            Stage values to compute rating table. If None, then use the range of observations.
+        step : float
+            Step size for stage values
+
+        Returns
+        -------
+        DataFrame
+            Rating table with columns 'stage', 'discharge', and 'sigma'
         """
         if h is None:
             extend = 1.1
@@ -44,6 +58,12 @@ class Rating(Model):
         return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
     
     def predict(self) -> DataFrame:
+        """Abstract method for predicting discharge from stage
+
+        Returns
+        -------
+        DataFrame
+        """
         raise NotImplementedError
 
     def save(self, filename: str) -> None:
@@ -189,14 +209,19 @@ class PowerLawRating(Rating):
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
-    def predict(self, trace: InferenceData, h: ArrayLike):
+    def predict(self, trace: InferenceData, h: ArrayLike) -> DataFrame:
         """Predicts values of new data with a trained rating model
 
         Parameters
         ----------
-        trace : InferenceData
-        h : array_like
-          Stages at which to predict discharge.
+        trace : ArviZ InferenceData
+        h : array-like
+            Stages at which to predict discharge.
+
+        Returns
+        -------
+        DataFrame
+            Dataframe with columns 'stage', 'discharge', and 'sigma' containing predicted discharge and uncertainty.
         """
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
@@ -218,8 +243,8 @@ class PowerLawRating(Rating):
         sigma = q_z.std(axis=1)
         q = self.q_transform.untransform(q_z)
 
-        return DataFrame({'discharge': q.mean(axis=1).flatten(),
-                          'stage': h,
+        return DataFrame({'stage': h,
+                          'discharge': q.mean(axis=1).flatten(),
                           'sigma': np.exp(sigma).flatten()})
 
 
@@ -232,12 +257,16 @@ class SplineRating(Rating):
 
         Parameters
         ----------
-        q, h: array_like
+        q, h: array-like
             Input arrays of discharge (q) and stage (h) observations.
-        q_sigma : array_like
+        q_sigma : array-like, optional
             Input array of discharge uncertainty in units of discharge.
-        knots : arrak_like
+        knots : arrak-like
             Stage value locations of the spline knots.
+        mean, sd : float
+            Prior mean and standard deviation for the spline coefficients.
+        df : int
+            Degrees of freedom for the spline coefficients.
         """
         super().__init__(name, model)
         self.q_obs = q
@@ -265,13 +294,13 @@ class SplineRating(Rating):
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
-    def predict(self, trace: InferenceData, h):
+    def predict(self, trace: InferenceData, h: ArrayLike):
         """Predicts values of new data with a trained rating model
 
         Parameters
         ----------
-        trace : InferenceData
-        h : array_like
+        trace : ArviZ InferenceData
+        h : array-like
           Stages at which to predict discharge.
         """
         w = trace.posterior['w'].values.squeeze()
@@ -311,8 +340,8 @@ def compute_knots(minimum: float, maximum: float, n: int):
     Parameters
     ----------
     minimum, maximum : float
-
+        Minimum and maximum stage (h) observations.
     n : int
-        Number of knots
+        Number of knots.
     """
     return np.linspace(minimum, maximum, n)

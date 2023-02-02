@@ -14,10 +14,15 @@ class Transform:
 
     All children of Transform must have transfom and untransform methods
     """
-    def __init__(self):
+    def __init__(self, x):
         """Create empty Transform object
         """
-        pass
+
+    def transform(self, x: ArrayLike) -> ArrayLike:
+        return x
+    
+    def untransform(self, x: ArrayLike) -> ArrayLike:
+        return x 
 
 
 class ZTransform(Transform):
@@ -54,30 +59,6 @@ class ZTransform(Transform):
           Transformed data
         """
         return z*self._std + self._mean
-
-
-class UnitTransform(Transform):
-    """Transforms data to the unit (0 to 1) interval.
-    """
-    def __init__(self, x: ArrayLike):
-        """Create UnitTransform of array
-        """
-        self._max = np.nanmax(x, axis=0)
-
-    def transform(self, x: ArrayLike) -> ArrayLike:
-        """Transform to unit interval
-        """
-        return x/self._max
-
-    def untransform(self, x: ArrayLike) -> ArrayLike:
-        """Transform from unit interval back to original units
-
-        Parameters
-        ----------
-        x : array_like
-          Transformed data.
-        """
-        return x*self._max
 
 
 class LogZTransform(ZTransform):
@@ -118,6 +99,30 @@ class LogZTransform(ZTransform):
         """
         log_x = super().untransform(z)
         return np.exp(log_x)
+
+
+class UnitTransform(Transform):
+    """Transforms data to the unit (0 to 1) interval.
+    """
+    def __init__(self, x: ArrayLike):
+        """Create UnitTransform of array
+        """
+        self._max = np.nanmax(x, axis=0)
+
+    def transform(self, x: ArrayLike) -> ArrayLike:
+        """Transform to unit interval
+        """
+        return x/self._max
+
+    def untransform(self, x: ArrayLike) -> ArrayLike:
+        """Transform from unit interval back to original units
+
+        Parameters
+        ----------
+        x : array_like
+          Transformed data.
+        """
+        return x*self._max
 
 
 class Dmatrix():
