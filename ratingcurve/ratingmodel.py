@@ -1,18 +1,20 @@
 """Streamflow rating models"""
 from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from arviz import InferenceData
+    from numpy.typing import ArrayLike
 
 import math
 import numpy as np
 
 from pandas import DataFrame, Series
-from typing import TYPE_CHECKING
 
 import pymc as pm
 from pymc import Model
 import pytensor.tensor as at
 
-if TYPE_CHECKING:
-    from arviz import InferenceData
 
 from .transform import LogZTransform, Dmatrix
 from .plot import plot_power_law_rating, plot_spline_rating
@@ -114,7 +116,7 @@ class PowerLawRating(Rating):
         self._hs_lower_bounds[0] = 0
 
         self._hs_upper_bounds = np.zeros((self.segments, 1)) + self.h_obs.max()
-        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6  # XXX If possible, don't hard code
+        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 # TODO compute threshold
 
         # set random init on unit interval then scale based on bounds
         self._init_hs = np.random.rand(self.segments, 1) \
@@ -123,7 +125,7 @@ class PowerLawRating(Rating):
 
         self._init_hs = np.sort(self._init_hs)  # not necessary?
 
-        self.compile_model()
+        self._setup_powerlaw()
 
     def plot(self, trace, ax=None):
         plot_power_law_rating(self, trace, ax=ax)
@@ -167,7 +169,9 @@ class PowerLawRating(Rating):
 
         return hs
 
-    def compile_model(self):
+    def _setup_powerlaw(self):
+        """Helper function that defines model
+        """
         with Model(coords=self.COORDS) as model:
             h = pm.MutableData("h", self.h_obs)
             w = pm.Normal("w", mu=0, sigma=3, dims="splines")
@@ -185,8 +189,14 @@ class PowerLawRating(Rating):
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
-    def predict(self, trace: InferenceData, h):
-        """TODO verify sigma computation
+    def predict(self, trace: InferenceData, h: ArrayLike):
+        """Predicts values of new data with a trained rating model
+
+        Parameters
+        ----------
+        trace : InferenceData
+        h : array_like
+          Stages at which to predict discharge.
         """
         chain = trace.posterior['chain'].shape[0]
         draw = trace.posterior['draw'].shape[0]
@@ -256,9 +266,13 @@ class SplineRating(Rating):
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
     def predict(self, trace: InferenceData, h):
-        """Predict discharge given stage
+        """Predicts values of new data with a trained rating model
 
-
+        Parameters
+        ----------
+        trace : InferenceData
+        h : array_like
+          Stages at which to predict discharge.
         """
         w = trace.posterior['w'].values.squeeze()
         B = self.d_transform(h)

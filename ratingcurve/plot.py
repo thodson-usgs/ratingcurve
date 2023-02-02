@@ -97,7 +97,6 @@ def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
 
     else:
         sigma_2 = 0
-        # q_sigma = q_sigma * 1.96
 
     ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o")
 
