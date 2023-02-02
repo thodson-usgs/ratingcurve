@@ -2,9 +2,9 @@ import pytest
 
 import numpy as np
 
-from .ratingmodel import compute_knots, stage_range
+from ratingcurve.ratingmodel import compute_knots, stage_range
 
-from .ratingmodel import Rating, PowerLawRating, SplineRating
+from ratingcurve.ratingmodel import Rating, PowerLawRating, SplineRating
 
 # TODO specify these with pytest parametrize
 def test_compute_knots():
