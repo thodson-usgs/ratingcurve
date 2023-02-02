@@ -2,12 +2,12 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from numpy.typing import ArrayLike
-
 import numpy as np
+
 from patsy import dmatrix, build_design_matrices
 
+if TYPE_CHECKING:
+    from numpy.typing import ArrayLike
 
 class Transform:
     """Transformation class
