@@ -69,6 +69,22 @@ class Rating(Model):
 
         return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
     
+    def residuals(self, trace: InferenceData) -> ArrayLike:
+        """Compute residuals of rating model
+
+        Parameters
+        ----------
+        trace : arviz.InferenceData
+          Arviz ``InferenceData`` object containing posterior samples of model parameters.
+
+        Returns
+        -------
+        residuals : array-like
+          Log residuals of rating model
+        """
+        q_pred = self.predict(trace, self.h_obs).discharge
+        return np.array(np.log(self.q_obs) - np.log(q_pred))
+
     def predict(self, trace: InferenceData, h: ArrayLike):
         """Predicts values of new data with a trained rating model
 
