@@ -11,7 +11,7 @@ from pymc import Model
 from pandas import DataFrame, Series
 
 from .transform import LogZTransform, Dmatrix
-from .plot import plot_power_law_rating, plot_spline_rating
+from .plot import plot_power_law_rating, plot_spline_rating, _plot_residuals
 
 if TYPE_CHECKING:
     from arviz import InferenceData
@@ -84,6 +84,18 @@ class Rating(Model):
         """
         q_pred = self.predict(trace, self.h_obs).discharge
         return np.array(np.log(self.q_obs) - np.log(q_pred))
+    
+    def plot_residuals(self, trace: InferenceData, ax=None):
+        """Plot residuals of rating model
+
+        Parameters
+        ----------
+        trace : arviz.InferenceData
+          Arviz ``InferenceData`` object containing posterior samples of model parameters.
+        ax : matplotlib axes object, default None
+          An axes of the current figure
+        """
+        _plot_residuals(self, trace, ax)
 
     def predict(self, trace: InferenceData, h: ArrayLike):
         """Predicts values of new data with a trained rating model
@@ -108,6 +120,7 @@ class Rating(Model):
           An axes of the current figure
         """
         raise NotImplementedError
+    
 
     def save(self, filename: str) -> None:
         """Save model to file
