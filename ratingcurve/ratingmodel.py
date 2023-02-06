@@ -6,6 +6,7 @@ import numpy as np
 import pymc as pm
 import pytensor.tensor as at
 
+from dataclasses import dataclass, asdict
 from pymc import Model
 from pandas import DataFrame, Series
 
@@ -44,7 +45,7 @@ class Rating(Model):
         ----------
         trace : ArviZ InferenceData
             Trace from MCMC sampling
-        h : array_like
+        h : array-like
             Stage values to compute rating table. If None, then use the range of observations.
         step : float
             Step size for stage values
@@ -58,7 +59,8 @@ class Rating(Model):
             extend = 1.1
             h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=step)
 
-        table = self.predict(trace, h)
+        ratingdata = self.predict(trace, h)
+        table = DataFrame(asdict(ratingdata))
 
         return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
     
@@ -69,7 +71,7 @@ class Rating(Model):
         ----------
         trace : arviz.InferenceData
           Arviz ``InferenceData`` object containing posterior samples of model parameters.
-        h : array_like
+        h : array-like
           Stages at which to predict discharge.
         """
         raise NotImplementedError
@@ -114,9 +116,9 @@ class PowerLawRating(Rating):
 
         Parameters
         ----------
-        q, h: array_like
+        q, h: array-like
             Input arrays of discharge (q) and gage height (h) observations.
-        q_sigma : array_like
+        q_sigma : array-like
             Input array of discharge uncertainty in units of discharge.
         segments : int
             Number of segments in the rating.
@@ -251,7 +253,7 @@ class PowerLawRating(Rating):
 
         Returns
         -------
-        DataFrame
+        RatingData
             Dataframe with columns 'stage', 'discharge', and 'sigma' containing predicted discharge and uncertainty.
         """
         chain = trace.posterior['chain'].shape[0]
@@ -274,9 +276,9 @@ class PowerLawRating(Rating):
         sigma = q_z.std(axis=1)
         q = self.q_transform.untransform(q_z)
 
-        return DataFrame({'stage': h,
-                          'discharge': q.mean(axis=1).flatten(),
-                          'sigma': np.exp(sigma).flatten()})
+        return RatingData(stage=h.squeeze(),
+                          discharge=q.mean(axis=1).squeeze(),
+                          sigma=np.exp(sigma).squeeze())
 
 
 class SplineRating(Rating):
@@ -333,19 +335,41 @@ class SplineRating(Rating):
         trace : ArviZ InferenceData
         h : array-like
             Stages at which to predict discharge.
+
+        Returns
+        -------
+        RatingData
+            dataclass with stage, discharge, and sigma.
         """
         w = trace.posterior['w'].values.squeeze()
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
         q = self.q_transform.untransform(q_z)
         sigma = q_z.std(axis=1)
-        
-        return DataFrame({'discharge': Series(q.mean(axis=1)),
-                          'stage': h,
-                          'sigma': Series(np.exp(sigma))})
+
+        return RatingData(stage=h.squeeze(),
+                          discharge=q.mean(axis=1).squeeze(),
+                          sigma=np.exp(sigma).squeeze())
 
     def plot(self, trace, ax=None):
         plot_spline_rating(self, trace, ax=ax)
+
+
+@dataclass
+class RatingData():
+    """Dataclass for rating model output
+    Attributes
+    ----------
+    stage : array-like
+        Stage values.
+    discharge : array-like
+        Discharge values.
+    sigma : array-like
+        Discharge uncertainty.
+    """
+    stage: ArrayLike
+    discharge: ArrayLike
+    sigma: ArrayLike
 
 
 def stage_range(minimum: float, maximum: float, step: float = 0.01):
