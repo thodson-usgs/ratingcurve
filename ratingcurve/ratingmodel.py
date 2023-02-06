@@ -38,7 +38,7 @@ class Rating(Model):
         with self.model:
             trace = pm.sample(50_000)
 
-    def table(self, trace, h=None, step=0.01) -> DataFrame:
+    def table(self, trace, h=None, step=0.01, extend=1.1) -> DataFrame:
         """Return stage-discharge rating table
 
         Parameters
@@ -49,6 +49,8 @@ class Rating(Model):
             Stage values to compute rating table. If None, then use the range of observations.
         step : float
             Step size for stage values
+        extend : float
+            Extend range of discharge values by this factor
 
         Returns
         -------
@@ -56,11 +58,14 @@ class Rating(Model):
             Rating table with columns 'stage', 'discharge', and 'sigma'
         """
         if h is None:
-            extend = 1.1
             h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=step)
+            ratingdata = self.predict(trace, h)
+            table = DataFrame(asdict(ratingdata))
+            table = table[table['discharge'] <= self.q_obs.max() * extend]
 
-        ratingdata = self.predict(trace, h)
-        table = DataFrame(asdict(ratingdata))
+        else:
+            ratingdata = self.predict(trace, h)
+            table = DataFrame(asdict(ratingdata))
 
         return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
     
