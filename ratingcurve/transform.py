@@ -17,6 +17,8 @@ class Transform:
     def __init__(self, x):
         """Create empty Transform object
         """
+        self.mean_ = None
+        self.std_ = None
 
     def transform(self, x: ArrayLike) -> ArrayLike:
         return x
@@ -37,8 +39,8 @@ class ZTransform(Transform):
         x : array_like
           Data that defines the transform.
         """
-        self._mean = np.nanmean(x, axis=0)
-        self._std = np.nanstd(x, axis=0)
+        self.mean_ = np.nanmean(x, axis=0)
+        self.std_ = np.nanstd(x, axis=0)
 
     def transform(self, x: ArrayLike) -> ArrayLike:
         """Transform to z score (standardize x)
@@ -48,7 +50,7 @@ class ZTransform(Transform):
         x : array_like
           Data to be transformed.
         """
-        return (x - self._mean)/self._std
+        return (x - self.mean_) / self.std_
 
     def untransform(self, z: ArrayLike) -> ArrayLike:
         """Transform from z score back to original units.
@@ -58,7 +60,7 @@ class ZTransform(Transform):
         z : array_like
           Transformed data
         """
-        return z*self._std + self._mean
+        return z * self.std_ + self.mean_
 
 
 class LogZTransform(ZTransform):
@@ -107,12 +109,12 @@ class UnitTransform(Transform):
     def __init__(self, x: ArrayLike):
         """Create UnitTransform of array
         """
-        self._max = np.nanmax(x, axis=0)
+        self.max_ = np.nanmax(x, axis=0)
 
     def transform(self, x: ArrayLike) -> ArrayLike:
         """Transform to unit interval
         """
-        return x/self._max
+        return x/self.max_
 
     def untransform(self, x: ArrayLike) -> ArrayLike:
         """Transform from unit interval back to original units
@@ -122,7 +124,7 @@ class UnitTransform(Transform):
         x : array_like
           Transformed data.
         """
-        return x*self._max
+        return x*self.max_
 
 
 class Dmatrix():
