@@ -9,6 +9,7 @@ from patsy import dmatrix, build_design_matrices
 if TYPE_CHECKING:
     from numpy.typing import ArrayLike
 
+
 class Transform:
     """Transformation class
 
@@ -25,6 +26,15 @@ class Transform:
     
     def untransform(self, x: ArrayLike) -> ArrayLike:
         return x 
+    
+    def mean(self):
+        raise NotImplementedError
+    
+    def sigma(self):
+        raise NotImplementedError
+    
+    def median(self):
+        raise NotImplementedError
 
 
 class ZTransform(Transform):
@@ -101,6 +111,54 @@ class LogZTransform(ZTransform):
         """
         log_x = super().untransform(z)
         return np.exp(log_x)
+    
+    def mean(self, z: ArrayLike, axis: int=1) -> ArrayLike:
+        """Compute mean.
+
+        Parameters
+        ----------
+        z : array_like
+          Transformed data.
+
+        Returns
+        -------
+        mean : array_like
+            Arithmetic mean.
+        """
+        x = self.untransform(z)
+        return x.mean(axis=axis)
+    
+    def sigma(self, z: ArrayLike, axis: int=1) -> ArrayLike:
+        """Compute standard deviation.
+
+        Parameters
+        ----------
+        z : array_like
+          Transformed data.
+
+        Returns
+        -------
+        sigma : array_like
+            Multiplicative standard deviation.
+        """
+        sigma = z.std(axis=axis)
+        return np.exp(sigma)
+    
+    def median(self, z: ArrayLike, axis: int=1) -> ArrayLike:
+        """Compute median.
+
+        Parameters
+        ----------
+        z : array_like
+          Transformed data.
+
+        Returns
+        -------
+        median : array_like
+            Median or geometric mean.
+        """
+        x = self.untransform(z)
+        return x.median(axis=axis)
 
 
 class UnitTransform(Transform):
@@ -136,3 +194,7 @@ class Dmatrix():
 
     def transform(self, stage):
         return np.asarray(build_design_matrices([self.design_info], {"stage": stage})).squeeze()
+
+
+   
+

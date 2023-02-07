@@ -11,7 +11,7 @@ from pymc import Model
 from pandas import DataFrame, Series
 
 from .transform import LogZTransform, Dmatrix
-from .plot import plot_power_law_rating, plot_spline_rating, _plot_residuals
+from .plot import PowerLawPlotMixin, SplinePlotMixin
 
 if TYPE_CHECKING:
     from arviz import InferenceData
@@ -85,18 +85,6 @@ class Rating(Model):
         q_pred = self.predict(trace, self.h_obs).discharge
         return np.array(np.log(self.q_obs) - np.log(q_pred))
     
-    def plot_residuals(self, trace: InferenceData, ax=None):
-        """Plot residuals of rating model
-
-        Parameters
-        ----------
-        trace : arviz.InferenceData
-          Arviz ``InferenceData`` object containing posterior samples of model parameters.
-        ax : matplotlib axes object, default None
-          An axes of the current figure
-        """
-        _plot_residuals(self, trace, ax)
-
     def predict(self, trace: InferenceData, h: ArrayLike):
         """Predicts values of new data with a trained rating model
 
@@ -108,19 +96,6 @@ class Rating(Model):
           Stages at which to predict discharge.
         """
         raise NotImplementedError
-
-    def plot(self, trace: InferenceData, ax=None):
-        """Plot rating
-
-        Parameters
-        ----------
-        trace : arviz.InferenceData
-          Arviz ``InferenceData`` object containing posterior samples of model parameters.
-        ax : matplotlib axes object, default None
-          An axes of the current figure
-        """
-        raise NotImplementedError
-    
 
     def save(self, filename: str) -> None:
         """Save model to file
@@ -134,7 +109,7 @@ class Rating(Model):
         raise NotImplementedError
 
 
-class PowerLawRating(Rating):
+class PowerLawRating(Rating, PowerLawPlotMixin):
     """Multi-segment power law rating using Heaviside parameterization.
     """
     def __init__(
@@ -204,18 +179,6 @@ class PowerLawRating(Rating):
         self._init_hs = np.sort(self._init_hs)  # not necessary?
 
         self._setup_powerlaw()
-
-    def plot(self, trace, ax=None):
-        """Plot rating
-
-        Parameters
-        ----------
-        trace : arviz.InferenceData
-          Arviz ``InferenceData`` object containing posterior samples of model parameters.
-        ax : matplotlib axes object, default None
-          An axes of the current figure
-        """
-        plot_power_law_rating(self, trace, ax=ax)
 
     def set_normal_prior(self):
         """Normal prior for breakpoints
@@ -307,15 +270,14 @@ class PowerLawRating(Rating):
         b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
         q_z = a + (b1*w).sum(axis=2)
 
-        sigma = q_z.std(axis=1)
-        q = self.q_transform.untransform(q_z)
+        transform = self.q_transform
 
         return RatingData(stage=h.squeeze(),
-                          discharge=q.mean(axis=1).squeeze(),
-                          sigma=np.exp(sigma).squeeze())
+                          discharge=transform.mean(q_z).squeeze(),
+                          sigma=transform.sigma(q_z).squeeze())
 
 
-class SplineRating(Rating):
+class SplineRating(Rating, SplinePlotMixin):
     """Natural spline rating model
     """
 
@@ -378,15 +340,12 @@ class SplineRating(Rating):
         w = trace.posterior['w'].values.squeeze()
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
-        q = self.q_transform.untransform(q_z)
-        sigma = q_z.std(axis=1)
+
+        transform = self.q_transform
 
         return RatingData(stage=h.squeeze(),
-                          discharge=q.mean(axis=1).squeeze(),
-                          sigma=np.exp(sigma).squeeze())
-
-    def plot(self, trace, ax=None):
-        plot_spline_rating(self, trace, ax=ax)
+                          discharge=transform.mean(q_z).squeeze(),
+                          sigma=transform.sigma(q_z).squeeze())
 
 
 @dataclass
