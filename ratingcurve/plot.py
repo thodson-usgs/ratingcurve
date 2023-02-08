@@ -107,8 +107,8 @@ class PowerLawPlotMixin(PlotMixin):
         """
         ax = self.setup_plot(ax=ax)
         self._format_rating_plot(ax)
-        _plot_power_law_rating(self, trace, ax=ax)
         self._plot_transitions(trace, ax=ax)
+        _plot_power_law_rating(self, trace, ax=ax)
 
     def plot_residuals(self, trace: InferenceData, ax=None):
         """Plots residuals
@@ -119,8 +119,8 @@ class PowerLawPlotMixin(PlotMixin):
         ax : matplotlib axes
         """
         ax = self.setup_plot(ax=ax)
-        super().plot_residuals(trace, ax=ax)
         self._plot_transitions(trace, ax=ax)
+        super().plot_residuals(trace, ax=ax)
 
     def _plot_transitions(self, trace, ax):
         """Plot transitions (breakpoints)
