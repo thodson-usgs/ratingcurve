@@ -176,7 +176,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             * (self._hs_upper_bounds - self._hs_lower_bounds) \
             + self._hs_lower_bounds
 
-        self._init_hs = np.sort(self._init_hs)  # not necessary?
+        self._init_hs = np.sort(self._init_hs, axis=0)  # not necessary?
 
         self._setup_powerlaw()
 
@@ -189,15 +189,13 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         prior={'distribution': 'normal', 'mu': [], 'sigma': []}
         """
         with Model(coords=self.COORDS) as model:
-            hs_ = pm.TruncatedNormal('hs_',
-                                     mu=self.prior['mu'],
-                                     sigma=self.prior['sigma'],
-                                     lower=self._hs_lower_bounds,
-                                     upper=self._hs_upper_bounds,
-                                     shape=(self.segments, 1),
-                                     initval=self._init_hs)
-
-            hs = pm.Deterministic('hs', at.sort(hs_))
+            hs = pm.TruncatedNormal('hs',
+                                    mu=self.prior['mu'],
+                                    sigma=self.prior['sigma'],
+                                    lower=self._hs_lower_bounds,
+                                    upper=self._hs_upper_bounds,
+                                    shape=(self.segments, 1),
+                                    initval=self._init_hs)
 
         return hs
 
@@ -209,13 +207,11 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         prior={distribution:'uniform'}
         """
         with Model(coords=self.COORDS) as model:
-            hs_ = pm.Uniform('hs_',
-                             lower=self._hs_lower_bounds,
-                             upper=self._hs_upper_bounds,
-                             shape=(self.segments, 1),
-                             initval=self._init_hs)
-
-            hs = pm.Deterministic('hs', at.sort(hs_))
+            hs = pm.Uniform('hs',
+                            lower=self._hs_lower_bounds,
+                            upper=self._hs_upper_bounds,
+                            shape=(self.segments, 1),
+                            initval=self._init_hs)
 
         return hs
 
