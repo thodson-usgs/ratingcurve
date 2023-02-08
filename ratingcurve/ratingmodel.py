@@ -198,12 +198,6 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 # TODO compute threshold
 
         # set random init on unit interval then scale based on bounds
-        self._init_hs = np.random.rand(self.segments, 1) \
-            * (self._hs_upper_bounds - self._hs_lower_bounds) \
-            + self._hs_lower_bounds
-
-        self._init_hs = np.sort(self._init_hs, axis=0)  # not necessary?
-
         self._setup_powerlaw()
 
     def set_normal_prior(self):
@@ -215,13 +209,21 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         prior={'distribution': 'normal', 'mu': [], 'sigma': []}
         """
         with Model(coords=self.COORDS) as model:
+
+            self._init_hs = np.sort(np.array(self.prior['mu']))
+            self._init_hs = self._init_hs.reshape((self.segments, 1))
+
+            prior_mu = np.array(self.prior['mu']).reshape((self.segments, 1))
+            prior_sigma = np.array(self.prior['sigma']).reshape((self.segments, 1))
+
             hs = pm.TruncatedNormal('hs',
-                                    mu=self.prior['mu'],
-                                    sigma=self.prior['sigma'],
+                                    mu=prior_mu,
+                                    sigma=prior_sigma,
                                     lower=self._hs_lower_bounds,
                                     upper=self._hs_upper_bounds,
                                     shape=(self.segments, 1),
                                     initval=self._init_hs)
+                                    #transform=pm.distributions.transforms.Ordered()) # Not working
 
         return hs
 
@@ -230,8 +232,21 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         Make no prior assumption about the location of the breakpoints, only their number.
 
-        prior={distribution:'uniform'}
+        prior={distribution:'uniform', initval: []}
+
+        TODO: clean this up
         """
+        self._init_hs = self.prior.get('initval', None)
+
+        if self._init_hs is None:
+            self._init_hs = np.random.rand(self.segments, 1) \
+                * (self._hs_upper_bounds - self._hs_lower_bounds) \
+                + self._hs_lower_bounds
+            self._init_hs = np.sort(self._init_hs, axis=0)  # not necessary?
+
+        else:
+            self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
+
         with Model(coords=self.COORDS) as model:
             hs = pm.Uniform('hs',
                             lower=self._hs_lower_bounds,
@@ -342,7 +357,7 @@ class SplineRating(Rating, SplinePlotMixin):
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
 
-    def predict(self, trace: InferenceData, h: ArrayLike):
+    def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
 
         Parameters
