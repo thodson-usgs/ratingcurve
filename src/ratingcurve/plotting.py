@@ -77,11 +77,11 @@ def plot_power_law_rating(model, trace, colors=('tab:blue', 'tab:orange'), ax=No
 
 def _plot_transitions(hs, q_min, q_max, ax=None):
     alpha = 0.05
-    hs_u = hs.mean(dim=['chain', 'draw']).data
-    hs_lower = hs.quantile(alpha/2, dim=['chain', 'draw']).data
-    hs_upper = hs.quantile(1 - alpha/2, dim=['chain', 'draw']).data
+    hs_u = hs.mean(dim=['chain', 'draw']).data.squeeze()
+    hs_lower = hs.quantile(alpha/2, dim=['chain', 'draw']).data.squeeze()
+    hs_upper = hs.quantile(1 - alpha/2, dim=['chain', 'draw']).data.squeeze()
 
-    [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)]
+    [ax.axhspan(l, u, color='whitesmoke') for l, u in zip(hs_lower, hs_upper)]
     [ax.axhline(u, color='grey', linestyle='dotted') for u in hs_u]
 
 
