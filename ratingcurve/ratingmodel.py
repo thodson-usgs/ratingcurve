@@ -85,7 +85,7 @@ class Rating(Model):
         q_pred = self.predict(trace, self.h_obs).discharge
         return np.array(np.log(self.q_obs) - np.log(q_pred))
     
-    def predict(self, trace: InferenceData, h: ArrayLike):
+    def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
 
         Parameters
@@ -94,6 +94,11 @@ class Rating(Model):
           Arviz ``InferenceData`` object containing posterior samples of model parameters.
         h : array-like
           Stages at which to predict discharge.
+
+        Returns
+        -------
+        RatingData
+            dataclass with stage, discharge, and sigma.
         """
         raise NotImplementedError
 
@@ -107,6 +112,27 @@ class Rating(Model):
         """Load a saved model
         """
         raise NotImplementedError
+
+    def _format_ratingdata(self, h: ArrayLike, q_z: ArrayLike) -> RatingData:
+        """Helper function that formats RatingData
+
+        Parameters
+        ----------
+        h : array-like
+            Stage values.
+        q_z : array-like
+            Predicted discharge values.
+
+        Returns
+        -------
+        RatingData
+            dataclass with stage, discharge, and sigma.
+        """
+        transform = self.q_transform
+
+        return RatingData(stage=h.squeeze(),
+                          discharge=transform.mean(q_z).squeeze(),
+                          sigma=transform.sigma(q_z).squeeze())
 
 
 class PowerLawRating(Rating, PowerLawPlotMixin):
@@ -235,7 +261,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
             mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
-    def predict(self, trace: InferenceData, h: ArrayLike) -> DataFrame:
+    def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
 
         Parameters
@@ -266,11 +292,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
         q_z = a + (b1*w).sum(axis=2)
 
-        transform = self.q_transform
-
-        return RatingData(stage=h.squeeze(),
-                          discharge=transform.mean(q_z).squeeze(),
-                          sigma=transform.sigma(q_z).squeeze())
+        return self._format_ratingdata(h=h, q_z=q_z)
 
 
 class SplineRating(Rating, SplinePlotMixin):
@@ -319,6 +341,7 @@ class SplineRating(Rating, SplinePlotMixin):
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
+
     def predict(self, trace: InferenceData, h: ArrayLike):
         """Predicts values of new data with a trained rating model
 
@@ -337,11 +360,7 @@ class SplineRating(Rating, SplinePlotMixin):
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
 
-        transform = self.q_transform
-
-        return RatingData(stage=h.squeeze(),
-                          discharge=transform.mean(q_z).squeeze(),
-                          sigma=transform.sigma(q_z).squeeze())
+        return self._format_ratingdata(h=h, q_z=q_z)
 
 
 @dataclass
