@@ -4,10 +4,9 @@ channels:
   - anaconda
 dependencies:
   - ipykernel
-  - pymc>=4.1.1
+  - xarray==2022.11.0
+  - pymc==4.2.0
+  - matplotlib-base==3.6.0
   - patsy
   - aiohttp
-  - intake
-  - pip:
-    - git+https://github.com/thodson-usgs/ratingcurve.git
-      #- -e git+https://github.com/thodson-usgs/ratingcurve.git
+  - requests
