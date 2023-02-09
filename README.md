@@ -61,15 +61,6 @@ powerrating.plot(trace)
 
 See the [notebooks](https://github.com/thodson-usgs/ratingcurve/tree/main/notebooks) for more examples.
 
-## Issue tracker
-
-Please report any bugs and enhancement ideas using the dataretrieval issue
-tracker:
-
-  https://github.com/thodson-usgs/ratingcurve/issues
-
-Feel free to also ask questions on the tracker.
-
 ## Disclaimer
 
 This software is preliminary or provisional and is subject to revision. 
