@@ -3,7 +3,7 @@
     "name": "ratingcurve",
     "organization": "U.S. Geological Survey",
     "description": "*A Python library for fitting stage-discharge rating curves.",
-    "version": "0.1.0",
+    "version": "0.3.1",
     "status": "Production",
 
     "permissions": {
