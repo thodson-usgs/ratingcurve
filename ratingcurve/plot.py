@@ -46,9 +46,9 @@ class PlotMixin:
         else:
             q_sigma = None
 
-        residuals = rating.residuals(trace)
-
-        _plot_gagings(rating.h_obs, residuals, q_sigma=q_sigma, ax=ax)
+        # approximate percentage error
+        residuals = rating.residuals(trace) * 100
+        ax.errorbar(y=rating.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o", lw=1)
         rating._format_residual_plot(ax)
 
 
