@@ -24,24 +24,29 @@ In the segmented power law $b_o$ is the slope and each subsequent $b_i$ are adju
 This library is for experimental purposes only.
 
 ## Installation
-
+Install using pip
 ```sh
-conda env create -f environment.yaml # use mamba if possible
-
-# add environment to jupyter
+pip install ratingcurve
+```
+or conda
+```sh
+# acreate a new environment
+conda create -n ratingcurve
 conda activate ratingcurve
+conda install -c conda-forge ratingcurve
+# add environment to jupyter
 python -m ipykernel install --user --name=ratingcurve
 ```
 
 ## Getting Started
 The [`segmented-power-law-demo.ipynb`](https://github.com/thodson-usgs/ratingcurve/blob/main/notebooks/segmented-power-law-demo.ipynb)
 notebook demonstrates basic use of the package.
-To run the notebook click the Google Colab badge \
+You can try it out in Google Colab
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/master/notebooks/segmented-power-law-demo.ipynb)
 
-or to run the notebook locally
+or locally using the environment created in the previous step
 ```sh
-conda activate base # or your jupyter lab environment
+conda activate base # or your prefered jupyter lab environment
 jupyter lab
 ```
 then open the notebook and select the `ratingcurve` kernel that was installed earlier.
