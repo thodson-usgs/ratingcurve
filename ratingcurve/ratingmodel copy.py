@@ -8,7 +8,7 @@ import pytensor.tensor as at
 
 from dataclasses import dataclass, asdict
 from pymc import Model
-from pandas import DataFrame
+from pandas import DataFrame, Series
 
 from .transform import LogZTransform, Dmatrix
 from .plot import PowerLawPlotMixin, SplinePlotMixin
@@ -16,7 +16,6 @@ from .plot import PowerLawPlotMixin, SplinePlotMixin
 if TYPE_CHECKING:
     from arviz import InferenceData
     from numpy.typing import ArrayLike
-
 
 class Rating(Model):
     """Abstract base class for rating models
@@ -38,7 +37,6 @@ class Rating(Model):
     def sample(self, n_samples, n_tune):
         with self.model:
             trace = pm.sample(50_000)
-        return trace
 
     def table(self, trace, h=None, step=0.01, extend=1.1) -> DataFrame:
         """Return stage-discharge rating table
@@ -115,13 +113,11 @@ class Rating(Model):
         """
         raise NotImplementedError
 
-    def _format_ratingdata(self, h: ArrayLike, q_z: ArrayLike) -> RatingData:
+    def _format_ratingdata(self, q_z) -> RatingData:
         """Helper function that formats RatingData
 
         Parameters
         ----------
-        h : array-like
-            Stage values.
         q_z : array-like
             Predicted discharge values.
 
@@ -132,7 +128,7 @@ class Rating(Model):
         """
         transform = self.q_transform
 
-        return RatingData(stage=h.squeeze(),
+        return RatingData(stage=self.h_obs,
                           discharge=transform.mean(q_z).squeeze(),
                           sigma=transform.sigma(q_z).squeeze())
 
@@ -200,6 +196,12 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 # TODO compute threshold
 
         # set random init on unit interval then scale based on bounds
+        self._init_hs = np.random.rand(self.segments, 1) \
+            * (self._hs_upper_bounds - self._hs_lower_bounds) \
+            + self._hs_lower_bounds
+
+        self._init_hs = np.sort(self._init_hs, axis=0)  # not necessary?
+
         self._setup_powerlaw()
 
     def set_normal_prior(self):
@@ -211,16 +213,9 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         prior={'distribution': 'normal', 'mu': [], 'sigma': []}
         """
         with Model(coords=self.COORDS) as model:
-
-            self._init_hs = np.sort(np.array(self.prior['mu']))
-            self._init_hs = self._init_hs.reshape((self.segments, 1))
-
-            prior_mu = np.array(self.prior['mu']).reshape((self.segments, 1))
-            prior_sigma = np.array(self.prior['sigma']).reshape((self.segments, 1))
-
             hs = pm.TruncatedNormal('hs',
-                                    mu=prior_mu,
-                                    sigma=prior_sigma,
+                                    mu=self.prior['mu'],
+                                    sigma=self.prior['sigma'],
                                     lower=self._hs_lower_bounds,
                                     upper=self._hs_upper_bounds,
                                     shape=(self.segments, 1),
@@ -233,21 +228,8 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         Make no prior assumption about the location of the breakpoints, only their number.
 
-        prior={distribution:'uniform', initval: []}
-
-        TODO: clean this up
+        prior={distribution:'uniform'}
         """
-        self._init_hs = self.prior.get('initval', None)
-
-        if self._init_hs is None:
-            self._init_hs = np.random.rand(self.segments, 1) \
-                * (self._hs_upper_bounds - self._hs_lower_bounds) \
-                + self._hs_lower_bounds
-            self._init_hs = np.sort(self._init_hs, axis=0)  # not necessary?
-
-        else:
-            self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
-
         with Model(coords=self.COORDS) as model:
             hs = pm.Uniform('hs',
                             lower=self._hs_lower_bounds,
@@ -308,7 +290,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
         q_z = a + (b1*w).sum(axis=2)
 
-        return self._format_ratingdata(h=h, q_z=q_z)
+        return self._format_ratingdata(q_z)
 
 
 class SplineRating(Rating, SplinePlotMixin):
@@ -357,7 +339,8 @@ class SplineRating(Rating, SplinePlotMixin):
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
-    def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
+
+    def predict(self, trace: InferenceData, h: ArrayLike):
         """Predicts values of new data with a trained rating model
 
         Parameters
@@ -375,7 +358,7 @@ class SplineRating(Rating, SplinePlotMixin):
         B = self.d_transform(h)
         q_z = np.dot(B, w.T)
 
-        return self._format_ratingdata(h=h, q_z=q_z)
+        return self._format_ratingdata(q_z)
 
 
 @dataclass
@@ -398,8 +381,8 @@ class RatingData():
 def stage_range(minimum: float, maximum: float, step: float = 0.01):
     """Returns a range of stage values
 
-    To compute the range, round down (up) to the nearest step for
-    the minumum (maximum).
+    To compute the range, round down (up) to the nearest step for 
+    the minumum (maximum). 
 
     Parameters
     ----------

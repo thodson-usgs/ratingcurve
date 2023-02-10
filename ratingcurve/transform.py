@@ -22,17 +22,29 @@ class Transform:
         self.std_ = None
 
     def transform(self, x: ArrayLike) -> ArrayLike:
+        """Transform data
+
+        Parameters
+        ----------
+        x : array_like
+            Data to be transformed.
+
+        Returns
+        -------
+        ArrayLike
+            Transformed data.
+        """
         return x
-    
+
     def untransform(self, x: ArrayLike) -> ArrayLike:
-        return x 
-    
+        return x
+
     def mean(self):
         raise NotImplementedError
-    
+
     def sigma(self):
         raise NotImplementedError
-    
+
     def median(self):
         raise NotImplementedError
 
@@ -59,6 +71,11 @@ class ZTransform(Transform):
         ----------
         x : array_like
           Data to be transformed.
+
+        Returns
+        -------
+        ArrayLike
+            original data standardized to zero mean and unit variance (z-score)
         """
         return (x - self.mean_) / self.std_
 
@@ -69,6 +86,11 @@ class ZTransform(Transform):
         ----------
         z : array_like
           Transformed data
+
+        Returns
+        -------
+        ArrayLike
+            z-scores transformed back to original units.
         """
         return z * self.std_ + self.mean_
 
@@ -97,6 +119,11 @@ class LogZTransform(ZTransform):
         ----------
         x : array_like
           Data to be transformed.
+
+        Returns
+        -------
+        ArrayLike
+            log transform data standardized to zero mean and unit variance (log z-score)
         """
         log_x = np.log(x)
         return super().transform(log_x)
@@ -108,11 +135,16 @@ class LogZTransform(ZTransform):
         ----------
         z : array_like
           Transformed data.
+
+        Returns
+        -------
+        ArrayLike
+            log z-scores transformed back to original units.
         """
         log_x = super().untransform(z)
         return np.exp(log_x)
-    
-    def mean(self, z: ArrayLike, axis: int=1) -> ArrayLike:
+
+    def mean(self, z: ArrayLike, axis: int = 1) -> ArrayLike:
         """Compute mean.
 
         Parameters
@@ -122,13 +154,13 @@ class LogZTransform(ZTransform):
 
         Returns
         -------
-        mean : array_like
+        ArrayLike
             Arithmetic mean.
         """
         x = self.untransform(z)
         return x.mean(axis=axis)
-    
-    def sigma(self, z: ArrayLike, axis: int=1) -> ArrayLike:
+
+    def sigma(self, z: ArrayLike, axis: int = 1) -> ArrayLike:
         """Compute standard deviation.
 
         Parameters
@@ -138,13 +170,13 @@ class LogZTransform(ZTransform):
 
         Returns
         -------
-        sigma : array_like
+        ArrayLike
             Multiplicative standard deviation.
         """
         sigma = z.std(axis=axis)
         return np.exp(sigma)
     
-    def median(self, z: ArrayLike, axis: int=1) -> ArrayLike:
+    def median(self, z: ArrayLike, axis: int = 1) -> ArrayLike:
         """Compute median.
 
         Parameters
@@ -154,7 +186,7 @@ class LogZTransform(ZTransform):
 
         Returns
         -------
-        median : array_like
+        ArrayLike
             Median or geometric mean.
         """
         x = self.untransform(z)
@@ -166,11 +198,26 @@ class UnitTransform(Transform):
     """
     def __init__(self, x: ArrayLike):
         """Create UnitTransform of array
+
+        Parameters
+        ----------
+        x : array_like
+            Data that defines the transform.
         """
         self.max_ = np.nanmax(x, axis=0)
 
     def transform(self, x: ArrayLike) -> ArrayLike:
         """Transform to unit interval
+
+        Parameters
+        ----------
+        x : array_like
+            Data to be transformed.
+        
+        Returns
+        -------
+        ArrayLike
+            Original data transformed to unit interval
         """
         return x/self.max_
 
@@ -181,6 +228,11 @@ class UnitTransform(Transform):
         ----------
         x : array_like
           Transformed data.
+
+        Returns
+        -------
+        ArrayLike
+            Unit interval transformed back to original units.
         """
         return x*self.max_
 
@@ -188,13 +240,32 @@ class UnitTransform(Transform):
 class Dmatrix():
     """Transform for spline design matrix
     """
-    def __init__(self, stage, df, form='cr'):
+    def __init__(self, stage: ArrayLike, df: int, form: str = 'cr'):
+        """Create a Dmatrix object
+        
+        Parameters
+        ----------
+        stage : array_like
+          Stage data
+        df : int
+          Degrees of freedom
+        form : str
+          Spline form
+        """
         temp = dmatrix(f"{form}(stage, df={df}) - 1", {"stage": stage})
         self.design_info = temp.design_info
 
-    def transform(self, stage):
+    def transform(self, stage: ArrayLike) -> ArrayLike:
+        """Transform stage using spline design matrix
+ 
+        Parameters
+        ----------
+        stage : array-like
+          Stage data
+
+        Returns
+        -------
+        ArrayLike
+            Transformed data
+        """
         return np.asarray(build_design_matrices([self.design_info], {"stage": stage})).squeeze()
-
-
-   
-

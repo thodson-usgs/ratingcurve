@@ -8,11 +8,12 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
 if TYPE_CHECKING:
-    from .ratingmodel import Rating, PowerLawRating, SplineRating
+    from .ratingmodel import PowerLawRating, SplineRating
     from arviz import InferenceData
 
 
-DEFAULT_FIGSIZE = (5,5)
+DEFAULT_FIGSIZE = (5, 5)
+
 
 class PlotMixin:
     """Mixin class for plotting rating models
@@ -29,7 +30,7 @@ class PlotMixin:
             fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
         return ax
-    
+
     def plot_residuals(rating, trace: InferenceData, ax=None):
         """Plots residuals
 
@@ -40,7 +41,7 @@ class PlotMixin:
         """
         ax = rating.setup_plot(ax=ax)
 
-        #TODO: this could be a function 
+        #TODO: this could be a function
         if rating.q_sigma is not None:
             q_sigma = rating.q_sigma
         else:
@@ -50,7 +51,6 @@ class PlotMixin:
         residuals = rating.residuals(trace) * 100
         ax.errorbar(y=rating.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o", lw=1)
         rating._format_residual_plot(ax)
-
 
     def _format_rating_plot(rating, ax):
         """Format rating plot
@@ -77,6 +77,7 @@ class PlotMixin:
         xlim = ax.get_xlim()
         x_max = max(abs(xlim[0]), abs(xlim[1]))
         ax.set_xlim(-x_max, x_max)
+
 
 class SplinePlotMixin(PlotMixin):
     """Mixin class for plotting spline rating models

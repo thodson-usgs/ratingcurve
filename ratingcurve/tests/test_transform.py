@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 
-from ratingcurve.transform import *
+from ..transform import *
 
 class TestTransform:
     def test_transform(self):
