@@ -41,7 +41,7 @@ class PlotMixin:
         """
         ax = rating.setup_plot(ax=ax)
 
-        #TODO: this could be a function
+        # TODO: this could be a function
         if rating.q_sigma is not None:
             q_sigma = rating.q_sigma
         else:

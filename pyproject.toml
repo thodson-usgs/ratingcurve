@@ -24,7 +24,7 @@ dependencies = [
 dynamic = ["version"]
 
 [tool.setuptools]
-packages = ["ratingcurve"]
+packages = ["ratingcurve","ratingcurve.data"]
 
 [project.optional-dependencies]
 test = [

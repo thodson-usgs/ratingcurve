@@ -3,12 +3,13 @@ import pkg_resources
 from pandas import read_csv
 
 DATASETS = {
-    'chalk artificial' : 'chalk_artificial.csv',
-    'co channel' : 'co_channel.csv',
-    'green channel' : 'green_channel.csv',
-    'provo natural' : 'provo_natural.csv',
-    '3-segment simulated' : 'simulated_rating.csv'
+    'chalk artificial': 'chalk_artificial.csv',
+    'co channel': 'co_channel.csv',
+    'green channel': 'green_channel.csv',
+    'provo natural': 'provo_natural.csv',
+    '3-segment simulated': 'simulated_rating.csv'
 }
+
 
 def list():
     """Returns a list of tutorial datasets
