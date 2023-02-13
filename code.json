@@ -2,23 +2,23 @@
   {
     "name": "ratingcurve",
     "organization": "U.S. Geological Survey",
-    "description": "*A Python library for fitting stage-discharge rating curves.",
-    "version": "0.3.1",
-    "status": "Production",
+    "description": "A Python library for fitting stage-discharge rating curves.",
+    "version": "main",
+    "status": "development",
 
     "permissions": {
       "usageType": "openSource",
       "licenses": [
         {
           "name": "Public Domain, CC0-1.0",
-          "URL": "https://code.usgs.gov/wma/uncertainty/ratingcurve/-/raw/master/LICENSE.md"
+          "URL": "https://code.usgs.gov/wma/uncertainty/ratingcurve/-/raw/main/LICENSE.md"
         }
       ]
     },
 
     "homepageURL": "https://code.usgs.gov/wma/uncertainty/ratingcurve",
-    "downloadURL": "https://code.usgs.gov/wma/uncertainty/ratingcurve/-/archive/master/ratingcurve-master.zip",
-    "disclaimerURL": "https://code.usgs.gov/wma/uncertainty/ratingcurve/-/raw/master/DISCLAIMER.md",
+    "downloadURL": "https://code.usgs.gov/wma/uncertainty/ratingcurve/-/archive/main/ratingcurve-main.zip",
+    "disclaimerURL": "https://code.usgs.gov/wma/uncertainty/ratingcurve/-/raw/main/DISCLAIMER.md",
     "repositoryURL": "https://code.usgs.gov/wma/uncertainty/ratingcurve.git",
     "vcs": "git",
 
@@ -39,7 +39,7 @@
     },
 
     "date": {
-      "metadataLastUpdated": "2022-12-08"
+      "metadataLastUpdated": "2023-2-13"
     }
   }
 ]
