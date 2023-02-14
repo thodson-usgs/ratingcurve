@@ -4,7 +4,7 @@
     "organization": "U.S. Geological Survey",
     "description": "A Python library for fitting stage-discharge rating curves.",
     "version": "main",
-    "status": "development",
+    "status": "Development",
 
     "permissions": {
       "usageType": "openSource",
@@ -39,7 +39,7 @@
     },
 
     "date": {
-      "metadataLastUpdated": "2023-2-13"
+      "metadataLastUpdated": "2023-02-13"
     }
   }
 ]
