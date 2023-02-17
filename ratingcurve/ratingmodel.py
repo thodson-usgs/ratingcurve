@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 import pymc as pm
-import pytensor.tensor as at
+import aesara.tensor as at
 
 from dataclasses import dataclass, asdict
 from pymc import Model
