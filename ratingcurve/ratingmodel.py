@@ -262,8 +262,8 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         """
         with Model(coords=self.COORDS) as model:
             h = pm.MutableData("h", self.h_obs)
-            w = pm.Normal("w", mu=0, sigma=3, dims="splines")
-            a = pm.Normal("a", mu=0, sigma=5)
+            w = pm.Normal("w", mu=0, sigma=1, dims="splines")
+            a = pm.Normal("a", mu=0, sigma=1)
 
             # set prior on break points
             if self.prior['distribution'] == 'normal':
