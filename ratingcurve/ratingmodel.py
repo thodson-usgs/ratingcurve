@@ -220,14 +220,15 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             prior_mu = np.array(self.prior['mu']).reshape((self.segments, 1))
             prior_sigma = np.array(self.prior['sigma']).reshape((self.segments, 1))
 
-            hs = pm.TruncatedNormal('hs',
-                                    mu=prior_mu,
-                                    sigma=prior_sigma,
-                                    lower=self._hs_lower_bounds,
-                                    upper=self._hs_upper_bounds,
-                                    shape=(self.segments, 1),
-                                    initval=self._init_hs)
+            hs_ = pm.TruncatedNormal('hs_',
+                                     mu=prior_mu,
+                                     sigma=prior_sigma,
+                                     lower=self._hs_lower_bounds,
+                                     upper=self._hs_upper_bounds,
+                                     shape=(self.segments, 1),
+                                     initval=self._init_hs)
 
+            hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
         return hs
 
     def set_uniform_prior(self):
@@ -251,11 +252,14 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
 
         with Model(coords=self.COORDS) as model:
-            hs = pm.Uniform('hs',
+            hs_ = pm.Uniform('hs_',
                             lower=self._hs_lower_bounds,
                             upper=self._hs_upper_bounds,
                             shape=(self.segments, 1),
                             initval=self._init_hs)
+
+            # Sorting reduces multimodality. The benifit increases with fewer observations.
+            hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
 
         return hs
 
