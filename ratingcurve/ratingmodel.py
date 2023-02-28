@@ -253,10 +253,10 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         with Model(coords=self.COORDS) as model:
             hs_ = pm.Uniform('hs_',
-                            lower=self._hs_lower_bounds,
-                            upper=self._hs_upper_bounds,
-                            shape=(self.segments, 1),
-                            initval=self._init_hs)
+                             lower=self._hs_lower_bounds,
+                             upper=self._hs_upper_bounds,
+                             shape=(self.segments, 1),
+                             initval=self._init_hs)
 
             # Sorting reduces multimodality. The benifit increases with fewer observations.
             hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
