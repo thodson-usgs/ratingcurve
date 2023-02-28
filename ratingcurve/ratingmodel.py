@@ -4,11 +4,13 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 import pymc as pm
+import arviz as az
 import pytensor.tensor as at
 
 from dataclasses import dataclass, asdict
 from pymc import Model
 from pandas import DataFrame
+
 
 from .transform import LogZTransform, Dmatrix
 from .plot import PowerLawPlotMixin, SplinePlotMixin
@@ -218,14 +220,15 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             prior_mu = np.array(self.prior['mu']).reshape((self.segments, 1))
             prior_sigma = np.array(self.prior['sigma']).reshape((self.segments, 1))
 
-            hs = pm.TruncatedNormal('hs',
-                                    mu=prior_mu,
-                                    sigma=prior_sigma,
-                                    lower=self._hs_lower_bounds,
-                                    upper=self._hs_upper_bounds,
-                                    shape=(self.segments, 1),
-                                    initval=self._init_hs)
+            hs_ = pm.TruncatedNormal('hs_',
+                                     mu=prior_mu,
+                                     sigma=prior_sigma,
+                                     lower=self._hs_lower_bounds,
+                                     upper=self._hs_upper_bounds,
+                                     shape=(self.segments, 1),
+                                     initval=self._init_hs)
 
+            hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
         return hs
 
     def set_uniform_prior(self):
@@ -249,11 +252,14 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
 
         with Model(coords=self.COORDS) as model:
-            hs = pm.Uniform('hs',
-                            lower=self._hs_lower_bounds,
-                            upper=self._hs_upper_bounds,
-                            shape=(self.segments, 1),
-                            initval=self._init_hs)
+            hs_ = pm.Uniform('hs_',
+                             lower=self._hs_lower_bounds,
+                             upper=self._hs_upper_bounds,
+                             shape=(self.segments, 1),
+                             initval=self._init_hs)
+
+            # Sorting reduces multimodality. The benifit increases with fewer observations.
+            hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
 
         return hs
 
@@ -262,8 +268,11 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         """
         with Model(coords=self.COORDS) as model:
             h = pm.MutableData("h", self.h_obs)
-            w = pm.Normal("w", mu=0, sigma=3, dims="splines")
-            a = pm.Normal("a", mu=0, sigma=5)
+            w_mu = np.zeros(self.segments)
+            # see Le Coz 2014 for default values, but typical between 1.5 and 2.5
+            w_mu[0] = 1.6 
+            w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
+            a = pm.Normal("a", mu=0, sigma=2)
 
             # set prior on break points
             if self.prior['distribution'] == 'normal':
@@ -291,24 +300,26 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         RatingData
             Dataframe with columns 'stage', 'discharge', and 'sigma' containing predicted discharge and uncertainty.
         """
-        chain = trace.posterior['chain'].shape[0]
-        draw = trace.posterior['draw'].shape[0]
+        trace = az.extract(trace)
+        sample = trace.sample.shape[0]
+        a = trace['a'].values
+        w = trace['w'].values
+        w2 = np.expand_dims(w.T, -1) #FIX
+        hs = np.moveaxis(trace['hs'].values, -1, 0)
+        sigma = trace['sigma'].values
 
-        a = trace.posterior['a'].values.reshape(chain, draw, 1)
-        w = trace.posterior['w'].values.reshape(chain, draw, -1, 1)
-        hs = trace.posterior['hs'].values
-
-        clips = np.zeros((hs.shape[2], 1))
+        clips = np.zeros((hs.shape[1], 1))
         clips[0] = -np.inf
-        h_tile = np.tile(h, draw).reshape(chain, draw, 1, -1)
+        h_tile = np.tile(h, sample).reshape(sample, 1, -1)
 
-        h0_offset = np.ones((hs.shape[2], 1))
+        h0_offset = np.ones_like(clips)
         h0_offset[0] = 0
         h0 = hs - h0_offset
         b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
-        q_z = a + (b1*w).sum(axis=2)
+        q_z = a + (b1*w2).sum(axis=1).T 
+        e = np.random.normal(0, sigma, sample)
 
-        return self._format_ratingdata(h=h, q_z=q_z)
+        return self._format_ratingdata(h=h, q_z=q_z+e)
 
 
 class SplineRating(Rating, SplinePlotMixin):
@@ -371,11 +382,15 @@ class SplineRating(Rating, SplinePlotMixin):
         RatingData
             dataclass with stage, discharge, and sigma.
         """
-        w = trace.posterior['w'].values.squeeze()
+        trace = az.extract(trace)
+        sample = trace.sample.shape[0]
+        w = trace['w'].values.squeeze()
         B = self.d_transform(h)
-        q_z = np.dot(B, w.T)
+        sigma = trace['sigma'].values
+        q_z = np.dot(B, w)
+        e = np.random.normal(0, sigma, sample)
 
-        return self._format_ratingdata(h=h, q_z=q_z)
+        return self._format_ratingdata(h=h, q_z=q_z+e)
 
 
 @dataclass
