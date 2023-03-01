@@ -30,6 +30,29 @@ class PlotMixin:
             fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
         return ax
+ 
+    def plot(self, trace: InferenceData, ax=None):
+        """Plots rating curve
+
+        Parameters
+        ----------
+        trace : ArviZ InferenceData
+        ax : matplotlib axes
+        """
+        ax = self.setup_plot(ax=ax)
+        self._format_rating_plot(ax)
+        #_plot_rating(self.table(trace), ax=ax)
+
+        rating_table = self.table(trace)
+        h = rating_table['stage']
+        q = rating_table['discharge']
+        sigma = rating_table['sigma']
+        ax.plot(q, h, color='black')
+        q_u = q * (sigma)**1.96  # this should be 2 sigma
+        q_l = q / (sigma)**1.96
+        ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
+
+        self.plot_gagings(ax=ax)
 
     def plot_residuals(rating, trace: InferenceData, ax=None):
         """Plots residuals
@@ -40,6 +63,7 @@ class PlotMixin:
         ax : matplotlib axes
         """
         ax = rating.setup_plot(ax=ax)
+        rating._format_rating_plot(ax)
 
         # TODO: this could be a function
         if rating.q_sigma is not None:
@@ -51,6 +75,28 @@ class PlotMixin:
         residuals = rating.residuals(trace) * 100
         ax.errorbar(y=rating.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o", lw=1)
         rating._format_residual_plot(ax)
+
+    def plot_gagings(rating, ax=None):
+        """Plot gagings with uncertainty
+
+        Parameters
+        ----------
+        ax : matplotlib axes, optional
+        """
+        ax = rating.setup_plot(ax=ax)
+
+        q_sigma = rating.q_sigma
+        h_obs = rating.h_obs
+        q_obs = rating.q_obs
+
+        if q_sigma is not None:
+            sigma_2 = 1.96 * (np.exp(q_sigma) - 1)*np.abs(q_obs)
+
+        else:
+            sigma_2 = 0
+
+        ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o")
+        rating._format_rating_plot(ax)
 
     def _format_rating_plot(rating, ax):
         """Format rating plot
@@ -91,14 +137,18 @@ class SplinePlotMixin(PlotMixin):
         ax : matplotlib axes
         """
         ax = self.setup_plot(ax=ax)
-        self._format_rating_plot(ax)
-        _plot_spline_rating(self, trace, ax=ax)
+        super().plot(trace, ax=ax)
+
+    def _plot_knots(self, ax):
+        """TODO: Plot knots
+        """
+        raise NotImplementedError
 
 
 class PowerLawPlotMixin(PlotMixin):
     """Mixin class for plotting power law rating models
     """
-    def plot(self, trace: InferenceData, ax=None):
+    def plot(self, trace: InferenceData=None, ax=None):
         """Plots rating curve
 
         Parameters
@@ -107,9 +157,8 @@ class PowerLawPlotMixin(PlotMixin):
         ax : matplotlib axes
         """
         ax = self.setup_plot(ax=ax)
-        self._format_rating_plot(ax)
         self._plot_transitions(trace, ax=ax)
-        _plot_power_law_rating(self, trace, ax=ax)
+        super().plot(trace, ax=ax)
 
     def plot_residuals(self, trace: InferenceData, ax=None):
         """Plots residuals
@@ -123,7 +172,7 @@ class PowerLawPlotMixin(PlotMixin):
         self._plot_transitions(trace, ax=ax)
         super().plot_residuals(trace, ax=ax)
 
-    def _plot_transitions(self, trace, ax):
+    def _plot_transitions(self, trace: InferenceData, ax):
         """Plot transitions (breakpoints)
 
         Parameters
@@ -141,100 +190,3 @@ class PowerLawPlotMixin(PlotMixin):
 
         [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)]
         [ax.axhline(u, color='grey', linestyle='dotted') for u in hs_u]
-
-
-def _plot_spline_rating(rating: SplineRating, trace: InferenceData, ax=None):
-    """Plots sline power law rating model
-
-    Parameters
-    ----------
-    rating : SplineRating
-        Spline rating model
-    trace : ArviZ InferenceData
-    ax : matplotlib axes
-
-    Returns
-    -------
-    figure, axes
-    """
-    q_obs = rating.q_obs
-    h_obs = rating.h_obs
-
-    if rating.q_sigma is not None:
-        q_sigma = rating.q_sigma
-    else:
-        q_sigma = None
-
-    _plot_gagings(h_obs, q_obs, q_sigma, ax=ax)
-
-    _plot_rating(rating.table(trace), ax=ax)
-
-
-def _plot_power_law_rating(rating: PowerLawRating, trace: InferenceData, ax=None):
-    """Plots segmented power law rating model
-
-    Parameters
-    ----------
-    rating : PowerLawRating
-    trace : ArviZ InferenceData
-    ax : matplotlib axes
-
-    Returns
-    -------
-    figure, axes
-    """
-    q_obs = rating.q_obs
-    h_obs = rating.h_obs
-
-    if rating.q_sigma is not None:
-        q_sigma = rating.q_sigma
-    else:
-        q_sigma = None
-
-    _plot_gagings(h_obs, q_obs, q_sigma, ax=ax)
-    _plot_rating(rating.table(trace), ax=ax)
-
-
-def _plot_rating(rating_table, ax=None):
-    """"Plot rating table with uncertainty
-
-    TODO This function is hack. Should be able to generate posterior predictions directly,
-    but this version of pymc seems to have bug.
-
-    Parameters
-    ----------
-    rating_table : pandas DataFrame
-    ax : matplotlib axes, optional
-    """
-    h = rating_table['stage']
-    q = rating_table['discharge']
-    sigma = rating_table['sigma']
-    ax.plot(q, h, color='black')
-    q_u = q * (sigma)**1.96  # this should be 2 sigma
-    q_l = q / (sigma)**1.96
-    ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
-
-
-def _plot_gagings(h_obs, q_obs, q_sigma=None, ax=None):
-    """Plot gagings with uncertainty
-
-    Parameters
-    ----------
-    h_obs : array-like
-        Stage observations.
-    q_obs : array-like
-        Discharge observations.
-    q_sigma : array-like, optional
-        Discharge uncertainty (1 sigma)
-    ax : matplotlib axes, optional
-    """
-    if ax is None:
-        fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
-
-    if q_sigma is not None:
-        sigma_2 = 1.96 * (np.exp(q_sigma) - 1)*np.abs(q_obs)
-
-    else:
-        sigma_2 = 0
-
-    ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o")

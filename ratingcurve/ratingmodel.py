@@ -33,15 +33,6 @@ class Rating(Model):
         """
         super().__init__(name, model)
 
-    def fit(self, method="advi", n=150_000):
-        mean_field = pm.fit(method=method, n=n, model=self.model)
-        return mean_field
-
-    def sample(self, n_samples, n_tune):
-        with self.model:
-            trace = pm.sample(50_000)
-        return trace
-
     def table(self, trace, h=None, step=0.01, extend=1.1) -> DataFrame:
         """Return stage-discharge rating table
 
@@ -106,17 +97,6 @@ class Rating(Model):
         """
         raise NotImplementedError
 
-    def save(self, filename: str) -> None:
-        """Save model to file
-        """
-        raise NotImplementedError
-
-    @staticmethod
-    def load(filename: str) -> Model:
-        """Load a saved model
-        """
-        raise NotImplementedError
-
     def _format_ratingdata(self, h: ArrayLike, q_z: ArrayLike) -> RatingData:
         """Helper function that formats RatingData
 
@@ -173,6 +153,9 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         self.q_transform = LogZTransform(self.q_obs)
         self.y = self.q_transform.transform(self.q_obs)
 
+        COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(segments)}
+        self.add_coords(COORDS)
+
         # transform observational uncertainty to log scale
         if q_sigma is None:
             self.q_sigma = 0
@@ -180,8 +163,6 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             self.q_sigma = np.log(1 + q_sigma/q)
 
         self.h_obs = h
-
-        self._inf = [np.inf]
 
         # clipping boundary
         clips = np.zeros((self.segments, 1))
@@ -192,8 +173,6 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         self._h0_offsets = np.ones((self.segments, 1))
         self._h0_offsets[0] = 0
 
-        self.COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(segments)}
-
         # compute initval
         self._hs_lower_bounds = np.zeros((self.segments, 1)) + self.h_obs.min()
         self._hs_lower_bounds[0] = 0
@@ -201,7 +180,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         self._hs_upper_bounds = np.zeros((self.segments, 1)) + self.h_obs.max()
         self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 # TODO compute threshold
 
-        # set random init on unit interval then scale based on bounds
+        # setup model
         self._setup_powerlaw()
 
     def set_normal_prior(self):
@@ -212,24 +191,23 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         prior={'distribution': 'normal', 'mu': [], 'sigma': []}
         """
-        with Model(coords=self.COORDS) as model:
+        self._init_hs = np.sort(np.array(self.prior['mu']))
+        self._init_hs = self._init_hs.reshape((self.segments, 1))
 
-            self._init_hs = np.sort(np.array(self.prior['mu']))
-            self._init_hs = self._init_hs.reshape((self.segments, 1))
+        prior_mu = np.array(self.prior['mu']).reshape((self.segments, 1))
+        prior_sigma = np.array(self.prior['sigma']).reshape((self.segments, 1))
 
-            prior_mu = np.array(self.prior['mu']).reshape((self.segments, 1))
-            prior_sigma = np.array(self.prior['sigma']).reshape((self.segments, 1))
+        hs_ = pm.TruncatedNormal('hs_',
+                                 mu=prior_mu,
+                                 sigma=prior_sigma,
+                                 lower=self._hs_lower_bounds,
+                                 upper=self._hs_upper_bounds,
+                                 shape=(self.segments, 1),
+                                 initval=self._init_hs)
 
-            hs_ = pm.TruncatedNormal('hs_',
-                                     mu=prior_mu,
-                                     sigma=prior_sigma,
-                                     lower=self._hs_lower_bounds,
-                                     upper=self._hs_upper_bounds,
-                                     shape=(self.segments, 1),
-                                     initval=self._init_hs)
-
-            hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
-        return hs
+        # Sorting reduces multimodality. The benifit increases with fewer observations.
+        hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
+        return  hs
 
     def set_uniform_prior(self):
         """Uniform prior for breakpoints
@@ -251,40 +229,37 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         else:
             self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
 
-        with Model(coords=self.COORDS) as model:
-            hs_ = pm.Uniform('hs_',
-                             lower=self._hs_lower_bounds,
-                             upper=self._hs_upper_bounds,
-                             shape=(self.segments, 1),
-                             initval=self._init_hs)
+        hs_ = pm.Uniform('hs_',
+                         lower=self._hs_lower_bounds,
+                         upper=self._hs_upper_bounds,
+                         shape=(self.segments, 1),
+                         initval=self._init_hs)
 
-            # Sorting reduces multimodality. The benifit increases with fewer observations.
-            hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
-
+        # Sorting reduces multimodality. The benifit increases with fewer observations.
+        hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
         return hs
 
     def _setup_powerlaw(self):
         """Helper function that defines model
         """
-        with Model(coords=self.COORDS) as model:
-            h = pm.MutableData("h", self.h_obs)
-            w_mu = np.zeros(self.segments)
-            # see Le Coz 2014 for default values, but typical between 1.5 and 2.5
-            w_mu[0] = 1.6 
-            w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
-            a = pm.Normal("a", mu=0, sigma=2)
+        h = pm.MutableData("h", self.h_obs)
+        w_mu = np.zeros(self.segments)
+        # see Le Coz 2014 for default values, but typical between 1.5 and 2.5
+        w_mu[0] = 1.6
+        w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
+        a = pm.Normal("a", mu=0, sigma=2)
 
-            # set prior on break points
-            if self.prior['distribution'] == 'normal':
-                hs = self.set_normal_prior()
-            else:
-                hs = self.set_uniform_prior()
+        # set prior on break points
+        if self.prior['distribution'] == 'normal':
+            hs = self.set_normal_prior()
+        else:
+            hs = self.set_uniform_prior()
 
-            h0 = hs - self._h0_offsets
-            b = pm.Deterministic('b', at.switch(at.le(h, hs), self._clips, at.log(h-h0)))
+        h0 = hs - self._h0_offsets
+        b = pm.Deterministic('b', at.switch(at.le(h, hs), self._clips, at.log(h-h0)))
 
-            sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
-            mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
+        sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
+        mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
@@ -335,7 +310,7 @@ class SplineRating(Rating, SplinePlotMixin):
             Input arrays of discharge (q) and stage (h) observations.
         q_sigma : array-like, optional
             Input array of discharge uncertainty in units of discharge.
-        knots : arrak-like
+        knots : array-like
             Stage value locations of the spline knots.
         mean, sd : float
             Prior mean and standard deviation for the spline coefficients.
@@ -425,16 +400,3 @@ def stage_range(minimum: float, maximum: float, step: float = 0.01):
     stop = maximum + (maximum % step)
 
     return np.arange(start, stop, step)
-
-
-def compute_knots(minimum: float, maximum: float, n: int):
-    """Return list of spline knots
-
-    Parameters
-    ----------
-    minimum, maximum : float
-        Minimum and maximum stage (h) observations.
-    n : int
-        Number of knots.
-    """
-    return np.linspace(minimum, maximum, n)
