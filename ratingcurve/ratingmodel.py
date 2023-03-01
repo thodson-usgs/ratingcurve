@@ -14,13 +14,14 @@ from pandas import DataFrame
 
 from .transform import LogZTransform, Dmatrix
 from .plot import PowerLawPlotMixin, SplinePlotMixin
+from .sklearn import RegressorMixin
 
 if TYPE_CHECKING:
     from arviz import InferenceData
     from numpy.typing import ArrayLike
 
 
-class Rating(Model):
+class Rating(Model, RegressorMixin):
     """Abstract base class for rating models
     """
     def __init__(self, name='', model=None):
@@ -330,6 +331,7 @@ class SplineRating(Rating, SplinePlotMixin):
             self.q_sigma = np.log(1 + q_sigma/q)
 
         self._dmatrix = Dmatrix(self.h_obs, df, 'cr')
+        import pdb; pdb.set_trace()
         self.d_transform = self._dmatrix.transform
 
         self.B = self.d_transform(h)
