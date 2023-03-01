@@ -242,6 +242,11 @@ class Dmatrix():
     """
     def __init__(self, stage: ArrayLike, df: int, form: str = 'cr'):
         """Create a Dmatrix object
+
+        Create a design matrix for a natural cubic spline, which is a cubic
+        spline that is additionally constrained to be linear at the boundaries.
+        Due to this constraint, the total degrees of freedom equals the number
+        of knots minus 1.
         
         Parameters
         ----------
@@ -251,9 +256,13 @@ class Dmatrix():
           Degrees of freedom
         form : str
           Spline form
+
         """
+        n_knots = df - 1
+        self.knots = compute_knots(stage.min(), stage.max(), n=n_knots)
         temp = dmatrix(f"{form}(stage, df={df}) - 1", {"stage": stage})
         self.design_info = temp.design_info
+        #self.design_info = dmatrix(f"{form}(stage, knots={tuple(self.knots[1:-1])}) - 1", {"stage": stage})
 
     def transform(self, stage: ArrayLike) -> ArrayLike:
         """Transform stage using spline design matrix
@@ -269,3 +278,16 @@ class Dmatrix():
             Transformed data
         """
         return np.asarray(build_design_matrices([self.design_info], {"stage": stage})).squeeze()
+
+
+def compute_knots(minimum: float, maximum: float, n: int):
+    """Return list of spline knots
+
+    Parameters
+    ----------
+    minimum, maximum : float
+        Minimum and maximum stage (h) observations.
+    n : int
+        Number of knots.
+    """
+    return np.linspace(minimum, maximum, n)

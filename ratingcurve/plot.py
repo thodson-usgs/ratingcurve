@@ -137,12 +137,13 @@ class SplinePlotMixin(PlotMixin):
         ax : matplotlib axes
         """
         ax = self.setup_plot(ax=ax)
+        self._plot_knots(ax=ax)
         super().plot(trace, ax=ax)
 
     def _plot_knots(self, ax):
         """TODO: Plot knots
         """
-        raise NotImplementedError
+        [ax.axhline(k, color='grey', linestyle='dotted') for k in self._dmatrix.knots]
 
 
 class PowerLawPlotMixin(PlotMixin):
