@@ -33,3 +33,9 @@ class TestUnitTransform:
         u = UnitTransform(x)
         assert np.allclose(u.transform(x), np.array([0.2, 0.4, 0.6, 0.8, 1.]))
         assert np.allclose(u.untransform(u.transform(x)), x)
+
+
+def test_compute_knots():
+    assert np.allclose(compute_knots(0, 1, 2), np.array([0, 1]))
+    assert np.allclose(compute_knots(0, 1, 3), np.array([0, 0.5, 1]))
+    assert np.allclose(compute_knots(0, 1, 11), np.array([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]))
