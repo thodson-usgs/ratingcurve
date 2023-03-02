@@ -175,12 +175,6 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         self._h0_offsets[0] = 0
 
         # compute initval
-        self._hs_lower_bounds = np.zeros((self.segments, 1)) + self.h_obs.min()
-        self._hs_lower_bounds[0] = 0
-
-        self._hs_upper_bounds = np.zeros((self.segments, 1)) + self.h_obs.max()
-        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 # TODO compute threshold
-
         # setup model
         self._setup_powerlaw()
 
@@ -192,6 +186,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         prior={'distribution': 'normal', 'mu': [], 'sigma': []}
         """
+        self.__set_hs_bounds()
         self._init_hs = np.sort(np.array(self.prior['mu']))
         self._init_hs = self._init_hs.reshape((self.segments, 1))
 
@@ -219,17 +214,9 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         TODO: clean this up
         """
-        self._init_hs = self.prior.get('initval', None)
-
-        if self._init_hs is None:
-            self._init_hs = np.random.rand(self.segments, 1) \
-                * (self._hs_upper_bounds - self._hs_lower_bounds) \
-                + self._hs_lower_bounds
-            self._init_hs = np.sort(self._init_hs, axis=0)  # not necessary?
-
-        else:
-            self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
-
+        self.__set_hs_bounds()
+        self.__init_hs()
+        
         hs_ = pm.Uniform('hs_',
                          lower=self._hs_lower_bounds,
                          upper=self._hs_upper_bounds,
@@ -253,8 +240,10 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         # set prior on break points
         if self.prior['distribution'] == 'normal':
             hs = self.set_normal_prior()
-        else:
+        elif self.prior['distribution'] == 'uniform':
             hs = self.set_uniform_prior()
+        else:
+            raise NotImplementedError('Prior distribution not implemented')
 
         h0 = hs - self._h0_offsets
         b = pm.Deterministic('b', at.switch(at.le(h, hs), self._clips, at.log(h-h0)))
@@ -296,7 +285,36 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         e = np.random.normal(0, sigma, sample)
 
         return self._format_ratingdata(h=h, q_z=q_z+e)
+    
+    def __set_hs_bounds(self):
+        """Set upper and lower bounds for breakpoints
 
+        Sets the lower and upper bounds for the breakpoints. For the first
+        breakpoint, the lower bound is set to 0. The upper bound is set to the
+        minimum observed stage. For the remaining breakpoints, the lower bound
+        is set to the minimum observed stage. The upper bound is set to the
+        maximum observed stage.
+        """
+        self._hs_lower_bounds = np.zeros((self.segments, 1)) + self.h_obs.min()
+        self._hs_lower_bounds[0] = 0
+
+        self._hs_upper_bounds = np.zeros((self.segments, 1)) + self.h_obs.max()
+        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 # TODO compute threshold
+
+    def __init_hs(self):
+        """Initialize breakpoints
+        
+        """
+        self._init_hs = self.prior.get('initval', None)
+
+        if self._init_hs is None:
+            self._init_hs = np.random.rand(self.segments, 1) \
+                * (self._hs_upper_bounds - self._hs_lower_bounds) \
+                + self._hs_lower_bounds
+            self._init_hs = np.sort(self._init_hs, axis=0)  # not necessary?
+
+        else:
+            self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
 
 class SplineRating(Rating, SplinePlotMixin):
     """Natural spline rating model
