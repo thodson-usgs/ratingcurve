@@ -240,7 +240,7 @@ class UnitTransform(Transform):
 class Dmatrix():
     """Transform for spline design matrix
     """
-    def __init__(self, stage: ArrayLike, df: int, form: str = 'cr'):
+    def __init__(self, stage: ArrayLike, df: int, form: str = 'cr') -> None:
         """Create a Dmatrix object
 
         Create a design matrix for a natural cubic spline, which is a cubic
@@ -262,7 +262,6 @@ class Dmatrix():
         self.knots = compute_knots(stage.min(), stage.max(), n=n_knots)
         temp = dmatrix(f"{form}(stage, df={df}) - 1", {"stage": stage})
         self.design_info = temp.design_info
-        #self.design_info = dmatrix(f"{form}(stage, knots={tuple(self.knots[1:-1])}) - 1", {"stage": stage})
 
     def transform(self, stage: ArrayLike) -> ArrayLike:
         """Transform stage using spline design matrix
@@ -280,7 +279,7 @@ class Dmatrix():
         return np.asarray(build_design_matrices([self.design_info], {"stage": stage})).squeeze()
 
 
-def compute_knots(minimum: float, maximum: float, n: int):
+def compute_knots(minimum: float, maximum: float, n: int) -> ArrayLike:
     """Return list of spline knots
 
     Parameters
@@ -289,5 +288,10 @@ def compute_knots(minimum: float, maximum: float, n: int):
         Minimum and maximum stage (h) observations.
     n : int
         Number of knots.
+
+    Returns
+    -------
+    ArrayLike
+        List of spline knots.
     """
     return np.linspace(minimum, maximum, n)

@@ -19,14 +19,17 @@ class RegressorMixin(RatingMixin):
     """
     @property
     def __default_advi_draws(self):
+        """Default number of draws for ADVI inference"""
         return 10_000
 
     @property
     def __default_nuts_kwargs(self):
+        """Default keyword arguments for NUTS inference"""
         return {'tune': 2000, 'chains':4, 'cores':4, 'target_accept':0.95}
 
     @property
     def __default_advi_kwargs(self):
+        """Default keyword arguments for ADVI inference"""
         return {
             'n': 200_000,
             'callbacks': [pm.callbacks.CheckParametersConvergence()]
@@ -47,7 +50,7 @@ class RegressorMixin(RatingMixin):
         """
         raise NotImplementedError
  
-    def fit(self, method="advi", **kwargs):
+    def fit(self, method="advi", **kwargs) -> InferenceData:
         """Fit the model to the data
 
         Parameters
@@ -55,12 +58,15 @@ class RegressorMixin(RatingMixin):
         method : str, optional
             Method to use for inference, by default "advi"
 
+        Returns
+        -------
+        InferenceData
+            ArviZ InferenceData object
+
         Raises
         ------
         ValueError
             If method is not supported
-
-        TODO: Add support for model evaluation
         """
         with self.model:
             if method == "advi":
@@ -82,6 +88,13 @@ class RegressorMixin(RatingMixin):
         ----------
         inference_kwargs : dict
             Keyword arguments to pass to pm.fit
+
+        Returns
+        -------
+        trace : InferenceData
+            ArviZ InferenceData object
+        kwargs : dict
+            Keyword arguments to pass to pm.fit
         """
         advi_kwargs = self.__default_advi_kwargs.copy()
         advi_kwargs.update(kwargs)
@@ -97,9 +110,8 @@ class RegressorMixin(RatingMixin):
 
         Parameters
         ----------
-        inference_kwargs : dict
+        kwargs : dict
             Keyword arguments to pass to pm.sample
-
         """
         nuts_kwargs = self.__default_nuts_kwargs.copy()
         nuts_kwargs.update(kwargs)
@@ -113,5 +125,15 @@ class RegressorMixin(RatingMixin):
     @staticmethod
     def load(filename: str) -> Model:
         """Load a saved model
+
+        Parameters
+        ----------
+        filename : str
+            Path to saved model
+
+        Returns
+        -------
+        Model
+            PyMC3 model
         """
         raise NotImplementedError

@@ -9,8 +9,8 @@ import arviz as az
 from matplotlib.ticker import FuncFormatter
 
 if TYPE_CHECKING:
-    from .ratingmodel import PowerLawRating, SplineRating
     from arviz import InferenceData
+    from pandas import DataFrame
 
 
 DEFAULT_FIGSIZE = (5, 5)
@@ -23,14 +23,32 @@ class RatingMixin:
         raise NotImplementedError
 
     @property
-    def trace(self):
+    def trace(self) -> InferenceData:
+        """ArviZ InferenceData object
+
+        Returns
+        -------
+        ArviZ InferenceData object
+        """
         return self.__last_trace
     
     @trace.setter
     def trace(self, value):
         self.__last_trace = value
 
-    def summary(self, trace: InferenceData=None, var_names: list=None):
+    def summary(self, trace: InferenceData=None, var_names: list=None) -> DataFrame:
+        """Summary of rating model parameters
+        
+        Parameters
+        ----------
+        trace : ArviZ InferenceData
+        var_names : list of str
+            List of variables to include in summary
+            
+        Returns
+        -------
+        DataFrame summary of rating model parameters
+        """
         if trace is None:
             trace = self.trace
         return az.summary(trace, var_names)
@@ -45,7 +63,10 @@ class PlotMixin(RatingMixin):
 
         Parameters
         ----------
-        trace : ArviZ InferenceData
+        ax : matplotlib axes
+
+        Returns
+        -------
         ax : matplotlib axes
         """
         if ax is None:
@@ -53,7 +74,7 @@ class PlotMixin(RatingMixin):
 
         return ax
  
-    def plot(self, trace: InferenceData=None, ax=None):
+    def plot(self, trace: InferenceData=None, ax=None) -> None:
         """Plots rating curve
 
         Parameters
@@ -78,7 +99,7 @@ class PlotMixin(RatingMixin):
 
         self.plot_gagings(ax=ax)
 
-    def plot_residuals(self, trace: InferenceData=None, ax=None):
+    def plot_residuals(self, trace: InferenceData=None, ax=None) -> None:
         """Plots residuals
 
         Parameters
@@ -103,7 +124,7 @@ class PlotMixin(RatingMixin):
         ax.errorbar(y=self.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o", lw=1)
         self._format_residual_plot(ax)
 
-    def plot_gagings(self, ax=None):
+    def plot_gagings(self, ax=None) -> None:
         """Plot gagings with uncertainty
 
         Parameters
@@ -127,7 +148,7 @@ class PlotMixin(RatingMixin):
         self._format_rating_plot(ax)
 
     @staticmethod
-    def _format_rating_plot(ax):
+    def _format_rating_plot(ax) -> None:
         """Format rating plot
 
         Parameters
@@ -139,7 +160,7 @@ class PlotMixin(RatingMixin):
         ax.get_xaxis().set_major_formatter(FuncFormatter(lambda x, p: format(int(x), ',')))
 
     @staticmethod
-    def _format_residual_plot(ax):
+    def _format_residual_plot(ax) -> None:
         """Format residual plot
 
         Parameters
@@ -171,7 +192,11 @@ class SplinePlotMixin(PlotMixin):
         super().plot(trace, ax=ax)
 
     def _plot_knots(self, ax):
-        """Plot knots
+        """Plot spline knots
+
+        Parameters
+        ----------
+        ax : matplotlib axes
         """
         [ax.axhline(k, color='grey', linestyle='dotted') for k in self._dmatrix.knots]
 

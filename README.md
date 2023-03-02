@@ -1,10 +1,10 @@
 # ratingcurve
-*A Python library for fitting stage-discharge rating curves.*
+*A Python library for fitting hydrologic rating curves.*
 
-Use `ratingcurve` to fit streamflow ratings with a segmented power law,
-which is the the most common model used by USGS.
-
-At this time, the library is for research and is not ready for operation. 
+In hydrology, a rating curve is a mathematical relationship between streamflow and water surface elevation (stage).
+Because stage is much easier to measure than streamflow, almost all streamflow timeseries are generated from rating curves.
+Historically, those ratings were fitted by hand, which can be time consuming and error prone.
+`ratingcurve` provides an easy-to-use algorithm for fitting the standard form of rating curve, the segmented power law.
 
 ## Installation
 Install using pip
@@ -13,28 +13,14 @@ pip install ratingcurve
 ```
 or conda
 ```sh
-# acreate a new environment
-conda create -n ratingcurve
-conda activate ratingcurve
 conda install -c conda-forge ratingcurve
-# add environment to jupyter
-python -m ipykernel install --user --name=ratingcurve
 ```
 
 ## Getting Started
 The [`segmented-power-law-demo.ipynb`](https://github.com/thodson-usgs/ratingcurve/blob/main/notebooks/segmented-power-law-demo.ipynb)
-notebook demonstrates basic use of the package.
-You can try it out in Google Colab
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/master/notebooks/segmented-power-law-demo.ipynb)
-
-or locally using the environment created in the previous step
-```sh
-conda activate base # or your prefered jupyter lab environment
-jupyter lab
-```
-then open the notebook and select the `ratingcurve` kernel that was installed earlier.
-
-A simple example is given below.
+notebook demonstrates basic usage of the package.
+Try it locally or in Colab
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/master/notebooks/segmented-power-law-demo.ipynb).
 
 ```python
 from ratingcurve.ratingmodel import PowerLawRating
@@ -50,16 +36,27 @@ powerrating = PowerLawRating(q=df['q'],
                              q_sigma=df['q_sigma'],
                              segments=segments)
                                    
-# fit model, then simulate the rating
-with powerrating:
-    mean_field = pm.fit(n=150_000)
-    trace = mean_field.sample(5000)
-    
+# fit the model
+trace = powerrating.fit()
 powerrating.plot(trace)
 ```
 ![example plot](https://github.com/thodson-usgs/ratingcurve/blob/main/paper/green_example.png?raw=true)
 
 See the [notebooks](https://github.com/thodson-usgs/ratingcurve/tree/main/notebooks) for more examples.
+
+## Environment setup
+In practice, many prefer to create a new environment and and install it using `ipykernel`.
+```sh
+# acreate a new environment
+conda create -n ratingcurve
+conda activate ratingcurve
+conda install -c conda-forge ratingcurve
+# add environment to jupyter
+python -m ipykernel install --user --name=ratingcurve
+
+jupyter lab
+```
+Now select the kernel `ratingcurve` in the Jupyter Lab launcher.
 
 ## Disclaimer
 
