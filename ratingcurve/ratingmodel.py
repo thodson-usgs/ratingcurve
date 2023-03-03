@@ -248,7 +248,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         h0 = hs - self._h0_offsets
         b = pm.Deterministic('b', at.switch(at.le(h, hs), self._clips, at.log(h-h0)))
 
-        sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
+        sigma = pm.HalfCauchy("sigma", beta=0.1) + self.q_sigma
         mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
