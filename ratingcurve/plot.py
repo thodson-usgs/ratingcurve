@@ -92,7 +92,7 @@ class PlotMixin(RatingMixin):
         h = rating_table['stage']
         q = rating_table['discharge']
         sigma = rating_table['sigma']
-        ax.plot(q, h, color='black')
+        ax.plot(q, h, color='black', lw=1.5)
         q_u = q * (sigma)**1.96  # this should be 2 sigma
         q_l = q / (sigma)**1.96
         ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
@@ -121,7 +121,7 @@ class PlotMixin(RatingMixin):
 
         # approximate percentage error
         residuals = self.residuals(trace) * 100
-        ax.errorbar(y=self.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o", lw=1)
+        ax.errorbar(y=self.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o", lw=1, markersize=4, markerfacecolor='white', markeredgecolor='none')
         self._format_residual_plot(ax)
 
     def plot_gagings(self, ax=None) -> None:
@@ -144,7 +144,7 @@ class PlotMixin(RatingMixin):
         else:
             sigma_2 = 0
 
-        ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o")
+        ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o", lw=1, color='black', markersize=4, markerfacecolor='none')
         self._format_rating_plot(ax)
 
     @staticmethod
@@ -253,4 +253,4 @@ class PowerLawPlotMixin(PlotMixin):
         hs_upper = hs.quantile(1 - alpha/2, dim=['chain', 'draw']).data.flatten()
 
         [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)]
-        [ax.axhline(u, color='grey', linestyle='dotted') for u in hs_u]
+        [ax.axhline(u, color='grey', linestyle='dotted', linewidth=1) for u in hs_u]
