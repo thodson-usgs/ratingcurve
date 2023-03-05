@@ -349,7 +349,6 @@ class SplineRating(Rating, SplinePlotMixin):
             self.q_sigma = np.log(1 + q_sigma/q)
 
         self._dmatrix = Dmatrix(self.h_obs, df, 'cr')
-        import pdb; pdb.set_trace()
         self.d_transform = self._dmatrix.transform
 
         self.B = self.d_transform(h)
