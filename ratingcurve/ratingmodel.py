@@ -165,7 +165,8 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         self.h_obs = h
 
-        # clipping boundary
+        # set clipping boundary of 0 for all but the first segment (Fig 1, from Reitan et al. 2019)
+        # NOTE: clips = 0 should work fine for all but the lowest flows
         clips = np.zeros((self.segments, 1))
         clips[0] = -np.inf
         self._clips = at.constant(clips)
