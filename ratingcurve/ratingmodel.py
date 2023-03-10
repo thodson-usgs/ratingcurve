@@ -164,14 +164,37 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             self.q_sigma = np.log(1 + q_sigma/q)
 
         self.h_obs = h
+        
+        # setup model
+        # data
+        h = pm.MutableData("h", self.h_obs)
 
-        # set clipping boundary of 0 for all but the first segment (Fig 1, from Reitan et al. 2019)
+        # fixed parameters
         # taking the log of h0_offset produces the clipping boundaries in Fig 1, from Reitan et al. 2019
         self._h0_offsets = np.ones((self.segments, 1))
         self._h0_offsets[0] = 0
 
-        # setup model
-        self._setup_powerlaw()
+        # priors
+        w_mu = np.zeros(self.segments)
+        # see Le Coz 2014 for default values, but typical between 1.5 and 2.5
+        w_mu[0] = 1.6
+        w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
+        a = pm.Normal("a", mu=0, sigma=2)
+
+        # set prior on break points
+        if self.prior['distribution'] == 'normal':
+            hs = self.set_normal_prior()
+        elif self.prior['distribution'] == 'uniform':
+            hs = self.set_uniform_prior()
+        else:
+            raise NotImplementedError('Prior distribution not implemented')
+
+        ho = self._h0_offsets # DELETE
+
+        # likelihood
+        b = pm.Deterministic('b', at.switch(at.le(h, hs), at.log(ho), at.log(h-hs+ho)))
+        sigma = pm.HalfCauchy("sigma", beta=0.1) + self.q_sigma
+        mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
     def set_normal_prior(self):
         """Normal prior for breakpoints
@@ -221,30 +244,6 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         # Sorting reduces multimodality. The benifit increases with fewer observations.
         hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
         return hs
-
-    def _setup_powerlaw(self):
-        """Helper function that defines model
-        """
-        h = pm.MutableData("h", self.h_obs)
-        w_mu = np.zeros(self.segments)
-        # see Le Coz 2014 for default values, but typical between 1.5 and 2.5
-        w_mu[0] = 1.6
-        w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
-        a = pm.Normal("a", mu=0, sigma=2)
-
-        # set prior on break points
-        if self.prior['distribution'] == 'normal':
-            hs = self.set_normal_prior()
-        elif self.prior['distribution'] == 'uniform':
-            hs = self.set_uniform_prior()
-        else:
-            raise NotImplementedError('Prior distribution not implemented')
-
-        ho = self._h0_offsets
-        b = pm.Deterministic('b', at.switch(at.le(h, hs), at.log(ho), at.log(h-hs+ho)))
-
-        sigma = pm.HalfCauchy("sigma", beta=0.1) + self.q_sigma
-        mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
 
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
