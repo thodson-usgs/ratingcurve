@@ -166,16 +166,10 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         self.h_obs = h
 
         # set clipping boundary of 0 for all but the first segment (Fig 1, from Reitan et al. 2019)
-        # NOTE: clips = 0 should work fine for all but the lowest flows
-        clips = np.zeros((self.segments, 1))
-        clips[0] = -np.inf
-        self._clips = at.constant(clips)
-
-        # create h0 offsets
+        # taking the log of h0_offset produces the clipping boundaries in Fig 1, from Reitan et al. 2019
         self._h0_offsets = np.ones((self.segments, 1))
         self._h0_offsets[0] = 0
 
-        # compute initval
         # setup model
         self._setup_powerlaw()
 
@@ -246,8 +240,8 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         else:
             raise NotImplementedError('Prior distribution not implemented')
 
-        h0 = hs - self._h0_offsets
-        b = pm.Deterministic('b', at.switch(at.le(h, hs), self._clips, at.log(h-h0)))
+        ho = self._h0_offsets
+        b = pm.Deterministic('b', at.switch(at.le(h, hs), at.log(ho), at.log(h-hs+ho)))
 
         sigma = pm.HalfCauchy("sigma", beta=0.1) + self.q_sigma
         mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
@@ -396,7 +390,7 @@ class RatingData():
     stage : array-like
         Stage values.
     discharge : array-like
-        Discharge values.
+        Discharge values (median).
     sigma : array-like
         Discharge uncertainty.
     """
