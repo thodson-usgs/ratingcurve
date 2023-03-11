@@ -165,8 +165,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         self.h_obs = h
         
-        # setup model
-        # data
+        # observations
         h = pm.MutableData("h", self.h_obs)
 
         # fixed parameters
@@ -176,12 +175,12 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # priors
         w_mu = np.zeros(self.segments)
-        # see Le Coz 2014 for default values, but typical between 1.5 and 2.5
+        # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
         w_mu[0] = 1.6
         w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
         a = pm.Normal("a", mu=0, sigma=2)
 
-        # set prior on break points
+        # set priors on break points
         if self.prior['distribution'] == 'normal':
             hs = self.set_normal_prior()
         elif self.prior['distribution'] == 'uniform':
@@ -193,8 +192,8 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # likelihood
         b = pm.Deterministic('b', at.switch(at.le(h, hs), at.log(ho), at.log(h-hs+ho)))
-        sigma = pm.HalfCauchy("sigma", beta=0.1) + self.q_sigma
-        mu = pm.Normal("mu", a + at.dot(w, b), sigma, observed=self.y)
+        sigma = pm.HalfCauchy("sigma", beta=0.1)
+        mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
 
     def set_normal_prior(self):
         """Normal prior for breakpoints
