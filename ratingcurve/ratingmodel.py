@@ -170,8 +170,8 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # fixed parameters
         # taking the log of h0_offset produces the clipping boundaries in Fig 1, from Reitan et al. 2019
-        self._h0_offsets = np.ones((self.segments, 1))
-        self._h0_offsets[0] = 0
+        self._ho = np.ones((self.segments, 1))
+        self._ho[0] = 0
 
         # priors
         w_mu = np.zeros(self.segments)
@@ -188,10 +188,9 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         else:
             raise NotImplementedError('Prior distribution not implemented')
 
-        ho = self._h0_offsets # DELETE
-
         # likelihood
-        b = pm.Deterministic('b', at.switch(at.le(h, hs), at.log(ho), at.log(h-hs+ho)))
+        ho = self._ho
+        b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, np.inf) + ho)) # best yet
         sigma = pm.HalfCauchy("sigma", beta=0.1)
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
 
@@ -270,11 +269,11 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         clips[0] = -np.inf
         h_tile = np.tile(h, sample).reshape(sample, 1, -1)
 
-        h0_offset = np.ones_like(clips)
-        h0_offset[0] = 0
-        h0 = hs - h0_offset
-        b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
-        q_z = a + (b1*w2).sum(axis=1).T 
+        ho = np.ones_like(clips)
+        ho[0] = 0
+        b = np.log( np.clip(h_tile - hs, 0, np.inf) + ho)
+        #b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
+        q_z = a + (b*w2).sum(axis=1).T 
         e = np.random.normal(0, sigma, sample)
 
         return self._format_ratingdata(h=h, q_z=q_z+e)
