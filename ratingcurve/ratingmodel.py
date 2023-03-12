@@ -174,10 +174,8 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         self._ho[0] = 0
 
         # priors
-        w_mu = np.zeros(self.segments)
         # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
-        w_mu[0] = 1.6
-        w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
+        w = pm.Normal("w", mu=1.6, sigma=0.5, dims="splines")
         a = pm.Normal("a", mu=0, sigma=2)
 
         # set priors on break points
@@ -190,7 +188,11 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # likelihood
         ho = self._ho
-        b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, np.inf) + ho)) # best yet
+        hs1 = np.empty((self.segments + 1, 1))
+        hs1[:-1] = hs.eval()
+        hs1[-1] = np.inf
+
+        b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, hs1[1:] - hs) + ho)) # best yet
         sigma = pm.HalfCauchy("sigma", beta=0.1)
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
 
