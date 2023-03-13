@@ -188,13 +188,14 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # likelihood
         ho = self._ho
-        hs1 = np.empty((self.segments + 1, 1))
-        hs1[:-1] = hs.eval()
-        hs1[-1] = np.inf
-        x = at.clip(h - hs, 1e-6, np.inf)
+        #hs1 = np.empty((self.segments + 1, 1))
+        #hs1[:-1] = hs.eval()
+        #hs1[-1] = np.inf
+        inf = at.constant([np.inf], dtype='float64').reshape((-1, 1 ))
+        hs1 = at.concatenate([hs, inf])
+        x = at.clip(h - hs, 1e-12, np.inf)
         #b = pm.Deterministic('b', at.clip(at.log(x), at.log(ho), at.log(hs1[1:] - hs))) # works for 2 segment
-        b = pm.Deterministic('b', at.clip(at.log(x), at.log(ho), at.log(hs1[1:] - hs + ho))) # works for 2 segment
-        #b = pm.Deterministic('b', at.log( at.clip(h - hs + ho, 0, hs1[1:] - hs + ho)))
+        b = pm.Deterministic('b', at.clip(at.log(x), 0, at.log(hs1[1:] - hs))) # works for 2 segment
         sigma = pm.HalfCauchy("sigma", beta=0.1)
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
 
