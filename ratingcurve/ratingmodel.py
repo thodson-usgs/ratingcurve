@@ -165,13 +165,13 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         self.h_obs = h
         
-        # observations
+        # data
         h = pm.MutableData("h", self.h_obs)
 
-        # fixed parameters
+        # parameters
         # taking the log of h0_offset produces the clipping boundaries in Fig 1, from Reitan et al. 2019
-        self._ho = np.ones((self.segments, 1))
-        self._ho[0] = 0
+        self.ho = np.ones((self.segments, 1))
+        self.ho[0] = 0
 
         # priors
         w_mu = np.zeros(self.segments)
@@ -179,6 +179,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         w_mu[0] = 1.6
         w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
         a = pm.Normal("a", mu=0, sigma=2)
+        sigma = pm.HalfCauchy("sigma", beta=0.1)
 
         # set priors on break points
         if self.prior['distribution'] == 'normal':
@@ -189,9 +190,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             raise NotImplementedError('Prior distribution not implemented')
 
         # likelihood
-        ho = self._ho
-        b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, np.inf) + ho)) # best yet
-        sigma = pm.HalfCauchy("sigma", beta=0.1)
+        b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, np.inf) + self.ho)) # best yet
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
 
     def set_normal_prior(self):
@@ -265,14 +264,11 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         hs = np.moveaxis(trace['hs'].values, -1, 0)
         sigma = trace['sigma'].values
 
-        clips = np.zeros((hs.shape[1], 1))
-        clips[0] = -np.inf
         h_tile = np.tile(h, sample).reshape(sample, 1, -1)
 
-        ho = np.ones_like(clips)
-        ho[0] = 0
-        b = np.log( np.clip(h_tile - hs, 0, np.inf) + ho)
-        #b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
+        #ho = np.ones((self.segments, 1))
+        #ho[0] = 0
+        b = np.log( np.clip(h_tile - hs, 0, np.inf) + self.ho)
         q_z = a + (b*w2).sum(axis=1).T 
         e = np.random.normal(0, sigma, sample)
 
@@ -344,14 +340,17 @@ class SplineRating(Rating, SplinePlotMixin):
         self.d_transform = self._dmatrix.transform
 
         self.B = self.d_transform(h)
-        B = pm.MutableData("B", self.B)
-
         COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(self.B.shape[1])}
         self.add_coords(COORDS)
 
-        w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
+        # data
+        B = pm.MutableData("B", self.B)
 
+        # priors
+        w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
         sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
+
+        # likelihood
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
 
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
