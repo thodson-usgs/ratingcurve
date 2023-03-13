@@ -193,9 +193,10 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         #hs1[-1] = np.inf
         inf = at.constant([np.inf], dtype='float64').reshape((-1, 1 ))
         hs1 = at.concatenate([hs, inf])
-        x = at.clip(h - hs, 1e-12, np.inf)
-        #b = pm.Deterministic('b', at.clip(at.log(x), at.log(ho), at.log(hs1[1:] - hs))) # works for 2 segment
-        b = pm.Deterministic('b', at.clip(at.log(x), 0, at.log(hs1[1:] - hs))) # works for 2 segment
+        ##b = pm.Deterministic('b', at.log( at.clip(x, 0, hs1[1:] - hs) + ho)) # -31
+        #x = at.clip(h - hs, , np.inf)
+        b1 = at.switch(at.gt(h,hs), at.log(h - hs), 0) #at.log(ho)
+        b = pm.Deterministic('b', at.switch(at.gt(h, hs1[1:]), at.log(hs1[1:] - hs), b1))
         sigma = pm.HalfCauchy("sigma", beta=0.1)
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
 
