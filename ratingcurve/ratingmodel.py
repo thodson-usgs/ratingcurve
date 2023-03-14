@@ -188,15 +188,10 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # likelihood
         ho = self._ho
-        #hs1 = np.empty((self.segments + 1, 1))
-        #hs1[:-1] = hs.eval()
-        #hs1[-1] = np.inf
         inf = at.constant([np.inf], dtype='float64').reshape((-1, 1 ))
         hs1 = at.concatenate([hs, inf])
-        ##b = pm.Deterministic('b', at.log( at.clip(x, 0, hs1[1:] - hs) + ho)) # -31
-        #x = at.clip(h - hs, , np.inf)
-        b1 = at.switch(at.gt(h,hs), at.log(h - hs), 0) #at.log(ho)
-        b = pm.Deterministic('b', at.switch(at.gt(h, hs1[1:]), at.log(hs1[1:] - hs), b1))
+        b1 = at.switch(at.gt(h,hs), at.log(h - hs + ho), 0) #at.log(ho)
+        b = pm.Deterministic('b', at.switch(at.gt(h, hs1[1:]), at.log(hs1[1:] - hs + ho), b1))
         sigma = pm.HalfCauchy("sigma", beta=0.1)
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
 
