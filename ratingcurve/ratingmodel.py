@@ -190,7 +190,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             raise NotImplementedError('Prior distribution not implemented')
 
         # likelihood
-        b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, np.inf) + self.ho)) # best yet
+        b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, np.inf) + self.ho))
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
 
     def set_normal_prior(self):

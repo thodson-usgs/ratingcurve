@@ -32,6 +32,7 @@ class RegressorMixin(RatingMixin):
         """Default keyword arguments for ADVI inference"""
         return {
             'n': 200_000,
+            'obj_optimizer' : pm.adam(learning_rate=.001), # converges faster than adagrad_window
             'callbacks': [pm.callbacks.CheckParametersConvergence()]
         }
 
