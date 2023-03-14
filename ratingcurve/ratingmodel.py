@@ -348,7 +348,7 @@ class SplineRating(Rating, SplinePlotMixin):
 
         # priors
         w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
-        sigma = pm.HalfCauchy("sigma", beta=1) + self.q_sigma
+        sigma = pm.HalfCauchy("sigma", beta=0.1) + self.q_sigma
 
         # likelihood
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
