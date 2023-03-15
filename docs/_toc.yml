@@ -12,6 +12,7 @@ chapters:
 - file: notebooks/model-evaluation-demo
 - file: meta/implementation
 - file: meta/troubleshooting
+- file: api
 #- file: markdown
 #- file: notebooks
 #- file: markdown-notebooks
