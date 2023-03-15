@@ -47,20 +47,6 @@ powerating.table(trace)
 ```
 See more examples at [notebooks](https://github.com/thodson-usgs/ratingcurve/tree/main/docs/notebooks).
 
-## Creating a Jupyter Environment
-In practice, many prefer to create a new environment and and install it using `ipykernel`.
-```sh
-# acreate a new environment
-conda create -n ratingcurve
-conda activate ratingcurve
-conda install -c conda-forge ratingcurve
-# add environment to jupyter
-python -m ipykernel install --user --name=ratingcurve
-
-jupyter lab
-```
-Now select the kernel `ratingcurve` in the Jupyter Lab launcher.
-
 ## Disclaimer
 
 This software is preliminary or provisional and is subject to revision. 
