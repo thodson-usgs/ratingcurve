@@ -162,6 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l1"><a class="reference internal" href="../meta/implementation.html">Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API documentation</a></li>
 </ul>
 
     </div>
@@ -434,33 +435,6 @@ As a result, splines may produce strange results, particularly with small datase
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html">
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-</div><div class="output text_html">
-    <div>
-      <progress value='70000' class='' max='70000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [70000/70000 00:02&lt;00:00 Average Loss = -36.502]
-    </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -36.495
-</pre></div>
-</div>
-<img alt="../_images/9158d9685f2c3a37dd1a4f3b7239604b9b50d2efdd063824efdcb9658ebab485.png" src="../_images/9158d9685f2c3a37dd1a4f3b7239604b9b50d2efdd063824efdcb9658ebab485.png" />
-</div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="spline-with-simulated-data">
@@ -479,12 +453,6 @@ As a result, splines may produce strange results, particularly with small datase
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Stage (ft)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Stage (ft)&#39;)
-</pre></div>
-</div>
-<img alt="../_images/a558662bcfcc6af53a39d624d3e17451a43d8e69d122dd3cc668980e7fd711d6.png" src="../_images/a558662bcfcc6af53a39d624d3e17451a43d8e69d122dd3cc668980e7fd711d6.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -505,33 +473,6 @@ As a result, splines may produce strange results, particularly with small datase
 <span class="n">spline_rating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-</div><div class="output text_html">
-    <div>
-      <progress value='100000' class='' max='100000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [100000/100000 00:04&lt;00:00 Average Loss = -24.764]
-    </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -24.762
-</pre></div>
-</div>
-<img alt="../_images/6a1ddbfd5f847baf9049c7b8018a8a05d19a6e2200ec3027059db2ab99c64b83.png" src="../_images/6a1ddbfd5f847baf9049c7b8018a8a05d19a6e2200ec3027059db2ab99c64b83.png" />
 </div>
 </div>
 <section id="excercise">
@@ -561,16 +502,16 @@ For example, try
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: ""
         },
         kernelOptions: {
-            name: "python3",
+            name: "",
             path: "./notebooks"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = ''</script>
 
                 </article>
               
