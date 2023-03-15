@@ -2,8 +2,16 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
+root: meta/intro
 chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+- file: meta/background
+- file: meta/installation
+- file: notebooks/getting-started
+- file: notebooks/segmented-power-law-demo
+- file: notebooks/spline-demo
+- file: notebooks/model-evaluation-demo
+- file: meta/implementation
+- file: meta/troubleshooting
+#- file: markdown
+#- file: notebooks
+#- file: markdown-notebooks

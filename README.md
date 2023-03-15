@@ -17,10 +17,10 @@ conda install -c conda-forge ratingcurve
 ```
 
 ## Getting Started
-The [`segmented-power-law-demo.ipynb`](https://github.com/thodson-usgs/ratingcurve/blob/main/notebooks/segmented-power-law-demo.ipynb)
+The [`segmented-power-law-demo.ipynb`](https://github.com/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-demo.ipynb)
 notebook demonstrates basic usage of the package.
 Try it locally or in Colab.
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/master/notebooks/segmented-power-law-demo.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/master/notebooks/docs/segmented-power-law-demo.ipynb)
 
 ```python
 from ratingcurve.ratingmodel import PowerLawRating
@@ -45,7 +45,7 @@ Generate a rating table that can be imported into other applications.
 ```python
 powerating.table(trace)
 ```
-See more examples at [notebooks](https://github.com/thodson-usgs/ratingcurve/tree/main/notebooks).
+See more examples at [notebooks](https://github.com/thodson-usgs/ratingcurve/tree/main/docs/notebooks).
 
 ## Creating a Jupyter Environment
 In practice, many prefer to create a new environment and and install it using `ipykernel`.
