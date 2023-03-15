@@ -1,0 +1,1074 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Fitting a Stage-Discharge Rating using a Segmented &#8212; ratingcurve</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/segmented-power-law-demo';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spline demo" href="spline-demo.html" />
+    <link rel="prev" title="Getting Started" href="getting-started.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../meta/intro.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">ratingcurve</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../meta/intro.html">
+                    ratingcurve
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../meta/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Fitting a Stage-Discharge Rating using a Segmented</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spline-demo.html">Spline demo</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="model-evaluation-demo.html">Model evaluation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../meta/implementation.html">Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/thodson-usgs/ratingcurve" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/thodson-usgs/ratingcurve/issues/new?title=Issue%20on%20page%20%2Fnotebooks/segmented-power-law-demo.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/segmented-power-law-demo.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Fitting a Stage-Discharge Rating using a Segmented</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-model">Setup model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulated-example">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameterization">Parameterization</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="fitting-a-stage-discharge-rating-using-a-segmented">
+<h1>Fitting a Stage-Discharge Rating using a Segmented<a class="headerlink" href="#fitting-a-stage-discharge-rating-using-a-segmented" title="Permalink to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/master/notebooks/segmented-power-law-demo.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>There are several approaches to fitting a stage-discharge rating curve.
+The first section of this notebook demonstrates the classic approach,
+which is to use a segmented power law.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Only run this cell to setup Google Colab. It will take a minute.</span>
+<span class="c1"># %%capture</span>
+<span class="c1"># # Specific repo version used in this notebook</span>
+<span class="c1"># !pip install pymc==5.0.2</span>
+<span class="c1">#</span>
+<span class="c1"># # Colab needs this</span>
+<span class="c1"># %env MKL_THREADING_LAYER=GNU</span>
+<span class="c1">#</span>
+<span class="c1"># # install ratingcurve library</span>
+<span class="c1"># !pip install git+https://github.com/thodson-usgs/ratingcurve.git</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+
+<span class="kn">import</span> <span class="nn">pymc</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
+<span class="kn">from</span> <span class="nn">ratingcurve.ratingmodel</span> <span class="kn">import</span> <span class="n">PowerLawRating</span><span class="p">,</span> <span class="n">SplineRating</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pymc</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">ratingcurve.ratingmodel</span> <span class="kn">import</span> <span class="n">PowerLawRating</span><span class="p">,</span> <span class="n">SplineRating</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;ratingcurve&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="load-data">
+<h2>Load Data<a class="headerlink" href="#load-data" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load tutorial data</span>
+<span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;chalk artificial&#39;,
+ &#39;co channel&#39;,
+ &#39;green channel&#39;,
+ &#39;provo natural&#39;,
+ &#39;3-segment simulated&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>and load a specific dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>datetime</th>
+      <th>stage</th>
+      <th>q</th>
+      <th>q_sigma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-05-21 14:13:41 [UTC-07:00]</td>
+      <td>7.04</td>
+      <td>12199.342</td>
+      <td>199.172931</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-04-16 14:55:31 [UTC-07:00]</td>
+      <td>4.43</td>
+      <td>4921.953</td>
+      <td>95.425619</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-03-04 13:54:10 [UTC-07:00]</td>
+      <td>2.99</td>
+      <td>2331.665</td>
+      <td>61.860500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-03-04 13:16:51 [UTC-07:00]</td>
+      <td>2.94</td>
+      <td>2289.220</td>
+      <td>47.886745</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-01-23 11:04:32 [UTC-07:00]</td>
+      <td>2.96</td>
+      <td>2408.210</td>
+      <td>99.522964</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the data</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Discharge (cfs)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Stage (ft)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setup-model">
+<h2>Setup model<a class="headerlink" href="#setup-model" title="Permalink to this heading">#</a></h2>
+<p>Setup a rating model. This make take a minute while the model compiles.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segments</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">powerrating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
+                             <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span> 
+                             <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">],</span>
+                             <span class="n">segments</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span>
+                             <span class="n">prior</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;distribution&#39;</span><span class="p">:</span><span class="s1">&#39;uniform&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>then fit the model using variational inference (this will be slower on the first run). Set the number of iterations <code class="docutils literal notranslate"><span class="pre">n</span></code> such that the model stops after the loss stops decreasing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">powerrating</span><span class="p">:</span>
+    <span class="n">mean_field</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;advi&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">120_000</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">mean_field</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='120000' class='' max='120000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [120000/120000 00:10&lt;00:00 Average Loss = -49.281]
+    </div>
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -49.273
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once fit, we can evaluate the model by plotting the rating curve.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powerrating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/mnt/c/Users/thodson/OneDrive - DOI/Desktop/Projects/software-release/ratingcurve/ratingcurve/ratingmodel.py:318: RuntimeWarning: invalid value encountered in log
+  b1 = np.where(h_tile &lt;= hs, clips, np.log(h_tile-h0))
+</pre></div>
+</div>
+<img alt="../_images/8bde96e21e0ceb50ec75323489e9246bc44073a4e1ce32bc70c7e464ae4d1eca.png" src="../_images/8bde96e21e0ceb50ec75323489e9246bc44073a4e1ce32bc70c7e464ae4d1eca.png" />
+</div>
+</div>
+<p>or as a table of stage-discharge values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/mnt/c/Users/thodson/OneDrive - DOI/Desktop/Projects/software-release/ratingcurve/ratingcurve/ratingmodel.py:318: RuntimeWarning: invalid value encountered in log
+  b1 = np.where(h_tile &lt;= hs, clips, np.log(h_tile-h0))
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stage</th>
+      <th>discharge</th>
+      <th>sigma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.20</td>
+      <td>1365.65</td>
+      <td>1.0154</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.21</td>
+      <td>1378.06</td>
+      <td>1.0154</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.22</td>
+      <td>1390.47</td>
+      <td>1.0153</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.23</td>
+      <td>1402.89</td>
+      <td>1.0153</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.24</td>
+      <td>1415.32</td>
+      <td>1.0152</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<p>What happens if we choose the wrong number of segments?
+Increase the number of segments by one and rerun the model.
+We can use this approach to select the correct number of segments;
+more on this topic in the <span class="xref myst">model evaluation notebook</span>(<a class="reference external" href="https://github/thodson-usgs/ratingcurve/blob/master/notebooks/model-evaluation-demo.ipynb">https://github/thodson-usgs/ratingcurve/blob/master/notebooks/model-evaluation-demo.ipynb</a>)</p>
+</section>
+<section id="simulated-example">
+<h2>Simulated Example<a class="headerlink" href="#simulated-example" title="Permalink to this heading">#</a></h2>
+<p>This example uses a simulated rating curve, which allows you to test how different sampling schemes affect the rating curve fit.</p>
+<p>First, open the <code class="docutils literal notranslate"><span class="pre">simulated_rating</span></code> tutorial dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim_df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3-segment simulated&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The simulated rating contains </span><span class="si">{}</span><span class="s1"> observations&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sim_df</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The simulated rating contains 763 observations
+</pre></div>
+</div>
+</div>
+</div>
+<p>This rating contains observations of every 0.01 inch. increment in stage, which is much more than we’d have for a natural rating.
+Try sampling to <code class="docutils literal notranslate"><span class="pre">n=15</span></code> or <code class="docutils literal notranslate"><span class="pre">n=30</span></code> and see how that affects the model fit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># subsample the simulated rating curve</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Discharge (cfs)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Stage (ft)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Stage (ft)&#39;)
+</pre></div>
+</div>
+<img alt="../_images/809263fa01c2b1f8d374556a0854029c4ee76df816053a7563fad4dee65ea06c.png" src="../_images/809263fa01c2b1f8d374556a0854029c4ee76df816053a7563fad4dee65ea06c.png" />
+</div>
+</div>
+<p>Setup a rating model with 3 segments</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segments</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">powerrating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
+                             <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span>
+                             <span class="n">q_sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">segments</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span>
+                             <span class="n">prior</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;distribution&#39;</span><span class="p">:</span><span class="s1">&#39;uniform&#39;</span><span class="p">})</span>
+                             <span class="c1">#prior={&#39;distribution&#39;:&#39;normal&#39;, &#39;mu&#39;:[5, 8, 11], &#39;sigma&#39;:[1, 1, 0.2]})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>now fit the model using ADVI</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">powerrating</span><span class="p">:</span>
+    <span class="n">mean_field</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;advi&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">150_000</span><span class="p">)</span> <span class="c1">#increase n as necessary</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">mean_field</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='150000' class='' max='150000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [150000/150000 00:14&lt;00:00 Average Loss = -55.532]
+    </div>
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -55.501
+</pre></div>
+</div>
+</div>
+</div>
+<p>and visualize the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powerrating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/mnt/c/Users/thodson/OneDrive - DOI/Desktop/Projects/software-release/ratingcurve/ratingcurve/ratingmodel.py:318: RuntimeWarning: invalid value encountered in log
+  b1 = np.where(h_tile &lt;= hs, clips, np.log(h_tile-h0))
+</pre></div>
+</div>
+<img alt="../_images/957380e1b2ed3b6e013b6572d03afeb6d99922382ba0ae87b4b5101c5890fc34.png" src="../_images/957380e1b2ed3b6e013b6572d03afeb6d99922382ba0ae87b4b5101c5890fc34.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;sigma&quot;</span><span class="p">,</span> <span class="s2">&quot;hs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>arviz - WARNING - Shape validation failed: input_shape: (1, 5000), minimum_shape: (chains=2, draws=4)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean</th>
+      <th>sd</th>
+      <th>hdi_3%</th>
+      <th>hdi_97%</th>
+      <th>mcse_mean</th>
+      <th>mcse_sd</th>
+      <th>ess_bulk</th>
+      <th>ess_tail</th>
+      <th>r_hat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>w[0]</th>
+      <td>0.968</td>
+      <td>0.001</td>
+      <td>0.965</td>
+      <td>0.971</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4363.0</td>
+      <td>4715.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>w[1]</th>
+      <td>0.072</td>
+      <td>0.004</td>
+      <td>0.065</td>
+      <td>0.079</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>5119.0</td>
+      <td>4678.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>w[2]</th>
+      <td>0.308</td>
+      <td>0.006</td>
+      <td>0.297</td>
+      <td>0.319</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4866.0</td>
+      <td>4850.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>a</th>
+      <td>-0.999</td>
+      <td>0.002</td>
+      <td>-1.003</td>
+      <td>-0.996</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>5085.0</td>
+      <td>4869.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>sigma</th>
+      <td>0.010</td>
+      <td>0.001</td>
+      <td>0.007</td>
+      <td>0.012</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4792.0</td>
+      <td>4901.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>hs[0, 0]</th>
+      <td>4.932</td>
+      <td>0.001</td>
+      <td>4.930</td>
+      <td>4.933</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>5105.0</td>
+      <td>4897.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>hs[1, 0]</th>
+      <td>9.517</td>
+      <td>0.098</td>
+      <td>9.326</td>
+      <td>9.694</td>
+      <td>0.001</td>
+      <td>0.001</td>
+      <td>4540.0</td>
+      <td>4761.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>hs[2, 0]</th>
+      <td>10.759</td>
+      <td>0.030</td>
+      <td>10.702</td>
+      <td>10.814</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>5003.0</td>
+      <td>4861.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Fitting this model is tricky. If the fit appears poor, here are some steps to try.</p>
+<ol class="arabic simple">
+<li><p>rerun the model, a new</p></li>
+<li><p>try increasing the number of iterations.</p></li>
+<li><p>try a strong prior on the breakpoints. For example, try <code class="docutils literal notranslate"><span class="pre">prior={'distribution':'normal',</span> <span class="pre">'mu':[5,</span> <span class="pre">9.5,</span> <span class="pre">10.5],</span> <span class="pre">'sigma':[1,</span> <span class="pre">1,</span> <span class="pre">0.2]})</span></code>, which implies we know the true breakpoint within +-0.5 ft.</p></li>
+<li><p>finally, try fitting the model with another method.</p></li>
+</ol>
+<p>ADVI typically underestimates uncertainty and struggles with multi-modal distributions.
+NUTS may give better results but will be substantially slower to fit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># NUTS example. This may take several minutes, depending on your CPU.</span>
+<span class="c1"># n = 4</span>
+<span class="c1"># with powerrating:</span>
+<span class="c1">#     trace = pm.sample(tune=1500, chains=n, cores=n, target_accept=0.95)</span>
+<span class="c1"># </span>
+<span class="c1"># powerrating.plot(trace)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="parameterization">
+<h2>Parameterization<a class="headerlink" href="#parameterization" title="Permalink to this heading">#</a></h2>
+<p>The segmented power law is defined as:</p>
+<p>\begin{align}
+\log(Q) = a + \sum_{i=1}^{n} b_i \log(x - x_{o,i}) H_i(x - x_{o,i})
+\end{align}
+where
+<span class="math notranslate nohighlight">\(Q\)</span> is a vector discharge, <br />
+<span class="math notranslate nohighlight">\(n\)</span> is the number of breakpoints in the rating, <br />
+<span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are model parameters, <br />
+<span class="math notranslate nohighlight">\(x\)</span> is a vector of stage observations, <br />
+<span class="math notranslate nohighlight">\(x_o\)</span> is a vector of breakpoints, and <br />
+<span class="math notranslate nohighlight">\(H\)</span> is the Heaviside function.</p>
+<p>In a standard linear model <span class="math notranslate nohighlight">\(b\)</span> represents the slope of the function with respect the input.
+In the segmented power law <span class="math notranslate nohighlight">\(b_o\)</span> is the slope and each subsequent <span class="math notranslate nohighlight">\(b_i\)</span> are adjustment to the base slope for each segment.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: ""
+        },
+        kernelOptions: {
+            name: "",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = ''</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="getting-started.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="spline-demo.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Spline demo</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-model">Setup model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulated-example">Simulated Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameterization">Parameterization</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Timothy Hodson
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
