@@ -48,7 +48,7 @@ class ReitanRating(PowerLawRating):
             Prior knowledge of breakpoint locations.
         """
 
-        super(PowerLawRating, self).__init__(name, model)
+        super(PowerLawRating, self).__init__(q, h, name, model)
 
         self.segments = segments
         self.prior = prior

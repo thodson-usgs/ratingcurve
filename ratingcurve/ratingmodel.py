@@ -24,15 +24,22 @@ if TYPE_CHECKING:
 class Rating(Model, RegressorMixin):
     """Abstract base class for rating models
     """
-    def __init__(self, name='', model=None):
+    def __init__(self, q, h, name='', model=None):
         """Initialize rating model
 
         Parameters
         ----------
+        q, h: array-like
+            Input arrays of discharge (q) and gage height (h) observations.
+
         name : str
           Name that will be used as prefix for names of all random variables defined within model
         """
         super().__init__(name, model)
+
+        if np.any(q <= 0):
+            raise ValueError('Discharge must be positive. Zero values will be allowed in a future release.')
+
 
     def table(self, trace, h=None, step=0.01, extend=1.1) -> DataFrame:
         """Return stage-discharge rating table
@@ -146,7 +153,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
             Prior knowledge of breakpoint locations.
         """
 
-        super().__init__(name, model)
+        super().__init__(q, h, name, model)
 
         self.segments = segments
         self.prior = prior
@@ -285,6 +292,8 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         maximum observed stage.
         """
         self._hs_lower_bounds = np.zeros((self.segments, 1)) + self.h_obs.min()
+        # set to slightly above highest zero flow value
+        #self._hs_lower_bounds = self.h_obs[]
         self._hs_lower_bounds[0] = 0
 
         self._hs_upper_bounds = np.zeros((self.segments, 1)) + self.h_obs.max()
@@ -325,7 +334,7 @@ class SplineRating(Rating, SplinePlotMixin):
         df : int
             Degrees of freedom for the spline coefficients.
         """
-        super().__init__(name, model)
+        super().__init__(q, h, name, model)
         self.q_obs = q
         self.h_obs = h
         self.q_transform = LogZTransform(self.q_obs)
