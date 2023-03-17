@@ -17,13 +17,11 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# load tutorial data
 from ratingcurve import data
 %load_ext autoreload
 %autoreload 2
 %xmode minimal
 #suppress warnings and errors
-
 
 import pymc as pm
 import arviz as az
@@ -36,11 +34,10 @@ df = data.load('green channel')
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[1], line 2[0m
-[1;32m      1[0m [38;5;66;03m# load tutorial data[39;00m
-[0;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mratingcurve[39;00m [38;5;28;01mimport[39;00m data
-[1;32m      3[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mload_ext[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mautoreload[39m[38;5;124m'[39m)
-[1;32m      4[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mautoreload[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m2[39m[38;5;124m'[39m)
+Cell [0;32mIn[2], line 1[0m
+[0;32m----> 1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mratingcurve[39;00m [38;5;28;01mimport[39;00m data
+[1;32m      2[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mload_ext[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mautoreload[39m[38;5;124m'[39m)
+[1;32m      3[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mautoreload[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m2[39m[38;5;124m'[39m)
 
 [0;31mModuleNotFoundError[0m: No module named 'ratingcurve'
 ModuleNotFoundError: No module named 'ratingcurve'

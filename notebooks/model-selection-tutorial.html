@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Model evaluation &#8212; ratingcurve</title>
+    <title>Model selection &#8212; ratingcurve</title>
   
   
   
@@ -61,11 +61,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/model-evaluation-demo';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/model-selection-tutorial';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Implementation" href="../meta/implementation.html" />
-    <link rel="prev" title="Spline demo" href="spline-demo.html" />
+    <link rel="prev" title="Natural Splines" href="spline-tutorial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,14 +152,11 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../meta/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started-tutorial.html">Getting Started</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="segmented-power-law-demo.html">Fitting a Stage-Discharge Rating using a Segmented</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spline-demo.html">Spline demo</a></li>
-
-
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model evaluation</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="segmented-power-law-tutorial.html">Fitting a Stage-Discharge Rating using a Segmented</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spline-tutorial.html">Natural Splines</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model selection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/implementation.html">Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API documentation</a></li>
@@ -234,7 +231,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/thodson-usgs/ratingcurve/issues/new?title=Issue%20on%20page%20%2Fnotebooks/model-evaluation-demo.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/thodson-usgs/ratingcurve/issues/new?title=Issue%20on%20page%20%2Fnotebooks/model-selection-tutorial.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -264,7 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/notebooks/model-evaluation-demo.ipynb" target="_blank"
+      <li><a href="../_sources/notebooks/model-selection-tutorial.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -346,7 +343,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Model evaluation</h1>
+    <h1>Model selection</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -356,10 +353,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Model evaluation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-the-data">Fit the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-analysis">Residual analysis</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -370,19 +366,35 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="model-evaluation">
-<h1>Model evaluation<a class="headerlink" href="#model-evaluation" title="Permalink to this heading">#</a></h1>
-<p>In some cases, we may not know the number of segments or we may wish to compare a power law against other types of rating models.
-For these cases, we can use information criteria to select the best model.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="model-selection">
+<h1>Model selection<a class="headerlink" href="#model-selection" title="Permalink to this heading">#</a></h1>
+<p>Perhaps we do not know the number of segments in a rating or that a power law is better than another type of model.
+In these situations, we want to compare the performance of one model against another,
+then select whichever models gives the best fit for the data.
+More specifically, we want to know the generalization performance of each model,
+which refers to their performance on new (out-of-sample) data.</p>
+<p>One way to estimate generalization performance is cross validation, but it can be costly.
+In cross validation, a portion of the data is held out.
+If you don’t have a lot of data to begin with,
+holding out a portion can substantially degrade model fit.</p>
+<p>An alternative approach is to use information criteria,
+which are measures that use in-sample data to estimate out-of-sample performance.</p>
+<p>In this tutorial, we demonstrate how to select the number of segments in the Green River rating.
+We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to select the number of segments that gives the best fit.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load tutorial data</span>
-<span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Load the data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
 <span class="o">%</span><span class="k">load_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
 <span class="o">%</span><span class="k">xmode</span> minimal
 <span class="c1">#suppress warnings and errors</span>
-
 
 <span class="kn">import</span> <span class="nn">pymc</span> <span class="k">as</span> <span class="nn">pm</span>
 <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
@@ -397,18 +409,19 @@ For these cases, we can use information criteria to select the best model.</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># load tutorial data</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;load_ext&#39;</span><span class="p">,</span> <span class="s1">&#39;autoreload&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;autoreload&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;load_ext&#39;</span><span class="p">,</span> <span class="s1">&#39;autoreload&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;autoreload&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;ratingcurve&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<p>Fit the data to ratings with 1 to 4 segments and determine which is best.</p>
+<section id="fit-the-data">
+<h2>Fit the data<a class="headerlink" href="#fit-the-data" title="Permalink to this heading">#</a></h2>
+<p>Fit the data to ratings with 1 to 4 segments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -441,10 +454,10 @@ For these cases, we can use information criteria to select the best model.</p>
 </div>
 </div>
 </div>
-<p>As we expected, the 2-segment model was ranked highest.</p>
+<p>As expected, the 2-segment model ranked highest.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="residuals">
-<h1>Residuals<a class="headerlink" href="#residuals" title="Permalink to this heading">#</a></h1>
+<section id="residual-analysis">
+<h2>Residual analysis<a class="headerlink" href="#residual-analysis" title="Permalink to this heading">#</a></h2>
 <p>In practice, it can be helpful to plot to rating error
 (the deviations between the rating fit and the discharge observations).
 Here is a demonstration of how.</p>
@@ -458,15 +471,8 @@ Here is a demonstration of how.</p>
                              <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">],</span>
                              <span class="n">segments</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span>
                              <span class="n">prior</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;distribution&#39;</span><span class="p">:</span><span class="s1">&#39;uniform&#39;</span><span class="p">})</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">powerrating</span><span class="p">:</span>
-    <span class="n">mean_field</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;advi&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">150_000</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">mean_field</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+
+<span class="n">trace</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;advi&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -485,6 +491,7 @@ Here is a demonstration of how.</p>
 </div>
 </div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -516,12 +523,12 @@ Here is a demonstration of how.</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="spline-demo.html"
+       href="spline-tutorial.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Spline demo</p>
+        <p class="prev-next-title">Natural Splines</p>
       </div>
     </a>
     <a class="right-next"
@@ -548,10 +555,9 @@ Here is a demonstration of how.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Model evaluation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">Residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-the-data">Fit the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-analysis">Residual analysis</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
