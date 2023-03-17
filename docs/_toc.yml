@@ -6,10 +6,10 @@ root: meta/intro
 chapters:
 - file: meta/background
 - file: meta/installation
-- file: notebooks/getting-started
-- file: notebooks/segmented-power-law-demo
-- file: notebooks/spline-demo
-- file: notebooks/model-evaluation-demo
+- file: notebooks/getting-started-tutorial
+- file: notebooks/segmented-power-law-tutorial
+- file: notebooks/spline-tutorial
+- file: notebooks/model-selection-tutorial
 - file: meta/implementation
 - file: meta/troubleshooting
 - file: api
