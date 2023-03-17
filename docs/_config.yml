@@ -3,7 +3,11 @@
 
 title: ratingcurve
 author: Timothy Hodson
+copyright: 'CC0'
+description: "A Python package for fitting multi-segment rating curves"
 logo: "" # A path to the book logo; e.g. logo.png
+
+only_build_toc_files: True
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
