@@ -167,6 +167,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         
         # data
         h = pm.MutableData("h", self.h_obs)
+        q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
         # parameters
         # taking the log of h0_offset produces the clipping boundaries in Fig 1, from Reitan et al. 2019
@@ -191,7 +192,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # likelihood
         b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, np.inf) + self.ho))
-        mu = pm.Normal("mu", a + at.dot(w, b), sigma + self.q_sigma, observed=self.y)
+        mu = pm.Normal("mu", a + at.dot(w, b), sigma + q_sigma, observed=self.y)
 
     def set_normal_prior(self):
         """Normal prior for breakpoints
@@ -345,10 +346,11 @@ class SplineRating(Rating, SplinePlotMixin):
 
         # data
         B = pm.MutableData("B", self.B)
+        q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
         # priors
         w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
-        sigma = pm.HalfCauchy("sigma", beta=0.1) + self.q_sigma
+        sigma = pm.HalfCauchy("sigma", beta=0.1) + q_sigma
 
         # likelihood
         mu = pm.Normal("mu", at.dot(B, w.T), sigma, observed=self.y, dims="obs")
