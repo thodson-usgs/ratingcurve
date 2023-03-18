@@ -1,3 +1,4 @@
+#`ratingcurve`
 *A standard algorithm for fitting multi-segment rating curves*
 
 Streamflow is one of the most important variables in hydrology but is costly to measure.
