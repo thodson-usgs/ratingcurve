@@ -3,19 +3,16 @@
 
 format: jb-book
 root: meta/intro
-parts:
-  - caption: Getting Started
-    chapters:
-    - file: meta/background
-    - file: meta/installation
-  - caption: Tutorials
-    chapters:
-    - file: notebooks/getting-started-tutorial
-    - file: notebooks/segmented-power-law-tutorial
-    - file: notebooks/spline-tutorial
-    - file: notebooks/model-selection-tutorial
-  - caption: Advanced
-    chapters:
-    - file: meta/implementation
-    - file: meta/troubleshooting
-    - file: api
+chapters:
+- file: meta/background
+- file: meta/installation
+- file: notebooks/getting-started-tutorial
+- file: notebooks/segmented-power-law-tutorial
+- file: notebooks/spline-tutorial
+- file: notebooks/model-selection-tutorial
+- file: meta/implementation
+- file: meta/troubleshooting
+- file: api
+#- file: markdown
+#- file: notebooks
+#- file: markdown-notebooks
