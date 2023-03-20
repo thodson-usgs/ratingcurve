@@ -4,15 +4,14 @@
 format: jb-book
 root: meta/intro
 chapters:
-- file: meta/background
 - file: meta/installation
 - file: notebooks/getting-started-tutorial
-- file: notebooks/segmented-power-law-tutorial
-- file: notebooks/spline-tutorial
-- file: notebooks/model-selection-tutorial
+- file: meta/tutorials
+  sections:
+  - file: notebooks/segmented-power-law-tutorial
+  - file: notebooks/spline-tutorial
+  - file: notebooks/model-selection-tutorial
+- file: meta/background
 - file: meta/implementation
 - file: meta/troubleshooting
 - file: api
-#- file: markdown
-#- file: notebooks
-#- file: markdown-notebooks
