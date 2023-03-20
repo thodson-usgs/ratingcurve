@@ -24,6 +24,8 @@ if TYPE_CHECKING:
 
 class ReitanRating(PowerLawRating):
     """Experimental multi-segment power law rating using the Reitan parameterization.
+
+    Unlike Reitan Eq. 5, this version uses a fixed offset for each segment (ho).
     """
     def __init__(
         self,
@@ -66,7 +68,7 @@ class ReitanRating(PowerLawRating):
             self.q_sigma = np.log(1 + q_sigma/q)
 
         self.h_obs = h
-        
+
         # observations
         h = pm.MutableData("h", self.h_obs)
         q_sigma = pm.MutableData("q_sigma", self.q_sigma)
@@ -95,7 +97,7 @@ class ReitanRating(PowerLawRating):
         inf = at.constant([np.inf], dtype='float64').reshape((-1, 1 ))
         hs1 = at.concatenate([hs, inf])
 
-        b = at.log( at.clip(h - hs, 0, hs1[1:] - hs) + ho) ## BEST
+        b = at.log( at.clip(h - hs, 0, hs1[1:] - hs) + ho) #best but suspect ho is accumulating (ho added to each segment)
         sigma = pm.HalfCauchy("sigma", beta=0.1)
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + q_sigma, observed=self.y)
 
@@ -128,9 +130,8 @@ class ReitanRating(PowerLawRating):
         ho = self._ho
         inf = np.array(np.inf).reshape(-1, 1)
         hs1 = np.pad(hs, ((0,0), (0,1), (0,0)), 'constant', constant_values=np.inf )
-        b= np.log( np.clip(h - hs, 0, hs1[:,1:] - hs) + ho)
-        q_z = a + (b*w2).sum(axis=1).T 
+        b = np.log( np.clip(h - hs, 0, hs1[:,1:] - hs) + ho)
+        q_z = a + (b*w2).sum(axis=1).T
         e = np.random.normal(0, sigma, sample)
 
         return self._format_ratingdata(h=h, q_z=q_z+e)
-    
