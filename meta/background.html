@@ -61,13 +61,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'meta/background';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Installation" href="installation.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="intro.html" />
+    <link rel="next" title="Implementation" href="implementation.html" />
+    <link rel="prev" title="Getting Started" href="../notebooks/getting-started-tutorial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -148,7 +147,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    <no title>
+                    Motivation
                 </a>
             </li>
         </ul>
@@ -156,9 +155,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/getting-started-tutorial.html">Getting Started</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/segmented-power-law-tutorial.html">Fitting a Stage-Discharge Rating using a Segmented</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/spline-tutorial.html">Natural Splines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/model-selection-tutorial.html">Model selection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implementation.html">Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
@@ -372,16 +368,17 @@ but they are difficult to measure directly.
 In nearly all timeseries applications, streamflow is estimated from rating curves or ``ratings’’ that describe the relationship between streamflow and an easy-to-measure predictor like stage.
 The shape of the rating is specific to each streamgage and is governed by channel conditions at or downstream from the gage, referred to as controls.
 Section controls, like riffles or weirs, occur downstream of the gage, whereas channel controls, like the geometry of the banks, occur at the gage.
-Regardless of the type, the behavior of each control is often well-approximated with standard hydrologic equations that take the general form of a power law with a location parameter
-\begin{equation}
-Q = C(h - h_0)^{b}
-\end{equation}
-where <span class="math notranslate nohighlight">\(Q\)</span> is the discharge (streamflow);
-<span class="math notranslate nohighlight">\(h\)</span> is the height of the water above some datum (stage);
-<span class="math notranslate nohighlight">\(h_0\)</span> is the stage of zero flow (the location or offset parameter);
-<span class="math notranslate nohighlight">\((h-h_0)\)</span> is the hydraulic head \citep{ISO18320_2020};
-<span class="math notranslate nohighlight">\(b\)</span> is the slope of the rating curve when plotted in log-log space;
-<span class="math notranslate nohighlight">\(C\)</span> is a scale factor equal to the discharge when the head is equal to one;
+Regardless of the type, the behavior of each control is often well-approximated with standard hydrologic equations that take the general form of a power law with a location parameter</p>
+<div class="amsmath math notranslate nohighlight" id="equation-082e6b6b-bb63-4cb5-869d-858507fd7239">
+<span class="eqno">(1)<a class="headerlink" href="#equation-082e6b6b-bb63-4cb5-869d-858507fd7239" title="Permalink to this equation">#</a></span>\[\begin{equation}
+    Q = C(h - h_0)^{b}
+\end{equation}\]</div>
+<p>where $Q$ is the discharge (streamflow);
+$h$ is the height of the water above some datum (stage);
+$h_0$ is the stage of zero flow (the location or offset parameter);
+$(h-h_0)$ is the hydraulic head \citep{ISO18320_2020};
+$b$ is the slope of the rating curve when plotted in log-log space;
+$C$ is a scale factor equal to the discharge when the head is equal to one;
 When multiple controls are present, the rating curve is divided into segments
 with one power-law corresponding to each control resulting in a multi-segment or compound rating.</p>
 <p>Though several automated methods exist, most ratings are still fit by hand using a graphical method of plotting stage and discharge in log-log space.
@@ -403,7 +400,7 @@ requiring less data to achieve the same fit and being less prone to overfitting.
 Similar algorithms already exist, notably those of \citet{Reitan_2008, Le_Coz_2014},
 as well as the so-called generalized power law \citep{Hrafnkelsson_2021}.
 Like the algorithm described here, each of these examples is Bayesian, meaning they can utilize prior information to help constrain the solution space and reduce multimodality.
-Simple examples of priors include constraining the exponent <span class="math notranslate nohighlight">\(b\)</span> to a narrow range around the value of 5/3,
+Simple examples of priors include constraining the exponent $b$ to a narrow range around the value of 5/3,
 or constraining the number of rating segments,
 or constraining the transitions between segments around a particular stage.
 Being Bayesian, they also inherently estimate uncertainty in the fitted parameters and discharge,
@@ -446,20 +443,20 @@ or switch between different approximation algorithms to achieve different tradeo
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="intro.html"
+       href="../notebooks/getting-started-tutorial.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Getting Started</p>
       </div>
     </a>
     <a class="right-next"
-       href="installation.html"
+       href="implementation.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Installation</p>
+        <p class="prev-next-title">Implementation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -61,13 +61,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/segmented-power-law-tutorial';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Natural Splines" href="spline-tutorial.html" />
-    <link rel="prev" title="Getting Started" href="getting-started-tutorial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -148,17 +145,14 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../meta/intro.html">
-                    <no title>
+                    Motivation
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../meta/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting-started-tutorial.html">Getting Started</a></li>
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Fitting a Stage-Discharge Rating using a Segmented</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spline-tutorial.html">Natural Splines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-selection-tutorial.html">Model selection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/implementation.html">Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
@@ -371,7 +365,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="fitting-a-stage-discharge-rating-using-a-segmented">
+  <section id="fitting-a-stage-discharge-rating-using-a-segmented">
 <h1>Fitting a Stage-Discharge Rating using a Segmented<a class="headerlink" href="#fitting-a-stage-discharge-rating-using-a-segmented" title="Permalink to this heading">#</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/master/notebooks/segmented-power-law-demo.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>There are several approaches to fitting a stage-discharge rating curve.
@@ -664,7 +658,7 @@ which is to use a segmented power law.</p>
 <p>What happens if we choose the wrong number of segments?
 Increase the number of segments by one and rerun the model.
 We can use this approach to select the correct number of segments;
-more on this topic in the <span class="xref myst">model evaluation notebook</span>(<a class="reference external" href="https://github/thodson-usgs/ratingcurve/blob/master/notebooks/model-evaluation-demo.ipynb">https://github/thodson-usgs/ratingcurve/blob/master/notebooks/model-evaluation-demo.ipynb</a>)</p>
+more on this topic in the <span class="xref myst">model evaluation notebook</span>(https://github/thodson-usgs/ratingcurve/blob/master/notebooks/model-evaluation-demo.ipynb)</p>
 </section>
 <section id="simulated-example">
 <h2>Simulated Example<a class="headerlink" href="#simulated-example" title="Permalink to this heading">#</a></h2>
@@ -935,18 +929,19 @@ NUTS may give better results but will be substantially slower to fit.</p>
 <section id="parameterization">
 <h2>Parameterization<a class="headerlink" href="#parameterization" title="Permalink to this heading">#</a></h2>
 <p>The segmented power law is defined as:</p>
-<p>\begin{align}
-\log(Q) = a + \sum_{i=1}^{n} b_i \log(x - x_{o,i}) H_i(x - x_{o,i})
-\end{align}
-where
-<span class="math notranslate nohighlight">\(Q\)</span> is a vector discharge, <br />
-<span class="math notranslate nohighlight">\(n\)</span> is the number of breakpoints in the rating, <br />
-<span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are model parameters, <br />
-<span class="math notranslate nohighlight">\(x\)</span> is a vector of stage observations, <br />
-<span class="math notranslate nohighlight">\(x_o\)</span> is a vector of breakpoints, and <br />
-<span class="math notranslate nohighlight">\(H\)</span> is the Heaviside function.</p>
-<p>In a standard linear model <span class="math notranslate nohighlight">\(b\)</span> represents the slope of the function with respect the input.
-In the segmented power law <span class="math notranslate nohighlight">\(b_o\)</span> is the slope and each subsequent <span class="math notranslate nohighlight">\(b_i\)</span> are adjustment to the base slope for each segment.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-88ab0c11-ba5c-42f0-9250-087307d7b44f">
+<span class="eqno">()<a class="headerlink" href="#equation-88ab0c11-ba5c-42f0-9250-087307d7b44f" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \log(Q) = a + \sum_{i=1}^{n} b_i \log(x - x_{o,i}) H_i(x - x_{o,i})
+\end{align}\]</div>
+<p>where
+$Q$ is a vector discharge, <br />
+$n$ is the number of breakpoints in the rating, <br />
+$a$ and $b$ are model parameters, <br />
+$x$ is a vector of stage observations, <br />
+$x_o$ is a vector of breakpoints, and <br />
+$H$ is the Heaviside function.</p>
+<p>In a standard linear model $b$ represents the slope of the function with respect the input.
+In the segmented power law $b_o$ is the slope and each subsequent $b_i$ are adjustment to the base slope for each segment.</p>
 </section>
 </section>
 
@@ -978,24 +973,6 @@ In the segmented power law <span class="math notranslate nohighlight">\(b_o\)</s
                 <footer class="bd-footer-article">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="getting-started-tutorial.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting Started</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="spline-tutorial.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Natural Splines</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               

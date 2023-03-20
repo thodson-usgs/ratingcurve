@@ -61,13 +61,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'meta/implementation';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
-    <link rel="prev" title="Model selection" href="../notebooks/model-selection-tutorial.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="background.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -148,7 +147,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    <no title>
+                    Motivation
                 </a>
             </li>
         </ul>
@@ -156,9 +155,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/getting-started-tutorial.html">Getting Started</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/segmented-power-law-tutorial.html">Fitting a Stage-Discharge Rating using a Segmented</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/spline-tutorial.html">Natural Splines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/model-selection-tutorial.html">Model selection</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
@@ -369,7 +365,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="implementation">
+  <section id="implementation">
 <h1>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading">#</a></h1>
 <p>We implemented our curve-fitting algorithm, along with some additional plotting and evaluation tools, test datasets, and tutorials, as a Python package called \texttt{ratingcurve}.
 The algorithm is written using \texttt{PyMC} \citep{Salvatier_2016},
@@ -384,26 +380,27 @@ and more accurate Hamiltonian Monte Carlo with the No-U-Turn Sampler \citep[NUTS
 <h2>Parameterization<a class="headerlink" href="#parameterization" title="Permalink to this heading">#</a></h2>
 <p>Our rating curve model is functionally equivalent to that of \citet{Reitan_2008}
 but adapts the parameterization used by \citet{Muggeo_2003} for piecewise regression.</p>
-<p>Streamflow or discharge <span class="math notranslate nohighlight">\(Q\)</span> is a function of stage <span class="math notranslate nohighlight">\(h\)</span> and parameterized as
-\begin{align}
-\label{eq:parameterization}
-B &amp;= \ln(\max(h - h_s, 0) + h_o) \
-\ln(Q) &amp;= a + w^T B + \epsilon
-\end{align}
-where
-<span class="math notranslate nohighlight">\(h_s\)</span> is a vector containing the stage of each segment breakpoint;
-<span class="math notranslate nohighlight">\(h_o\)</span> is a vector of offsets, the first is 0 and the rest are 1;
-<span class="math notranslate nohighlight">\(\max\)</span> is the element-wise maximum, which returns a vector of size <span class="math notranslate nohighlight">\(h_s\)</span>;
-<span class="math notranslate nohighlight">\(a\)</span> is a bias parameter;
-<span class="math notranslate nohighlight">\(w\)</span> is a vector of weights;
-and <span class="math notranslate nohighlight">\(\epsilon\)</span> is the error.</p>
+<p>Streamflow or discharge $Q$ is a function of stage $h$ and parameterized as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8fda10b4-4d65-4c6e-b1b1-811e148d8ef6">
+<span class="eqno">(2)<a class="headerlink" href="#equation-8fda10b4-4d65-4c6e-b1b1-811e148d8ef6" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \label{eq:parameterization}
+    B &amp;= \ln(\max(h - h_s, 0) + h_o) \\
+    \ln(Q) &amp;= a + w^T B + \epsilon
+\end{align}\]</div>
+<p>where
+$h_s$ is a vector containing the stage of each segment breakpoint;
+$h_o$ is a vector of offsets, the first is 0 and the rest are 1;
+$\max$ is the element-wise maximum, which returns a vector of size $h_s$;
+$a$ is a bias parameter;
+$w$ is a vector of weights;
+and $\epsilon$ is the error.</p>
 <p>\citet{Reitan_2008} parameterize the rating curve as separate control segments.
 As stage increases, the flow is divided among segments, filling from the bottom up,
 similar to how different controls become active as stage increases in the channel.
 Once stage rises beyond the range of a particular control, that control is “drowned out” and its flow ceases to increase with stage.
 Our parameterization is simpler though less physical.
 As stage increases, new segments are activated, but their effect never drowns out:
-each successive <span class="math notranslate nohighlight">\(w_i\)</span> term makes cumulative adjustments to the base slope <span class="math notranslate nohighlight">\(w_1\)</span>.</p>
+each successive $w_i$ term makes cumulative adjustments to the base slope $w_1$.</p>
 <p>Unless we erred in implementing \citet{Reitan_2008},
 the less physical parametrization performed better in our testing.
 Other parametrizations, priors, or optimization algorithms might be even better,
@@ -415,7 +412,7 @@ The default assumes the breakpoints are uniformly distributed, which works well 
 Alternatively, the user can specify the approximate location of each breakpoint using a normal distribution,
 like if they had other evidence that a breakpoint occurred at a particular stage.
 With the normal prior, the user specifies the expected stage for each breakpoint and their uncertainty about it.</p>
-<p>Like \citet{Reitan_2008}, we assume <span class="math notranslate nohighlight">\(\epsilon\)</span> is normally distributed with mean zero and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>, <span class="math notranslate nohighlight">\(\epsilon \sim N(0, \sigma^2)\)</span>.
+<p>Like \citet{Reitan_2008}, we assume $\epsilon$ is normally distributed with mean zero and variance $\sigma^2$, $\epsilon \sim N(0, \sigma^2)$.
 That simplification can create unaccounted heteroscedasticity \citep{Petersen_Overleir_2004}
 but generally yields a reasonable estimate for the rating and its uncertainty.
 Other error distributions could be tested and incorporated in the package;
@@ -461,12 +458,12 @@ while being relatively simple and easy to extend.</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../notebooks/model-selection-tutorial.html"
+       href="background.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Model selection</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
       </div>
     </a>
     <a class="right-next"
