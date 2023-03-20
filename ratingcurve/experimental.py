@@ -78,7 +78,8 @@ class ReitanRating(PowerLawRating):
 
         # priors
         # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
-        w = pm.Normal("w", mu=1.6, sigma=0.5, dims="splines")
+        #w = pm.Normal("w", mu=1.6, sigma=0.5, dims="splines")
+        w = pm.TruncatedNormal("w", mu=1.6, sigma=1.0, lower=0.1, dims="splines") # lower is somewhat arbitrary
         a = pm.Normal("a", mu=0, sigma=2)
 
         # set priors on break points
@@ -93,8 +94,8 @@ class ReitanRating(PowerLawRating):
         ho = self._ho
         inf = at.constant([np.inf], dtype='float64').reshape((-1, 1 ))
         hs1 = at.concatenate([hs, inf])
-        b1 = at.switch(at.gt(h,hs), at.log(h - hs + ho), 0) #at.log(ho)
-        b = pm.Deterministic('b', at.switch(at.gt(h, hs1[1:]), at.log(hs1[1:] - hs + ho), b1))
+
+        b = at.log( at.clip(h - hs, 0, hs1[1:] - hs) + ho) ## BEST
         sigma = pm.HalfCauchy("sigma", beta=0.1)
         mu = pm.Normal("mu", a + at.dot(w, b), sigma + q_sigma, observed=self.y)
 
@@ -126,12 +127,8 @@ class ReitanRating(PowerLawRating):
 
         ho = self._ho
         inf = np.array(np.inf).reshape(-1, 1)
-        #import pdb; pdb.set_trace()
-        #hs1 = np.concatenate([hs, inf])
         hs1 = np.pad(hs, ((0,0), (0,1), (0,0)), 'constant', constant_values=np.inf )
-        b1 = np.where(h >= hs, np.log(h - hs + ho), 0)
-        b = np.where(h >= hs1[:, 1:], np.log(hs1[:, 1:] - hs + ho), b1)
-        #b1 = np.where(h_tile <= hs, clips, np.log(h_tile-h0))
+        b= np.log( np.clip(h - hs, 0, hs1[:,1:] - hs) + ho)
         q_z = a + (b*w2).sum(axis=1).T 
         e = np.random.normal(0, sigma, sample)
 
