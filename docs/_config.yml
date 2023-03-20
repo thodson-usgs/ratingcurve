@@ -38,8 +38,7 @@ html:
 sphinx:
   extra_extensions:
   - 'sphinx.ext.autodoc'
-  - 'sphinx.ext.autosummary'
   - 'sphinx.ext.napoleon'
   - 'sphinx.ext.viewcode'
   config:
-    autosummary_generate: True
+    add_module_names: True
