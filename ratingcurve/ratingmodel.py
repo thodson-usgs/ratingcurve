@@ -186,7 +186,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
         w_mu[0] = 1.6
         w = pm.Normal("w", mu=w_mu, sigma=0.5, dims="splines")
-        a = pm.Normal("a", mu=0, sigma=2)
+        a = pm.Normal("a", mu=0, sigma=3)
         sigma = pm.HalfCauchy("sigma", beta=0.1)
 
         # set priors on break points
@@ -291,13 +291,18 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         is set to the minimum observed stage. The upper bound is set to the
         maximum observed stage.
         """
-        self._hs_lower_bounds = np.zeros((self.segments, 1)) + self.h_obs.min()
-        # set to slightly above highest zero flow value
-        #self._hs_lower_bounds = self.h_obs[]
-        self._hs_lower_bounds[0] = 0
+        h = np.sort(self.h_obs)
+        e = 1e-6
+        [1]
+        # construct prior bounds to help ensure a minimum of 2 observations in each segment
+        self._hs_lower_bounds = np.zeros(self.segments) 
+        self._hs_lower_bounds[1:] = h[2 * np.arange(1, self.segments) - 1] + e
+        self._hs_lower_bounds = self._hs_lower_bounds.reshape((-1, 1))
 
-        self._hs_upper_bounds = np.zeros((self.segments, 1)) + self.h_obs.max()
-        self._hs_upper_bounds[0] = self.h_obs.min() - 1e-6 # TODO compute threshold
+        self._hs_upper_bounds = np.zeros(self.segments)
+        self._hs_upper_bounds[0] = h[0]
+        self._hs_upper_bounds[:0:-1] = h[-2 * np.arange(1, self.segments)]
+        self._hs_upper_bounds = self._hs_upper_bounds.reshape((-1, 1))  - e
 
     def __init_hs(self):
         """Initialize breakpoints
@@ -305,6 +310,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         """
         self._init_hs = self.prior.get('initval', None)
 
+        # TODO: distribute to evenly split the data
         if self._init_hs is None:
             self._init_hs = np.random.rand(self.segments, 1) \
                 * (self._hs_upper_bounds - self._hs_lower_bounds) \
