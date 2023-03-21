@@ -135,3 +135,239 @@ class ReitanRating(PowerLawRating):
         e = np.random.normal(0, sigma, sample)
 
         return self._format_ratingdata(h=h, q_z=q_z+e)
+
+
+class ISORating(PowerLawRating):
+    """Experimental multi-segment power law rating using the Reitan parameterization.
+
+    Unlike Reitan Eq. 5, this version uses a fixed offset for each segment (ho).
+    """
+    def __init__(
+        self,
+        q,
+        h,
+        segments,
+        prior={'distribution': 'uniform'},
+        q_sigma=None,
+        name='',
+        model=None):
+        """Create a multi-segment power law rating model
+
+        Parameters
+        ----------
+        q, h: array-like
+            Input arrays of discharge (q) and gage height (h) observations.
+        q_sigma : array-like
+            Input array of discharge uncertainty in units of discharge.
+        segments : int
+            Number of segments in the rating.
+        prior : dict
+            Prior knowledge of breakpoint locations.
+        """
+
+        super(PowerLawRating, self).__init__(q, h, name, model)
+
+        self.segments = segments
+        self.prior = prior
+        self.q_obs = q
+        self.q_transform = LogZTransform(self.q_obs)
+        self.y = self.q_transform.transform(self.q_obs)
+
+        COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(segments)}
+        self.add_coords(COORDS)
+
+        # transform observational uncertainty to log scale
+        if q_sigma is None:
+            self.q_sigma = 0
+        else:
+            self.q_sigma = np.log(1 + q_sigma/q)
+
+        self.h_obs = h
+
+        # observations
+        h = pm.MutableData("h", self.h_obs)
+        q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+
+
+        # priors
+        # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
+        #w_mu = np.zeros(self.segments) + 1.3
+        #w_mu[0] = 2.0
+        #w = pm.TruncatedNormal("w", mu=w_mu, sigma=0.2, lower=0.5, dims="splines") # lower is somewhat arbitrary
+        w = pm.TruncatedNormal("w", mu=2, sigma=0.4, lower=0.5, dims="splines") # lower is somewhat arbitrary
+        a = pm.Normal("a", mu=0, sigma=3, dims='splines') # a is scale dependent
+        #a = pm.Normal("a", mu=0, sigma=10) #TESTING!
+
+        # set priors on break points
+        if self.prior['distribution'] == 'normal':
+            hs = self.set_normal_prior()
+        elif self.prior['distribution'] == 'uniform':
+            hs = self.set_uniform_prior()
+        else:
+            raise NotImplementedError('Prior distribution not implemented')
+
+        # likelihood
+        inf = at.constant([np.inf], dtype='float64').reshape((-1, 1 ))
+        hs1 = at.concatenate([hs, inf])
+        x = at.clip(h - hs, 1e-12, hs1[1:] - hs) # works for up to 2 segments
+        b = at.exp(a + w * at.log(x.T))
+        q = at.log(at.sum(b, axis=1))
+
+        sigma = pm.HalfCauchy("sigma", beta=0.1)
+        mu = pm.Normal("mu", q, sigma + q_sigma, observed=self.y)
+        #mu = pm.Normal("mu", at.log(q), sigma, observed=self.y)
+
+    def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
+        """Predicts values of new data with a trained rating model
+
+        Parameters
+        ----------
+        trace : ArviZ InferenceData
+        h : array-like
+            Stages at which to predict discharge.
+
+        Returns
+        -------
+        RatingData
+            Dataframe with columns 'stage', 'discharge', and 'sigma' containing predicted discharge and uncertainty.
+        """
+        trace = az.extract(trace)
+        sample = trace.sample.shape[0]
+        a = trace['a'].values
+        w = trace['w'].values
+        w2 = np.expand_dims(w.T, -1) #FIX
+        hs = np.moveaxis(trace['hs'].values, -1, 0)
+        sigma = trace['sigma'].values
+
+        clips = np.zeros((hs.shape[1], 1))
+        clips[0] = -np.inf
+        h_tile = np.tile(h, sample).reshape(sample, 1, -1)
+
+        inf = np.array(np.inf).reshape(-1, 1)
+        hs1 = np.pad(hs, ((0,0), (0,1), (0,0)), 'constant', constant_values=np.inf )
+
+        #x = np.clip(h - hs, 1e-9, hs1[:,1:] - hs)
+        x = np.clip(h - hs, 0, hs1[:,1:] - hs)
+        #b = at.switch(h > hs, at.exp(a + w * at.log(x.T)), 0 )
+        b = np.exp(a + w * np.log(x.T))
+        q_z = np.log(np.sum(b, axis=1))
+        e = np.random.normal(0, sigma, sample)
+
+        return self._format_ratingdata(h=h, q_z=q_z+e)
+    
+
+class ISORating2(PowerLawRating):
+    """Experimental multi-segment power law rating using the Reitan parameterization.
+
+    Unlike Reitan Eq. 5, this version uses a fixed offset for each segment (ho).
+    """
+    def __init__(
+        self,
+        q,
+        h,
+        segments,
+        prior={'distribution': 'uniform'},
+        q_sigma=None,
+        name='',
+        model=None):
+        """Create a multi-segment power law rating model
+
+        Parameters
+        ----------
+        q, h: array-like
+            Input arrays of discharge (q) and gage height (h) observations.
+        q_sigma : array-like
+            Input array of discharge uncertainty in units of discharge.
+        segments : int
+            Number of segments in the rating.
+        prior : dict
+            Prior knowledge of breakpoint locations.
+        """
+
+        super(PowerLawRating, self).__init__(q, h, name, model)
+
+        self.segments = segments
+        self.prior = prior
+        self.q_obs = q
+        self.q_transform = LogZTransform(self.q_obs)
+        self.y = self.q_transform.transform(self.q_obs)
+
+        COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(segments)}
+        self.add_coords(COORDS)
+
+        # transform observational uncertainty to log scale
+        if q_sigma is None:
+            self.q_sigma = 0
+        else:
+            self.q_sigma = np.log(1 + q_sigma/q)
+
+        self.h_obs = h
+
+        # observations
+        h = pm.MutableData("h", self.h_obs)
+        q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+
+
+        # priors
+        # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
+        w_mu = np.zeros((self.segments,1)) + 1.3
+        w_mu[0] = 2.0
+        w = pm.TruncatedNormal("w", mu=2, sigma=0.3, lower=0.5, shape=(self.segments, 1)) # lower is somewhat arbitrary
+        a = pm.Normal("a", mu=0, sigma=3, shape=(self.segments,1)) # a is scale dependent
+        #a = pm.TruncatedNormal("a", mu=0, sigma=1, upper=0, dims='splines')
+
+        # set priors on break points
+        if self.prior['distribution'] == 'normal':
+            hs = self.set_normal_prior()
+        elif self.prior['distribution'] == 'uniform':
+            hs = self.set_uniform_prior()
+        else:
+            raise NotImplementedError('Prior distribution not implemented')
+
+        # likelihood
+        inf = at.constant([np.inf], dtype='float64').reshape((-1, 1 ))
+        hs1 = at.concatenate([hs, inf])
+        x = at.clip(h - hs, 0, hs1[1:] - hs) # BEST
+        b = at.switch( h > hs, at.exp(a + w * at.log(x)), 0)
+        q = at.log(at.sum(b, axis=0))
+
+        sigma = pm.HalfCauchy("sigma", beta=1)
+        mu = pm.Normal("mu", q, sigma + q_sigma, observed=self.y)
+
+    def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
+        """Predicts values of new data with a trained rating model
+
+        Parameters
+        ----------
+        trace : ArviZ InferenceData
+        h : array-like
+            Stages at which to predict discharge.
+
+        Returns
+        -------
+        RatingData
+            Dataframe with columns 'stage', 'discharge', and 'sigma' containing predicted discharge and uncertainty.
+        """
+        trace = az.extract(trace)
+        sample = trace.sample.shape[0]
+        a = trace['a'].values
+        w = trace['w'].values
+        w2 = np.expand_dims(w.T, -1) #FIX
+        hs = np.moveaxis(trace['hs'].values, -1, 0)
+        sigma = trace['sigma'].values
+
+        clips = np.zeros((hs.shape[1], 1))
+        clips[0] = -np.inf
+        h_tile = np.tile(h, sample).reshape(sample, 1, -1)
+
+        inf = np.array(np.inf).reshape(-1, 1)
+        hs1 = np.pad(hs, ((0,0), (0,1), (0,0)), 'constant', constant_values=np.inf )
+
+        x = np.clip(h - hs, 0, hs1[:,1:] - hs)
+        b = np.where(h > hs, np.exp(a + w * np.log(x)), 0 )
+        #b = np.exp(a + w * np.log(x.T))
+        q_z = np.log(np.sum(b, axis=0))
+        e = np.random.normal(0, sigma, sample)
+
+        return self._format_ratingdata(h=h, q_z=q_z+e)
+    
