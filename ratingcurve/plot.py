@@ -123,7 +123,12 @@ class PlotMixin(RatingMixin):
 
         # approximate percentage error
         residuals = self.residuals(trace) * 100
-        ax.errorbar(y=self.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o", lw=1, markersize=4, markerfacecolor='white', markeredgecolor='none')
+        ax.errorbar(y=self.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o",
+                    lw=NARROW_LINE,
+                    markersize=4,
+                    markerfacecolor='none',
+                    markeredgecolor='black',
+                    ecolor='black')
         self._format_residual_plot(ax)
 
     def plot_gagings(self, ax=None) -> None:

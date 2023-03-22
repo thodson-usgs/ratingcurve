@@ -188,15 +188,11 @@ class ISORating(PowerLawRating):
         h = pm.MutableData("h", self.h_obs)
         q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
-
         # priors
         # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
-        #w_mu = np.zeros(self.segments) + 1.3
-        #w_mu[0] = 2.0
-        #w = pm.TruncatedNormal("w", mu=w_mu, sigma=0.2, lower=0.5, dims="splines") # lower is somewhat arbitrary
         w = pm.TruncatedNormal("w", mu=2, sigma=0.4, lower=0.5, dims="splines") # lower is somewhat arbitrary
         a = pm.Normal("a", mu=0, sigma=3, dims='splines') # a is scale dependent
-        #a = pm.Normal("a", mu=0, sigma=10) #TESTING!
+        #TEST a = pm.Normal("a", mu=0, sigma=3) # a is scale dependent
 
         # set priors on break points
         if self.prior['distribution'] == 'normal':
@@ -209,13 +205,14 @@ class ISORating(PowerLawRating):
         # likelihood
         inf = at.constant([np.inf], dtype='float64').reshape((-1, 1 ))
         hs1 = at.concatenate([hs, inf])
-        x = at.clip(h - hs, 1e-12, hs1[1:] - hs) # works for up to 2 segments
+        x = at.clip(h - hs, 1e-6, hs1[1:] - hs) # could use at.switch instead
+        #TEST b = at.exp(w * at.log(x.T))
+        #TEST q = a + at.log(at.sum(b, axis=1))
         b = at.exp(a + w * at.log(x.T))
         q = at.log(at.sum(b, axis=1))
 
         sigma = pm.HalfCauchy("sigma", beta=0.1)
         mu = pm.Normal("mu", q, sigma + q_sigma, observed=self.y)
-        #mu = pm.Normal("mu", at.log(q), sigma, observed=self.y)
 
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
@@ -246,8 +243,7 @@ class ISORating(PowerLawRating):
         inf = np.array(np.inf).reshape(-1, 1)
         hs1 = np.pad(hs, ((0,0), (0,1), (0,0)), 'constant', constant_values=np.inf )
 
-        #x = np.clip(h - hs, 1e-9, hs1[:,1:] - hs)
-        x = np.clip(h - hs, 0, hs1[:,1:] - hs)
+        x = np.clip(h - hs, 1e-6, hs1[:,1:] - hs)
         #b = at.switch(h > hs, at.exp(a + w * at.log(x.T)), 0 )
         b = np.exp(a + w * np.log(x.T))
         q_z = np.log(np.sum(b, axis=1))

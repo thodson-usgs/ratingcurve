@@ -42,6 +42,9 @@ def load(name: str) -> DataFrame:
 
     Returns
     """
+    if name not in DATASETS.keys():
+        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
+    
     filename = DATASETS.get(name) + '.csv'
     stream = pkg_resources.resource_stream(__name__, filename)
     return read_csv(stream)
@@ -61,6 +64,9 @@ def describe(name) -> str:
     str
         Description of the dataset
     """
+    if name not in DATASETS.keys():
+        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
+
     filename = DATASETS.get(name) + '.md'
     stream = pkg_resources.resource_stream(__name__, filename)
-    return stream.read().decode('utf-8')
+    print(stream.read().decode('utf-8'))
