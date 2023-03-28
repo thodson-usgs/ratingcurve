@@ -102,9 +102,27 @@ class Rating(Model, RegressorMixin):
         -------
         RatingData
             dataclass with stage, discharge, and sigma.
-        """
-        raise NotImplementedError
 
+        See: https://www.pymc.io/projects/examples/en/latest/generalized_linear_models/GLM-out-of-sample-predictions.html
+        """
+        y = np.zeros_like(h)
+        q_sigma = np.zeros_like(h)
+        pm.set_data({'h':h,
+                     'q_sigma':q_sigma,
+                     'y':y},
+                     model=self)
+        
+        prediction = pm.sample_posterior_predictive(trace, model=self)
+        q_z = prediction['posterior_predictive']['mu']
+
+        # return data to original state
+        pm.set_data({'h':self.h_obs,
+                     'q_sigma':self.q_sigma,
+                     'y':self.y},
+                     model=self)
+ 
+        return self._format_ratingdata(h, q_z)
+    
     def _format_ratingdata(self, h: ArrayLike, q_z: ArrayLike) -> RatingData:
         """Helper function that formats RatingData
 
@@ -166,7 +184,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # transform observational uncertainty to log scale
         if q_sigma is None:
-            self.q_sigma = 0
+            self.q_sigma = np.zeros_like(q) # 0
         else:
             self.q_sigma = np.log(1 + q_sigma/q)
 
@@ -175,6 +193,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         # data
         h = pm.MutableData("h", self.h_obs)
         q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+        y = pm.MutableData("y", self.y)
 
         # parameters
         # taking the log of h0_offset produces the clipping boundaries in Fig 1, from Reitan et al. 2019
@@ -199,7 +218,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         # likelihood
         b = pm.Deterministic('b', at.log( at.clip(h - hs, 0, np.inf) + self.ho))
-        mu = pm.Normal("mu", a + at.dot(w, b), sigma + q_sigma, observed=self.y)
+        mu = pm.Normal("mu", a + at.dot(w, b), sigma + q_sigma, observed=y)
 
     def set_normal_prior(self):
         """Normal prior for breakpoints
@@ -249,9 +268,12 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         # Sorting reduces multimodality. The benifit increases with fewer observations.
         hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
         return hs
-
+    
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
+
+        This is a faster but model-specific version of the generic predict method.
+        If the PowerLawRating model changes, so must this function.
 
         Parameters
         ----------
@@ -274,14 +296,12 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         h_tile = np.tile(h, sample).reshape(sample, 1, -1)
 
-        #ho = np.ones((self.segments, 1))
-        #ho[0] = 0
         b = np.log( np.clip(h_tile - hs, 0, np.inf) + self.ho)
         q_z = a + (b*w2).sum(axis=1).T 
         e = np.random.normal(0, sigma, sample)
 
         return self._format_ratingdata(h=h, q_z=q_z+e)
-    
+
     def __set_hs_bounds(self):
         """Set upper and lower bounds for breakpoints
 
@@ -361,7 +381,9 @@ class SplineRating(Rating, SplinePlotMixin):
 
         # data
         B = pm.MutableData("B", self.B)
+        #h = pm.MutableData("h", self.h_obs)
         q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+        y = pm.MutableData("y", self.y)
 
         # priors
         w = pm.Normal("w", mu=mean, sigma=sd, dims="splines")
@@ -376,7 +398,7 @@ class SplineRating(Rating, SplinePlotMixin):
         Parameters
         ----------
         trace : ArviZ InferenceData
-        h : array-like
+        h : array-likea
             Stages at which to predict discharge.
 
         Returns
