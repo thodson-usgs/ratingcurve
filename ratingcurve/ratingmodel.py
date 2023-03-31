@@ -91,6 +91,10 @@ class Rating(Model, RegressorMixin):
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
 
+        This function uses PyMC's built in posterior predictive sampling, which
+        is convenient but slow. Many descendants of this class implement faster
+        predict methods using numpy that are specific to each model.
+
         Parameters
         ----------
         trace : arviz.InferenceData
