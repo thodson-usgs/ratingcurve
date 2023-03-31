@@ -63,14 +63,14 @@ class Rating(Model, RegressorMixin):
         if h is None:
             h = stage_range(self.h_obs.min(), self.h_obs.max() * extend, step=step)
             ratingdata = self.predict(trace, h)
-            table = DataFrame(asdict(ratingdata))
+            table = ratingdata.table()
             table = table[table['discharge'] <= self.q_obs.max() * extend]
 
         else:
             ratingdata = self.predict(trace, h)
-            table = DataFrame(asdict(ratingdata))
+            table = ratingdata.table()
 
-        return table.round({'discharge': 2, 'stage': 2, 'sigma': 4})
+        return table
     
     def residuals(self, trace: InferenceData) -> ArrayLike:
         """Compute residuals of rating model
@@ -124,29 +124,10 @@ class Rating(Model, RegressorMixin):
                      'q_sigma':self.q_sigma,
                      'y':self.y},
                      model=self)
+
  
-        return self._format_ratingdata(h, q_z)
-    
-    def _format_ratingdata(self, h: ArrayLike, q_z: ArrayLike) -> RatingData:
-        """Helper function that formats RatingData
-
-        Parameters
-        ----------
-        h : array-like
-            Stage values.
-        q_z : array-like
-            Predicted discharge values.
-
-        Returns
-        -------
-        RatingData
-            dataclass with stage, discharge, and sigma.
-        """
-        transform = self.q_transform
-
-        return RatingData(stage=h.squeeze(),
-                          discharge=transform.mean(q_z).squeeze(),
-                          sigma=transform.sigma(q_z).squeeze())
+        q = self.q_transform.untransform(q_z)
+        return RatingData(stage=h, discharge=q)
 
 
 class PowerLawRating(Rating, PowerLawPlotMixin):
@@ -303,8 +284,9 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         b = np.log( np.clip(h_tile - hs, 0, np.inf) + self.ho)
         q_z = a + (b*w2).sum(axis=1).T 
         e = np.random.normal(0, sigma, sample)
+        q = self.q_transform.untransform(q_z + e)
 
-        return self._format_ratingdata(h=h, q_z=q_z+e)
+        return RatingData(stage=h, discharge=q)
 
     def __set_hs_bounds(self):
         """Set upper and lower bounds for breakpoints
@@ -317,7 +299,6 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         """
         h = np.sort(self.h_obs)
         e = 1e-6
-        [1]
         # construct prior bounds to help ensure a minimum of 2 observations in each segment
         self._hs_lower_bounds = np.zeros(self.segments) 
         self._hs_lower_bounds[1:] = h[2 * np.arange(1, self.segments) - 1] + e
@@ -343,6 +324,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         else:
             self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
+
 
 class SplineRating(Rating, SplinePlotMixin):
     """Natural spline rating model
@@ -385,7 +367,6 @@ class SplineRating(Rating, SplinePlotMixin):
 
         # data
         B = pm.MutableData("B", self.B)
-        #h = pm.MutableData("h", self.h_obs)
         q_sigma = pm.MutableData("q_sigma", self.q_sigma)
         y = pm.MutableData("y", self.y)
 
@@ -418,24 +399,68 @@ class SplineRating(Rating, SplinePlotMixin):
         q_z = np.dot(B, w)
         e = np.random.normal(0, sigma, sample)
 
-        return self._format_ratingdata(h=h, q_z=q_z+e)
+        q = self.q_transform.untransform(q_z + e)
+        return RatingData(stage=h, discharge=q)
 
 
-@dataclass
-class RatingData():
-    """Dataclass for rating model output
-    Attributes
-    ----------
-    stage : array-like
-        Stage values.
-    discharge : array-like
-        Discharge values (median).
-    sigma : array-like
-        Discharge uncertainty.
-    """
-    stage: ArrayLike
-    discharge: ArrayLike
-    sigma: ArrayLike
+class RatingData:
+    """Dataclass for rating model output"""
+    def __init__(self, stage, discharge):
+        """Input stochastic predictions
+        """
+        self.stage = stage.squeeze()
+        self.discharge = discharge.squeeze()
+
+    def mean(self, axis: int = 1) -> ArrayLike:
+        """Return expected (mean) discharge
+        """
+        return np.mean(self.discharge, axis=axis)
+ 
+    def median(self, axis: int = 1) -> ArrayLike:
+        """Return median discharge
+        """
+        return np.median(self.discharge, axis=axis)
+
+    def gse(self, axis: int = 1) -> ArrayLike:
+        """Return geometric standard error
+
+        References
+        ----------
+        .. [1] Kirkwood, T. B., "Geometric means and measures of dispersion",
+               Biometrics, vol. 35, pp. 908-909, 1979
+        """
+        z = np.log(self.discharge)
+        return np.exp(z.std(axis=axis))
+    
+    def prediction_interval(self, alpha: float = 0.05) -> Tuple[ArrayLike, ArrayLike]:
+        """ Return prediction interval
+
+        See Table 1 of [1]_ for the definition of the prediction interval.
+
+        References
+        ----------
+        .. [1] Limpert, E, et al., "Log-normal distributions across the sciences:
+               Keys and Clues", BioScience, vol. 51 (5), pp. 341-352, 2001.
+        """
+        median = self.median()
+        gse = self.gse()
+        return (median / gse**1.96,
+                median * gse**1.96)
+ 
+    def table(self) -> DataFrame:
+        """Return a rating table
+
+        Return a rating table with stage, expected discharge, median discharge,
+        and gse.
+
+        Returns
+        -------
+        DataFrame
+        """
+        return DataFrame({'stage': self.stage.round(2),
+                          'discharge': self.mean().round(2),
+                          'median': self.median().round(2),
+                          'gse': self.gse().round(4)})
 
 
 def stage_range(minimum: float, maximum: float, step: float = 0.01):

@@ -93,7 +93,7 @@ class PlotMixin(RatingMixin):
         rating_table = self.table(trace)
         h = rating_table['stage']
         q = rating_table['discharge']
-        sigma = rating_table['sigma']
+        sigma = rating_table['gse']
         ax.plot(q, h, color='black', lw=NARROW_LINE)
         q_u = q * (sigma)**1.96  # this should be 2 sigma
         q_l = q / (sigma)**1.96
@@ -151,7 +151,10 @@ class PlotMixin(RatingMixin):
         else:
             sigma_2 = 0
 
-        ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o", lw=1, color='black', markersize=4, markerfacecolor='none')
+        ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o", lw=1,
+                    color='black',
+                    markersize=4,
+                    markerfacecolor='none')
         self._format_rating_plot(ax)
 
     @staticmethod
