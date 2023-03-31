@@ -39,15 +39,6 @@ class Transform:
     def untransform(self, x: ArrayLike) -> ArrayLike:
         return x
 
-    def mean(self):
-        raise NotImplementedError
-
-    def sigma(self):
-        raise NotImplementedError
-
-    def median(self):
-        raise NotImplementedError
-
 
 class ZTransform(Transform):
     """Z-transforms data to have zero mean and unit variance
@@ -143,54 +134,6 @@ class LogZTransform(ZTransform):
         """
         log_x = super().untransform(z)
         return np.exp(log_x)
-
-    def mean(self, z: ArrayLike, axis: int = 1) -> ArrayLike:
-        """Compute mean.
-
-        Parameters
-        ----------
-        z : array_like
-          Transformed data.
-
-        Returns
-        -------
-        ArrayLike
-            Arithmetic mean.
-        """
-        x = self.untransform(z)
-        return x.mean(axis=axis)
-
-    def sigma(self, z: ArrayLike, axis: int = 1) -> ArrayLike:
-        """Compute standard deviation.
-
-        Parameters
-        ----------
-        z : array_like
-          Transformed data.
-
-        Returns
-        -------
-        ArrayLike
-            Multiplicative standard deviation.
-        """
-        sigma = z.std(axis=axis)
-        return np.exp(sigma)
-    
-    def median(self, z: ArrayLike, axis: int = 1) -> ArrayLike:
-        """Compute median.
-
-        Parameters
-        ----------
-        z : array_like
-          Transformed data.
-
-        Returns
-        -------
-        ArrayLike
-            Median or geometric mean.
-        """
-        x = self.untransform(z)
-        return x.median(axis=axis)
 
 
 class UnitTransform(Transform):
