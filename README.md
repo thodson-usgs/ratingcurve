@@ -39,7 +39,7 @@ powerrating = PowerLawRating(q=df['q'],
 trace = powerrating.fit()
 powerrating.plot(trace)
 ```
-![example plot](https://github.com/thodson-usgs/ratingcurve/blob/main/paper/green_example.png?raw=true)
+![example plot](https://github.com/thodson-usgs/ratingcurve/blob/main/docs/assets/green-channel-rating.png?raw=true)
 
 Generate a rating table that can be imported into other applications.
 ```python
