@@ -288,7 +288,7 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         return RatingData(stage=h, discharge=q)
 
-    def __set_hs_bounds(self):
+    def __set_hs_bounds(self, n: int=1):
         """Set upper and lower bounds for breakpoints
 
         Sets the lower and upper bounds for the breakpoints. For the first
@@ -296,17 +296,22 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         minimum observed stage. For the remaining breakpoints, the lower bound
         is set to the minimum observed stage. The upper bound is set to the
         maximum observed stage.
+
+        Parameters
+        ----------
+        n : int, optional
+            Number of observations to exlude from each segment, by default 1
         """
-        h = np.sort(self.h_obs)
         e = 1e-6
-        # construct prior bounds to help ensure a minimum of 2 observations in each segment
+        h = np.sort(self.h_obs)
         self._hs_lower_bounds = np.zeros(self.segments) 
-        self._hs_lower_bounds[1:] = h[2 * np.arange(1, self.segments) - 1] + e
+
+        self._hs_lower_bounds[1:] = h[n * np.arange(1, self.segments) - 1] + e
         self._hs_lower_bounds = self._hs_lower_bounds.reshape((-1, 1))
 
         self._hs_upper_bounds = np.zeros(self.segments)
         self._hs_upper_bounds[0] = h[0]
-        self._hs_upper_bounds[:0:-1] = h[-2 * np.arange(1, self.segments)]
+        self._hs_upper_bounds[:0:-1] = h[-n * np.arange(1, self.segments)]
         self._hs_upper_bounds = self._hs_upper_bounds.reshape((-1, 1))  - e
 
     def __init_hs(self):
