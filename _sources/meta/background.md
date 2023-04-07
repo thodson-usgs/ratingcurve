@@ -1,3 +1,4 @@
+# Background
 Streamflow timeseries are widely used in hydrologic research, water resource management, and flood forecasting,
 but they are difficult to measure directly.
 In nearly all timeseries applications, streamflow is estimated from rating curves or ``ratings'' that describe the relationship between streamflow and an easy-to-measure predictor like stage.
@@ -22,9 +23,9 @@ Variants of this method have been used for decades,
 first with pencil and log paper
 and now with computer-aided software, though fitting is still done by manually adjusting parameters until an acceptable fit is achieved.
 
-While single-segment ratings are relatively easy to fit by automated methods \citep{Venetis_1970},
+While single-segment ratings are relatively easy to fit by automated methods {cite:p}`Venetis_1970`,
 compound ratings are more challenging, because their solution is multimodal,
-meaning it has multiple optima \citep{Reitan_2006}.
+meaning it has multiple optima {cite:p}`Reitan_2006`.
 As a result, standard optimization algorithms can become stuck in local optima and fail to converge to the global optimum.
 General function approximators, such as natural splines \citep{Fenton_2018} or neural networks,
 can be easier to fit but their generality comes at a cost.
@@ -51,3 +52,6 @@ As a result, most of the underlying numerical code is maintained by a broader co
 enabling us to focus on the particular nuances of parameterizing a rating curve model,
 as well as making it easier to extend or modify the algorithm
 or switch between different approximation algorithms to achieve different tradeoffs of speed and accuracy.
+
+```{bibliography}
+```

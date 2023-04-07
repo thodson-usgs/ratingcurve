@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,8 +38,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -64,7 +64,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/getting-started-tutorial';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="../meta/background.html" />
+    <link rel="next" title="Tutorials" href="../meta/tutorials.html" />
     <link rel="prev" title="Installation" href="../meta/installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -153,7 +153,13 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../meta/installation.html">Installation</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting Started</a></li>
-
+<li class="toctree-l1 has-children"><a class="reference internal" href="../meta/tutorials.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="segmented-power-law-tutorial.html">Segmented Power Law</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spline-tutorial.html">Natural Splines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model-selection-tutorial.html">Model selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/background.html">Background</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/implementation.html">Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
@@ -350,10 +356,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Getting Started</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-datasets">Demo datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-datasets">Demo datasets</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -366,51 +370,220 @@ document.write(`
                   
   <section id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h1>
+<p>A simple demonstration fitting a rating curve is show below.
+First load the library (1) and some tutorial data (2):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ratingcurve.ratingmodel</span> <span class="kn">import</span> <span class="n">PowerLawRating</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. load modules</span>
+<span class="kn">from</span> <span class="nn">ratingcurve.ratingmodel</span> <span class="kn">import</span> <span class="n">PowerLawRating</span>
 <span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
 
-<span class="c1"># load tutorial data</span>
+<span class="c1"># 2. load tutorial data</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="c1"># initialize the model</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>datetime</th>
+      <th>stage</th>
+      <th>q</th>
+      <th>q_sigma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-05-21 14:13:41 [UTC-07:00]</td>
+      <td>7.04</td>
+      <td>12199.342</td>
+      <td>199.172931</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-04-16 14:55:31 [UTC-07:00]</td>
+      <td>4.43</td>
+      <td>4921.953</td>
+      <td>95.425619</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-03-04 13:54:10 [UTC-07:00]</td>
+      <td>2.99</td>
+      <td>2331.665</td>
+      <td>61.860500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-03-04 13:16:51 [UTC-07:00]</td>
+      <td>2.94</td>
+      <td>2289.220</td>
+      <td>47.886745</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-01-23 11:04:32 [UTC-07:00]</td>
+      <td>2.96</td>
+      <td>2408.210</td>
+      <td>99.522964</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now initialize a model (3), fit it to the tutorial data (4) and visualize the result (5):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 3. initialize the model</span>
 <span class="n">powerrating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
                              <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span> 
                              <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">],</span>
                              <span class="n">segments</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
                                    
-<span class="c1"># fit the model</span>
+<span class="c1"># 4. fit the model</span>
 <span class="n">trace</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># 5. visualize the result</span>
 <span class="n">powerrating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">ratingcurve.ratingmodel</span> <span class="kn">import</span> <span class="n">PowerLawRating</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># load tutorial data</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;ratingcurve&#39;
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='123280' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      61.64% [123280/200000 00:24&lt;00:15 Average Loss = -51.701]
+    </div>
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 123700
 </pre></div>
 </div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 123,699 [61%]: Average Loss = 1.6899
+</pre></div>
+</div>
+<img alt="../_images/e01de3612ffa38e247a803f131c838ebafb68ee0931c71432cfb4074ee48fe8d.png" src="../_images/e01de3612ffa38e247a803f131c838ebafb68ee0931c71432cfb4074ee48fe8d.png" />
 </div>
 </div>
-<p>The fit</p>
+<p>On the first run, the previous cell will take a bit longer while the model compiles.
+A progress bar will appear when the optimization begins.
+The loss with decline as the optimization proceeds and should converge after a few seconds (Average Loss = -51).</p>
+<p>The resulting fit can be displayed as a rating table</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powerating</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stage</th>
+      <th>discharge</th>
+      <th>median</th>
+      <th>gse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.20</td>
+      <td>1374.96</td>
+      <td>1374.76</td>
+      <td>1.0107</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.21</td>
+      <td>1387.12</td>
+      <td>1386.92</td>
+      <td>1.0106</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.22</td>
+      <td>1399.28</td>
+      <td>1399.09</td>
+      <td>1.0106</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.23</td>
+      <td>1411.46</td>
+      <td>1411.26</td>
+      <td>1.0106</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.24</td>
+      <td>1423.65</td>
+      <td>1423.46</td>
+      <td>1.0106</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>and saved as a CSV</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;green_rating_table.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 <section id="demo-datasets">
-<h1>Demo datasets<a class="headerlink" href="#demo-datasets" title="Permalink to this heading">#</a></h1>
-<p>The package also includes several demo datasets that are useful for testing.
+<h2>Demo datasets<a class="headerlink" href="#demo-datasets" title="Permalink to this heading">#</a></h2>
+<p>The package includes several demo datasets.
 List them by calling</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -419,7 +592,336 @@ List them by calling</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;chalk artificial&#39;,
+ &#39;co channel&#39;,
+ &#39;green channel&#39;,
+ &#39;provo natural&#39;,
+ &#39;3-segment simulated&#39;]
+</pre></div>
 </div>
+</div>
+</div>
+<p>Each dataset includes a description and is loaded as a DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># Green River near Jensen, UT (channel control)
+
+## USGS Gage ID: 09261000
+
+## Control
+At the gage, the river is restricted to one channel at all stages.
+The streambed is very flat and is composed of cobbles.
+The banks consist of sand, gravel and cobbles.
+Riparian vegetation includes sage brush, willows, greasewood, and tamarisk.
+The left bank is not as steep as the right, which slopes up quite abruptly.
+Both banks are quite stable and are not subject to overflow except at extremely high stages.
+The channel is straight for several hundred yards upstream but bends sharply to the right about 2,000 feet below the station.
+Channel control prevails at all but the lowest stages when a rocky riffle 200 feet below the gage becomes effective.
+The riffle is quite stable. 
+
+## Stage Ranges
+- Reach control: &lt; 3.70 ft
+- Channel control: 3.70 to 14 ft
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>datetime</th>
+      <th>stage</th>
+      <th>q</th>
+      <th>q_sigma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-05-21 14:13:41 [UTC-07:00]</td>
+      <td>7.04</td>
+      <td>12199.342</td>
+      <td>199.172931</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-04-16 14:55:31 [UTC-07:00]</td>
+      <td>4.43</td>
+      <td>4921.953</td>
+      <td>95.425619</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-03-04 13:54:10 [UTC-07:00]</td>
+      <td>2.99</td>
+      <td>2331.665</td>
+      <td>61.860500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-03-04 13:16:51 [UTC-07:00]</td>
+      <td>2.94</td>
+      <td>2289.220</td>
+      <td>47.886745</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-01-23 11:04:32 [UTC-07:00]</td>
+      <td>2.96</td>
+      <td>2408.210</td>
+      <td>99.522964</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2019-12-17 14:48:54 [UTC-07:00]</td>
+      <td>3.09</td>
+      <td>2533.894</td>
+      <td>51.712122</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2019-11-14 14:28:01 [UTC-07:00]</td>
+      <td>2.46</td>
+      <td>1643.082</td>
+      <td>33.532286</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2019-10-07 12:38:17 [UTC-07:00]</td>
+      <td>2.54</td>
+      <td>1827.425</td>
+      <td>45.685625</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2019-08-29 08:03:05 [UTC-07:00]</td>
+      <td>2.86</td>
+      <td>2105.019</td>
+      <td>38.663614</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2019-07-23 11:43:33 [UTC-07:00]</td>
+      <td>3.53</td>
+      <td>3173.955</td>
+      <td>66.393957</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2019-06-10 12:17:17 [UTC-07:00]</td>
+      <td>9.60</td>
+      <td>20154.349</td>
+      <td>349.616258</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2019-04-24 17:36:28 [UTC-07:00]</td>
+      <td>5.58</td>
+      <td>8000.834</td>
+      <td>159.200268</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2019-03-07 18:33:28 [UTC-07:00]</td>
+      <td>2.21</td>
+      <td>1409.271</td>
+      <td>35.231775</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2019-02-04 17:35:13 [UTC-07:00]</td>
+      <td>3.17</td>
+      <td>2561.581</td>
+      <td>54.891021</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2018-12-06 15:49:05 [UTC-07:00]</td>
+      <td>3.09</td>
+      <td>2453.631</td>
+      <td>53.829660</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2018-10-25 12:18:42 [UTC-07:00]</td>
+      <td>2.50</td>
+      <td>1795.588</td>
+      <td>35.728537</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2018-09-13 12:47:40 [UTC-07:00]</td>
+      <td>2.65</td>
+      <td>1882.085</td>
+      <td>39.370145</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2018-08-09 17:22:36 [UTC-07:00]</td>
+      <td>2.98</td>
+      <td>2318.337</td>
+      <td>49.678650</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2018-06-27 14:00:29 [UTC-07:00]</td>
+      <td>3.03</td>
+      <td>2417.105</td>
+      <td>50.561890</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2018-05-24 14:27:04 [UTC-07:00]</td>
+      <td>6.60</td>
+      <td>10706.397</td>
+      <td>240.347688</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2018-04-19 08:24:27 [UTC-07:00]</td>
+      <td>3.92</td>
+      <td>3795.702</td>
+      <td>75.526723</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2018-03-15 12:09:50 [UTC-07:00]</td>
+      <td>2.93</td>
+      <td>2315.117</td>
+      <td>42.522557</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>2018-03-15 11:27:25 [UTC-07:00]</td>
+      <td>2.92</td>
+      <td>2295.206</td>
+      <td>42.156845</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2018-01-31 14:57:47 [UTC-07:00]</td>
+      <td>3.72</td>
+      <td>3448.262</td>
+      <td>59.816790</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2017-11-13 17:01:47 [UTC-07:00]</td>
+      <td>3.50</td>
+      <td>2996.979</td>
+      <td>61.162837</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2017-10-04 17:14:01 [UTC-07:00]</td>
+      <td>3.73</td>
+      <td>3565.210</td>
+      <td>72.759388</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>2017-08-24 07:06:33 [UTC-07:00]</td>
+      <td>3.12</td>
+      <td>2587.378</td>
+      <td>46.203179</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>2017-07-18 16:03:54 [UTC-07:00]</td>
+      <td>3.66</td>
+      <td>3446.044</td>
+      <td>65.052871</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2017-06-13 08:37:46 [UTC-07:00]</td>
+      <td>8.99</td>
+      <td>18505.309</td>
+      <td>557.047567</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>2017-05-04 17:46:14 [UTC-07:00]</td>
+      <td>7.03</td>
+      <td>12173.573</td>
+      <td>403.715431</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>2017-03-24 07:53:49 [UTC-07:00]</td>
+      <td>5.72</td>
+      <td>8532.444</td>
+      <td>165.424935</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2017-02-16 08:42:52 [UTC-07:00]</td>
+      <td>3.27</td>
+      <td>2777.993</td>
+      <td>55.276391</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>2017-01-11 13:07:23 [UTC-07:00]</td>
+      <td>3.01</td>
+      <td>2416.000</td>
+      <td>48.073469</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>2016-12-02 10:12:48 [UTC-07:00]</td>
+      <td>2.49</td>
+      <td>1726.456</td>
+      <td>37.876331</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>2016-10-25 13:23:16 [UTC-07:00]</td>
+      <td>2.44</td>
+      <td>1676.239</td>
+      <td>34.208959</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>2011-06-09 09:32:15 [UTC-07:00]</td>
+      <td>12.32</td>
+      <td>29617.364</td>
+      <td>395.905580</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -448,7 +950,10 @@ List them by calling</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../meta/installation.html"
@@ -460,15 +965,18 @@ List them by calling</p>
       </div>
     </a>
     <a class="right-next"
-       href="../meta/background.html"
+       href="../meta/tutorials.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Tutorials</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -483,10 +991,8 @@ List them by calling</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Getting Started</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-datasets">Demo datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-datasets">Demo datasets</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
@@ -494,7 +1000,7 @@ List them by calling</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -524,7 +1030,7 @@ By Timothy Hodson
     
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -533,8 +1039,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

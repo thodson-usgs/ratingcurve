@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,8 +38,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -64,6 +64,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/spline-tutorial';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model selection" href="model-selection-tutorial.html" />
+    <link rel="prev" title="Segmented Power Law" href="segmented-power-law-tutorial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -148,10 +150,16 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../meta/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting-started-tutorial.html">Getting Started</a></li>
-
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../meta/tutorials.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="segmented-power-law-tutorial.html">Segmented Power Law</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Natural Splines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model-selection-tutorial.html">Model selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../meta/background.html">Background</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/implementation.html">Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meta/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
@@ -370,7 +378,7 @@ document.write(`
 In fact, the multi-segment power law is a form of linear spline,
 but other types of spline can be used as well.
 One alternative is the natural spline.
-They have the advantage of being very easy (fast) to fit,
+They have the advantage of being faster to fit,
 but their form is less constrained than the segmented power law.
 As a result, natural splines may produce strange results, particularly with small datasets.</p>
 <div class="cell docutils container">
@@ -390,16 +398,11 @@ As a result, natural splines may produce strange results, particularly with smal
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pymc</span> <span class="k">as</span> <span class="nn">pm</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">ratingcurve.ratingmodel</span> <span class="kn">import</span> <span class="n">PowerLawRating</span><span class="p">,</span> <span class="n">SplineRating</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;ratingcurve&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;chalk artificial&#39;,
+ &#39;co channel&#39;,
+ &#39;green channel&#39;,
+ &#39;provo natural&#39;,
+ &#39;3-segment simulated&#39;]
 </pre></div>
 </div>
 </div>
@@ -407,15 +410,15 @@ As a result, natural splines may produce strange results, particularly with smal
 <section id="green-river">
 <h2>Green River<a class="headerlink" href="#green-river" title="Permalink to this heading">#</a></h2>
 <p>In practice splines can work quite well, particularly for simpler ratings.
-Here is an example, showing a natural spline fit to the Green River dataset.</p>
+Here is an example showing a natural spline fit to the Green River dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
 
-<span class="n">spline_rating</span> <span class="o">=</span> <span class="n">SplineRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
-                             <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span>
-                             <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">],</span>
-                             <span class="n">df</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">spline</span> <span class="o">=</span> <span class="n">SplineRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
+                      <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span>
+                      <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">],</span>
+                      <span class="n">df</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -423,10 +426,37 @@ Here is an example, showing a natural spline fit to the Green River dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># converges much faster than the power law</span>
-<span class="n">trace</span> <span class="o">=</span> <span class="n">spline_rating</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">70_000</span><span class="p">)</span>
-<span class="n">spline_rating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<span class="n">trace</span> <span class="o">=</span> <span class="n">spline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">70_000</span><span class="p">)</span>
+<span class="n">spline</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='70000' class='' max='70000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [70000/70000 00:06&lt;00:00 Average Loss = -38.752]
+    </div>
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -38.752
+</pre></div>
+</div>
+<img alt="../_images/f3fdbacd1132f283035249661aa8c132913fad7d38de6e0986992ffde6e253b6.png" src="../_images/f3fdbacd1132f283035249661aa8c132913fad7d38de6e0986992ffde6e253b6.png" />
 </div>
 </div>
 </section>
@@ -438,7 +468,7 @@ Here is an example, showing a natural spline fit to the Green River dataset.</p>
 
 <span class="c1"># subsample the simulated rating curve</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
@@ -447,32 +477,93 @@ Here is an example, showing a natural spline fit to the Green River dataset.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Stage (ft)&#39;)
+</pre></div>
+</div>
+<img alt="../_images/6d83e7aacf93acf36cc70456b78d3da75c62d89ae7b8590d22e64e2891b9fc90.png" src="../_images/6d83e7aacf93acf36cc70456b78d3da75c62d89ae7b8590d22e64e2891b9fc90.png" />
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spline_rating</span> <span class="o">=</span> <span class="n">SplineRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
-                             <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span>
-                             <span class="n">df</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spline</span> <span class="o">=</span> <span class="n">SplineRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
+                      <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span>
+                      <span class="n">df</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">spline_rating</span><span class="p">:</span>
-    <span class="n">mean_field</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;advi&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span> <span class="n">mean_field</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
-
-<span class="n">spline_rating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trace</span> <span class="o">=</span> <span class="n">spline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
+<span class="n">spline</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='100000' class='' max='100000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [100000/100000 00:09&lt;00:00 Average Loss = -2.7214]
+    </div>
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -2.7233
+</pre></div>
+</div>
+<img alt="../_images/1d7f0830a03bf1daf168a48eb21a38a97ca61bb138c210ff7ec9f90a36913881.png" src="../_images/1d7f0830a03bf1daf168a48eb21a38a97ca61bb138c210ff7ec9f90a36913881.png" />
 </div>
 </div>
 <section id="excercise">
 <h3>Excercise<a class="headerlink" href="#excercise" title="Permalink to this heading">#</a></h3>
 <p>Splines can give unexpectedly poor results.
-For example, try
-<code class="docutils literal notranslate"><span class="pre">sim_df.sample(n=30,</span> <span class="pre">random_state=771)</span></code></p>
+Experiment with the following:</p>
+<ol class="arabic simple">
+<li><p>Try  <code class="docutils literal notranslate"><span class="pre">sim_df.sample(n=30,</span> <span class="pre">random_state=771)</span></code></p></li>
+<li><p>Rerun with <code class="docutils literal notranslate"><span class="pre">n=200</span></code>. The fit has improved, but the uncertainty is unreasonably high.</p></li>
+<li><p>Rerun with <code class="docutils literal notranslate"><span class="pre">df=30</span></code> in <code class="docutils literal notranslate"><span class="pre">SplineRating()</span></code>, and observe how the uncertainty changes.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="o">%</span><span class="k">watermark</span> -n -u -v -iv -w -p pytensor,xarray
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Fri Apr 07 2023
+
+Python implementation: CPython
+Python version       : 3.8.16
+IPython version      : 8.12.0
+
+pytensor: 2.10.1
+xarray  : 2023.1.0
+
+arviz      : 0.15.1
+numpy      : 1.24.2
+ratingcurve: 0.1.dev1+g27e357a
+pymc       : 5.2.0
+
+Watermark: 2.3.1
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -486,16 +577,16 @@ For example, try
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: ""
+            mode: "python"
         },
         kernelOptions: {
-            name: "",
+            name: "python3",
             path: "./notebooks"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = ''</script>
+    <script>kernelName = 'python3'</script>
 
                 </article>
               
@@ -503,9 +594,33 @@ For example, try
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="segmented-power-law-tutorial.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Segmented Power Law</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="model-selection-tutorial.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Model selection</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -533,7 +648,7 @@ For example, try
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -563,7 +678,7 @@ By Timothy Hodson
     
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -572,8 +687,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

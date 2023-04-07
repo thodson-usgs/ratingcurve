@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; ratingcurve</title>
+    <title>Background &#8212; ratingcurve</title>
   
   
   
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,8 +38,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Implementation" href="implementation.html" />
-    <link rel="prev" title="Getting Started" href="../notebooks/getting-started-tutorial.html" />
+    <link rel="prev" title="Model selection" href="../notebooks/model-selection-tutorial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -151,10 +151,16 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/getting-started-tutorial.html">Getting Started</a></li>
-
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/segmented-power-law-tutorial.html">Segmented Power Law</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/spline-tutorial.html">Natural Splines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/model-selection-tutorial.html">Model selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Background</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implementation.html">Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
@@ -328,9 +334,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -341,19 +345,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Background</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -363,14 +359,16 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p>Streamflow timeseries are widely used in hydrologic research, water resource management, and flood forecasting,
+  <section id="background">
+<h1>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h1>
+<p>Streamflow timeseries are widely used in hydrologic research, water resource management, and flood forecasting,
 but they are difficult to measure directly.
 In nearly all timeseries applications, streamflow is estimated from rating curves or ``ratings’’ that describe the relationship between streamflow and an easy-to-measure predictor like stage.
 The shape of the rating is specific to each streamgage and is governed by channel conditions at or downstream from the gage, referred to as controls.
 Section controls, like riffles or weirs, occur downstream of the gage, whereas channel controls, like the geometry of the banks, occur at the gage.
 Regardless of the type, the behavior of each control is often well-approximated with standard hydrologic equations that take the general form of a power law with a location parameter</p>
-<div class="amsmath math notranslate nohighlight" id="equation-63e88a3b-aea3-41b6-a440-41e1b0bbc7cb">
-<span class="eqno">(1)<a class="headerlink" href="#equation-63e88a3b-aea3-41b6-a440-41e1b0bbc7cb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0a42e3b8-4cdf-4b5c-a051-cbaab9526f49">
+<span class="eqno">(1)<a class="headerlink" href="#equation-0a42e3b8-4cdf-4b5c-a051-cbaab9526f49" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q = C(h - h_0)^{b}
 \end{equation}\]</div>
 <p>where $Q$ is the discharge (streamflow);
@@ -386,9 +384,9 @@ With the appropriate location parameter, each control can be fit to a straight-l
 Variants of this method have been used for decades,
 first with pencil and log paper
 and now with computer-aided software, though fitting is still done by manually adjusting parameters until an acceptable fit is achieved.</p>
-<p>While single-segment ratings are relatively easy to fit by automated methods \citep{Venetis_1970},
+<p>While single-segment ratings are relatively easy to fit by automated methods <span id="id1">[<a class="reference internal" href="#id20" title="C. Venetis. A note on the estimation of the parameters in logarithmic stage-discharge relationships with estimates of their error. International Association of Scientific Hydrology. Bulletin, 15(2):105–111, jun 1970. URL: https://doi.org/10.1080%2F02626667009493957, doi:10.1080/02626667009493957.">Ven70</a>]</span>,
 compound ratings are more challenging, because their solution is multimodal,
-meaning it has multiple optima \citep{Reitan_2006}.
+meaning it has multiple optima <span id="id2">[<a class="reference internal" href="#id17" title="Trond Reitan and Asgeir Petersen-Øverleir. Existence of the frequentistic estimate for power-law regression with a location parameter, with applications for making discharge rating curves. Stochastic Environmental Research and Risk Assessment, 20(6):445–453, jul 2006. URL: https://doi.org/10.1007%2Fs00477-006-0037-6, doi:10.1007/s00477-006-0037-6.">RPOverleir06</a>]</span>.
 As a result, standard optimization algorithms can become stuck in local optima and fail to converge to the global optimum.
 General function approximators, such as natural splines \citep{Fenton_2018} or neural networks,
 can be easier to fit but their generality comes at a cost.
@@ -413,6 +411,18 @@ As a result, most of the underlying numerical code is maintained by a broader co
 enabling us to focus on the particular nuances of parameterizing a rating curve model,
 as well as making it easier to extend or modify the algorithm
 or switch between different approximation algorithms to achieve different tradeoffs of speed and accuracy.</p>
+<div class="docutils container" id="id3">
+<div class="citation" id="id17" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">RPOverleir06</a><span class="fn-bracket">]</span></span>
+<p>Trond Reitan and Asgeir Petersen-Øverleir. Existence of the frequentistic estimate for power-law regression with a location parameter, with applications for making discharge rating curves. <em>Stochastic Environmental Research and Risk Assessment</em>, 20(6):445–453, jul 2006. URL: <a class="reference external" href="https://doi.org/10.1007%2Fs00477-006-0037-6">https://doi.org/10.1007%2Fs00477-006-0037-6</a>, <a class="reference external" href="https://doi.org/10.1007/s00477-006-0037-6">doi:10.1007/s00477-006-0037-6</a>.</p>
+</div>
+<div class="citation" id="id20" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">Ven70</a><span class="fn-bracket">]</span></span>
+<p>C. Venetis. A note on the estimation of the parameters in logarithmic stage-discharge relationships with estimates of their error. <em>International Association of Scientific Hydrology. Bulletin</em>, 15(2):105–111, jun 1970. URL: <a class="reference external" href="https://doi.org/10.1080%2F02626667009493957">https://doi.org/10.1080%2F02626667009493957</a>, <a class="reference external" href="https://doi.org/10.1080/02626667009493957">doi:10.1080/02626667009493957</a>.</p>
+</div>
+</div>
+</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -440,15 +450,18 @@ or switch between different approximation algorithms to achieve different tradeo
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../notebooks/getting-started-tutorial.html"
+       href="../notebooks/model-selection-tutorial.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting Started</p>
+        <p class="prev-next-title">Model selection</p>
       </div>
     </a>
     <a class="right-next"
@@ -460,31 +473,20 @@ or switch between different approximation algorithms to achieve different tradeo
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
-              
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -514,7 +516,7 @@ By Timothy Hodson
     
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -523,8 +525,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>
