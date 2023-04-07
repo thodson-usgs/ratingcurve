@@ -30,10 +30,15 @@ class RegressorMixin(RatingMixin):
     @property
     def __default_advi_kwargs(self):
         """Default keyword arguments for ADVI inference"""
+        cb = [
+            pm.callbacks.CheckParametersConvergence(tolerance=2e-3, diff="absolute"),
+            pm.callbacks.CheckParametersConvergence(tolerance=2e-3, diff="relative"),
+        ]
+
         return {
             'n': 200_000,
             'obj_optimizer' : pm.adam(learning_rate=.001), # converges faster than adagrad_window
-            'callbacks': [pm.callbacks.CheckParametersConvergence()]
+            'callbacks': cb
         }
 
     def predict(self, X: ArrayLike) -> ArrayLike:

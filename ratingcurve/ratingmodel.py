@@ -17,9 +17,9 @@ from .plot import PowerLawPlotMixin, SplinePlotMixin
 from .sklearn import RegressorMixin
 
 if TYPE_CHECKING:
-    from arviz import InferenceData
+    from typing import Tuple
     from numpy.typing import ArrayLike
-
+    from arviz import InferenceData
 
 class Rating(Model, RegressorMixin):
     """Abstract base class for rating models
@@ -305,7 +305,6 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
         e = 1e-6
         h = np.sort(self.h_obs)
         self._hs_lower_bounds = np.zeros(self.segments) 
-
         self._hs_lower_bounds[1:] = h[n * np.arange(1, self.segments) - 1] + e
         self._hs_lower_bounds = self._hs_lower_bounds.reshape((-1, 1))
 
