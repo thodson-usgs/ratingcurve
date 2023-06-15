@@ -3,9 +3,21 @@
 
 In hydrology, a rating curve is a mathematical relationship between streamflow and water surface elevation (stage).
 Because stage is much easier to measure than streamflow, almost all streamflow timeseries are generated from rating curves.
-Historically, those ratings were fitted by hand, which can be time consuming and error prone.
-`ratingcurve` provides an easy-to-use algorithm for fitting the standard form of rating curve, the segmented power law.
+For the most part, those rating curves are still fit manually by drawing a curve to the data,
+which can be time consuming and subjective.
+To improve that process, the U.S. Geological Survey (USGS), among others, is evaluating methods for automating that fitting. 
+Several automated methods currently exist, but each parameterizes the rating curve slightly differently,
+and because of the nature of the problem, those slight differences can greatly affect performance.
+To help the community evaluate different parameterizations,
+we created the `ratingcurve' package.
+The package implements our best parameterization for others to try.
+Furthermore, the implementation uses PyMC, a general purpose library for probabilistic modeling, 
+which makes it easier for others to modify the model to test different parameterizations or fitting algorithms.
+If you can improve upon our parameterization, USGS might use your algorithm to generate streamflow timeseries at thousands of locations around the United States.
+The package includes simple demonstrations and test datasets to get you started.
 
+Please report any bugs, suggest enhancements, or ask questions by creating an [issue](https://github.com/thodson-usgs/ratingcurve/issues).
+  
 ## Installation
 Install using pip
 ```sh
@@ -16,11 +28,10 @@ or conda
 conda install -c conda-forge ratingcurve
 ```
 
-## Getting Started
-This [`tutorial`](https://github.com/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-tutorial.ipynb)
-notebook demonstrates basic usage of the package.
-Try it locally or in Colab.
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-tutorial.ipynb)
+## Basic Usage
+This [`tutorial`](https://github.com/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-tutorial.ipynb) demonstrates basic usage of the package
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-tutorial.ipynb).
+Here's a simple example that fits and plots a rating curve.
 
 ```python
 from ratingcurve.ratingmodel import PowerLawRating
@@ -42,7 +53,7 @@ powerrating.plot(trace)
 ![example plot](https://github.com/thodson-usgs/ratingcurve/blob/main/docs/assets/green-channel-rating-plot.png?raw=true)
 
 
-Generate a rating table that can be imported into other applications.
+Once fit, easily generate a rating table that can be imported into other applications.
 ```python
 powerating.table(trace)
 ```
