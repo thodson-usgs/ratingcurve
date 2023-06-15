@@ -9,8 +9,7 @@ To improve that process, the U.S. Geological Survey (USGS), among others, is eva
 Several automated methods currently exist, but each parameterizes the rating curve slightly differently,
 and because of the nature of the problem, those slight differences can greatly affect performance.
 To help the community evaluate different parameterizations,
-we created the `ratingcurve' package.
-The package implements our best parameterization for others to try.
+we created the `ratingcurve' package, which implements our best parameterization for others to try.
 Furthermore, the implementation uses PyMC, a general purpose library for probabilistic modeling, 
 which makes it easier for others to modify the model to test different parameterizations or fitting algorithms.
 If you can improve upon our parameterization, USGS might use your algorithm to generate streamflow timeseries at thousands of locations around the United States.
