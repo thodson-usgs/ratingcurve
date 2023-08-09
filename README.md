@@ -10,7 +10,7 @@ Several automated methods currently exist, but each parameterizes the rating cur
 and because of the nature of the problem, those slight differences can greatly affect performance.
 To help the community evaluate different parameterizations,
 we created the `ratingcurve' package, which implements our best parameterization for others to try.
-Furthermore, the implementation uses PyMC, a general purpose library for probabilistic modeling, 
+Furthermore, the implementation uses [PyMC](https://www.pymc.io/welcome.html), a general purpose library for probabilistic modeling, 
 which makes it easier for others to modify the model to test different parameterizations or fitting algorithms.
 If you can improve upon our parameterization, USGS might use your algorithm to generate streamflow timeseries at thousands of locations around the United States.
 The package includes simple demonstrations and test datasets to get you started.
@@ -54,7 +54,7 @@ powerrating.plot(trace)
 
 Once fit, easily generate a rating table that can be imported into other applications.
 ```python
-powerating.table(trace)
+powerrating.table(trace)
 ```
 
 For more, see the [documentation](https://thodson-usgs.github.io/ratingcurve/meta/intro.html).
