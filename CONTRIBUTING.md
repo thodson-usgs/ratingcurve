@@ -69,7 +69,7 @@ your fork, to the original upstream repository.
 
 ### Implementing Features
 
-Look through the GitHub [issues](https://github.com/USGS-python/dataretrieval/issues)
+Look through the GitHub [issues](https://github.com/thodson-usgs/ratingcurve/issues)
 for outstanding feature requests. Anything tagged with "enhancement"
 and "please-help" is open to whomever wants to implement it.
 
@@ -84,8 +84,8 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds or modifies functionality, the documentation should
    be updated. To do so, either add or modify a functions docstring which will
    automatically become part of the API documentation
-3. The pull request should work for Python 3.7, 3.8, 3.9, 3.10 - refer to the
-   [python-package.yml file](https://github.com/USGS-python/dataretrieval/blob/master/.github/workflows/python-package.yml)
+3. The pull request should work for Python 3.9, 3.10, 3.11 - refer to the
+   [python-package.yml file](https://github.com/thodson-usgs/ratingcurve/blob/main/.github/workflows/python-package.yml)
    for the latest versions of Python being tested by the continuous integration
    pipelines. This will be checked automatically by the CI pipelines once the
    pull request is opened.
@@ -93,7 +93,7 @@ Before you submit a pull request, check that it meets these guidelines:
 ### Coding Standards and Style
 
 Note that coding standards and style as described below are strong suggestions,
-the `dataretrieval` project does not strictly lint or enforce style guidelines
+the `ratingcurve` project does not strictly limit or enforce style guidelines
 via any automated processes or pipelines.
 
 #### Style
@@ -103,7 +103,6 @@ via any automated processes or pipelines.
   can and should be used internally and in tests
 * Functions for downloading data from a specific web portal must be grouped
   within their own submodule
-  * For example, all NWIS functions are located at `dataretrieval.nwis`
 
 #### Docstrings
 * Docstrings should follow the [numpy standard](https://numpydoc.readthedocs.io/en/v1.5.0/format.html):
@@ -135,7 +134,6 @@ via any automated processes or pipelines.
 
     """
     ```
-  * For more details see https://github.com/sphinx-doc/sphinx/blob/master/doc/ext/example_numpy.py
 
 #### Quotes
 
@@ -183,12 +181,12 @@ clearly describe what it is your proposed changes add or fix.
 ### Adding Examples to the Documentation
 
 A number of examples are provided in the documentation in the form of Jupyter
-notebooks. These example notebooks are all contained within the `demos/`
+notebooks. These example notebooks are all contained within the `docs/notebooks/`
 subdirectory of the repository. If you have an example use of the package you
 would like to add to the documentation as a run and rendered notebook, you
 will need to do the following (in a separate branch of the repository):
 
-1. Add your notebook to the `demos/` subdirectory after clearing all outputs
+1. Add your notebook to the `docs/notebooks/` subdirectory after clearing all outputs
 2. Add a corresponding `.nblink` file to `docs/source/examples/` subdirectory,
    see existing examples for reference, or refer to the [nbsphinx-link](https://nbsphinx-link.readthedocs.io/en/latest/) documentation.
 3. Add the example and some text describing it to one of the `.rst` files in
@@ -212,7 +210,7 @@ refer to [Reporting Bugs](#reporting-bugs).
 ### Feature Requests
 
 To request or propose a new feature, open an issue at
-[https://github.com/USGS-python/dataretrieval/issues](https://github.com/thodson-usgs/ratingcurve/issues).
+[https://github.com/thodson-usgs/ratingcurve/issues](https://github.com/thodson-usgs/ratingcurve/issues).
 
 Please be sure to:
 * Explain in detail how it would work, possibly with pseudo-code or an example
@@ -225,4 +223,4 @@ Please be sure to:
 ---
 
 ## Acknowledgements
-This document was adapted from the cookiecutter project's [CONTRIBUTING file](https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst).
+This document was adapted from the cookiecutter project's [CONTRIBUTING file](https://github.com/cookiecutter/cookiecutter/blob/main/CONTRIBUTING.md).
