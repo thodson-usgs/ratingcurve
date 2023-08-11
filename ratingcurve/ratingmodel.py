@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+import math
 import numpy as np
 import pymc as pm
 import arviz as az
@@ -478,7 +479,7 @@ def stage_range(minimum: float, maximum: float, step: float = 0.01):
     h_min, h_max : float
         Minimum and maximum stage (h) observations.
     """
-    start = minimum - (minimum % step)
-    stop = maximum + (maximum % step)
+    start = minimum - math.remainder(minimum, step)
+    stop = maximum + (step - math.remainder(maximum, step))
 
     return np.arange(start, stop, step)
