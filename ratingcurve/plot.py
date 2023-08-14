@@ -123,6 +123,7 @@ class PlotMixin(RatingMixin):
 
         # approximate percentage error
         residuals = self.residuals(trace) * 100
+        residuals = residuals.mean(axis=1)
         ax.errorbar(y=self.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o",
                     lw=NARROW_LINE,
                     markersize=4,

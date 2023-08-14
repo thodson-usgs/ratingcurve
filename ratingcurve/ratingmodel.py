@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+import math
 import numpy as np
 import pymc as pm
 import arviz as az
@@ -86,7 +87,13 @@ class Rating(Model, RegressorMixin):
           Log residuals of rating model
         """
         q_pred = self.predict(trace, self.h_obs).discharge
-        return np.array(np.log(self.q_obs) - np.log(q_pred))
+
+        if self.q_obs.ndim == 1:
+            q_obs = self.q_obs.values.reshape((-1,1))
+        else:
+            q_obs = self.q_obs
+
+        return np.array(np.log(q_obs) - np.log(q_pred))
     
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
@@ -478,7 +485,7 @@ def stage_range(minimum: float, maximum: float, step: float = 0.01):
     h_min, h_max : float
         Minimum and maximum stage (h) observations.
     """
-    start = minimum - (minimum % step)
-    stop = maximum + (maximum % step)
+    start = minimum - math.remainder(minimum, step)
+    stop = maximum + (step - math.remainder(maximum, step))
 
     return np.arange(start, stop, step)

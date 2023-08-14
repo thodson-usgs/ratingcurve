@@ -1,14 +1,21 @@
 import pytest
-
 import numpy as np
 
 from ..ratingmodel import stage_range
 
-from ..ratingmodel import Rating, PowerLawRating, SplineRating
-
-# TODO specify these with pytest parametrize
-def test_stage_range():
-    assert np.allclose(stage_range(0, 1, 2), np.array([0])) # Nonsense
-    assert np.allclose(stage_range(0.01, 1.01, 0.1), np.array([0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.]))
-    assert np.allclose(stage_range(0.01, 1.01, 0.2), np.array([0. , 0.2, 0.4, 0.6, 0.8, 1.]))
+@pytest.mark.parametrize('minimum', [0, 10, 1e3])
+@pytest.mark.parametrize('maximum', [0, 1e2, 1e4])
+@pytest.mark.parametrize('step', [0.01, 1, 50, 1e3])
+def test_stage_range(minimum, maximum, step):
     
+    if minimum >= maximum:
+        pytest.xfail("minimum must be less than maximum")
+    if step > (maximum - minimum):
+         pytest.xfail("step must be smaller than minimum/maximum difference")
+
+    print(maximum, step)
+    stg_rng = stage_range(minimum, maximum, step)
+    assert stg_rng[0] <= minimum
+    assert (stg_rng[-1] >= maximum) or (np.allclose(stg_rng[-1], maximum))
+    assert np.allclose(stg_rng[1] - stg_rng[0], step)
+    assert len(stg_rng) <= (maximum - minimum)/step + 2
