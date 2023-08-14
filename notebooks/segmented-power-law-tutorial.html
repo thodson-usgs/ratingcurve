@@ -476,7 +476,7 @@ which uses a segmented power law.</p>
 </table>
 </div></div></div>
 </div>
-<p>and plotting the observations</p>
+<p>and plotting the observations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
@@ -489,7 +489,7 @@ which uses a segmented power law.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Stage (ft)&#39;)
 </pre></div>
 </div>
-<img alt="../_images/678f92340205bd7667db5a077d07b70873a0c716a708dee5dba3aa55340824f5.png" src="../_images/678f92340205bd7667db5a077d07b70873a0c716a708dee5dba3aa55340824f5.png" />
+<img alt="../_images/26e466bec6ea79ea7c2bd8b6707cad0866f1861a04b9da4dd9b32430c8d17e81.png" src="../_images/26e466bec6ea79ea7c2bd8b6707cad0866f1861a04b9da4dd9b32430c8d17e81.png" />
 </div>
 </div>
 </section>
@@ -538,13 +538,10 @@ though the model should coverge well before that.</p>
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='135182' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      67.59% [135182/200000 00:26&lt;00:12 Average Loss = -51.473]
+      <progress value='200000' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [200000/200000 00:40&lt;00:00 Average Loss = -51.809]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 135800
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 135,799 [67%]: Average Loss = -4.7636
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -51.803
 </pre></div>
 </div>
 </div>
@@ -557,7 +554,7 @@ though the model should coverge well before that.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cd9109559ecc234a3f257d000c0bd716df05a6c6c5a99d5c0338a8fee0bc65da.png" src="../_images/cd9109559ecc234a3f257d000c0bd716df05a6c6c5a99d5c0338a8fee0bc65da.png" />
+<img alt="../_images/c45f9301a215845aa1a546a0d2c45cefb7b17615a7776fd6085a33209c174473.png" src="../_images/c45f9301a215845aa1a546a0d2c45cefb7b17615a7776fd6085a33209c174473.png" />
 </div>
 </div>
 <p>or as a table of stage-discharge values.</p>
@@ -596,38 +593,38 @@ though the model should coverge well before that.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2.20</td>
-      <td>1375.09</td>
-      <td>1375.09</td>
-      <td>1.0107</td>
+      <td>2.21</td>
+      <td>1385.92</td>
+      <td>1385.99</td>
+      <td>1.0106</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2.21</td>
-      <td>1387.23</td>
-      <td>1387.24</td>
+      <td>2.22</td>
+      <td>1398.06</td>
+      <td>1398.11</td>
       <td>1.0106</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2.22</td>
-      <td>1399.39</td>
-      <td>1399.43</td>
+      <td>2.23</td>
+      <td>1410.21</td>
+      <td>1410.27</td>
       <td>1.0106</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2.23</td>
-      <td>1411.56</td>
-      <td>1411.62</td>
-      <td>1.0106</td>
+      <td>2.24</td>
+      <td>1422.37</td>
+      <td>1422.45</td>
+      <td>1.0105</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2.24</td>
-      <td>1423.74</td>
-      <td>1423.79</td>
-      <td>1.0106</td>
+      <td>2.25</td>
+      <td>1434.55</td>
+      <td>1434.63</td>
+      <td>1.0105</td>
     </tr>
   </tbody>
 </table>
@@ -639,11 +636,11 @@ though the model should coverge well before that.</p>
 <p>What happens if we choose the wrong number of segments?
 Increase the number of segments by one and rerun the model.
 In fact, we can use this to select the correct number of segments,
-which is demonstrated in the <a class="reference external" href="https://github.com/thodson-usgs/ratingcurve/blob/main/docs/notebooks/model-selection-tutorial.ipynb">model evaluation notebook</a></p>
+which is demonstrated in the <a class="reference external" href="https://github.com/thodson-usgs/ratingcurve/blob/main/docs/notebooks/model-selection-tutorial.ipynb">model evaluation notebook</a>.</p>
 </section>
 <section id="simulated-example">
 <h2>Simulated Example<a class="headerlink" href="#simulated-example" title="Permalink to this heading">#</a></h2>
-<p>This example uses a simulated rating curve, which allows you to test how</p>
+<p>This example uses a simulated rating curve, which allows you to test how changing the number of segments affects the rating curve.</p>
 <p>First, load the ‘3-segment simulated’ tutorial dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -659,12 +656,12 @@ which is demonstrated in the <a class="reference external" href="https://github.
 </div>
 </div>
 <p>This rating contains observations of every 0.01 inch. increment in stage, which is much more than we’d have for a natural rating.
-Try sampling to <code class="docutils literal notranslate"><span class="pre">n=15</span></code> or <code class="docutils literal notranslate"><span class="pre">n=30</span></code> and see how that affects the model fit.</p>
+Try sampling to <code class="docutils literal notranslate"><span class="pre">n_sample=15</span></code> or <code class="docutils literal notranslate"><span class="pre">n_sample=30</span></code> and see how that affects the model fit.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># subsample the simulated rating curve</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">n_sample</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_sample</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
@@ -674,7 +671,7 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n=1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6d83e7aacf93acf36cc70456b78d3da75c62d89ae7b8590d22e64e2891b9fc90.png" src="../_images/6d83e7aacf93acf36cc70456b78d3da75c62d89ae7b8590d22e64e2891b9fc90.png" />
+<img alt="../_images/7e5765bda268f1af0344f4a1d8fe16487dcfa3329e3e055e41dca2b7959a51f4.png" src="../_images/7e5765bda268f1af0344f4a1d8fe16487dcfa3329e3e055e41dca2b7959a51f4.png" />
 </div>
 </div>
 <p>Setup a rating model with 3 segments</p>
@@ -717,13 +714,10 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n=1
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='54671' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      27.34% [54671/200000 00:10&lt;00:28 Average Loss = -57.172]
+      <progress value='200000' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [200000/200000 00:40&lt;00:00 Average Loss = -48.443]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 54900
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 54,899 [27%]: Average Loss = 632.55
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.449
 </pre></div>
 </div>
 </div>
@@ -736,13 +730,15 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n=1
 <span class="n">powerrating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 
 <span class="c1"># plot the original data for comparison</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sim_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10133e274b740141aed8e76f9ac5f1f8c79322ddc1a734faf19e9cbe1efeedc8.png" src="../_images/10133e274b740141aed8e76f9ac5f1f8c79322ddc1a734faf19e9cbe1efeedc8.png" />
-<img alt="../_images/9964dc70c838059783e00c0f5ec0dc83f80d6a390bfe5bdcd726d3b4172470da.png" src="../_images/9964dc70c838059783e00c0f5ec0dc83f80d6a390bfe5bdcd726d3b4172470da.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;q&#39;, ylabel=&#39;Stage&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/6e5df41f55de9b48f3918ee64f605219968c7a2d637313318de25de6ed4ba49b.png" src="../_images/6e5df41f55de9b48f3918ee64f605219968c7a2d637313318de25de6ed4ba49b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -787,98 +783,98 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n=1
   <tbody>
     <tr>
       <th>w[0]</th>
-      <td>0.968</td>
-      <td>0.001</td>
-      <td>0.965</td>
-      <td>0.970</td>
+      <td>0.984</td>
+      <td>0.002</td>
+      <td>0.980</td>
+      <td>0.987</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>10062.0</td>
-      <td>9065.0</td>
+      <td>9169.0</td>
+      <td>10024.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>w[1]</th>
-      <td>0.072</td>
-      <td>0.003</td>
-      <td>0.066</td>
-      <td>0.078</td>
+      <td>0.356</td>
+      <td>0.008</td>
+      <td>0.340</td>
+      <td>0.370</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9817.0</td>
-      <td>10001.0</td>
+      <td>10143.0</td>
+      <td>9754.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>w[2]</th>
-      <td>0.308</td>
-      <td>0.006</td>
-      <td>0.298</td>
-      <td>0.318</td>
+      <td>0.023</td>
+      <td>0.056</td>
+      <td>-0.084</td>
+      <td>0.126</td>
+      <td>0.001</td>
       <td>0.000</td>
-      <td>0.000</td>
-      <td>9838.0</td>
-      <td>9796.0</td>
+      <td>9982.0</td>
+      <td>9879.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>a</th>
-      <td>-0.997</td>
-      <td>0.002</td>
-      <td>-1.001</td>
-      <td>-0.994</td>
+      <td>-1.006</td>
+      <td>0.003</td>
+      <td>-1.011</td>
+      <td>-1.000</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>10272.0</td>
-      <td>9962.0</td>
+      <td>9973.0</td>
+      <td>10001.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>sigma</th>
-      <td>0.010</td>
-      <td>0.001</td>
-      <td>0.007</td>
+      <td>0.016</td>
+      <td>0.002</td>
       <td>0.012</td>
+      <td>0.020</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>10086.0</td>
-      <td>9757.0</td>
+      <td>9995.0</td>
+      <td>10043.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[0, 0]</th>
-      <td>4.932</td>
+      <td>4.928</td>
       <td>0.001</td>
+      <td>4.926</td>
       <td>4.930</td>
-      <td>4.933</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9269.0</td>
-      <td>9406.0</td>
+      <td>10223.0</td>
+      <td>9916.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[1, 0]</th>
-      <td>9.512</td>
-      <td>0.095</td>
-      <td>9.335</td>
-      <td>9.689</td>
-      <td>0.001</td>
-      <td>0.001</td>
-      <td>9859.0</td>
-      <td>9667.0</td>
+      <td>10.545</td>
+      <td>0.032</td>
+      <td>10.483</td>
+      <td>10.605</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>9944.0</td>
+      <td>9944.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[2, 0]</th>
-      <td>10.759</td>
-      <td>0.026</td>
-      <td>10.710</td>
-      <td>10.808</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>9514.0</td>
-      <td>10083.0</td>
+      <td>12.325</td>
+      <td>0.159</td>
+      <td>12.042</td>
+      <td>12.529</td>
+      <td>0.002</td>
+      <td>0.001</td>
+      <td>10017.0</td>
+      <td>9815.0</td>
       <td>NaN</td>
     </tr>
   </tbody>
@@ -890,7 +886,7 @@ The most common issue is a poor initialization of the breakpoints.
 A fix is under development, but for now, try</p>
 <ol class="arabic simple">
 <li><p>reinitializing the model <code class="docutils literal notranslate"><span class="pre">PowerLawRating()</span></code>;</p></li>
-<li><p>increasing the number of iterations <code class="docutils literal notranslate"><span class="pre">n</span></code>;</p></li>
+<li><p>increasing the number of iterations for the fitting algorithm <code class="docutils literal notranslate"><span class="pre">fit(n=300_000)</span></code>;</p></li>
 <li><p>a prior on the breakpoints, example, try <code class="docutils literal notranslate"><span class="pre">prior={'distribution':'normal',</span> <span class="pre">'mu':[5,</span> <span class="pre">9.5,</span> <span class="pre">10.5],</span> <span class="pre">'sigma':[1,</span> <span class="pre">1,</span> <span class="pre">0.2]})</span></code>, which implies we know the true breakpoint within +-0.5 ft; or</p></li>
 <li><p>fitting the model with NUTS <code class="docutils literal notranslate"><span class="pre">fit(method='nuts')</span></code>.</p></li>
 </ol>
@@ -902,21 +898,21 @@ A fix is under development, but for now, try</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Thu Jun 15 2023
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Mon Aug 14 2023
 
 Python implementation: CPython
 Python version       : 3.8.17
 IPython version      : 8.12.2
 
-pytensor: 2.12.2
+pytensor: 2.12.3
 xarray  : 2023.1.0
 
-matplotlib : 3.7.1
-ratingcurve: 0.1.dev1+g64fa2b2
-pymc       : 5.5.0
 arviz      : 0.15.1
+ratingcurve: 0.1.dev1+g9786a47
+pymc       : 5.6.1
+matplotlib : 3.7.2
 
-Watermark: 2.4.2
+Watermark: 2.4.3
 </pre></div>
 </div>
 </div>

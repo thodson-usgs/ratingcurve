@@ -364,6 +364,18 @@ document.write(`
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel.PowerLawRating">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">PowerLawRating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#PowerLawRating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.PowerLawRating" title="Permalink to this definition">#</a></dt>
 <dd><p>Multi-segment power law rating using Heaviside parameterization.</p>
+<p>Create a multi-segment power law rating model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>q</strong> (<em>array-like</em>) – Input arrays of discharge (q) and gage height (h) observations.</p></li>
+<li><p><strong>h</strong> (<em>array-like</em>) – Input arrays of discharge (q) and gage height (h) observations.</p></li>
+<li><p><strong>q_sigma</strong> (<em>array-like</em>) – Input array of discharge uncertainty in units of discharge.</p></li>
+<li><p><strong>segments</strong> (<em>int</em>) – Number of segments in the rating.</p></li>
+<li><p><strong>prior</strong> (<em>dict</em>) – Prior knowledge of breakpoint locations.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel.PowerLawRating.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ratingcurve.ratingmodel.RatingData" title="ratingcurve.ratingmodel.RatingData"><span class="pre">RatingData</span></a></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#PowerLawRating.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.PowerLawRating.predict" title="Permalink to this definition">#</a></dt>
@@ -410,6 +422,16 @@ This can be very helpful when convergence is poor.</p>
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel.Rating">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">Rating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#Rating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.Rating" title="Permalink to this definition">#</a></dt>
 <dd><p>Abstract base class for rating models</p>
+<p>Initialize rating model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>q</strong> (<em>array-like</em>) – Input arrays of discharge (q) and gage height (h) observations.</p></li>
+<li><p><strong>h</strong> (<em>array-like</em>) – Input arrays of discharge (q) and gage height (h) observations.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Name that will be used as prefix for names of all random variables defined within model</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel.Rating.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ratingcurve.ratingmodel.RatingData" title="ratingcurve.ratingmodel.RatingData"><span class="pre">RatingData</span></a></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#Rating.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.Rating.predict" title="Permalink to this definition">#</a></dt>
@@ -479,6 +501,7 @@ predict methods using numpy that are specific to each model.</p>
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel.RatingData">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">RatingData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discharge</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#RatingData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.RatingData" title="Permalink to this definition">#</a></dt>
 <dd><p>Dataclass for rating model output</p>
+<p>Input stochastic predictions</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel.RatingData.gse">
 <span class="sig-name descname"><span class="pre">gse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#RatingData.gse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.RatingData.gse" title="Permalink to this definition">#</a></dt>
@@ -535,6 +558,20 @@ and gse.</p>
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel.SplineRating">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">SplineRating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#SplineRating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.SplineRating" title="Permalink to this definition">#</a></dt>
 <dd><p>Natural spline rating model</p>
+<p>Create a natural spline rating model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>q</strong> (<em>array-like</em>) – Input arrays of discharge (q) and stage (h) observations.</p></li>
+<li><p><strong>h</strong> (<em>array-like</em>) – Input arrays of discharge (q) and stage (h) observations.</p></li>
+<li><p><strong>q_sigma</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Input array of discharge uncertainty in units of discharge.</p></li>
+<li><p><strong>knots</strong> (<em>array-like</em>) – Stage value locations of the spline knots.</p></li>
+<li><p><strong>mean</strong> (<em>float</em>) – Prior mean and standard deviation for the spline coefficients.</p></li>
+<li><p><strong>sd</strong> (<em>float</em>) – Prior mean and standard deviation for the spline coefficients.</p></li>
+<li><p><strong>df</strong> (<em>int</em>) – Degrees of freedom for the spline coefficients.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel.SplineRating.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ratingcurve.ratingmodel.RatingData" title="ratingcurve.ratingmodel.RatingData"><span class="pre">RatingData</span></a></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#SplineRating.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.SplineRating.predict" title="Permalink to this definition">#</a></dt>
@@ -578,6 +615,20 @@ the minumum (maximum).</p>
 <dt class="sig sig-object py" id="ratingcurve.transform.Dmatrix">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">Dmatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cr'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix" title="Permalink to this definition">#</a></dt>
 <dd><p>Transform for spline design matrix</p>
+<p>Create a Dmatrix object</p>
+<p>Create a design matrix for a natural cubic spline, which is a cubic
+spline that is additionally constrained to be linear at the boundaries.
+Due to this constraint, the total degrees of freedom equals the number
+of knots minus 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stage</strong> (<em>array_like</em>) – Stage data</p></li>
+<li><p><strong>df</strong> (<em>int</em>) – Degrees of freedom</p></li>
+<li><p><strong>form</strong> (<em>str</em>) – Spline form</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.Dmatrix.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix.transform" title="Permalink to this definition">#</a></dt>
@@ -601,6 +652,12 @@ the minumum (maximum).</p>
 <dt class="sig sig-object py" id="ratingcurve.transform.LogZTransform">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">LogZTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#LogZTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.LogZTransform" title="Permalink to this definition">#</a></dt>
 <dd><p>Log transform then takes z-score.</p>
+<p>Create a LogZTransform for x.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>array_like</em>) – Data that defines the transform.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.LogZTransform.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#LogZTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.LogZTransform.transform" title="Permalink to this definition">#</a></dt>
@@ -643,6 +700,7 @@ the minumum (maximum).</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">Transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#Transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Transform" title="Permalink to this definition">#</a></dt>
 <dd><p>Transformation class</p>
 <p>All children of Transform must have transfom and untransform methods</p>
+<p>Create empty Transform object</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.Transform.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#Transform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Transform.transform" title="Permalink to this definition">#</a></dt>
@@ -666,6 +724,12 @@ the minumum (maximum).</p>
 <dt class="sig sig-object py" id="ratingcurve.transform.UnitTransform">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">UnitTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform" title="Permalink to this definition">#</a></dt>
 <dd><p>Transforms data to the unit (0 to 1) interval.</p>
+<p>Create UnitTransform of array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>array_like</em>) – Data that defines the transform.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.UnitTransform.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform.transform" title="Permalink to this definition">#</a></dt>
@@ -706,6 +770,12 @@ the minumum (maximum).</p>
 <dt class="sig sig-object py" id="ratingcurve.transform.ZTransform">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">ZTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#ZTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.ZTransform" title="Permalink to this definition">#</a></dt>
 <dd><p>Z-transforms data to have zero mean and unit variance</p>
+<p>Create a ZTransform object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>array_like</em>) – Data that defines the transform.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.ZTransform.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#ZTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.ZTransform.transform" title="Permalink to this definition">#</a></dt>

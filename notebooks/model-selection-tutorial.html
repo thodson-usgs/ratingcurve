@@ -387,13 +387,7 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Load the data</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
+<span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
 <span class="o">%</span><span class="k">load_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
 <span class="o">%</span><span class="k">xmode</span> minimal
@@ -421,7 +415,7 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
-<span class="c1"># OUtput supressed, this will print &quot;Finished&quot; after running each of the four models</span>
+<span class="c1"># Output supressed, this will print &quot;Finished&quot; after running each of the four models</span>
 
 <span class="n">segments</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="n">traces</span> <span class="o">=</span> <span class="p">[]</span>
@@ -433,23 +427,32 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
                              <span class="n">prior</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;distribution&#39;</span><span class="p">:</span><span class="s1">&#39;uniform&#39;</span><span class="p">})</span>
     
     <span class="n">trace</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
-    <span class="n">traces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">compute_log_likelihood</span><span class="p">(</span><span class="n">trace</span><span class="p">))</span> <span class="c1"># Add arg to compute log likelihood</span>
+    <span class="n">traces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">compute_log_likelihood</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">powerrating</span><span class="p">))</span> <span class="c1"># Add arg to compute log likelihood</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 42500
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 45700
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 42,499 [42%]: Average Loss = 119.82
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 45,699 [45%]: Average Loss = 53.462
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">TypeError</span>: No model on context stack.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 74000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 73,999 [73%]: Average Loss = 53.254
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.133
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -43.954
 </pre></div>
 </div>
 </div>
 </div>
-<p>now use <code class="docutils literal notranslate"><span class="pre">arviz.compare</span></code> to format the output</p>
+<p>Now use <code class="docutils literal notranslate"><span class="pre">arviz.compare</span></code> to format the output.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this model will generate warnings about the LOO</span>
@@ -461,10 +464,87 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">IndexError</span>: list index out of range
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rank</th>
+      <th>elpd_loo</th>
+      <th>p_loo</th>
+      <th>elpd_diff</th>
+      <th>weight</th>
+      <th>se</th>
+      <th>dse</th>
+      <th>warning</th>
+      <th>scale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2 segment</th>
+      <td>0</td>
+      <td>73.627440</td>
+      <td>5.812137</td>
+      <td>0.000000</td>
+      <td>1.000000e+00</td>
+      <td>3.302542</td>
+      <td>0.000000</td>
+      <td>True</td>
+      <td>log</td>
+    </tr>
+    <tr>
+      <th>3 segment</th>
+      <td>1</td>
+      <td>65.939247</td>
+      <td>13.398806</td>
+      <td>7.688193</td>
+      <td>0.000000e+00</td>
+      <td>8.272719</td>
+      <td>7.300244</td>
+      <td>True</td>
+      <td>log</td>
+    </tr>
+    <tr>
+      <th>4 segment</th>
+      <td>2</td>
+      <td>58.021029</td>
+      <td>20.650838</td>
+      <td>15.606411</td>
+      <td>0.000000e+00</td>
+      <td>11.697098</td>
+      <td>10.978293</td>
+      <td>True</td>
+      <td>log</td>
+    </tr>
+    <tr>
+      <th>1 segment</th>
+      <td>3</td>
+      <td>53.480442</td>
+      <td>3.816195</td>
+      <td>20.146999</td>
+      <td>3.304024e-12</td>
+      <td>3.311242</td>
+      <td>4.574820</td>
+      <td>False</td>
+      <td>log</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>As expected, the 2-segment model ranked highest.</p>
 </section>
@@ -475,9 +555,7 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 Here is a demonstration of how.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="n">segments</span> <span class="o">=</span> <span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segments</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">powerrating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
                              <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span> 
                              <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">],</span>
@@ -507,20 +585,22 @@ Here is a demonstration of how.</p>
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='94159' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      47.08% [94159/200000 00:18&lt;00:20 Average Loss = -51.631]
+      <progress value='93069' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      46.53% [93069/200000 00:18&lt;00:21 Average Loss = -51.554]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 95000
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 94000
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 94,999 [47%]: Average Loss = 19.049
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 93,999 [46%]: Average Loss = -10.771
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">powerrating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">powerrating</span><span class="o">.</span><span class="n">plot_residuals</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -532,10 +612,10 @@ Here is a demonstration of how.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">ValueError</span>: operands could not be broadcast together with shapes (36,) (36,10000) 
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;&#39;)
 </pre></div>
 </div>
-<img alt="../_images/724fc5acd5dc571df0718b4bb40dcd8594b542523ed71fdc5ca8168a073d28c9.png" src="../_images/724fc5acd5dc571df0718b4bb40dcd8594b542523ed71fdc5ca8168a073d28c9.png" />
+<img alt="../_images/79723c08d5e9d62622226b032940d13e03ba93386cea817bc1811277332aa845.png" src="../_images/79723c08d5e9d62622226b032940d13e03ba93386cea817bc1811277332aa845.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -546,21 +626,21 @@ Here is a demonstration of how.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Thu Jun 15 2023
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Mon Aug 14 2023
 
 Python implementation: CPython
 Python version       : 3.8.17
 IPython version      : 8.12.2
 
-pytensor: 2.12.2
+pytensor: 2.12.3
 xarray  : 2023.1.0
 
 arviz      : 0.15.1
-pymc       : 5.5.0
-matplotlib : 3.7.1
-ratingcurve: 0.1.dev1+g64fa2b2
+pymc       : 5.6.1
+ratingcurve: 0.1.dev1+g9786a47
+matplotlib : 3.7.2
 
-Watermark: 2.4.2
+Watermark: 2.4.3
 </pre></div>
 </div>
 </div>

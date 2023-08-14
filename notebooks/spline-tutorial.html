@@ -451,12 +451,12 @@ Here is an example showing a natural spline fit to the Green River dataset.</p>
 </div><div class="output text_html">
     <div>
       <progress value='70000' class='' max='70000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [70000/70000 00:06&lt;00:00 Average Loss = -38.754]
+      100.00% [70000/70000 00:06&lt;00:00 Average Loss = -38.815]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -38.754
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -38.817
 </pre></div>
 </div>
-<img alt="../_images/f910eb17afafbc759f4ba1bca788394454b5cd6324ec49e77b55ef111456472e.png" src="../_images/f910eb17afafbc759f4ba1bca788394454b5cd6324ec49e77b55ef111456472e.png" />
+<img alt="../_images/c10d78d63de92734ba5b5fd27c1ab2a9769b32e1588b0dd789f9069ad65ebc64.png" src="../_images/c10d78d63de92734ba5b5fd27c1ab2a9769b32e1588b0dd789f9069ad65ebc64.png" />
 </div>
 </div>
 </section>
@@ -467,8 +467,8 @@ Here is an example showing a natural spline fit to the Green River dataset.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim_df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;3-segment simulated&#39;</span><span class="p">)</span>
 
 <span class="c1"># subsample the simulated rating curve</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">n_sample</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_sample</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sim_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;stage&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
@@ -481,7 +481,7 @@ Here is an example showing a natural spline fit to the Green River dataset.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Stage (ft)&#39;)
 </pre></div>
 </div>
-<img alt="../_images/6d83e7aacf93acf36cc70456b78d3da75c62d89ae7b8590d22e64e2891b9fc90.png" src="../_images/6d83e7aacf93acf36cc70456b78d3da75c62d89ae7b8590d22e64e2891b9fc90.png" />
+<img alt="../_images/7e5765bda268f1af0344f4a1d8fe16487dcfa3329e3e055e41dca2b7959a51f4.png" src="../_images/7e5765bda268f1af0344f4a1d8fe16487dcfa3329e3e055e41dca2b7959a51f4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -520,12 +520,12 @@ Here is an example showing a natural spline fit to the Green River dataset.</p>
 </div><div class="output text_html">
     <div>
       <progress value='100000' class='' max='100000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [100000/100000 00:08&lt;00:00 Average Loss = -2.7934]
+      100.00% [100000/100000 00:09&lt;00:00 Average Loss = -2.7474]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -2.7922
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -2.7473
 </pre></div>
 </div>
-<img alt="../_images/09e2db92f7c70f80355274d443d32097117d75c0c21c477475fcfd57d13e1b34.png" src="../_images/09e2db92f7c70f80355274d443d32097117d75c0c21c477475fcfd57d13e1b34.png" />
+<img alt="../_images/cfbaaa0a03b5dc769b8c77c706c12c07d57b2cd681f57cc3661d171973284206.png" src="../_images/cfbaaa0a03b5dc769b8c77c706c12c07d57b2cd681f57cc3661d171973284206.png" />
 </div>
 </div>
 <section id="excercise">
@@ -533,9 +533,9 @@ Here is an example showing a natural spline fit to the Green River dataset.</p>
 <p>Splines can give unexpectedly poor results.
 Experiment with the following:</p>
 <ol class="arabic simple">
-<li><p>Try  <code class="docutils literal notranslate"><span class="pre">sim_df.sample(n=30,</span> <span class="pre">random_state=771)</span></code></p></li>
+<li><p>Try changing the random state: <code class="docutils literal notranslate"><span class="pre">sim_df.sample(n=30,</span> <span class="pre">random_state=771)</span></code></p></li>
 <li><p>Rerun with <code class="docutils literal notranslate"><span class="pre">n=200</span></code>. The fit has improved, but the uncertainty is unreasonably high.</p></li>
-<li><p>Rerun with <code class="docutils literal notranslate"><span class="pre">df=30</span></code> in <code class="docutils literal notranslate"><span class="pre">SplineRating()</span></code>, and observe how the uncertainty changes.</p></li>
+<li><p>Rerun with more degrees of freedon (<code class="docutils literal notranslate"><span class="pre">df=30</span></code>) in <code class="docutils literal notranslate"><span class="pre">SplineRating()</span></code>, and observe how the uncertainty changes.</p></li>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -545,21 +545,21 @@ Experiment with the following:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Thu Jun 15 2023
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Mon Aug 14 2023
 
 Python implementation: CPython
 Python version       : 3.8.17
 IPython version      : 8.12.2
 
-pytensor: 2.12.2
+pytensor: 2.12.3
 xarray  : 2023.1.0
 
+numpy      : 1.24.4
 arviz      : 0.15.1
-ratingcurve: 0.1.dev1+g64fa2b2
-numpy      : 1.24.3
-pymc       : 5.5.0
+pymc       : 5.6.1
+ratingcurve: 0.1.dev1+g9786a47
 
-Watermark: 2.4.2
+Watermark: 2.4.3
 </pre></div>
 </div>
 </div>
