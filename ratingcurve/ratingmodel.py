@@ -87,7 +87,13 @@ class Rating(Model, RegressorMixin):
           Log residuals of rating model
         """
         q_pred = self.predict(trace, self.h_obs).discharge
-        return np.array(np.log(self.q_obs) - np.log(q_pred))
+
+        if self.q_obs.ndim == 1:
+            q_obs = self.q_obs.values.reshape((-1,1))
+        else:
+            q_obs = self.q_obs
+
+        return np.array(np.log(q_obs) - np.log(q_pred))
     
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
