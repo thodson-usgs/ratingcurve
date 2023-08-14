@@ -44,6 +44,7 @@ sphinx:
   - 'sphinx.ext.viewcode'
   config:
     add_module_names: True
+    autoclass_content : 'both'
 
 parse:
   myst_enable_extensions:
