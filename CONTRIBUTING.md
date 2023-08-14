@@ -93,7 +93,7 @@ Before you submit a pull request, check that it meets these guidelines:
 ### Coding Standards and Style
 
 Note that coding standards and style as described below are strong suggestions,
-the `ratingcurve` project does not strictly limit or enforce style guidelines
+the `ratingcurve` project does not strictly lint or enforce style guidelines
 via any automated processes or pipelines.
 
 #### Style
