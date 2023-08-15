@@ -1,5 +1,5 @@
 # ratingcurve
-*A Python library for fitting hydrologic rating curves.*
+*A Python package for fitting hydrologic rating curves.*
 
 In hydrology, a rating curve is a mathematical relationship between streamflow and water surface elevation (stage).
 Because stage is much easier to measure than streamflow, almost all streamflow timeseries are generated from rating curves.
