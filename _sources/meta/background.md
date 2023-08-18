@@ -11,14 +11,14 @@ Regardless of the type, the behavior of each control is often well-approximated 
 where $Q$ is the discharge (streamflow);
 $h$ is the height of the water above some datum (stage);
 $h_0$ is the stage of zero flow (the location or offset parameter);
-$(h-h_0)$ is the hydraulic head \citep{ISO18320_2020};
+$(h-h_0)$ is the hydraulic head {cite:p}`ISO18320_2020`;
 $b$ is the slope of the rating curve when plotted in log-log space;
 $C$ is a scale factor equal to the discharge when the head is equal to one;
 When multiple controls are present, the rating curve is divided into segments
 with one power-law corresponding to each control resulting in a multi-segment or compound rating.
 
 Though several automated methods exist, most ratings are still fit by hand using a graphical method of plotting stage and discharge in log-log space.
-With the appropriate location parameter, each control can be fit to a straight-line segment in log space \citep{Kennedy_1984, ISO18320_2020}.
+With the appropriate location parameter, each control can be fit to a straight-line segment in log space {cite:p}`Kennedy_1984, ISO18320_2020`.
 Variants of this method have been used for decades,
 first with pencil and log paper
 and now with computer-aided software, though fitting is still done by manually adjusting parameters until an acceptable fit is achieved.
@@ -27,16 +27,16 @@ While single-segment ratings are relatively easy to fit by automated methods {ci
 compound ratings are more challenging, because their solution is multimodal,
 meaning it has multiple optima {cite:p}`Reitan_2006`.
 As a result, standard optimization algorithms can become stuck in local optima and fail to converge to the global optimum.
-General function approximators, such as natural splines \citep{Fenton_2018} or neural networks,
+General function approximators, such as natural splines {cite:p}`Fenton_2018` or neural networks,
 can be easier to fit but their generality comes at a cost.
 The form of the power law matches that of the hydrologic equations governing uniform open-channel flow,
-like the Manning equation \citep{Manning_1891}.
+like the Manning equation {cite:p}`Manning_1891`.
 Due to that physical basis, power laws are potentially more robust than other generic curve-fitting functions:
 requiring less data to achieve the same fit and being less prone to overfitting.
 
 This paper describes a basic algorithm for fitting compound ratings and compares its performance against a natural spline.
-Similar algorithms already exist, notably those of \citet{Reitan_2008, Le_Coz_2014},
-as well as the so-called generalized power law \citep{Hrafnkelsson_2021}.
+Similar algorithms already exist, notably those of {cite:t}`Reitan_2008, Le_Coz_2014`,
+as well as the so-called generalized power law {cite:p}`Hrafnkelsson_2021`.
 Like the algorithm described here, each of these examples is Bayesian, meaning they can utilize prior information to help constrain the solution space and reduce multimodality.
 Simple examples of priors include constraining the exponent $b$ to a narrow range around the value of 5/3,
 or constraining the number of rating segments,

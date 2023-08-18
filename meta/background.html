@@ -367,36 +367,36 @@ In nearly all timeseries applications, streamflow is estimated from rating curve
 The shape of the rating is specific to each streamgage and is governed by channel conditions at or downstream from the gage, referred to as controls.
 Section controls, like riffles or weirs, occur downstream of the gage, whereas channel controls, like the geometry of the banks, occur at the gage.
 Regardless of the type, the behavior of each control is often well-approximated with standard hydrologic equations that take the general form of a power law with a location parameter</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0ff5bbbb-2026-4a7e-bdf8-6e08fd1c629d">
-<span class="eqno">(1)<a class="headerlink" href="#equation-0ff5bbbb-2026-4a7e-bdf8-6e08fd1c629d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7973fe74-7151-4a32-9380-c8e20ea49b62">
+<span class="eqno">(1)<a class="headerlink" href="#equation-7973fe74-7151-4a32-9380-c8e20ea49b62" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q = C(h - h_0)^{b}
 \end{equation}\]</div>
 <p>where $Q$ is the discharge (streamflow);
 $h$ is the height of the water above some datum (stage);
 $h_0$ is the stage of zero flow (the location or offset parameter);
-$(h-h_0)$ is the hydraulic head \citep{ISO18320_2020};
+$(h-h_0)$ is the hydraulic head <span id="id1">[<a class="reference internal" href="#id14" title="ISO 18320:2020. Hydrometry–Measurement of Liquid Flow in Open Channels—Determination of the Stage–Discharge Relationship. International Organization for Standardization, 2020.">ISO18320202020</a>]</span>;
 $b$ is the slope of the rating curve when plotted in log-log space;
 $C$ is a scale factor equal to the discharge when the head is equal to one;
 When multiple controls are present, the rating curve is divided into segments
 with one power-law corresponding to each control resulting in a multi-segment or compound rating.</p>
 <p>Though several automated methods exist, most ratings are still fit by hand using a graphical method of plotting stage and discharge in log-log space.
-With the appropriate location parameter, each control can be fit to a straight-line segment in log space \citep{Kennedy_1984, ISO18320_2020}.
+With the appropriate location parameter, each control can be fit to a straight-line segment in log space <span id="id2">[<a class="reference internal" href="#id15" title="Edward J Kennedy. Discharge ratings at gaging stations. Department of the Interior, US Geological Survey, 1984.">Ken84</a>, <a class="reference internal" href="#id14" title="ISO 18320:2020. Hydrometry–Measurement of Liquid Flow in Open Channels—Determination of the Stage–Discharge Relationship. International Organization for Standardization, 2020.">ISO18320202020</a>]</span>.
 Variants of this method have been used for decades,
 first with pencil and log paper
 and now with computer-aided software, though fitting is still done by manually adjusting parameters until an acceptable fit is achieved.</p>
-<p>While single-segment ratings are relatively easy to fit by automated methods <span id="id1">[<a class="reference internal" href="#id20" title="C. Venetis. A note on the estimation of the parameters in logarithmic stage-discharge relationships with estimates of their error. International Association of Scientific Hydrology. Bulletin, 15(2):105–111, jun 1970. URL: https://doi.org/10.1080%2F02626667009493957, doi:10.1080/02626667009493957.">Ven70</a>]</span>,
+<p>While single-segment ratings are relatively easy to fit by automated methods <span id="id3">[<a class="reference internal" href="#id26" title="C. Venetis. A note on the estimation of the parameters in logarithmic stage-discharge relationships with estimates of their error. International Association of Scientific Hydrology. Bulletin, 15(2):105–111, jun 1970. URL: https://doi.org/10.1080%2F02626667009493957, doi:10.1080/02626667009493957.">Ven70</a>]</span>,
 compound ratings are more challenging, because their solution is multimodal,
-meaning it has multiple optima <span id="id2">[<a class="reference internal" href="#id17" title="Trond Reitan and Asgeir Petersen-Øverleir. Existence of the frequentistic estimate for power-law regression with a location parameter, with applications for making discharge rating curves. Stochastic Environmental Research and Risk Assessment, 20(6):445–453, jul 2006. URL: https://doi.org/10.1007%2Fs00477-006-0037-6, doi:10.1007/s00477-006-0037-6.">RPOverleir06</a>]</span>.
+meaning it has multiple optima <span id="id4">[<a class="reference internal" href="#id23" title="Trond Reitan and Asgeir Petersen-Øverleir. Existence of the frequentistic estimate for power-law regression with a location parameter, with applications for making discharge rating curves. Stochastic Environmental Research and Risk Assessment, 20(6):445–453, jul 2006. URL: https://doi.org/10.1007%2Fs00477-006-0037-6, doi:10.1007/s00477-006-0037-6.">RPOverleir06</a>]</span>.
 As a result, standard optimization algorithms can become stuck in local optima and fail to converge to the global optimum.
-General function approximators, such as natural splines \citep{Fenton_2018} or neural networks,
+General function approximators, such as natural splines <span id="id5">[<a class="reference internal" href="#id11" title="John D. Fenton. On the generation of stream rating curves. Journal of Hydrology, 564:748–757, sep 2018. URL: https://doi.org/10.1016%2Fj.jhydrol.2018.07.025, doi:10.1016/j.jhydrol.2018.07.025.">Fen18</a>]</span> or neural networks,
 can be easier to fit but their generality comes at a cost.
 The form of the power law matches that of the hydrologic equations governing uniform open-channel flow,
-like the Manning equation \citep{Manning_1891}.
+like the Manning equation <span id="id6">[<a class="reference internal" href="#id18" title="R. Manning. On the flow of water in open channels and pipes. Transactions of the Institution of Civil Engineers of Ireland, 20:179–207, 1891.">Man91</a>]</span>.
 Due to that physical basis, power laws are potentially more robust than other generic curve-fitting functions:
 requiring less data to achieve the same fit and being less prone to overfitting.</p>
 <p>This paper describes a basic algorithm for fitting compound ratings and compares its performance against a natural spline.
-Similar algorithms already exist, notably those of \citet{Reitan_2008, Le_Coz_2014},
-as well as the so-called generalized power law \citep{Hrafnkelsson_2021}.
+Similar algorithms already exist, notably those of <span id="id7">Le Coz <em>et al.</em> [<a class="reference internal" href="#id17" title="J. Le Coz, B. Renard, L. Bonnifait, F. Branger, and R. Le Boursicaud. Combining hydraulic knowledge and uncertain gaugings in the estimation of hydrometric rating curves: a bayesian approach. Journal of Hydrology, 509:573–587, Feb 2014. URL: http://dx.doi.org/10.1016/j.jhydrol.2013.11.016, doi:10.1016/j.jhydrol.2013.11.016.">LCRB+14</a>], Reitan and Petersen-Øverleir [<a class="reference internal" href="#id24" title="Trond Reitan and Asgeir Petersen-Øverleir. Bayesian methods for estimating multi-segment discharge rating curves. Stochastic Environmental Research and Risk Assessment, 23(5):627–642, Jun 2008. URL: http://dx.doi.org/10.1007/s00477-008-0248-0, doi:10.1007/s00477-008-0248-0.">RP08</a>]</span>,
+as well as the so-called generalized power law <span id="id8">[<a class="reference internal" href="#id13" title="Birgir Hrafnkelsson, Helgi Sigurdarson, Sölvi Rögnvaldsson, Axel Örn Jansson, Rafael Dan\'ıel Vias, and Sigurdur M. Gardarsson. Generalization of the power-law rating curve using hydrodynamic theory and bayesian hierarchical modeling. Environmetrics, dec 2021. URL: https://doi.org/10.1002%2Fenv.2711, doi:10.1002/env.2711.">HSR+21</a>]</span>.
 Like the algorithm described here, each of these examples is Bayesian, meaning they can utilize prior information to help constrain the solution space and reduce multimodality.
 Simple examples of priors include constraining the exponent $b$ to a narrow range around the value of 5/3,
 or constraining the number of rating segments,
@@ -411,14 +411,63 @@ As a result, most of the underlying numerical code is maintained by a broader co
 enabling us to focus on the particular nuances of parameterizing a rating curve model,
 as well as making it easier to extend or modify the algorithm
 or switch between different approximation algorithms to achieve different tradeoffs of speed and accuracy.</p>
-<div class="docutils container" id="id3">
+<div class="docutils container" id="id9">
+<div class="citation" id="id11" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">Fen18</a><span class="fn-bracket">]</span></span>
+<p>John D. Fenton. On the generation of stream rating curves. <em>Journal of Hydrology</em>, 564:748–757, sep 2018. URL: <a class="reference external" href="https://doi.org/10.1016%2Fj.jhydrol.2018.07.025">https://doi.org/10.1016%2Fj.jhydrol.2018.07.025</a>, <a class="reference external" href="https://doi.org/10.1016/j.jhydrol.2018.07.025">doi:10.1016/j.jhydrol.2018.07.025</a>.</p>
+</div>
+<div class="citation" id="id12" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>HG14<span class="fn-bracket">]</span></span>
+<p>Matthew D. Hoffman and Andrew Gelman. The no-u-turn sampler: adaptively setting path lengths in hamiltonian monte carlo. <em>Journal of Machine Learning Research</em>, 15(47):1593–1623, 2014. URL: <a class="reference external" href="http://jmlr.org/papers/v15/hoffman14a.html">http://jmlr.org/papers/v15/hoffman14a.html</a>.</p>
+</div>
+<div class="citation" id="id13" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">HSR+21</a><span class="fn-bracket">]</span></span>
+<p>Birgir Hrafnkelsson, Helgi Sigurdarson, Sölvi Rögnvaldsson, Axel Örn Jansson, Rafael Dan\'ıel Vias, and Sigurdur M. Gardarsson. Generalization of the power-law rating curve using hydrodynamic theory and bayesian hierarchical modeling. <em>Environmetrics</em>, dec 2021. URL: <a class="reference external" href="https://doi.org/10.1002%2Fenv.2711">https://doi.org/10.1002%2Fenv.2711</a>, <a class="reference external" href="https://doi.org/10.1002/env.2711">doi:10.1002/env.2711</a>.</p>
+</div>
+<div class="citation" id="id15" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">Ken84</a><span class="fn-bracket">]</span></span>
+<p>Edward J Kennedy. <em>Discharge ratings at gaging stations</em>. Department of the Interior, US Geological Survey, 1984.</p>
+</div>
+<div class="citation" id="id16" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>KTR+17<span class="fn-bracket">]</span></span>
+<p>Alp Kucukelbir, Dustin Tran, Rajesh Ranganath, Andrew Gelman, and David M. Blei. Automatic differentiation variational inference. <em>Journal of Machine Learning Research</em>, 18(14):1–45, 2017. URL: <a class="reference external" href="http://jmlr.org/papers/v18/16-107.html">http://jmlr.org/papers/v18/16-107.html</a>.</p>
+</div>
 <div class="citation" id="id17" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">RPOverleir06</a><span class="fn-bracket">]</span></span>
-<p>Trond Reitan and Asgeir Petersen-Øverleir. Existence of the frequentistic estimate for power-law regression with a location parameter, with applications for making discharge rating curves. <em>Stochastic Environmental Research and Risk Assessment</em>, 20(6):445–453, jul 2006. URL: <a class="reference external" href="https://doi.org/10.1007%2Fs00477-006-0037-6">https://doi.org/10.1007%2Fs00477-006-0037-6</a>, <a class="reference external" href="https://doi.org/10.1007/s00477-006-0037-6">doi:10.1007/s00477-006-0037-6</a>.</p>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">LCRB+14</a><span class="fn-bracket">]</span></span>
+<p>J. Le Coz, B. Renard, L. Bonnifait, F. Branger, and R. Le Boursicaud. Combining hydraulic knowledge and uncertain gaugings in the estimation of hydrometric rating curves: a bayesian approach. <em>Journal of Hydrology</em>, 509:573–587, Feb 2014. URL: <a class="reference external" href="http://dx.doi.org/10.1016/j.jhydrol.2013.11.016">http://dx.doi.org/10.1016/j.jhydrol.2013.11.016</a>, <a class="reference external" href="https://doi.org/10.1016/j.jhydrol.2013.11.016">doi:10.1016/j.jhydrol.2013.11.016</a>.</p>
+</div>
+<div class="citation" id="id18" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">Man91</a><span class="fn-bracket">]</span></span>
+<p>R. Manning. On the flow of water in open channels and pipes. <em>Transactions of the Institution of Civil Engineers of Ireland</em>, 20:179–207, 1891.</p>
 </div>
 <div class="citation" id="id20" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">Ven70</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>Mug03<span class="fn-bracket">]</span></span>
+<p>Vito M. R. Muggeo. Estimating regression models with unknown break-points. <em>Statistics in Medicine</em>, 22(19):3055–3071, 2003. URL: <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1545">https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1545</a>, <a class="reference external" href="https://arxiv.org/abs/https://onlinelibrary.wiley.com/doi/pdf/10.1002/sim.1545">arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1002/sim.1545</a>, <a class="reference external" href="https://doi.org/https://doi.org/10.1002/sim.1545">doi:https://doi.org/10.1002/sim.1545</a>.</p>
+</div>
+<div class="citation" id="id21" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>POverleir04<span class="fn-bracket">]</span></span>
+<p>Asgeir Petersen-Øverleir. Accounting for heteroscedasticity in rating curve estimates. <em>Journal of Hydrology</em>, 292(1-4):173–181, jun 2004. URL: <a class="reference external" href="https://doi.org/10.1016%2Fj.jhydrol.2003.12.024">https://doi.org/10.1016%2Fj.jhydrol.2003.12.024</a>, <a class="reference external" href="https://doi.org/10.1016/j.jhydrol.2003.12.024">doi:10.1016/j.jhydrol.2003.12.024</a>.</p>
+</div>
+<div class="citation" id="id23" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">RPOverleir06</a><span class="fn-bracket">]</span></span>
+<p>Trond Reitan and Asgeir Petersen-Øverleir. Existence of the frequentistic estimate for power-law regression with a location parameter, with applications for making discharge rating curves. <em>Stochastic Environmental Research and Risk Assessment</em>, 20(6):445–453, jul 2006. URL: <a class="reference external" href="https://doi.org/10.1007%2Fs00477-006-0037-6">https://doi.org/10.1007%2Fs00477-006-0037-6</a>, <a class="reference external" href="https://doi.org/10.1007/s00477-006-0037-6">doi:10.1007/s00477-006-0037-6</a>.</p>
+</div>
+<div class="citation" id="id24" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">RP08</a><span class="fn-bracket">]</span></span>
+<p>Trond Reitan and Asgeir Petersen-Øverleir. Bayesian methods for estimating multi-segment discharge rating curves. <em>Stochastic Environmental Research and Risk Assessment</em>, 23(5):627–642, Jun 2008. URL: <a class="reference external" href="http://dx.doi.org/10.1007/s00477-008-0248-0">http://dx.doi.org/10.1007/s00477-008-0248-0</a>, <a class="reference external" href="https://doi.org/10.1007/s00477-008-0248-0">doi:10.1007/s00477-008-0248-0</a>.</p>
+</div>
+<div class="citation" id="id25" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SWF16<span class="fn-bracket">]</span></span>
+<p>John Salvatier, Thomas V. Wiecki, and Christopher Fonnesbeck. Probabilistic programming in python using PyMC3. <em>PeerJ Computer Science</em>, 2:e55, apr 2016. URL: <a class="reference external" href="https://doi.org/10.7717%2Fpeerj-cs.55">https://doi.org/10.7717%2Fpeerj-cs.55</a>, <a class="reference external" href="https://doi.org/10.7717/peerj-cs.55">doi:10.7717/peerj-cs.55</a>.</p>
+</div>
+<div class="citation" id="id26" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">Ven70</a><span class="fn-bracket">]</span></span>
 <p>C. Venetis. A note on the estimation of the parameters in logarithmic stage-discharge relationships with estimates of their error. <em>International Association of Scientific Hydrology. Bulletin</em>, 15(2):105–111, jun 1970. URL: <a class="reference external" href="https://doi.org/10.1080%2F02626667009493957">https://doi.org/10.1080%2F02626667009493957</a>, <a class="reference external" href="https://doi.org/10.1080/02626667009493957">doi:10.1080/02626667009493957</a>.</p>
+</div>
+<div class="citation" id="id14" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>ISO18320202020<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
+<p>ISO 18320:2020. <em>Hydrometry–Measurement of Liquid Flow in Open Channels—Determination of the Stage–Discharge Relationship</em>. International Organization for Standardization, 2020.</p>
 </div>
 </div>
 </div>
