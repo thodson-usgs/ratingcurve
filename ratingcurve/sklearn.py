@@ -131,7 +131,7 @@ class RegressorMixin(RatingMixin):
         nuts_kwargs.update(kwargs)
 
         # Check to see if OS is Windows. If so, set cores=1 and print warning.
-        if sys.platform == 'win32':
+        if sys.platform == 'win32' and nuts_kwargs['cores'] != 1:
             nuts_kwargs.update({'cores': 1})
             warnings.warn("PyMC NUTS sampler has known bug when fitting with "
                           "more than one core on Windows. Overriding user "
