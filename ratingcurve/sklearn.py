@@ -28,7 +28,7 @@ class RegressorMixin(RatingMixin):
         """Default keyword arguments for NUTS inference"""
         # Windows has know PyMC bug with NUTS and multiple cores.
         #   Set default to 1 if OS is Windows
-        if sys.platform == 'win32'
+        if sys.platform == 'win32':
             return {'tune': 2000, 'chains':4, 'cores':1, 'target_accept':0.95}
         else:
             return {'tune': 2000, 'chains':4, 'cores':4, 'target_accept':0.95}
