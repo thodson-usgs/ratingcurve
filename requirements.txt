@@ -2,4 +2,3 @@ pymc>=5.0.0
 pandas
 pytensor
 patsy
-m2w64-toolchain ; sys_platform == 'win32'
