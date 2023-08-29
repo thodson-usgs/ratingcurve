@@ -39,7 +39,7 @@ class Rating(Model, RegressorMixin):
         super().__init__(name, model)
 
         if np.any(q <= 0):
-            raise ValueError('Discharge must be positive. Zero values will be allowed in a future release.')
+            raise ValueError('Discharge must be positive. Zero values may be allowed in a future release.')
 
 
     def table(self, trace, h=None, step=0.01, extend=1.1) -> DataFrame:
@@ -220,12 +220,30 @@ class PowerLawRating(Rating, PowerLawPlotMixin):
 
         prior={'distribution': 'normal', 'mu': [], 'sigma': []}
         """
+
         self.__set_hs_bounds()
         self._init_hs = np.sort(np.array(self.prior['mu']))
         self._init_hs = self._init_hs.reshape((self.segments, 1))
 
         prior_mu = np.array(self.prior['mu']).reshape((self.segments, 1))
         prior_sigma = np.array(self.prior['sigma']).reshape((self.segments, 1))
+
+        # check that the priors are within their bounds
+        h_min = self.h_obs.min()
+        h_max = self.h_obs.max()
+
+        if np.any(prior_mu[0] >= h_min):
+            raise ValueError('The prior mean (mu) of the first breakpoint represents '
+                             'the stage of zero-flow, so must be below the lowest '
+                             'observed stage.')
+
+        if np.any(prior_mu[1:] < h_min) or np.any(prior_mu > h_max):
+            raise ValueError('The prior means (mu) of subsequent breakpoints must '
+                             'be within the bounds of the observed stage.')
+        
+        if np.any(prior_sigma < 0):
+            raise ValueError('Prior standard deviations must be positive.')
+        
 
         hs_ = pm.TruncatedNormal('hs_',
                                  mu=prior_mu,
