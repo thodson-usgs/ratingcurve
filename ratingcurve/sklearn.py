@@ -2,6 +2,8 @@
 """
 from __future__ import annotations
 from typing import TYPE_CHECKING
+import sys
+import warnings
 
 import pymc as pm
 
@@ -25,7 +27,13 @@ class RegressorMixin(RatingMixin):
     @property
     def __default_nuts_kwargs(self):
         """Default keyword arguments for NUTS inference"""
-        return {'tune': 2000, 'chains':4, 'cores':4, 'target_accept':0.95}
+        # PyMC has known bug using NUTS with Windows and multiple cores.
+        if sys.platform == 'win32':
+            cores = 1
+        else:
+            cores = 4
+
+        return {'tune': 2000, 'chains':4, 'cores':cores, 'target_accept':0.95}
 
     @property
     def __default_advi_kwargs(self):
@@ -121,6 +129,13 @@ class RegressorMixin(RatingMixin):
         """
         nuts_kwargs = self.__default_nuts_kwargs.copy()
         nuts_kwargs.update(kwargs)
+
+        # Check to see if OS is Windows. If so, set cores=1 and print warning.
+        if sys.platform == 'win32':
+            warnings.warn("PyMC NUTS sampler has known bug when fitting with "
+                          "more than one core on Windows. Fitting with more "
+                          "than one core will cause an error.", RuntimeWarning)
+
         return pm.sample(**nuts_kwargs)
 
     def save(self, filename: str) -> None:
