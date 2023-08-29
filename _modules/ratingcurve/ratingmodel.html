@@ -349,7 +349,7 @@ document.write(`
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">q</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Discharge must be positive. Zero values will be allowed in a future release.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Discharge must be positive. Zero values may be allowed in a future release.&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Rating.table"><a class="viewcode-back" href="../../api.html#ratingcurve.ratingmodel.Rating.table">[docs]</a>    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
@@ -530,12 +530,30 @@ document.write(`
 
 <span class="sd">        prior={&#39;distribution&#39;: &#39;normal&#39;, &#39;mu&#39;: [], &#39;sigma&#39;: []}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">__set_hs_bounds</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prior</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="n">prior_mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prior</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">prior_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prior</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="c1"># check that the priors are within their bounds</span>
+        <span class="n">h_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">h_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">prior_mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">h_min</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The prior mean (mu) of the first breakpoint represents &#39;</span>
+                             <span class="s1">&#39;the stage of zero-flow, so must be below the lowest &#39;</span>
+                             <span class="s1">&#39;observed stage.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">prior_mu</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">&lt;</span> <span class="n">h_min</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">prior_mu</span> <span class="o">&gt;</span> <span class="n">h_max</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The prior means (mu) of subsequent breakpoints must &#39;</span>
+                             <span class="s1">&#39;be within the bounds of the observed stage.&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">prior_sigma</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Prior standard deviations must be positive.&#39;</span><span class="p">)</span>
+        
 
         <span class="n">hs_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(</span><span class="s1">&#39;hs_&#39;</span><span class="p">,</span>
                                  <span class="n">mu</span><span class="o">=</span><span class="n">prior_mu</span><span class="p">,</span>
