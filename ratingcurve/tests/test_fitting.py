@@ -4,7 +4,10 @@ from ..ratingmodel import PowerLawRating, SplineRating
 from .. import data
 
 def test_nuts_fit():
-    """NUTS is slow, so test a limited functionality"""
+    """Test fitting a power law by NUTS
+
+    NUTS is slow, so test a limited functionality"""
+
     df = data.load('green channel')
 
     rating = PowerLawRating(q=df['q'],
@@ -23,6 +26,8 @@ def test_nuts_fit():
 @pytest.mark.parametrize('segments, dof', [(1, 3), (4, 8)])
 
 def test_advi_fit(ratingmodel, segments, dof):
+    """Test fitting a power law by ADVI
+    """
     df = data.load('green channel')
 
     if ratingmodel == 'powerlaw':
@@ -44,6 +49,8 @@ def test_advi_fit(ratingmodel, segments, dof):
     assert all(df_model.discharge >= 0)
 
 def test_no_zero_flows():
+    """Test that a zero flow raises an error
+    """
     q = np.array([0, 1, 2])
     h = np.array([0, 1, 2])
 
@@ -54,7 +61,9 @@ def test_no_zero_flows():
 
 
 def test_zero_flow_prior():
-    """Check that the prior on the first breakpoint is below the lowest observed flow
+    """Test the zero-flow prior
+
+    The first breakpoint should be below the lowest observed flow.
     """
     df = data.load('green channel')
     
