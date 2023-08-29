@@ -67,10 +67,12 @@ def test_zero_flow_prior():
     The first breakpoint should be below the lowest observed flow.
     """
     df = data.load('green channel')
+
+    q_min = df['q'].min()
     
     with pytest.raises(ValueError):
         rating = PowerLawRating(q=df['q'],
                                 h=df['stage'],
                                 segments=1,
-                                prior = {'distribution': 'normal', 'mu': [0], 'sigma': [1]})
+                                prior = {'distribution': 'normal', 'mu': [q_min], 'sigma': [1]})
 
