@@ -312,6 +312,8 @@ document.write(`
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">import</span> <span class="nn">pymc</span> <span class="k">as</span> <span class="nn">pm</span>
 
@@ -335,7 +337,13 @@ document.write(`
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">__default_nuts_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Default keyword arguments for NUTS inference&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;tune&#39;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span> <span class="s1">&#39;chains&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cores&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;target_accept&#39;</span><span class="p">:</span><span class="mf">0.95</span><span class="p">}</span>
+        <span class="c1"># PyMC has known bug using NUTS with Windows and multiple cores.</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win32&#39;</span><span class="p">:</span>
+            <span class="n">cores</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cores</span> <span class="o">=</span> <span class="mi">4</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;tune&#39;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span> <span class="s1">&#39;chains&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cores&#39;</span><span class="p">:</span><span class="n">cores</span><span class="p">,</span> <span class="s1">&#39;target_accept&#39;</span><span class="p">:</span><span class="mf">0.95</span><span class="p">}</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">__default_advi_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -431,6 +439,13 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">nuts_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_nuts_kwargs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">nuts_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Check to see if OS is Windows. If so, set cores=1 and print warning.</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win32&#39;</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;PyMC NUTS sampler has known bug when fitting with &quot;</span>
+                          <span class="s2">&quot;more than one core on Windows. Fitting with more &quot;</span>
+                          <span class="s2">&quot;than one core will cause an error.&quot;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="o">**</span><span class="n">nuts_kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RegressorMixin.save"><a class="viewcode-back" href="../../api.html#ratingcurve.sklearn.RegressorMixin.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
