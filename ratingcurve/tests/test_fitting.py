@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 
 from ..ratingmodel import PowerLawRating, SplineRating
 from .. import data
