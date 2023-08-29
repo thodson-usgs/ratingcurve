@@ -12,7 +12,7 @@ def test_nuts_fit():
                             q_sigma=df['q_sigma'],
                             segments=2)
 
-    trace = rating.fit(method=method)
+    trace = rating.fit(method='nuts')
     df_model = rating.table(trace)
 
     assert len(df_model) > 0
