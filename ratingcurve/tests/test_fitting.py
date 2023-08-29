@@ -42,3 +42,25 @@ def test_advi_fit(ratingmodel, segments, dof):
     assert len(df_model) > 0
     assert all(df_model.stage >= 0)
     assert all(df_model.discharge >= 0)
+
+def test_no_zero_flows():
+    q = np.array([0, 1, 2])
+    h = np.array([0, 1, 2])
+
+    with pytest.raises(ValueError):
+        rating = PowerLawRating(q=q,
+                                h=h,
+                                segments=1)
+
+
+def test_zero_flow_prior():
+    """Check that the prior on the first breakpoint is below the lowest observed flow
+    """
+    df = data.load('green channel')
+    
+    with pytest.raises(ValueError):
+        rating = PowerLawRating(q=df['q'],
+                                h=df['stage'],
+                                segments=1,
+                                prior = {'distribution': 'normal', 'mu': [0], 'sigma': [1]})
+
