@@ -486,10 +486,10 @@ class RatingData:
         -------
         DataFrame
         """
-        return DataFrame({'stage': self.stage.round(2),
-                          'discharge': self.mean().round(2),
-                          'median': self.median().round(2),
-                          'gse': self.gse().round(4)})
+        return DataFrame({'stage': self.stage,
+                          'discharge': self.mean(),
+                          'median': self.median(),
+                          'gse': self.gse()})
 
 
 def stage_range(minimum: float, maximum: float, step: float = 0.01):

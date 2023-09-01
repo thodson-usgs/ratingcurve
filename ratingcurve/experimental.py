@@ -13,9 +13,9 @@ from pandas import DataFrame
 
 
 from .transform import LogZTransform, Dmatrix
-#from .plot import PowerLawPlotMixin, SplinePlotMixin
+from .plot import PowerLawPlotMixin, SplinePlotMixin
 #from .sklearn import RegressorMixin
-from .ratingmodel import PowerLawRating, RatingData
+from .ratingmodel import Rating, PowerLawRating, RatingData
 
 if TYPE_CHECKING:
     from arviz import InferenceData
@@ -380,4 +380,211 @@ class ISORating(PowerLawRating):
         e = np.random.normal(0, sigma, sample)
 
         return self._format_ratingdata(h=h, q_z=q_z+e)
-    
+
+
+
+class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
+    """
+    Experimental smooth multi-segment power law rating using the standard parameterization
+    (see https://en.wikipedia.org/wiki/Power_law#Broken_power_law).
+
+    This parameterization does not require the ho offset, as the positive slope
+    requirement is placed into the prior.
+    """
+    def __init__(
+        self,
+        q,
+        h,
+        segments,
+        prior={'distribution': 'uniform'},
+        q_sigma=None,
+        name='',
+        model=None):
+        """Create a multi-segment power law rating model
+
+        Parameters
+        ----------
+        q : array-like
+            Input array of discharge (q) observations.
+        h : array-like
+            Input array of gage height (h) observations.
+        q_sigma : array-like
+            Input array of discharge uncertainty in units of discharge.
+        segments : int
+            Number of segments in the rating. (I.e. the number of breakpoints
+            minus one.)
+        prior : dict
+            Prior knowledge of breakpoint locations.
+        """
+
+        super().__init__(q, h, name, model)
+
+        self.segments = segments
+        self.prior = prior
+        self.q_obs = q
+        self.q_transform = LogZTransform(self.q_obs)
+        # self.y = self.q_transform.transform(self.q_obs)
+        self.y = np.log(self.q_obs)
+
+        COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(segments)}
+        self.add_coords(COORDS)
+
+        # transform observational uncertainty to log scale
+        if q_sigma is None:
+            self.q_sigma = 0
+        else:
+            self.q_sigma = np.log(1 + q_sigma/q)
+
+        self.h_obs = np.array(h)
+
+        # observations
+        h = pm.MutableData("h", self.h_obs)
+        q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+        y = pm.MutableData("y", self.y)
+
+        # priors
+        # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
+        # w is the same as alpha, the power law slopes
+        # lower bound of truncated normal forces discharge to increase with stage
+        # w_mu = np.ones((self.segments, 1)) * 2
+        w = pm.TruncatedNormal("w", mu=np.array([1, 5.5]).reshape((-1, 1)), sigma=1, lower=0, shape=(self.segments, 1), dims="splines")
+        # w = pm.Uniform("w", lower=0, shape=(self.segments, 1), dims="splines")
+        # a is the scale parameter
+        # a = pm.Normal("a", mu=0, sigma=3)
+        a = pm.Flat("a")
+        # delta is the smoothness parameter, limit lower bound to prevent floating point errors
+        # delta = pm.Uniform('delta', lower=0.01, upper=4)
+        delta = pm.LogNormal('delta', mu=-1.0, sigma=0.5)
+        # delta = pm.Exponential('delta', lam=10)
+        sigma = pm.HalfCauchy("sigma", beta=0.1)
+
+        # set priors on break points
+        if self.prior['distribution'] == 'normal':
+            hs = self.set_normal_prior()
+        elif self.prior['distribution'] == 'uniform':
+            hs = self.set_uniform_prior()
+        else:
+            raise NotImplementedError('Prior distribution not implemented')
+
+        w_diff = at.diff(w, axis=0)
+        sum_array = (w_diff.T * delta) * at.log(1 + (self.h_obs.reshape((-1, 1))/hs.T) ** (1/delta))
+        sums = at.sum(sum_array, axis=1)
+        mu = pm.Normal("mu", a + at.log(h) * w[0, ...] + sums, sigma + q_sigma, observed=y)
+
+    def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
+        """Predicts values of new data with a trained rating model
+
+        This is a faster but model-specific version of the generic predict method.
+        If the PowerLawRating model changes, so must this function.
+
+        Parameters
+        ----------
+        trace : ArviZ InferenceData
+        h : array-like
+            Stages at which to predict discharge.
+
+        Returns
+        -------
+        RatingData
+            Dataframe with columns 'stage', 'discharge', and 'sigma' containing predicted discharge and uncertainty.
+        """
+        trace = az.extract(trace)
+        sample = trace.sample.shape[0]
+        a = trace['a'].values.reshape((-1, 1))
+        delta = trace['delta'].values.reshape((-1, 1, 1))
+        w = trace['w'].values
+        w_diff = np.moveaxis(w[1:, ...] - w[:-1, ...], -1, 0)
+        hs = np.moveaxis(trace['hs'].values, -1, 0)
+        sigma = trace['sigma'].values
+        
+        h_tile = np.tile(h, sample).reshape(sample, 1, -1)
+        
+        sum_array = (w_diff * delta) * np.log(1 + (h_tile/hs) ** (1/delta))
+        sums = np.sum(sum_array, axis=1)
+        q_z = (a + np.squeeze(np.log(h_tile)) * (w[0, 0, :]).reshape((-1, 1)) + sums).T
+        e = np.random.normal(0, sigma, sample)
+        # q = self.q_transform.untransform(q_z + e)
+        q = np.exp(q_z + e)
+        
+        return RatingData(stage=h, discharge=q)
+
+    def set_normal_prior(self):
+        """
+        Normal prior for breakpoints. Sets an expected value for each
+        breakpoint (mu) with uncertainty (sigma). This can be very helpful
+        when convergence is poor. Expected breakpoint values (mu) must be
+        within the data range.
+
+        prior={'distribution': 'normal', 'mu': [], 'sigma': []}
+        """
+
+        self._init_hs = np.sort(np.array(self.prior['mu']))
+        self._init_hs = self._init_hs.reshape((self.segments - 1, 1))
+
+        prior_mu = np.array(self.prior['mu']).reshape((self.segments - 1, 1))
+        prior_sigma = np.array(self.prior['sigma']).reshape((self.segments - 1, 1))
+
+        # check that the priors are within their bounds
+        h_min = self.h_obs.min()
+        h_max = self.h_obs.max()
+
+        if np.any(prior_mu < h_min) or np.any(prior_mu > h_max):
+            raise ValueError('The prior means (mu) of the breakpoints must '
+                             'be within the bounds of the observed stage.')
+        
+        if np.any(prior_sigma < 0):
+            raise ValueError('Prior standard deviations must be positive.')
+        
+        # Built in PyMC ordered transform forces multiple priors to be in ascending
+        #   order. This means that the breakpoints will be sorted internally to PyMC.
+        hs_ = pm.TruncatedNormal('hs_',
+                                 mu=prior_mu,
+                                 sigma=prior_sigma,
+                                 lower=h_min,
+                                 upper=h_max,
+                                 shape=(self.segments - 1, 1),
+                                 initval=self._init_hs)
+
+        # Sorting reduces multimodality. The benifit increases with fewer observations.
+        hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
+        return hs
+
+    def set_uniform_prior(self):
+        """
+        Uniform prior for breakpoints. Make no prior assumption about 
+        the location of the breakpoints, only the number of breaks and
+        that the breakpoints are ordered.
+
+        prior={distribution:'uniform', initval: []}
+        """
+        self.__init_hs()
+        h_min = self.h_obs.min()
+        h_max = self.h_obs.max()
+
+        # Built in PyMC ordered transform forces multiple priors to be in ascending
+        #   order. This means that the breakpoints will be sorted internally to PyMC.
+        hs_ = pm.Uniform('hs_',
+                         lower=h_min,
+                         upper=h_max,
+                         shape=(self.segments - 1, 1),
+                         initval=self._init_hs)
+
+        hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
+        return hs
+
+    def __init_hs(self):
+        """
+        Initialize breakpoints by randomly selecting points within the stage data
+        range. Selected points are then sorted.
+        """
+        self._init_hs = self.prior.get('initval', None)
+        h_min = self.h_obs.min()
+        h_max = self.h_obs.max()
+
+        # TODO: distribute to evenly split the data
+        if self._init_hs is None:
+            self._init_hs = np.random.rand(self.segments - 1, 1) \
+                            * (h_max - h_min) + h_min
+            self._init_hs = np.sort(self._init_hs, axis=0)
+        else:
+            self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments - 1, 1))
