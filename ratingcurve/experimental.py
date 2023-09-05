@@ -422,7 +422,7 @@ class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
         self.segments = segments
         self.prior = prior
         self.q_obs = q
-        self.q_transform = LogZTransform(self.q_obs)
+        # self.q_transform = LogZTransform(self.q_obs)
         # self.y = self.q_transform.transform(self.q_obs)
         self.y = np.log(self.q_obs)
 
@@ -447,14 +447,14 @@ class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
         # w is the same as alpha, the power law slopes
         # lower bound of truncated normal forces discharge to increase with stage
         # w_mu = np.ones((self.segments, 1)) * 2
-        w = pm.TruncatedNormal("w", mu=np.array([1, 5.5]).reshape((-1, 1)), sigma=1, lower=0, shape=(self.segments, 1), dims="splines")
-        # w = pm.Uniform("w", lower=0, shape=(self.segments, 1), dims="splines")
+        # w = pm.TruncatedNormal("w", mu=np.array([1, 5.5]).reshape((-1, 1)), sigma=1, lower=0, shape=(self.segments, 1), dims="splines")
+        w = pm.Uniform("w", lower=0, upper=100, shape=(self.segments, 1), dims="splines")
         # a is the scale parameter
         # a = pm.Normal("a", mu=0, sigma=3)
         a = pm.Flat("a")
         # delta is the smoothness parameter, limit lower bound to prevent floating point errors
-        # delta = pm.Uniform('delta', lower=0.01, upper=4)
-        delta = pm.LogNormal('delta', mu=-1.0, sigma=0.5)
+        delta = pm.Uniform('delta', lower=0.01, upper=4)
+        # delta = pm.LogNormal('delta', mu=-1.0, sigma=0.5)
         # delta = pm.Exponential('delta', lam=10)
         sigma = pm.HalfCauchy("sigma", beta=0.1)
 
@@ -467,8 +467,8 @@ class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
             raise NotImplementedError('Prior distribution not implemented')
 
         w_diff = at.diff(w, axis=0)
-        sum_array = (w_diff.T * delta) * at.log(1 + (self.h_obs.reshape((-1, 1))/hs.T) ** (1/delta))
-        sums = at.sum(sum_array, axis=1)
+        sum_array = (w_diff * delta) * at.log(1 + (h/hs) ** (1/delta))
+        sums = at.sum(sum_array, axis=0)
         mu = pm.Normal("mu", a + at.log(h) * w[0, ...] + sums, sigma + q_sigma, observed=y)
 
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
