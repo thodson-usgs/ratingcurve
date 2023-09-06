@@ -383,9 +383,9 @@ class ISORating(PowerLawRating):
 
 
 
-class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
+class BrokenPowerLawRating(Rating, PowerLawPlotMixin):
     """
-    Experimental smooth multi-segment power law rating using the standard parameterization
+    Experimental multi-segment power law rating using the standard parameterization
     (see https://en.wikipedia.org/wiki/Power_law#Broken_power_law).
 
     This parameterization does not require the ho offset, as the positive slope
@@ -446,16 +446,9 @@ class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
         # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
         # w is the same as alpha, the power law slopes
         # lower bound of truncated normal forces discharge to increase with stage
-        # w_mu = np.ones((self.segments, 1)) * 2
-        # w = pm.TruncatedNormal("w", mu=np.array([1, 5.5]).reshape((-1, 1)), sigma=1, lower=0, shape=(self.segments, 1), dims="splines")
         w = pm.Uniform("w", lower=0, upper=100, shape=(self.segments, 1), dims="splines")
         # a is the scale parameter
-        # a = pm.Normal("a", mu=0, sigma=3)
         a = pm.Flat("a")
-        # delta is the smoothness parameter, limit lower bound to prevent floating point errors
-        delta = pm.Uniform('delta', lower=0.01, upper=4)
-        # delta = pm.LogNormal('delta', mu=-1.0, sigma=0.5)
-        # delta = pm.Exponential('delta', lam=10)
         sigma = pm.HalfCauchy("sigma", beta=0.1)
 
         # set priors on break points
@@ -467,9 +460,23 @@ class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
             raise NotImplementedError('Prior distribution not implemented')
 
         w_diff = at.diff(w, axis=0)
-        sum_array = (w_diff * delta) * at.log(1 + (h/hs) ** (1/delta))
-        sums = at.sum(sum_array, axis=0)
-        mu = pm.Normal("mu", a + at.log(h) * w[0, ...] + sums, sigma + q_sigma, observed=y)
+        sums = at.cumsum(w_diff * at.log(hs), axis=0)
+        # Sum for first element is 0, as it does not have a summation 
+        sums = at.concatenate([pm.math.constant(0, ndim=2), sums])
+
+        # Create ranges for each segment
+        segments_range = at.concatenate([pm.math.constant(0, ndim=2),
+                                         hs,
+                                         pm.math.constant(np.inf, ndim=2)])
+
+        # Tensors are broadcasts for vectorized computation.
+        #   Calculates function within range sets value to 0 everywhere else. 
+        #   Then sum along segment dimension to collapse.
+        q = at.switch((h > segments_range[:-1]) & (h <= segments_range[1:]), 
+                       a + w * at.log(h) + sums, 0)
+        q = at.sum(q, axis=0)
+
+        mu = pm.Normal("mu", q, sigma + q_sigma, observed=y)
 
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
@@ -490,18 +497,27 @@ class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
         """
         trace = az.extract(trace)
         sample = trace.sample.shape[0]
-        a = trace['a'].values.reshape((-1, 1))
-        delta = trace['delta'].values.reshape((-1, 1, 1))
+        a = trace['a'].values.reshape((-1, 1, 1))
         w = trace['w'].values
         w_diff = np.moveaxis(w[1:, ...] - w[:-1, ...], -1, 0)
         hs = np.moveaxis(trace['hs'].values, -1, 0)
         sigma = trace['sigma'].values
         
         h_tile = np.tile(h, sample).reshape(sample, 1, -1)
-        
-        sum_array = (w_diff * delta) * np.log(1 + (h_tile/hs) ** (1/delta))
-        sums = np.sum(sum_array, axis=1)
-        q_z = (a + np.squeeze(np.log(h_tile)) * (w[0, 0, :]).reshape((-1, 1)) + sums).T
+
+        sums = np.cumsum(w_diff * np.log(hs), axis=1)
+        sums = np.insert(sums, 0, 0, axis=1)
+
+        # Create ranges for each segment
+        segments_range = np.insert(np.insert(hs, 0, 0, axis=1), self.segments, np.inf, axis=1)
+
+        # Arrays are broadcasts for vectorized computation.
+        #   Calculates function within range sets value to 0 everywhere else. 
+        #   Then sum along segment dimension to collapse.
+        q_z = np.where((h_tile > segments_range[:, :-1]) & (h_tile <= segments_range[:, 1:]), 
+                       a + np.moveaxis(w, -1, 0) * np.log(h_tile) + sums, 0)
+        q_z = np.sum(q_z, axis=1).T
+
         e = np.random.normal(0, sigma, sample)
         # q = self.q_transform.untransform(q_z + e)
         q = np.exp(q_z + e)
@@ -588,3 +604,126 @@ class SmoothPowerLawRating(Rating, PowerLawPlotMixin):
             self._init_hs = np.sort(self._init_hs, axis=0)
         else:
             self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments - 1, 1))
+
+
+class SmoothPowerLawRating(BrokenPowerLawRating):
+    """
+    Experimental smooth multi-segment power law rating using the standard parameterization
+    (see https://en.wikipedia.org/wiki/Power_law#Broken_power_law).
+
+    This parameterization does not require the ho offset, as the positive slope
+    requirement is placed into the prior.
+    """
+    def __init__(
+        self,
+        q,
+        h,
+        segments,
+        prior={'distribution': 'uniform'},
+        q_sigma=None,
+        name='',
+        model=None):
+        """Create a multi-segment power law rating model
+
+        Parameters
+        ----------
+        q : array-like
+            Input array of discharge (q) observations.
+        h : array-like
+            Input array of gage height (h) observations.
+        q_sigma : array-like
+            Input array of discharge uncertainty in units of discharge.
+        segments : int
+            Number of segments in the rating. (I.e. the number of breakpoints
+            minus one.)
+        prior : dict
+            Prior knowledge of breakpoint locations.
+        """
+
+        super(BrokenPowerLawRating, self).__init__(q, h, name, model)
+
+        self.segments = segments
+        self.prior = prior
+        self.q_obs = q
+        # self.q_transform = LogZTransform(self.q_obs)
+        # self.y = self.q_transform.transform(self.q_obs)
+        self.y = np.log(self.q_obs)
+
+        COORDS = {"obs": np.arange(len(self.y)), "splines": np.arange(segments)}
+        self.add_coords(COORDS)
+
+        # transform observational uncertainty to log scale
+        if q_sigma is None:
+            self.q_sigma = 0
+        else:
+            self.q_sigma = np.log(1 + q_sigma/q)
+
+        self.h_obs = np.array(h)
+
+        # observations
+        h = pm.MutableData("h", self.h_obs)
+        q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+        y = pm.MutableData("y", self.y)
+
+        # priors
+        # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
+        # w is the same as alpha, the power law slopes
+        # lower bound of truncated normal forces discharge to increase with stage
+        w = pm.Uniform("w", lower=0, upper=100, shape=(self.segments, 1), dims="splines")
+        # a is the scale parameter
+        a = pm.Flat("a")
+        # delta is the smoothness parameter, limit lower bound to prevent floating point errors
+        delta = pm.Uniform('delta', lower=0.01, upper=4)
+        # delta = pm.LogNormal('delta', mu=-1.0, sigma=0.5)
+        # delta = pm.Exponential('delta', lam=10)
+        sigma = pm.HalfCauchy("sigma", beta=0.1)
+
+        # set priors on break points
+        if self.prior['distribution'] == 'normal':
+            hs = self.set_normal_prior()
+        elif self.prior['distribution'] == 'uniform':
+            hs = self.set_uniform_prior()
+        else:
+            raise NotImplementedError('Prior distribution not implemented')
+
+        w_diff = at.diff(w, axis=0)
+        sum_array = (w_diff * delta) * at.log(1 + (h/hs) ** (1/delta))
+        sums = at.sum(sum_array, axis=0)
+        mu = pm.Normal("mu", a + at.log(h) * w[0, ...] + sums, sigma + q_sigma, observed=y)
+
+    def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
+        """Predicts values of new data with a trained rating model
+
+        This is a faster but model-specific version of the generic predict method.
+        If the PowerLawRating model changes, so must this function.
+
+        Parameters
+        ----------
+        trace : ArviZ InferenceData
+        h : array-like
+            Stages at which to predict discharge.
+
+        Returns
+        -------
+        RatingData
+            Dataframe with columns 'stage', 'discharge', and 'sigma' containing predicted discharge and uncertainty.
+        """
+        trace = az.extract(trace)
+        sample = trace.sample.shape[0]
+        a = trace['a'].values.reshape((-1, 1))
+        delta = trace['delta'].values.reshape((-1, 1, 1))
+        w = trace['w'].values
+        w_diff = np.moveaxis(w[1:, ...] - w[:-1, ...], -1, 0)
+        hs = np.moveaxis(trace['hs'].values, -1, 0)
+        sigma = trace['sigma'].values
+        
+        h_tile = np.tile(h, sample).reshape(sample, 1, -1)
+        
+        sum_array = (w_diff * delta) * np.log(1 + (h_tile/hs) ** (1/delta))
+        sums = np.sum(sum_array, axis=1)
+        q_z = (a + np.squeeze(np.log(h_tile)) * (w[0, 0, :]).reshape((-1, 1)) + sums).T
+        e = np.random.normal(0, sigma, sample)
+        q = np.exp(q_z + e)
+        breakpoint()
+        
+        return RatingData(stage=h, discharge=q)
