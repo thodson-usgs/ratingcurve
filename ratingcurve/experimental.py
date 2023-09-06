@@ -382,6 +382,11 @@ class ISORating(PowerLawRating):
         return self._format_ratingdata(h=h, q_z=q_z+e)
 
 
+class Test():
+    def __init__(x=None):
+        print('test')
+
+
 
 class BrokenPowerLawRating(Rating, PowerLawPlotMixin):
     """
@@ -443,12 +448,12 @@ class BrokenPowerLawRating(Rating, PowerLawPlotMixin):
         y = pm.MutableData("y", self.y)
 
         # priors
-        # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
         # w is the same as alpha, the power law slopes
         # lower bound of truncated normal forces discharge to increase with stage
         w = pm.Uniform("w", lower=0, upper=100, shape=(self.segments, 1), dims="splines")
         # a is the scale parameter
-        a = pm.Flat("a")
+        # a = pm.Flat("a")
+        a = pm.Uniform("a", lower=-100, upper=100)
         sigma = pm.HalfCauchy("sigma", beta=0.1)
 
         # set priors on break points
@@ -459,7 +464,8 @@ class BrokenPowerLawRating(Rating, PowerLawPlotMixin):
         else:
             raise NotImplementedError('Prior distribution not implemented')
 
-        w_diff = at.diff(w, axis=0)
+        # -1 gives w_{i-1) - w_i rather than w_i - w_{i-1} of diff
+        w_diff = -1 * at.diff(w, axis=0)
         sums = at.cumsum(w_diff * at.log(hs), axis=0)
         # Sum for first element is 0, as it does not have a summation 
         sums = at.concatenate([pm.math.constant(0, ndim=2), sums])
@@ -499,7 +505,7 @@ class BrokenPowerLawRating(Rating, PowerLawPlotMixin):
         sample = trace.sample.shape[0]
         a = trace['a'].values.reshape((-1, 1, 1))
         w = trace['w'].values
-        w_diff = np.moveaxis(w[1:, ...] - w[:-1, ...], -1, 0)
+        w_diff = np.moveaxis(w[:-1, ...] - w[1:, ...], -1, 0)
         hs = np.moveaxis(trace['hs'].values, -1, 0)
         sigma = trace['sigma'].values
         
@@ -672,10 +678,8 @@ class SmoothPowerLawRating(BrokenPowerLawRating):
         w = pm.Uniform("w", lower=0, upper=100, shape=(self.segments, 1), dims="splines")
         # a is the scale parameter
         a = pm.Flat("a")
-        # delta is the smoothness parameter, limit lower bound to prevent floating point errors
-        delta = pm.Uniform('delta', lower=0.01, upper=4)
-        # delta = pm.LogNormal('delta', mu=-1.0, sigma=0.5)
-        # delta = pm.Exponential('delta', lam=10)
+        # delta is the smoothness parameter, limit lower bound (m) to prevent floating point errors
+        delta = pm.Pareto('delta', alpha=0.5, m=0.01)
         sigma = pm.HalfCauchy("sigma", beta=0.1)
 
         # set priors on break points
