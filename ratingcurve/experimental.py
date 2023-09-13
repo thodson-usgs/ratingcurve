@@ -627,6 +627,7 @@ class SmoothPowerLawRating(BrokenPowerLawRating):
         segments,
         prior={'distribution': 'uniform'},
         q_sigma=None,
+        batch_size=None,
         name='',
         model=None):
         """Create a multi-segment power law rating model
@@ -644,6 +645,8 @@ class SmoothPowerLawRating(BrokenPowerLawRating):
             minus one.)
         prior : dict
             Prior knowledge of breakpoint locations.
+        batch_size : int
+            The batch size for mini-batches.
         """
 
         super(BrokenPowerLawRating, self).__init__(q, h, name, model)
@@ -661,8 +664,10 @@ class SmoothPowerLawRating(BrokenPowerLawRating):
         # transform observational uncertainty to log scale
         if q_sigma is None:
             self.q_sigma = 0
+            input_q_sigma = False
         else:
             self.q_sigma = np.log(1 + q_sigma/q)
+            input_q_sigma = True
 
         self.h_obs = np.array(h)
 
@@ -671,13 +676,23 @@ class SmoothPowerLawRating(BrokenPowerLawRating):
         q_sigma = pm.MutableData("q_sigma", self.q_sigma)
         y = pm.MutableData("y", self.y)
 
+        if batch_size is not None:
+            if input_q_sigma:
+                h, q_sigma, y = pm.Minibatch(h, q_sigma, y,
+                                    batch_size=batch_size)
+            else:
+                h, y = pm.Minibatch(h, y,
+                                    batch_size=batch_size)
+               
+
         # priors
         # see Le Coz 2014 for default values, but typically between 1.5 and 2.5
         # w is the same as alpha, the power law slopes
         # lower bound of truncated normal forces discharge to increase with stage
         w = pm.Uniform("w", lower=0, upper=100, shape=(self.segments, 1), dims="splines")
         # a is the scale parameter
-        a = pm.Flat("a")
+        a = pm.Uniform("a", lower=-20, upper=20)
+        # a = pm.Flat("a")
         # delta is the smoothness parameter, limit lower bound (m) to prevent floating point errors
         delta = pm.Pareto('delta', alpha=0.5, m=0.01)
         sigma = pm.HalfCauchy("sigma", beta=0.1)
@@ -693,7 +708,13 @@ class SmoothPowerLawRating(BrokenPowerLawRating):
         w_diff = at.diff(w, axis=0)
         sum_array = (w_diff * delta) * at.log(1 + (h/hs) ** (1/delta))
         sums = at.sum(sum_array, axis=0)
-        mu = pm.Normal("mu", a + at.log(h) * w[0, ...] + sums, sigma + q_sigma, observed=y)
+
+        if batch_size is not None:
+           mu = pm.Normal("mu", a + at.log(h) * w[0, ...] + sums, sigma + q_sigma,
+                           observed=y, total_size=self.y.shape)
+        else:
+            mu = pm.Normal("mu", a + at.log(h) * w[0, ...] + sums, sigma + q_sigma, observed=y)
+            
 
     def predict(self, trace: InferenceData, h: ArrayLike) -> RatingData:
         """Predicts values of new data with a trained rating model
