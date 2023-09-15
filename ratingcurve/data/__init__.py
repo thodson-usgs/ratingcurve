@@ -9,18 +9,20 @@ from intake import open_catalog
 if TYPE_CHECKING:
     from pandas import DataFrame
 
-cat = open_catalog('catalog.yaml')
+cat = open_catalog('ratingcurve/data/catalog.yaml')
 
-def list() -> list:
+def list() -> tuple:
     """
-    Returns a list of names for the tutorial datasets.
+    Returns a tuple of names for the tutorial datasets.
 
     Returns
     -------
-    datasets : list of str
-        List of names of tutorial datasets.
+    datasets : tuple of str
+        Tuple of names of tutorial datasets.
     """
-    return list(cat)
+    datasets = tuple(cat)
+    
+    return datasets
 
 
 def load(name: str) -> DataFrame:
@@ -38,8 +40,8 @@ def load(name: str) -> DataFrame:
         Dataframe with the tutorial data. Columns include `h` (stage) and `q` (discharge), and
         potentially `q_sigma` (discharge uncertainty).
     """
-    if name not in list(cat):
-        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list(cat)}')
+    if name not in tuple(cat):
+        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {tuple(cat)}')
     
     return cat[name].read()
 
@@ -53,8 +55,8 @@ def describe(name: str):
     name : str
         Name of the dataset (e.g., 'green channel').
     """
-    if name not in list(cat):
-        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list(cat)}')
+    if name not in tuple(cat):
+        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {tuple(cat)}')
 
     print(cat[name].description)
     

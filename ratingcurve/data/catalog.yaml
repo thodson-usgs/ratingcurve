@@ -24,7 +24,7 @@ sources:
                 - Section control: 2.88 to 4 ft
     driver: csv
     args:
-      urlpath: 'chalk_artificial.csv'
+      urlpath: 'ratingcurve/data/chalk_artificial.csv'
 
   co channel:
     description: |-
@@ -42,7 +42,7 @@ sources:
                 - Channel control: 4.0 to 22.0 ft
     driver: csv
     args:
-      urlpath: 'co_channel.csv'
+      urlpath: 'ratingcurve/data/co_channel.csv'
 
   green channel:
     description: |-
@@ -66,7 +66,7 @@ sources:
                 - Channel control: 3.70 to 14 ft
     driver: csv
     args:
-      urlpath: 'green_channel.csv'
+      urlpath: 'ratingcurve/data/green_channel.csv'
 
   provo natural:
     description: |-
@@ -88,7 +88,7 @@ sources:
                 - Channel control:
     driver: csv
     args:
-      urlpath: 'provo_natural.csv'
+      urlpath: 'ratingcurve/data/provo_natural.csv'
 
   simulated rating:
     description: |-
@@ -106,4 +106,4 @@ sources:
                 - Overbank control: 10 to 12.18 ft
     driver: csv
     args:
-      urlpath: 'simulated_rating.csv'
+      urlpath: 'ratingcurve/data/simulated_rating.csv'
