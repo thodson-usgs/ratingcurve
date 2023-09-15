@@ -7,8 +7,8 @@ metadata:
       default: example_file_name
       
 sources:
-  chalk_artificial:
-    description: |
+  chalk artificial:
+    description: |-
                 # Chalk Creek at Coalville, UT (section control)
 
                 ## USGS Gage ID: 10131000
@@ -26,8 +26,8 @@ sources:
     args:
       urlpath: 'chalk_artificial.csv'
 
-  co_channel:
-    description: |
+  co channel:
+    description: |-
                 # Colorado River at Potash, UT (channel control)
 
                 ## USGS Gage ID: 09185600
@@ -44,8 +44,8 @@ sources:
     args:
       urlpath: 'co_channel.csv'
 
-  green_channel:
-    description: |
+  green channel:
+    description: |-
                 # Green River near Jensen, UT (channel control)
                 
                 ## USGS Gage ID: 09261000
@@ -68,8 +68,8 @@ sources:
     args:
       urlpath: 'green_channel.csv'
 
-  provo_natural:
-    description: |
+  provo natural:
+    description: |-
                 # Provo River near Woodland, UT (single offset)
 
                 ## USGS Gage ID: 10154200
@@ -90,8 +90,8 @@ sources:
     args:
       urlpath: 'provo_natural.csv'
 
-  simulated_rating:
-    description: |
+  simulated rating:
+    description: |-
                 # Simulated 3 segment rating (section, channel, and overbank controls)
 
                 ## Control
