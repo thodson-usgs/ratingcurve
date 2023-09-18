@@ -227,9 +227,8 @@ class Dmatrix():
             Data that defines the transform.
         df : int
             Degrees of freedom.
-        form : str
+        form : str, optional
             Spline form.
-
         """
         n_knots = df - 1
         self.knots = compute_knots(x.min(), x.max(), n=n_knots)
