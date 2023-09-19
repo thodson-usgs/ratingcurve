@@ -40,7 +40,7 @@ class Transform:
         """
         return x
 
-    def untransform(self, x: ArrayLike) -> ArrayLike:
+    def untransform(self, transformed_x: ArrayLike) -> ArrayLike:
         """
         Undo data transform (untransform).
 
@@ -90,7 +90,7 @@ class ZTransform(Transform):
         """
         return (x - self.mean_) / self.std_
 
-    def untransform(self, z: ArrayLike) -> ArrayLike:
+    def untransform(self, transformed_x: ArrayLike) -> ArrayLike:
         """
         Transform from z-score scale back to original units.
 
@@ -104,7 +104,7 @@ class ZTransform(Transform):
         x : array_like
             Untransformed data back in original units.
         """
-        return z * self.std_ + self.mean_
+        return transformed_x * self.std_ + self.mean_
 
 
 class LogZTransform(ZTransform):
@@ -142,7 +142,7 @@ class LogZTransform(ZTransform):
         log_x = np.log(x)
         return super().transform(log_x)
 
-    def untransform(self, z: ArrayLike) -> ArrayLike:
+    def untransform(self, transformed_x: ArrayLike) -> ArrayLike:
         """
         Transform from log z-score scale back to original units.
 
@@ -156,7 +156,7 @@ class LogZTransform(ZTransform):
         x : array_like
             Untransformed data back in original units.
         """
-        log_x = super().untransform(z)
+        log_x = super().untransform(transformed_x)
         return np.exp(log_x)
 
 
@@ -189,9 +189,9 @@ class UnitTransform(Transform):
         transformed_x : array_like
             Transformed data to unit interval (0 to 1).
         """
-        return x/self.max_
+        return x / self.max_
 
-    def untransform(self, x: ArrayLike) -> ArrayLike:
+    def untransform(self, transformed_x: ArrayLike) -> ArrayLike:
         """
         Transform from unit interval back to original units.
 
@@ -205,7 +205,7 @@ class UnitTransform(Transform):
         x: array_like
             Untransformed data back in original units.
         """
-        return x*self.max_
+        return transformed_x * self.max_
 
 
 class Dmatrix():
