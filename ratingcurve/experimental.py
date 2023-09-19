@@ -40,9 +40,9 @@ class ReitanRating(PowerLawRating):
 
         Parameters
         ----------
-        q, h: array-like
+        q, h: array_like
             Input arrays of discharge (q) and gage height (h) observations.
-        q_sigma : array-like
+        q_sigma : array_like
             Input array of discharge uncertainty in units of discharge.
         segments : int
             Number of segments in the rating.
@@ -107,7 +107,7 @@ class ReitanRating(PowerLawRating):
         Parameters
         ----------
         trace : ArviZ InferenceData
-        h : array-like
+        h : array_like
             Stages at which to predict discharge.
 
         Returns
@@ -155,11 +155,11 @@ class LeCozRating(PowerLawRating):
 
         Parameters
         ----------
-        q, h: array-like
+        q, h: array_like
             Input arrays of discharge (q) and gage height (h) observations.
-        q_sigma : array-like
+        q_sigma : array_like
             Input array of discharge uncertainty in units of discharge.
-        m : array-like
+        m : array_like
             Hydrologic control matrix.
         segments : int
             Number of segments in the rating.
@@ -236,7 +236,7 @@ class LeCozRating(PowerLawRating):
         Parameters
         ----------
         trace : ArviZ InferenceData
-        h : array-like
+        h : array_like
             Stages at which to predict discharge.
 
         Returns
@@ -285,9 +285,9 @@ class ISORating(PowerLawRating):
 
         Parameters
         ----------
-        q, h: array-like
+        q, h: array_like
             Input arrays of discharge (q) and gage height (h) observations.
-        q_sigma : array-like
+        q_sigma : array_like
             Input array of discharge uncertainty in units of discharge.
         segments : int
             Number of segments in the rating.
@@ -350,7 +350,7 @@ class ISORating(PowerLawRating):
         Parameters
         ----------
         trace : ArviZ InferenceData
-        h : array-like
+        h : array_like
             Stages at which to predict discharge.
 
         Returns
@@ -382,12 +382,6 @@ class ISORating(PowerLawRating):
         return self._format_ratingdata(h=h, q_z=q_z+e)
 
 
-class Test():
-    def __init__(x=None):
-        print('test')
-
-
-
 class BrokenPowerLawRating(Rating, PowerLawPlotMixin):
     """
     Experimental multi-segment power law rating using the standard parameterization
@@ -409,15 +403,15 @@ class BrokenPowerLawRating(Rating, PowerLawPlotMixin):
 
         Parameters
         ----------
-        q : array-like
+        q : array_like
             Input array of discharge (q) observations.
-        h : array-like
+        h : array_like
             Input array of gage height (h) observations.
-        q_sigma : array-like
+        q_sigma : array_like
             Input array of discharge uncertainty in units of discharge.
         segments : int
-            Number of segments in the rating. (I.e. the number of breakpoints
-            minus one.)
+            Number of segments in the rating (i.e., the number of breakpoints
+            plus one.)
         prior : dict
             Prior knowledge of breakpoint locations.
         """
@@ -493,7 +487,7 @@ class BrokenPowerLawRating(Rating, PowerLawPlotMixin):
         Parameters
         ----------
         trace : ArviZ InferenceData
-        h : array-like
+        h : array_like
             Stages at which to predict discharge.
 
         Returns
@@ -634,15 +628,15 @@ class SmoothPowerLawRating(BrokenPowerLawRating):
 
         Parameters
         ----------
-        q : array-like
+        q : array_like
             Input array of discharge (q) observations.
-        h : array-like
+        h : array_like
             Input array of gage height (h) observations.
-        q_sigma : array-like
+        q_sigma : array_like
             Input array of discharge uncertainty in units of discharge.
         segments : int
-            Number of segments in the rating. (I.e. the number of breakpoints
-            minus one.)
+            Number of segments in the rating (i.e., the number of breakpoints
+            plus one.)
         prior : dict
             Prior knowledge of breakpoint locations.
         batch_size : int
@@ -725,7 +719,7 @@ class SmoothPowerLawRating(BrokenPowerLawRating):
         Parameters
         ----------
         trace : ArviZ InferenceData
-        h : array-like
+        h : array_like
             Stages at which to predict discharge.
 
         Returns
