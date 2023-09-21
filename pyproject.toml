@@ -19,6 +19,7 @@ classifiers = [
 dependencies = [
     "pymc >= 5.0.0",
     "patsy",
+    "intake",
 ]
 
 dynamic = ["version"]

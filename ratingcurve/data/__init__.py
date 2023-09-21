@@ -1,72 +1,62 @@
-"""Example datasets for rating curve analysis.
-"""
+"""Example datasets for rating curve analysis."""
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import pkg_resources
 
-from pandas import read_csv
-
+from intake import open_catalog
 
 if TYPE_CHECKING:
     from pandas import DataFrame
 
-DATASETS = {
-    'chalk artificial': 'chalk_artificial',
-    'co channel': 'co_channel',
-    'green channel': 'green_channel',
-    'provo natural': 'provo_natural',
-    '3-segment simulated': 'simulated_rating'
-}
+cat = open_catalog('ratingcurve/data/catalog.yaml')
 
-
-def list() -> list:
-    """Returns a list of tutorial datasets
+def list() -> tuple:
+    """
+    Returns a tuple of names for the tutorial datasets.
 
     Returns
     -------
-    list
-        List of tutorial datasets
+    datasets : tuple of str
+        Tuple of names of tutorial datasets.
     """
-    return [key for key in DATASETS.keys()]
+    datasets = tuple(cat)
+    
+    return datasets
 
 
 def load(name: str) -> DataFrame:
-    """Opens a tutorial dataset
-
-    Parameters
-    ----------
-    name : str
-        Name of the dataset.
-        e.g., 'green channel'
-
-    Returns
     """
-    if name not in DATASETS.keys():
-        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
-    
-    filename = DATASETS.get(name) + '.csv'
-    stream = pkg_resources.resource_stream(__name__, filename)
-    return read_csv(stream)
-
-
-def describe(name) -> str:
-    """Describes a tutorial dataset
+    Opens a tutorial dataset.
 
     Parameters
     ----------
     name : str
-        Name of the dataset.
-        e.g., 'green channel'
+        Name of the dataset (e.g., 'green channel').
 
     Returns
     -------
-    str
-        Description of the dataset
+    dataset : DataFrame
+        Dataframe with the tutorial data. Columns include `h` (stage) and `q` (discharge), and
+        potentially `q_sigma` (discharge uncertainty).
     """
-    if name not in DATASETS.keys():
-        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
+    if name not in tuple(cat):
+        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {tuple(cat)}')
+    
+    return cat[name].read()
 
-    filename = DATASETS.get(name) + '.md'
-    stream = pkg_resources.resource_stream(__name__, filename)
-    print(stream.read().decode('utf-8'))
+
+def describe(name: str):
+    """
+    Prints description of a tutorial dataset.
+
+    Parameters
+    ----------
+    name : str
+        Name of the dataset (e.g., 'green channel').
+    """
+    if name not in tuple(cat):
+        raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {tuple(cat)}')
+
+    print(cat[name].description)
+    
