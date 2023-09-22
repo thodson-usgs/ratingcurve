@@ -54,7 +54,7 @@ class Transform:
         x: array_like
             Untransformed data.
         """
-        return x
+        return transformed_x
 
 
 class ZTransform(Transform):

@@ -28,8 +28,8 @@ class RatingModelBuilder(ModelBuilder):
 
     def __init__(self,
                  method: str='advi',
-                 model_config: Dict = None,
-                 sampler_config: Dict = None,
+                 model_config: dict = None,
+                 sampler_config: dict = None,
                  ):
         """
         Updates the ModelBuilder initialization to save the input method.
@@ -209,7 +209,7 @@ class RatingModelBuilder(ModelBuilder):
                 sampler_args = {**self.sampler_config, **kwargs}
                 idata = pm.sample(**sampler_args)               
             else:
-                raise ValueError(f"Method {method} not supported")
+                raise ValueError(f"Method {self.method} not supported")
 
             idata.extend(pm.sample_prior_predictive())
             idata.extend(pm.sample_posterior_predictive(idata))
@@ -395,7 +395,7 @@ class RatingModelBuilder(ModelBuilder):
         return posterior_predictive_samples[self.output_var].data
 
 
-    def table(self, h: ArrayLike=None, step: float=0.01, extend: float=1.1) -> DataFrame:
+    def table(self, h: ArrayLike=None, step: float=0.01, extend: float=1.1) -> pd.DataFrame:
         """
         Return stage-discharge rating table.
 
