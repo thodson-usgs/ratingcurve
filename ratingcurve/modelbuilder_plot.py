@@ -20,46 +20,25 @@ class RatingMixin:
     """
     Parent class for other rating-related mixins.
     """
-    @property
-    def model(self):
-        raise NotImplementedError
-
-    @property
-    def trace(self) -> InferenceData:
-        """
-        ArviZ InferenceData object.
-
-        Returns
-        -------
-        trace: InferenceData
-            ArviZ InferenceData object from fit.
-        """
-        return self.__last_trace
-    
-    @trace.setter
-    def trace(self, value):
-        self.__last_trace = value
-
-    def summary(self, trace: InferenceData=None, var_names: list=None) -> DataFrame:
+    def summary(self, var_names: list=None) -> DataFrame:
         """
         Summary of rating model parameters.
         
         Parameters
         ----------
-        trace : InferenceData, optional
-            ArviZ InferenceData object from fit.
         var_names : list of str, optional
-            List of variables to include in summary.
+            List of variables to include in summary. If no names are given,
+            then a summary of all variables is returned.
             
         Returns
         -------
         df : DataFrame
             DataFrame summary of rating model parameters.
         """
-        if trace is None:
-            trace = self.trace
-        return az.summary(trace, var_names)
-
+        if self.idata is None:
+            raise AttributeError('Summary cannot be retrieved as model has not been fit.')
+            
+        return az.summary(self.idata, var_names)
 
 class PlotMixin(RatingMixin):
     """
@@ -85,24 +64,22 @@ class PlotMixin(RatingMixin):
 
         return ax
  
-    def plot(self, trace: InferenceData=None, ax: Axes=None) -> None:
+    def plot(self, ax: Axes=None) -> None:
         """
-        Plots rating curve.
+        Plots gagings and fit rating curve.
 
         Parameters
         ----------
-        trace : InferenceData, optional
-            ArviZ InferenceData object from fit.
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if trace is None:
-            trace = self.trace
+        if self.idata is None:
+            raise AttributeError('Fitted rating curve cannot be plotted as model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
         self._format_rating_plot(ax)
 
-        rating_table = self.table(trace)
+        rating_table = self.table()
         h = rating_table['stage']
         q = rating_table['discharge']
         sigma = rating_table['gse']
@@ -113,26 +90,23 @@ class PlotMixin(RatingMixin):
 
         self.plot_gagings(ax=ax)
 
-    def plot_residuals(self, trace: InferenceData=None, ax: Axes=None) -> None:
+    def plot_residuals(self, ax: Axes=None) -> None:
         """
         Plots residuals between model and data.
 
         Parameters
         ----------
-        trace : InferenceData, optional
-            ArviZ InferenceData object from fit.
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if trace is None:
-            trace = self.trace
+        if self.idata is None:
+            raise AttributeError('Rating curve residuals cannot be plotted as model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
         self._format_rating_plot(ax)
 
         # approximate percentage error
-        residuals = self.residuals(trace) * 100
-        residuals = residuals.mean(axis=1)
+        residuals = self.residuals() * 100
         ax.errorbar(y=self.h_obs, 
                     x=residuals, 
                     xerr=self.q_sigma*2*100, 
@@ -146,29 +120,23 @@ class PlotMixin(RatingMixin):
 
     def plot_gagings(self, ax: Axes=None) -> None:
         """
-        Plot gagings with uncertainty.
+        Plot observed gagings with uncertainty.
 
         Parameters
         ----------
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
+        if self.idata is None:
+            raise AttributeError('Observed gagings cannot be plotted as observed data is given during fitting.')
+
         ax = self.setup_plot(ax=ax)
 
-        # TODO: safely get these
-        q_sigma = self.q_sigma
-        h_obs = self.h_obs
-        q_obs = self.q_obs
+        sigma = 1.96 * (np.exp(self.q_sigma) - 1)*np.abs(self.q_obs)
 
-        if q_sigma is not None:
-            sigma_2 = 1.96 * (np.exp(q_sigma) - 1)*np.abs(q_obs)
-
-        else:
-            sigma_2 = 0
-
-        ax.errorbar(y=h_obs, 
-                    x=q_obs, 
-                    xerr=sigma_2, 
+        ax.errorbar(y=self.h_obs, 
+                    x=self.q_obs, 
+                    xerr=sigma, 
                     fmt="o", 
                     lw=1,
                     color='black',
@@ -212,20 +180,21 @@ class SplinePlotMixin(PlotMixin):
     """
     Mixin class for plotting spline rating models.
     """
-    def plot(self, trace: InferenceData=None, ax: Axes=None) -> None:
+    def plot(self, ax: Axes=None) -> None:
         """
         Plots spline rating curve.
 
         Parameters
         ----------
-        trace : InferenceData, optional
-            ArviZ InferenceData object from fit.
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
+        if self.idata is None:
+            raise AttributeError('Fitted rating curve cannot be plotted as model has not been fit.')
+
         ax = self.setup_plot(ax=ax)
         self._plot_knots(ax=ax)
-        super().plot(trace, ax=ax)
+        super().plot(ax=ax)
 
     def _plot_knots(self, ax: Axes) -> None:
         """
@@ -243,54 +212,48 @@ class PowerLawPlotMixin(PlotMixin):
     """
     Mixin class for plotting power law rating models.
     """
-    def plot(self, trace: InferenceData=None, ax: Axes=None) -> None:
+    def plot(self, ax: Axes=None) -> None:
         """
         Plots power-law rating curve.
 
         Parameters
         ----------
-        trace : InferenceData, optional
-            ArviZ InferenceData object from fit.
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if trace is None:
-            trace = self.trace
+        if self.idata is None:
+            raise AttributeError('Fitted rating curve cannot be plotted as model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
-        self._plot_transitions(trace, ax=ax)
-        super().plot(trace, ax=ax)
+        self._plot_transitions(ax=ax)
+        super().plot(ax=ax)
 
-    def plot_residuals(self, trace: InferenceData=None, ax: Axes=None) -> None:
+    def plot_residuals(self, ax: Axes=None) -> None:
         """
         Plots power-law residuals.
 
         Parameters
         ----------
-        trace : InferenceData, optional
-            ArviZ InferenceData object from fit.
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if trace is None:
-            trace = self.trace
+        if self.idata is None:
+            raise AttributeError('Fitted rating curve cannot be plotted as model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
-        self._plot_transitions(trace, ax=ax)
-        super().plot_residuals(trace, ax=ax)
+        self._plot_transitions(ax=ax)
+        super().plot_residuals(ax=ax)
 
-    def _plot_transitions(self, trace: InferenceData, ax: Axes) -> None:
+    def _plot_transitions(self, ax: Axes) -> None:
         """
         Plot power-law transitions (breakpoints).
 
         Parameters
         ----------
-        trace : InferenceData
-            ArviZ Inference data containing transition points (hs).
         ax : Axes
             Defined matplotlib axes.
         """
-        hs = trace.posterior['hs']
+        hs = self.idata.posterior['hs']
 
         alpha = 0.05
         hs_u = hs.mean(dim=['chain', 'draw']).data
