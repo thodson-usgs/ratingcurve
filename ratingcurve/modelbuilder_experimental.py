@@ -183,6 +183,17 @@ class RatingModelBuilder(ModelBuilder):
                 "The model hasn't been built yet, call .build_model() first or call .fit() instead."
             )
 
+        # Check if the fitting algorithm method is specified to fit(). If so, allow for it to be changed.
+        if 'method' in kwargs:
+            # Remove old sample_config keys from kwargs
+            for key in self.sampler_config.keys():
+                _ = kwargs.pop(key)
+            self.method = kwargs['method']
+            self.sampler_config = self.get_default_sampler_config()
+            kwargs.update(self.sampler_config)
+            # Remove method key from kwargs
+            _ = kwargs.pop('method')
+
         # Allow for using of the ADVI fitting algorithm
         with self.model:
             if self.method == "advi":
