@@ -17,11 +17,14 @@ DEFAULT_FIGSIZE = (5, 5)
 NARROW_LINE = 1
 REGULAR_LINE = NARROW_LINE * 1.5
 
+
 class RatingMixin:
     """Parent class for other rating-related mixins
     """
     @property
     def model(self):
+        """Not implemented.
+        """
         raise NotImplementedError
 
     @property
@@ -33,20 +36,20 @@ class RatingMixin:
         ArviZ InferenceData object
         """
         return self.__last_trace
-    
+
     @trace.setter
     def trace(self, value):
         self.__last_trace = value
 
-    def summary(self, trace: InferenceData=None, var_names: list=None) -> DataFrame:
+    def summary(self, trace: InferenceData = None, var_names: list = None) -> DataFrame:
         """Summary of rating model parameters
-        
+
         Parameters
         ----------
         trace : ArviZ InferenceData
         var_names : list of str
             List of variables to include in summary
-            
+  
         Returns
         -------
         DataFrame summary of rating model parameters
@@ -75,7 +78,7 @@ class PlotMixin(RatingMixin):
             fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
         return ax
- 
+
     def plot(self, trace: InferenceData=None, ax=None) -> None:
         """Plots rating curve
 
@@ -101,13 +104,15 @@ class PlotMixin(RatingMixin):
 
         self.plot_gagings(ax=ax)
 
-    def plot_residuals(self, trace: InferenceData=None, ax=None) -> None:
-        """Plots residuals
+    def plot_residuals(self, trace: InferenceData = None, ax = None) -> None:
+        """Plots residuals between model and data.
 
         Parameters
         ----------
-        trace : ArviZ InferenceData
-        ax : matplotlib axes
+        trace : InferenceData, optional
+            ArviZ InferenceData object containing model trace.
+        ax : Axes, optional
+            Pre-defined matplotlib axes.
         """
         if trace is None:
             trace = self.trace
@@ -115,7 +120,6 @@ class PlotMixin(RatingMixin):
         ax = self.setup_plot(ax=ax)
         self._format_rating_plot(ax)
 
-        # TODO: this could be a function
         if self.q_sigma is not None:
             q_sigma = self.q_sigma
         else:
@@ -124,7 +128,10 @@ class PlotMixin(RatingMixin):
         # approximate percentage error
         residuals = self.residuals(trace) * 100
         residuals = residuals.mean(axis=1)
-        ax.errorbar(y=self.h_obs, x=residuals, xerr=q_sigma*2*100, fmt="o",
+        ax.errorbar(y=self.h_obs,
+                    x=residuals,
+                    xerr=q_sigma*2*100,
+                    fmt="o",
                     lw=NARROW_LINE,
                     markersize=4,
                     markerfacecolor='none',
@@ -133,15 +140,15 @@ class PlotMixin(RatingMixin):
         self._format_residual_plot(ax)
 
     def plot_gagings(self, ax=None) -> None:
-        """Plot gagings with uncertainty
+        """Plot gagings with uncertainty.
 
         Parameters
         ----------
-        ax : matplotlib axes, optional
+        ax : Axes, optional
+            Pre-defined matplotlib axes.
         """
         ax = self.setup_plot(ax=ax)
 
-        # TODO: safely get these
         q_sigma = self.q_sigma
         h_obs = self.h_obs
         q_obs = self.q_obs
@@ -152,19 +159,25 @@ class PlotMixin(RatingMixin):
         else:
             sigma_2 = 0
 
-        ax.errorbar(y=h_obs, x=q_obs, xerr=sigma_2, fmt="o", lw=1,
+        ax.errorbar(y=h_obs,
+                    x=q_obs,
+                    xerr=sigma_2,
+                    fmt="o",
+                    lw=1,
                     color='black',
                     markersize=4,
                     markerfacecolor='none')
+
         self._format_rating_plot(ax)
 
     @staticmethod
     def _format_rating_plot(ax) -> None:
-        """Format rating plot
+        """Format rating plot.
 
         Parameters
         ----------
-        ax : matplotlib axes
+        ax : Axes
+            Defined matplotlib axes.
         """
         ax.set_ylabel('Stage')
         ax.set_xlabel('Discharge')
@@ -172,11 +185,12 @@ class PlotMixin(RatingMixin):
 
     @staticmethod
     def _format_residual_plot(ax) -> None:
-        """Format residual plot
+        """Format residual plot.
 
         Parameters
         ----------
-        ax : matplotlib axes
+        ax : Axes
+            Defined matplotlib axes.
         """
         ax.set_ylabel('Stage')
         ax.set_xlabel('Percentage Error')
@@ -191,39 +205,42 @@ class SplinePlotMixin(PlotMixin):
     """Mixin class for plotting spline rating models
     """
     def plot(self, trace: InferenceData=None, ax=None):
-        """Plots rating curve
+        """Plots rating curve.
 
         Parameters
         ----------
-        trace : ArviZ InferenceData
-        ax : matplotlib axes
+        trace : InferenceData, optional
+            ArviZ InferenceData object containing model trace.
+        ax : Axes
+            Pre-defined matplotlib axes.
         """
         ax = self.setup_plot(ax=ax)
         self._plot_knots(ax=ax)
         super().plot(trace, ax=ax)
 
     def _plot_knots(self, ax):
-        """Plot spline knots
+        """Plot spline knots.
 
         Parameters
         ----------
-        ax : matplotlib axes
+        ax : Axes
+            Pre-defined matplotlib axes.
         """
         [ax.axhline(k, color='lightgray', linestyle='dotted', linewidth=NARROW_LINE) for k in self._dmatrix.knots]
 
 
 class PowerLawPlotMixin(PlotMixin):
-    """Mixin class for plotting power law rating models
+    """Mixin class for plotting power law rating models.
     """
-    def plot(self, trace: InferenceData=None, ax=None):
+    def plot(self, trace: InferenceData = None, ax = None):
         """Plots rating curve
 
         Parameters
         ----------
-        trace : ArviZ InferenceData
-        ax : matplotlib axes
-
-        TODO: this function might be cleaner as a wrapper around PlotMixin.plot
+        trace : InferenceData, optional
+            ArviZ InferenceData object containing model trace.
+        ax : Axes, optional
+            Pre-defined matplotlib axes.
         """
         if trace is None:
             trace = self.trace
@@ -232,13 +249,15 @@ class PowerLawPlotMixin(PlotMixin):
         self._plot_transitions(trace, ax=ax)
         super().plot(trace, ax=ax)
 
-    def plot_residuals(self, trace: InferenceData=None, ax=None):
-        """Plots residuals
+    def plot_residuals(self, trace: InferenceData = None, ax = None):
+        """Plots power-law residuals.
 
         Parameters
         ----------
-        trace : ArviZ InferenceData
-        ax : matplotlib axes
+        trace : InferenceData
+            ArviZ InferenceData object containing model trace.
+        ax : Axes
+            Pre-defined matplotlib axes.
         """
         if trace is None:
             trace = self.trace
@@ -248,13 +267,14 @@ class PowerLawPlotMixin(PlotMixin):
         super().plot_residuals(trace, ax=ax)
 
     def _plot_transitions(self, trace: InferenceData, ax):
-        """Plot transitions (breakpoints)
+        """Plot power-law transitions (breakpoints).
 
         Parameters
         ----------
-        trace : ArviZ InferenceData
-            Inference data containing transition points (hs)
-        ax : matplotlib axes
+        trace : InferenceData
+            ArviZ Inference data containing transition points (hs)
+        ax : Axes
+            Pre-defined matplotlib axes.
         """
         hs = trace.posterior['hs']
 
