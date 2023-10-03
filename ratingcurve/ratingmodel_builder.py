@@ -28,30 +28,22 @@ class RatingModelBuilder(ModelBuilder):
     functions for better application in rating curve fitting.
     """
 
-    def __init__(self,
-                 method: str='advi',
-                 model_config: dict = None,
-                 sampler_config: dict = None,
-                 ):
+    def __init__(self, **kwargs):
         """
-        Updates the ModelBuilder initialization to save the input method.
+        Updates the ModelBuilder initialization to only configure the model.
+        Configuring the sampler now occurs in the `fit` call.
 
         Parameters
         ----------
-        method : str, optional
-            The method (algorithm) used to fit the data, options are 'advi' or 'nuts'.
-        model_config : dict, optional
-            A dictionary of parameters that initialise model configuration. Class-default
-            defined by the `default_model_config` method. (See `default_model_config` method
-            for details and required contents.)
-        sampler_config : dict, optional
-            A dictionary of parameters that initialise sampler configuration. Class-default
-            defined by the `default_sampler_config` method. (See `default_sampler_config` method
-            for details and required contents.)
+        **kwargs : dict
+            Additional keyword arguments to pass to the model configuration.
         """
-        # Save the fitting algorithm method
-        self.method = method
-        super().__init__(model_config=model_config, sampler_config=sampler_config)
+        model_config = self.get_default_model_config(**kwargs)
+        self.model_config = model_config  # parameters for priors etc.
+        
+        self.model = None  # Set by build_model
+        self.idata: Optional[az.InferenceData] = None  # idata is generated during fitting
+        self.is_fitted_ = False
 
 
     def _data_setter(self, h: ArrayLike, q: ArrayLike=None, q_sigma: ArrayLike=None):
@@ -92,47 +84,62 @@ class RatingModelBuilder(ModelBuilder):
         return "model_q"
 
     
-    def get_default_sampler_config(self) -> dict:
+    def get_default_sampler_config(self,
+                                   n: int=200_000,
+                                   abs_tol: float=2e-3,
+                                   rel_tol: float=2e-3, 
+                                   adam_learn_rate: float=0.001,
+                                   draws: int=None,
+                                   tune: int=2_000,
+                                   chains: int=4,
+                                   target_accept: float=0.95,
+                                   **kwargs) -> dict:
         """
         Returns a `sampler_config` dictionary with all the required sampler configuration parameters
         needed to sample/fit the model. It will be passed to the class instance on
         initialization, in case the user doesn't provide any sampler_config of their own.
 
-        When specified by a user, `model_config` must be a dictionary and contain the certain keys
-        depending on the fitting algorithm `method`. For ADVI algorithm (i.e., `method='advi'`), these 
-        keys must include and are formatted as follows:
-
+        Parameters
+        ----------
         n : int
-            The number of iterations.
+            The number of iterations. (Only used in ADVI algorithm.)
         abs_tol : float
            Convergence criterion for algorithm. Termination of fitting occurs when the
            absolute tolerance between two consecutive iterates is at most `abs_tol`.
+           (Only used in ADVI algorithm.)
         rel_tol : float
            Convergence criterion for algorithm. Termination of fitting occurs when the
            relative tolerance between two consecutive iterates is at most `rel_tol`.
+           (Only used in ADVI algorithm.)
         adam_learn_rate : float
-            The learning rate for the ADAM Optimizer.
+            The learning rate for the ADAM Optimizer. (Only used in ADVI algorithm.)
         draws : int
-            The number of samples to draw after fitting.
-
-        For the NUTS algorithm (i.e., `method='nuts'`), these keys must include and are
-        formatted as follows:
-        
+            The number of samples to draw. (Used in both algorithms.)
         tune : int
             Number of iterations to tune. Samplers adjust the step sizes, scalings or
-            similar during tuning.
+            similar during tuning. Tuning samples are discarded. (Only used in NUTS
+            algorithm.)
         chains : int
-            The number of chains to sample.
+            The number of chains to sample. (Only used in NUTS algorithm.)
         target_accept : float
             The step size is tuned such that we approximate this acceptance rate.
-        draws : int
-           The number of samples to draw. The number of `tune` samples are discarded. 
+            (Only used in NUTS algorithm.)
+
+        Returns
+        -------
+        sampler_config : dict
+            A dictionary containing all the required sampler configuration parameters.
         """
         if self.method == "advi":
-            sampler_config = {"n": 200_000, 'abs_tol': 2e-3, 'rel_tol': 2e-3, 
-                              'adam_learn_rate': 0.001, 'draws': 10_000}
+            if draws is None:
+                draws = 10_000
+            sampler_config = {"n": n, 'abs_tol': abs_tol, 'rel_tol': rel_tol, 
+                              'adam_learn_rate': adam_learn_rate, 'draws': draws}
         elif self.method == "nuts":
-            sampler_config = {"draws": 1_000, "tune": 2_000, "chains": 4, "target_accept": 0.95}
+            if draws is None:
+                draws = 1_000
+            sampler_config = {"draws": draws, "tune": tune,
+                              "chains": chains, "target_accept": target_accept}
          
         return sampler_config
 
@@ -217,7 +224,7 @@ class RatingModelBuilder(ModelBuilder):
                 sampler_args = {**sampler_config, **kwargs}
                 # Remove basic string keys from sampler_args dict as we do not need them now.
                 for key in ['abs_tol', 'rel_tol', 'adam_learn_rate', 'draws']:
-                    sampler_args.pop(key, None)
+                    _ = sampler_args.pop(key, None)
                     
                 approx = pm.fit(method=pm.ADVI(), **sampler_args)
                 idata = approx.sample(draws=self.sampler_config.get('draws'))
@@ -281,14 +288,15 @@ class RatingModelBuilder(ModelBuilder):
             h: ArrayLike,
             q: ArrayLike,
             q_sigma: ArrayLike=None,
+            method: str='advi',
             progressbar: bool=True,
             random_seed: RandomState=None,
             **kwargs: Any,
             ) -> InferenceData:
         """
-        Redefinition of ModelBuilder fit function as it needed tweaking from PyMC version.
-        Fit a model using the data passed as a parameter. Sets attrs to inference data
-        of the model.
+        Redefinition of ModelBuilder fit function as it needed updating from PyMC version.
+        Fit a model using the data and algorithm passed as a parameter. Sets attrs to
+        inference data of the model.
 
         Parameters
         ----------
@@ -298,12 +306,14 @@ class RatingModelBuilder(ModelBuilder):
             Target discharge (q) values.
         q_sigma : array_like, optional
             Discharge uncertainty in units of discharge.
+        method : str, optional
+            The method (algorithm) used to fit the data, options are 'advi' or 'nuts'.
         progressbar : bool, optional
             Specifies whether the fit progressbar should be displayed.
         random_seed : RandomState, optional
             Provides sampler with initial random seed for obtaining reproducible samples.
         **kwargs : dict
-            Custom sampler settings can be provided in form of keyword arguments.
+            Algorithm settings can be provided in form of keyword arguments.
 
         Returns
         -------
@@ -311,25 +321,23 @@ class RatingModelBuilder(ModelBuilder):
             Arviz InferenceData object containing posterior samples of model parameters
             of the fitted model.
         """
-        # Build rating curve models which can include discharge uncertainty
-        self.build_model(h, q, q_sigma=q_sigma)
+        # Save the fitting algorithm method
+        self.method = method
 
+        # Define the sampler configuration
+        sampler_config = self.get_default_sampler_config(**kwargs)
+        self.sampler_config = sampler_config
+
+        # Add progressbar and random_seed kwargs to sampler configuration
         sampler_config = self.sampler_config.copy()
         sampler_config["progressbar"] = progressbar
         sampler_config["random_seed"] = random_seed
         sampler_config.update(**kwargs)
 
-        # Check if the fitting algorithm method is specified to fit(). If so, allow for it to be changed.
-        if 'method' in sampler_config:
-            # Remove old sample_config keys from sampler_config
-            for key in self.sampler_config.keys():
-                _ = sampler_config.pop(key)
-            self.method = sampler_config['method']
-            self.sampler_config = self.get_default_sampler_config()
-            sampler_config.update(self.sampler_config)
-            # Remove method key from kwargs
-            _ = sampler_config.pop('method')
+        # Build rating curve models which can include discharge uncertainty
+        self.build_model(h, q, q_sigma=q_sigma)
 
+        # Sample (fit) the model
         self.idata = self.sample_model(**sampler_config)
 
         # Have fit data include uncertainty and have appropriate names

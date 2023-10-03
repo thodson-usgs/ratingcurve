@@ -32,14 +32,12 @@ def test_advi_fit(ratingmodel, segments, dof):
     df = data.load('green channel')
 
     if ratingmodel == 'powerlaw':
-        model_config = {'segments': segments,
-                        'prior' : {'distribution': 'uniform'}}
-        rating = PowerLawRating(model_config=model_config, method='advi')
+        rating = PowerLawRating(segments=segments)
     elif ratingmodel == 'spline':
-        model_config = {'mean': 0, 'ds': 1, 'df': dof}
-        rating = SplineRating(model_config=model_config, method='advi')
+        rating = SplineRating(df=dof)
 
-    idata = rating.fit(df['stage'], df['q'], q_sigma=df['q_sigma'])
+    idata = rating.fit(df['stage'], df['q'],
+                       q_sigma=df['q_sigma'], method='advi')
     df_model = rating.table()
 
     assert len(df_model) > 0
@@ -70,7 +68,8 @@ def test_zero_flow_prior():
     q_min = df['q'].min()
     
     with pytest.raises(ValueError):
-        model_config = {'segments': 1,
-                        'prior' : {'distribution': 'normal', 'mu': [q_min], 'sigma': [1]}}
-        rating = PowerLawRating(model_config=model_config)
+        rating = PowerLawRating(segments=1,
+                                prior={'distribution': 'normal',
+                                       'mu': [q_min],
+                                       'sigma': [1]})
         idata = rating.fit(df['stage'], df['q'])

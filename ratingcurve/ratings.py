@@ -25,16 +25,14 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
     version = "0.1"
         
     @staticmethod
-    def get_default_model_config() -> dict:
+    def get_default_model_config(segments: int=2, prior: dict={'distribution': 'uniform'}, **kwargs) -> dict:
         """
         Returns a `model_config` dictionary with all the required model configuration parameters
         needed to build the model. It will be passed to the class instance on
         initialization, in case the user doesn't provide any model_config of their own.
 
-        When specified by a user, `model_config` in the `PowerLawRatingModel` must be a
-        dictionary and contain the two keys `segements` and `prior`. These two keys are formatted
-        as follows:
-
+        Parameters
+        ----------
         segments : int
             Number of segments in the rating.
         prior : dict
@@ -42,18 +40,24 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
             which can either be set to a `'uniform'` or `'normal'` distribution. If a normal distribution,
             then the mean `mu` and width `sigma` must be given as well.
 
-        Examples:
-        ``model_config = {'segments': 2, 'prior': {'distribution': 'uniform'}}``
-        or
-        ``model_config = {'segments': 2, 'prior': {'distribution': 'normal', 'mu': [1, 2], 'sigma':[1, 1]}}``
-        or
-        ``model_config = {'segments': 4, 'prior': {'distribution': 'normal', 'mu': [1, 2, 5, 9], 'sigma':[1, 1, 1, 1]}}``
+            Examples:
+            (with any segment value)
+            ``prior = {'distribution': 'uniform'}``
+            or (with `segments = 2`)
+            ``prior = {'distribution': 'normal', 'mu': [1, 2], 'sigma':[1, 1]}``
+            or (with `segments = 4`)
+            ``prior = {'distribution': 'normal', 'mu': [1, 2, 5, 9], 'sigma':[1, 1, 1, 1]}``
+    
+            Note that the number of normal distribution means and widths must be the same as
+            the number of segments. Additionally, the first mean must be less than the lowest
+            observed stage as it defines the stage of zero flow.
 
-        Note that the number of normal distribution means and widths must be the same as
-        the number of segments. Additionally, the first mean must be less than the lowest
-        observed stage as it defines the stage of zero flow.
+        Returns
+        -------
+        model_config : dict
+            A dictionary containing all the required model configuration parameters.
         """
-        model_config = {'segments': 2, 'prior': {'distribution': 'uniform'}}
+        model_config = {'segments': segments, 'prior': prior}
 
         return model_config
 
@@ -228,16 +232,14 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
     version = "0.1"
         
     @staticmethod
-    def get_default_model_config() -> dict:
+    def get_default_model_config(mean: float=0, sd: float=1, df: int=5, **kwargs) -> dict:
         """
         Returns a `model_config` dictionary with all the required model configuration parameters
         needed to build the model. It will be passed to the class instance on
         initialization, in case the user doesn't provide any model_config of their own.
 
-        When specified by a user, `model_config` in the `SplineRatingModel`  must be a
-        dictionary and contain the three keys `mean`, `sd`, and `df`. These three keys are
-        formatted as follows:
-
+        Parameters
+        ----------
         mean : float
             Mean of the normal prior for the spline coefficients.
         sd : float
@@ -245,10 +247,12 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
         df : int
             Degrees of freedom for the spline coefficients.
 
-        Examples:
-        ``model_config = {'mean': 0, 'ds': 1, 'df': 5}``
+        Returns
+        -------
+        model_config : dict
+            A dictionary containing all the required model configuration parameters.
         """
-        model_config = {'mean': 0, 'ds': 1, 'df': 5}
+        model_config = {'mean': mean, 'sd': sd, 'df': df}
 
         return model_config
 
