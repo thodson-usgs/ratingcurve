@@ -625,7 +625,7 @@ the minumum (maximum).</p>
 <dt class="sig sig-object py" id="ratingcurve.transform.Dmatrix">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">Dmatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cr'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix" title="Permalink to this definition">#</a></dt>
 <dd><p>Transform for spline design matrix</p>
-<p>Create a Dmatrix object</p>
+<p>Create a Dmatrix object.</p>
 <p>Create a design matrix for a natural cubic spline, which is a cubic
 spline that is additionally constrained to be linear at the boundaries.
 Due to this constraint, the total degrees of freedom equals the number
@@ -642,7 +642,7 @@ of knots minus 1.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.Dmatrix.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix.transform" title="Permalink to this definition">#</a></dt>
-<dd><p>Transform stage using spline design matrix</p>
+<dd><p>Transform stage using spline design matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>stage</strong> (<em>array-like</em>) – Stage data</p>
@@ -759,11 +759,11 @@ of knots minus 1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.UnitTransform.untransform">
-<span class="sig-name descname"><span class="pre">untransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform.untransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform.untransform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">untransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform.untransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform.untransform" title="Permalink to this definition">#</a></dt>
 <dd><p>Transform from unit interval back to original units</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>array_like</em>) – Transformed data.</p>
+<dd class="field-odd"><p><strong>z</strong> (<em>array_like</em>) – Transformed data.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Unit interval transformed back to original units.</p>
@@ -865,10 +865,10 @@ of knots minus 1.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.plot_gagings">
 <span class="sig-name descname"><span class="pre">plot_gagings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_gagings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_gagings" title="Permalink to this definition">#</a></dt>
-<dd><p>Plot gagings with uncertainty</p>
+<dd><p>Plot gagings with uncertainty.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ax</strong> (<em>matplotlib axes</em><em>, </em><em>optional</em>) – </p>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -876,12 +876,12 @@ of knots minus 1.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.plot_residuals">
 <span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_residuals" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots residuals</p>
+<dd><p>Plots residuals between model and data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – </p></li>
-<li><p><strong>ax</strong> (<em>matplotlib axes</em>) – </p></li>
+<li><p><strong>trace</strong> (<em>InferenceData</em><em>, </em><em>optional</em>) – ArviZ InferenceData object containing model trace.</p></li>
+<li><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p></li>
 </ul>
 </dd>
 </dl>
@@ -909,7 +909,7 @@ of knots minus 1.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.plot.PowerLawPlotMixin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">PowerLawPlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin" title="Permalink to this definition">#</a></dt>
-<dd><p>Mixin class for plotting power law rating models</p>
+<dd><p>Mixin class for plotting power law rating models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PowerLawPlotMixin.plot">
 <span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot" title="Permalink to this definition">#</a></dt>
@@ -917,9 +917,8 @@ of knots minus 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – </p></li>
-<li><p><strong>ax</strong> (<em>matplotlib axes</em>) – </p></li>
-<li><p><strong>TODO</strong> (<em>this function might be cleaner as a wrapper around PlotMixin.plot</em>) – </p></li>
+<li><p><strong>trace</strong> (<em>InferenceData</em><em>, </em><em>optional</em>) – ArviZ InferenceData object containing model trace.</p></li>
+<li><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p></li>
 </ul>
 </dd>
 </dl>
@@ -928,12 +927,12 @@ of knots minus 1.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PowerLawPlotMixin.plot_residuals">
 <span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot_residuals" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots residuals</p>
+<dd><p>Plots power-law residuals.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – </p></li>
-<li><p><strong>ax</strong> (<em>matplotlib axes</em>) – </p></li>
+<li><p><strong>trace</strong> (<em>InferenceData</em>) – ArviZ InferenceData object containing model trace.</p></li>
+<li><p><strong>ax</strong> (<em>Axes</em>) – Pre-defined matplotlib axes.</p></li>
 </ul>
 </dd>
 </dl>
@@ -945,6 +944,12 @@ of knots minus 1.</p>
 <dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">RatingMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin" title="Permalink to this definition">#</a></dt>
 <dd><p>Parent class for other rating-related mixins</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#ratingcurve.plot.RatingMixin.model" title="Permalink to this definition">#</a></dt>
+<dd><p>Not implemented.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin.summary">
 <span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin.summary" title="Permalink to this definition">#</a></dt>
@@ -982,12 +987,12 @@ of knots minus 1.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.SplinePlotMixin.plot">
 <span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#SplinePlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.SplinePlotMixin.plot" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots rating curve</p>
+<dd><p>Plots rating curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – </p></li>
-<li><p><strong>ax</strong> (<em>matplotlib axes</em>) – </p></li>
+<li><p><strong>trace</strong> (<em>InferenceData</em><em>, </em><em>optional</em>) – ArviZ InferenceData object containing model trace.</p></li>
+<li><p><strong>ax</strong> (<em>Axes</em>) – Pre-defined matplotlib axes.</p></li>
 </ul>
 </dd>
 </dl>

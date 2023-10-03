@@ -337,11 +337,14 @@ document.write(`
 <span class="n">NARROW_LINE</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">REGULAR_LINE</span> <span class="o">=</span> <span class="n">NARROW_LINE</span> <span class="o">*</span> <span class="mf">1.5</span>
 
+
 <div class="viewcode-block" id="RatingMixin"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.RatingMixin">[docs]</a><span class="k">class</span> <span class="nc">RatingMixin</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Parent class for other rating-related mixins</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Not implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="nd">@property</span>
@@ -353,20 +356,20 @@ document.write(`
 <span class="sd">        ArviZ InferenceData object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__last_trace</span>
-    
+
     <span class="nd">@trace</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__last_trace</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="RatingMixin.summary"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.RatingMixin.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">var_names</span><span class="p">:</span> <span class="nb">list</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="RatingMixin.summary"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.RatingMixin.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">var_names</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Summary of rating model parameters</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        trace : ArviZ InferenceData</span>
 <span class="sd">        var_names : list of str</span>
 <span class="sd">            List of variables to include in summary</span>
-<span class="sd">            </span>
+<span class="sd">  </span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        DataFrame summary of rating model parameters</span>
@@ -395,7 +398,7 @@ document.write(`
             <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">DEFAULT_FIGSIZE</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ax</span></div>
- 
+
 <div class="viewcode-block" id="PlotMixin.plot"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PlotMixin.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots rating curve</span>
 
@@ -421,13 +424,15 @@ document.write(`
 
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_gagings</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlotMixin.plot_residuals"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PlotMixin.plot_residuals">[docs]</a>    <span class="k">def</span> <span class="nf">plot_residuals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots residuals</span>
+<div class="viewcode-block" id="PlotMixin.plot_residuals"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PlotMixin.plot_residuals">[docs]</a>    <span class="k">def</span> <span class="nf">plot_residuals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots residuals between model and data.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        trace : ArviZ InferenceData</span>
-<span class="sd">        ax : matplotlib axes</span>
+<span class="sd">        trace : InferenceData, optional</span>
+<span class="sd">            ArviZ InferenceData object containing model trace.</span>
+<span class="sd">        ax : Axes, optional</span>
+<span class="sd">            Pre-defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">trace</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">trace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span>
@@ -435,7 +440,6 @@ document.write(`
         <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_format_rating_plot</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
 
-        <span class="c1"># TODO: this could be a function</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_sigma</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">q_sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_sigma</span>
         <span class="k">else</span><span class="p">:</span>
@@ -444,7 +448,10 @@ document.write(`
         <span class="c1"># approximate percentage error</span>
         <span class="n">residuals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residuals</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
         <span class="n">residuals</span> <span class="o">=</span> <span class="n">residuals</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">residuals</span><span class="p">,</span> <span class="n">xerr</span><span class="o">=</span><span class="n">q_sigma</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">,</span>
+                    <span class="n">x</span><span class="o">=</span><span class="n">residuals</span><span class="p">,</span>
+                    <span class="n">xerr</span><span class="o">=</span><span class="n">q_sigma</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span>
+                    <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
                     <span class="n">lw</span><span class="o">=</span><span class="n">NARROW_LINE</span><span class="p">,</span>
                     <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
                     <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span>
@@ -453,15 +460,15 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">_format_residual_plot</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PlotMixin.plot_gagings"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PlotMixin.plot_gagings">[docs]</a>    <span class="k">def</span> <span class="nf">plot_gagings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot gagings with uncertainty</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot gagings with uncertainty.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ax : matplotlib axes, optional</span>
+<span class="sd">        ax : Axes, optional</span>
+<span class="sd">            Pre-defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 
-        <span class="c1"># TODO: safely get these</span>
         <span class="n">q_sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_sigma</span>
         <span class="n">h_obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span>
         <span class="n">q_obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_obs</span>
@@ -472,19 +479,25 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="n">sigma_2</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">h_obs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">q_obs</span><span class="p">,</span> <span class="n">xerr</span><span class="o">=</span><span class="n">sigma_2</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">h_obs</span><span class="p">,</span>
+                    <span class="n">x</span><span class="o">=</span><span class="n">q_obs</span><span class="p">,</span>
+                    <span class="n">xerr</span><span class="o">=</span><span class="n">sigma_2</span><span class="p">,</span>
+                    <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+                    <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
                     <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
                     <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_format_rating_plot</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_format_rating_plot</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format rating plot</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format rating plot.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ax : matplotlib axes</span>
+<span class="sd">        ax : Axes</span>
+<span class="sd">            Defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Stage&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Discharge&#39;</span><span class="p">)</span>
@@ -492,11 +505,12 @@ document.write(`
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_format_residual_plot</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format residual plot</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format residual plot.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ax : matplotlib axes</span>
+<span class="sd">        ax : Axes</span>
+<span class="sd">            Defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Stage&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Percentage Error&#39;</span><span class="p">)</span>
@@ -511,39 +525,42 @@ document.write(`
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin class for plotting spline rating models</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="SplinePlotMixin.plot"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.SplinePlotMixin.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots rating curve</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots rating curve.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        trace : ArviZ InferenceData</span>
-<span class="sd">        ax : matplotlib axes</span>
+<span class="sd">        trace : InferenceData, optional</span>
+<span class="sd">            ArviZ InferenceData object containing model trace.</span>
+<span class="sd">        ax : Axes</span>
+<span class="sd">            Pre-defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_plot_knots</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_plot_knots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot spline knots</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot spline knots.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ax : matplotlib axes</span>
+<span class="sd">        ax : Axes</span>
+<span class="sd">            Pre-defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="p">[</span><span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">NARROW_LINE</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dmatrix</span><span class="o">.</span><span class="n">knots</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="PowerLawPlotMixin"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PowerLawPlotMixin">[docs]</a><span class="k">class</span> <span class="nc">PowerLawPlotMixin</span><span class="p">(</span><span class="n">PlotMixin</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin class for plotting power law rating models</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin class for plotting power law rating models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="PowerLawPlotMixin.plot"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PowerLawPlotMixin.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerLawPlotMixin.plot"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PowerLawPlotMixin.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots rating curve</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        trace : ArviZ InferenceData</span>
-<span class="sd">        ax : matplotlib axes</span>
-
-<span class="sd">        TODO: this function might be cleaner as a wrapper around PlotMixin.plot</span>
+<span class="sd">        trace : InferenceData, optional</span>
+<span class="sd">            ArviZ InferenceData object containing model trace.</span>
+<span class="sd">        ax : Axes, optional</span>
+<span class="sd">            Pre-defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">trace</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">trace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span>
@@ -552,13 +569,15 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">_plot_transitions</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PowerLawPlotMixin.plot_residuals"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PowerLawPlotMixin.plot_residuals">[docs]</a>    <span class="k">def</span> <span class="nf">plot_residuals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots residuals</span>
+<div class="viewcode-block" id="PowerLawPlotMixin.plot_residuals"><a class="viewcode-back" href="../../api.html#ratingcurve.plot.PowerLawPlotMixin.plot_residuals">[docs]</a>    <span class="k">def</span> <span class="nf">plot_residuals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots power-law residuals.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        trace : ArviZ InferenceData</span>
-<span class="sd">        ax : matplotlib axes</span>
+<span class="sd">        trace : InferenceData</span>
+<span class="sd">            ArviZ InferenceData object containing model trace.</span>
+<span class="sd">        ax : Axes</span>
+<span class="sd">            Pre-defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">trace</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">trace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span>
@@ -568,13 +587,14 @@ document.write(`
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">plot_residuals</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_plot_transitions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">:</span> <span class="n">InferenceData</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot transitions (breakpoints)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot power-law transitions (breakpoints).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        trace : ArviZ InferenceData</span>
-<span class="sd">            Inference data containing transition points (hs)</span>
-<span class="sd">        ax : matplotlib axes</span>
+<span class="sd">        trace : InferenceData</span>
+<span class="sd">            ArviZ Inference data containing transition points (hs)</span>
+<span class="sd">        ax : Axes</span>
+<span class="sd">            Pre-defined matplotlib axes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">hs</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">posterior</span><span class="p">[</span><span class="s1">&#39;hs&#39;</span><span class="p">]</span>
 
