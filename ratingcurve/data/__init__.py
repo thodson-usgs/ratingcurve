@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 cat = open_catalog('ratingcurve/data/catalog.yaml')
 
 
-def list_datasets() -> tuple:
+def list() -> tuple:
     """
     Returns a tuple of names for the tutorial datasets.
 
