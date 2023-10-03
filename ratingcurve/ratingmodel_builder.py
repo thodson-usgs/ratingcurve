@@ -155,7 +155,11 @@ class RatingModelBuilder(ModelBuilder):
         # Convert inputs to numpy arrays
         self.h_obs = np.array(h).flatten()
         self.q_obs = np.array(q).flatten()
-        
+
+        # Make sure discharge is positive
+        if np.any(self.q_obs <= 0):
+            raise ValueError('Discharge must be positive. Zero values may be allowed in a future release.')
+
         # We want to fit in log space, so do that pre-processing here.
         self.log_q = np.log(self.q_obs)
 
