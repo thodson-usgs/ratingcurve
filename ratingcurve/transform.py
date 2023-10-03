@@ -11,9 +11,9 @@ if TYPE_CHECKING:
 
 
 class Transform:
-    """Transformation class
+    """Transformation base class.
 
-    All children of Transform must have transfom and untransform methods
+    All children of Transform must have transfom and untransform methods.
     """
     def __init__(self, x):
         """Create empty Transform object
@@ -41,7 +41,7 @@ class Transform:
 
 
 class ZTransform(Transform):
-    """Z-transforms data to have zero mean and unit variance
+    """Z-transforms data to have zero mean and unit variance.
     """
 
     def __init__(self, x: ArrayLike):
@@ -61,7 +61,7 @@ class ZTransform(Transform):
         Parameters
         ----------
         x : array_like
-          Data to be transformed.
+            Data to be transformed.
 
         Returns
         -------
@@ -102,7 +102,7 @@ class LogZTransform(ZTransform):
         super().__init__(log_x)
 
     def transform(self, x: ArrayLike) -> ArrayLike:
-        """Transform to log z-score
+        """Transform to log z-score.
 
         Logs the data then standardizes to zero mean and unit variance.
 
@@ -184,7 +184,7 @@ class Dmatrix():
     """Transform for spline design matrix
     """
     def __init__(self, stage: ArrayLike, df: int, form: str = 'cr') -> None:
-        """Create a Dmatrix object
+        """Create a Dmatrix object.
 
         Create a design matrix for a natural cubic spline, which is a cubic
         spline that is additionally constrained to be linear at the boundaries.
@@ -223,7 +223,7 @@ class Dmatrix():
 
 
 def compute_knots(minimum: float, maximum: float, n: int) -> ArrayLike:
-    """Return list of spline knots
+    """Return list of spline knots.
 
     Parameters
     ----------
