@@ -6,7 +6,7 @@ import numpy as np
 import pymc as pm
 import pytensor.tensor as at
 
-from .modelbuilder_ratings import PowerLawRatingModel
+from .ratings import PowerLawRatingModel
 
 if TYPE_CHECKING:
     from numpy.typing import ArrayLike

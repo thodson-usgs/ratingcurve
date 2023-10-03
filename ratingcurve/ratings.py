@@ -7,8 +7,8 @@ import pymc as pm
 import pytensor.tensor as at
 
 from .transform import Dmatrix
-from .modelbuilder_plot import PowerLawPlotMixin, SplinePlotMixin
-from .modelbuilder_base import RatingModelBuilder
+from .plot import PowerLawPlotMixin, SplinePlotMixin
+from .ratingmodel_builder import RatingModelBuilder
 
 if TYPE_CHECKING:
     from numpy.typing import ArrayLike
