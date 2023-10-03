@@ -4,29 +4,22 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 import pymc as pm
-import arviz as az
 import pytensor.tensor as at
 
-from dataclasses import dataclass, asdict
-from pymc import Model
-from pandas import DataFrame
-
-from .transform import ZTransform, Dmatrix
+from .transform import Dmatrix
 from .modelbuilder_plot import PowerLawPlotMixin, SplinePlotMixin
-from .modelbuilder_experimental import RatingModelBuilder
+from .modelbuilder_base import RatingModelBuilder
 
 if TYPE_CHECKING:
-    from arviz import InferenceData
     from numpy.typing import ArrayLike
 
 
-class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
+class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
     """
-    Experimental multi-segment power law rating using Heaviside 
-    parameterization and PyMC ModelBuilder.
+    Multi-segment power law rating using Heaviside parameterization.
     """
     # Give the model a name
-    _model_type = "PowerLawRatingModel"
+    _model_type = "PowerLawRating"
 
     # And a version
     version = "0.1"
@@ -38,15 +31,15 @@ class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
         needed to build the model. It will be passed to the class instance on
         initialization, in case the user doesn't provide any model_config of their own.
 
-        When specified by a user, `model_config` in the `PowerLawRatingModel`  must be a
+        When specified by a user, `model_config` in the `PowerLawRatingModel` must be a
         dictionary and contain the two keys `segements` and `prior`. These two keys are formatted
         as follows:
 
         segments : int
-            Number of segments in the rating (i.e., same number as breakpoints).
+            Number of segments in the rating.
         prior : dict
             Prior knowledge of breakpoint locations. Must contain the key `distribution`,
-            which can either be set to a `uniform` or `normal` distribution. If a normal distribution,
+            which can either be set to a `'uniform'` or `'normal'` distribution. If a normal distribution,
             then the mean `mu` and width `sigma` must be given as well.
 
         Examples:
@@ -58,7 +51,7 @@ class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
 
         Note that the number of normal distribution means and widths must be the same as
         the number of segments. Additionally, the first mean must be less than the lowest
-        observed stage.
+        observed stage as it defines the stage of zero flow.
         """
         model_config = {'segments': 2, 'prior': {'distribution': 'uniform'}}
 
@@ -75,15 +68,13 @@ class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
             Input array of gage height (h) observations.
         q : array_like
             Input array of discharge (q) observations.
-        q_sigma : array-like, optional
+        q_sigma : array_like, optional
             Input array of discharge uncertainty in units of discharge.
-         """
-        # Pre-process data: Converts q (and q_sigma if given) to log space
+        """
+        # Pre-process data: Converts q to normalized log space
+        # (and q_sigma to log space if given) 
         self.segments = self.model_config.get('segments')
         self._generate_and_preprocess_model_data(h, q, q_sigma)
-
-        self.q_transform = ZTransform(self.log_q)
-        self.log_q_z = self.q_transform.transform(self.log_q)
 
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
@@ -115,29 +106,6 @@ class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
             # likelihood
             X = pm.Deterministic('X', at.log( at.clip(h - hs, 0, np.inf) + self.ho))
             obs = pm.Normal("model_q", a + at.dot(b, X), sigma + q_sigma, shape=h.shape, observed=logq)
-
-
-    def sample_prior_predictive(self,
-                                X_pred,
-                                y_pred=None,
-                                samples: int=None,
-                                extend_idata: bool=False,
-                                combined: bool=True,
-                                **kwargs,
-                                ):
-        """
-        Update of ModelBuilder `sample_prior_predicitve` function to
-        output unlogged denormalized discharge (q).
-        """
-        return np.exp(self.q_transform.untransform(np.log(super().sample_prior_predictive(X_pred, y_pred, samples, extend_idata, combined, **kwargs))))
-        
-        
-    def sample_posterior_predictive(self, X_pred, extend_idata, combined, **kwargs):
-        """
-        Update of ModelBuilder `sample_posterior_predicitve` function to
-        output unlogged denormalized discharge (q).
-        """
-        return np.exp(self.q_transform.untransform(np.log(super().sample_posterior_predictive(X_pred, extend_idata, combined, **kwargs))))
 
     
     def set_normal_prior(self):
@@ -248,155 +216,13 @@ class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
             self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
 
 
-class BrokenPowerLawRatingModel(PowerLawRatingModel):
+
+class SplineRating(RatingModelBuilder, SplinePlotMixin):
     """
-    Experimental multi-segment power law rating using the standard parameterization
-    (see https://en.wikipedia.org/wiki/Power_law#Broken_power_law) and PyMC
-    ModelBuilder.
-    """
-    # Give the model a name
-    _model_type = "BrokenPowerLawRatingModel"
-
-    # And a version
-    version = "0.1"
-        
-    def build_model(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike=None, **kwargs):
-        """
-        Creates the PyMC model.
-
-        Parameters
-        ----------
-        h : array_like
-            Input array of gage height (h) observations.
-        q : array_like
-            Input array of discharge (q) observations.
-        q_sigma : array-like, optional
-            Input array of discharge uncertainty in units of discharge.
-         """
-        # Pre-process data: Converts q (and q_sigma if given) to log space
-        self.segments = self.model_config.get('segments')
-        self._generate_and_preprocess_model_data(h, q, q_sigma)
-
-        self.q_transform = ZTransform(self.log_q)
-        self.log_q_z = self.q_transform.transform(self.log_q)
-
-        # Create the model
-        with pm.Model(coords=self.model_coords) as self.model:
-
-            h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
-    
-            # Priors
-            # alpha, the power law slopes
-            # lower bound of truncated normal forces discharge to increase with stage
-            alpha = pm.Uniform("alpha", lower=0, upper=100, shape=(self.segments, 1), dims="splines")
-            # a is the scale parameter
-            a = pm.Uniform("a", lower=-100, upper=100)
-            sigma = pm.HalfCauchy("sigma", beta=0.1)
-    
-            # Set priors on break points
-            if self.model_config.get('prior').get('distribution', 'uniform') == 'normal':
-                hs = self.set_normal_prior()
-            elif self.model_config.get('prior').get('distribution', 'uniform') == 'uniform':
-                hs = self.set_uniform_prior()
-            else:
-                raise NotImplementedError('Prior distribution not implemented')
-    
-            # -1 gives alpha_{i-1) - alpha_i rather than alpha_i - alpha_{i-1} of diff
-            alpha_diff = -1 * at.diff(alpha, axis=0)
-            sums = at.cumsum(alpha_diff * at.log(hs[1:]), axis=0)
-            # Sum for first element is 0, as it does not have a summation 
-            sums = at.concatenate([pm.math.constant(0, ndim=2), sums])
-    
-            # Create ranges for each segment
-            segments_range = at.concatenate([pm.math.constant(0, ndim=2),
-                                             hs[1:],
-                                             pm.math.constant(np.inf, ndim=2)])
-    
-            # Tensors are broadcasts for vectorized computation.
-            #   Calculates function within range sets value to 0 everywhere else. 
-            #   Then sum along segment dimension to collapse.
-            q = at.switch(((h - hs[0]) > segments_range[:-1]) & ((h - hs[0]) <= segments_range[1:]), 
-                           a + alpha * at.log(h - hs[0]) + sums, 0)
-            q = at.sum(q, axis=0)
-    
-            obs = pm.Normal('model_q', q, sigma + q_sigma, shape=h.shape, observed=logq)
-
-
-
-class SmoothlyBrokenPowerLawRatingModel(BrokenPowerLawRatingModel):
-    """
-    Experimental smooothly broken multi-segment power law rating using the standard parameterization
-    (see https://en.wikipedia.org/wiki/Power_law#Smoothly_broken_power_law) and PyMC
-    ModelBuilder.
+    Natural spline rating.
     """
     # Give the model a name
-    _model_type = "SmoothlyBrokenPowerLawRatingModel"
-
-    # And a version
-    version = "0.1"
-    
-    def build_model(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike=None, **kwargs):
-        """
-        Creates the PyMC model.
-
-        Parameters
-        ----------
-        h : array_like
-            Input array of gage height (h) observations.
-        q : array_like
-            Input array of discharge (q) observations.
-        q_sigma : array-like, optional
-            Input array of discharge uncertainty in units of discharge.
-         """
-        # Pre-process data: Converts q (and q_sigma if given) to log space
-        self.segments = self.model_config.get('segments')
-        self._generate_and_preprocess_model_data(h, q, q_sigma)
-
-        self.q_transform = ZTransform(self.log_q)
-        self.log_q_z = self.q_transform.transform(self.log_q)
-
-        # Create the model
-        with pm.Model(coords=self.model_coords) as self.model:
-
-            # observations
-            h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
-    
-            # Priors
-            # alpha, the power law slopes
-            # lower bound of truncated normal forces discharge to increase with stage
-            alpha = pm.Uniform("alpha", lower=0, upper=100, shape=(self.segments, 1), dims="splines")
-            # a is the scale parameter
-            a = pm.Uniform("a", lower=-100, upper=100)
-            # delta is the smoothness parameter, limit lower bound (m) to prevent floating point errors
-            delta = pm.Pareto('delta', alpha=0.5, m=0.01)
-            sigma = pm.HalfCauchy("sigma", beta=0.1)
-    
-            # Set priors on break points
-            if self.model_config.get('prior').get('distribution', 'uniform') == 'normal':
-                hs = self.set_normal_prior()
-            elif self.model_config.get('prior').get('distribution', 'uniform') == 'uniform':
-                hs = self.set_uniform_prior()
-            else:
-                raise NotImplementedError('Prior distribution not implemented')
-    
-            alpha_diff = at.diff(alpha, axis=0)
-            sum_array = (alpha_diff * delta) * at.log(1 + ((h - hs[0])/hs[1:]) ** (1/delta))
-            sums = at.sum(sum_array, axis=0)
-    
-            obs = pm.Normal("model_q", a + at.log(h - hs[0]) * alpha[0, ...] + sums, sigma + q_sigma, shape=h.shape, observed=logq)
-
-
-
-class SplineRatingModel(RatingModelBuilder, SplinePlotMixin):
-    """
-    Experimental natural spline rating using PyMC ModelBuilder.
-    """
-    # Give the model a name
-    _model_type = "SplineRatingModel"
+    _model_type = "SplineRating"
 
     # And a version
     version = "0.1"
@@ -409,7 +235,7 @@ class SplineRatingModel(RatingModelBuilder, SplinePlotMixin):
         initialization, in case the user doesn't provide any model_config of their own.
 
         When specified by a user, `model_config` in the `SplineRatingModel`  must be a
-        dictionary and contain the three keys `mean`, `sd`, and `df`. These two keys are
+        dictionary and contain the three keys `mean`, `sd`, and `df`. These three keys are
         formatted as follows:
 
         mean : float
@@ -457,9 +283,9 @@ class SplineRatingModel(RatingModelBuilder, SplinePlotMixin):
             Input array of gage height (h) observations.
         q : array_like
             Input array of discharge (q) observations.
-        q_sigma : array-like, optional
+        q_sigma : array_like, optional
             Input array of discharge uncertainty in units of discharge.
-         """
+        """
         # Need to compute the design matrix now as we need it to get the number
         # of "segments" to include when preprocessing data for coords.
         self.h_obs = np.array(h).flatten()
@@ -468,12 +294,9 @@ class SplineRatingModel(RatingModelBuilder, SplinePlotMixin):
         self.B = self.d_transform(self.h_obs)
         self.segments = self.B.shape[1]
 
-        # Pre-process data: Converts q (and q_sigma if given) to log space
+        # Pre-process data: Converts q to normalized log space
+        # (and q_sigma to log space if given) 
         self._generate_and_preprocess_model_data(h, q, q_sigma)
-
-        # Normalize discharge
-        self.q_transform = ZTransform(self.log_q)
-        self.log_q_z = self.q_transform.transform(self.log_q)
 
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
@@ -488,26 +311,4 @@ class SplineRatingModel(RatingModelBuilder, SplinePlotMixin):
     
             # likelihood
             obs = pm.Normal("model_q", at.dot(B, w.T), sigma + q_sigma, shape=h.shape, observed=logq)
-
-
-    def sample_prior_predictive(self,
-                                X_pred,
-                                y_pred=None,
-                                samples: int=None,
-                                extend_idata: bool=False,
-                                combined: bool=True,
-                                **kwargs,
-                                ):
-        """
-        Update of ModelBuilder `sample_prior_predicitve` function to
-        output unlogged denormalized discharge (q).
-        """
-        return np.exp(self.q_transform.untransform(np.log(super().sample_prior_predictive(X_pred, y_pred, samples, extend_idata, combined, **kwargs))))
-        
-        
-    def sample_posterior_predictive(self, X_pred, extend_idata, combined, **kwargs):
-        """
-        Update of ModelBuilder `sample_posterior_predicitve` function to
-        output unlogged denormalized discharge (q).
-        """
-        return np.exp(self.q_transform.untransform(np.log(super().sample_posterior_predictive(X_pred, extend_idata, combined, **kwargs))))
+            

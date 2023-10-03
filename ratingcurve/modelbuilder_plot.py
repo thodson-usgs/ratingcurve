@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import arviz as az
 
 if TYPE_CHECKING:
-    from arviz import InferenceData
     from pandas import DataFrame
     from matplotlib.pyplot import Axes
 
@@ -15,6 +14,7 @@ if TYPE_CHECKING:
 DEFAULT_FIGSIZE = (5, 5)
 NARROW_LINE = 1
 REGULAR_LINE = NARROW_LINE * 1.5
+
 
 class RatingMixin:
     """
@@ -40,6 +40,8 @@ class RatingMixin:
             
         return az.summary(self.idata, var_names)
 
+
+
 class PlotMixin(RatingMixin):
     """
     Mixin class for plotting rating models.
@@ -63,7 +65,8 @@ class PlotMixin(RatingMixin):
             fig, ax = plt.subplots(1, figsize=DEFAULT_FIGSIZE)
 
         return ax
- 
+
+    
     def plot(self, ax: Axes=None) -> None:
         """
         Plots gagings and fit rating curve.
@@ -90,6 +93,7 @@ class PlotMixin(RatingMixin):
 
         self.plot_gagings(ax=ax)
 
+    
     def plot_residuals(self, ax: Axes=None) -> None:
         """
         Plots residuals between model and data.
@@ -118,6 +122,7 @@ class PlotMixin(RatingMixin):
                     ecolor='black')
         self._format_residual_plot(ax)
 
+    
     def plot_gagings(self, ax: Axes=None) -> None:
         """
         Plot observed gagings with uncertainty.
@@ -144,6 +149,7 @@ class PlotMixin(RatingMixin):
                     markerfacecolor='none')
         self._format_rating_plot(ax)
 
+    
     @staticmethod
     def _format_rating_plot(ax: Axes) -> None:
         """
@@ -176,6 +182,7 @@ class PlotMixin(RatingMixin):
         ax.set_xlim(-x_max, x_max)
 
 
+
 class SplinePlotMixin(PlotMixin):
     """
     Mixin class for plotting spline rating models.
@@ -196,6 +203,7 @@ class SplinePlotMixin(PlotMixin):
         self._plot_knots(ax=ax)
         super().plot(ax=ax)
 
+    
     def _plot_knots(self, ax: Axes) -> None:
         """
         Plots spline knots.
@@ -228,6 +236,7 @@ class PowerLawPlotMixin(PlotMixin):
         self._plot_transitions(ax=ax)
         super().plot(ax=ax)
 
+    
     def plot_residuals(self, ax: Axes=None) -> None:
         """
         Plots power-law residuals.
@@ -244,6 +253,7 @@ class PowerLawPlotMixin(PlotMixin):
         self._plot_transitions(ax=ax)
         super().plot_residuals(ax=ax)
 
+    
     def _plot_transitions(self, ax: Axes) -> None:
         """
         Plot power-law transitions (breakpoints).
