@@ -2,14 +2,13 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-import pkg_resources
-
 from intake import open_catalog
 
 if TYPE_CHECKING:
     from pandas import DataFrame
 
 cat = open_catalog('ratingcurve/data/catalog.yaml')
+
 
 def list() -> tuple:
     """
@@ -21,7 +20,7 @@ def list() -> tuple:
         Tuple of names of tutorial datasets.
     """
     datasets = tuple(cat)
-    
+
     return datasets
 
 
@@ -42,7 +41,7 @@ def load(name: str) -> DataFrame:
     """
     if name not in tuple(cat):
         raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {tuple(cat)}')
-    
+
     return cat[name].read()
 
 
@@ -59,4 +58,3 @@ def describe(name: str):
         raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {tuple(cat)}')
 
     print(cat[name].description)
-    

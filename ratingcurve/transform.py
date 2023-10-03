@@ -20,6 +20,7 @@ class Transform:
         """
         self.mean_ = None
         self.std_ = None
+        _ = x
 
     def transform(self, x: ArrayLike) -> ArrayLike:
         """Transform data
@@ -36,8 +37,8 @@ class Transform:
         """
         return x
 
-    def untransform(self, x: ArrayLike) -> ArrayLike:
-        return x
+    def untransform(self, z: ArrayLike) -> ArrayLike:
+        return z
 
 
 class ZTransform(Transform):
@@ -164,12 +165,12 @@ class UnitTransform(Transform):
         """
         return x/self.max_
 
-    def untransform(self, x: ArrayLike) -> ArrayLike:
+    def untransform(self, z: ArrayLike) -> ArrayLike:
         """Transform from unit interval back to original units
 
         Parameters
         ----------
-        x : array_like
+        z : array_like
           Transformed data.
 
         Returns
@@ -177,14 +178,14 @@ class UnitTransform(Transform):
         ArrayLike
             Unit interval transformed back to original units.
         """
-        return x*self.max_
+        return z*self.max_
 
 
 class Dmatrix():
     """Transform for spline design matrix
     """
     def __init__(self, stage: ArrayLike, df: int, form: str = 'cr') -> None:
-        """Create a Dmatrix object
+        """Create a Dmatrix object.
 
         Create a design matrix for a natural cubic spline, which is a cubic
         spline that is additionally constrained to be linear at the boundaries.
@@ -207,7 +208,7 @@ class Dmatrix():
         self.design_info = temp.design_info
 
     def transform(self, stage: ArrayLike) -> ArrayLike:
-        """Transform stage using spline design matrix
+        """Transform stage using spline design matrix.
  
         Parameters
         ----------
