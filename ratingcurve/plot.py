@@ -17,12 +17,9 @@ REGULAR_LINE = NARROW_LINE * 1.5
 
 
 class RatingMixin:
-    """
-    Parent class for other rating-related mixins.
-    """
+    """Parent class for other rating-related mixins."""
     def summary(self, var_names: list=None) -> DataFrame:
-        """
-        Summary of rating model parameters.
+        """Summary of rating model parameters.
         
         Parameters
         ----------
@@ -43,13 +40,10 @@ class RatingMixin:
 
 
 class PlotMixin(RatingMixin):
-    """
-    Mixin class for plotting rating models.
-    """
+    """Mixin class for plotting rating models."""
     @staticmethod
     def setup_plot(ax: Axes=None):
-        """
-        Sets up figure and axes for rating curve plot.
+        """Sets up figure and axes for rating curve plot.
 
         Parameters
         ----------
@@ -68,8 +62,7 @@ class PlotMixin(RatingMixin):
 
     
     def plot(self, ax: Axes=None) -> None:
-        """
-        Plots gagings and fit rating curve.
+        """Plots gagings and fit rating curve.
 
         Parameters
         ----------
@@ -95,8 +88,7 @@ class PlotMixin(RatingMixin):
 
     
     def plot_residuals(self, ax: Axes=None) -> None:
-        """
-        Plots residuals between model and data.
+        """Plots residuals between model and data.
 
         Parameters
         ----------
@@ -124,8 +116,7 @@ class PlotMixin(RatingMixin):
 
     
     def plot_gagings(self, ax: Axes=None) -> None:
-        """
-        Plot observed gagings with uncertainty.
+        """Plot observed gagings with uncertainty.
 
         Parameters
         ----------
@@ -152,8 +143,7 @@ class PlotMixin(RatingMixin):
     
     @staticmethod
     def _format_rating_plot(ax: Axes) -> None:
-        """
-        Format rating plot.
+        """Format rating plot.
 
         Parameters
         ----------
@@ -165,8 +155,7 @@ class PlotMixin(RatingMixin):
 
     @staticmethod
     def _format_residual_plot(ax: Axes) -> None:
-        """
-        Format residual plot.
+        """Format residual plot.
 
         Parameters
         ----------
@@ -184,12 +173,9 @@ class PlotMixin(RatingMixin):
 
 
 class SplinePlotMixin(PlotMixin):
-    """
-    Mixin class for plotting spline rating models.
-    """
+    """Mixin class for plotting spline rating models."""
     def plot(self, ax: Axes=None) -> None:
-        """
-        Plots spline rating curve.
+        """Plots spline rating curve.
 
         Parameters
         ----------
@@ -205,8 +191,7 @@ class SplinePlotMixin(PlotMixin):
 
     
     def _plot_knots(self, ax: Axes) -> None:
-        """
-        Plots spline knots.
+        """Plots spline knots.
 
         Parameters
         ----------
@@ -217,12 +202,9 @@ class SplinePlotMixin(PlotMixin):
 
 
 class PowerLawPlotMixin(PlotMixin):
-    """
-    Mixin class for plotting power law rating models.
-    """
+    """Mixin class for plotting power law rating models."""
     def plot(self, ax: Axes=None) -> None:
-        """
-        Plots power-law rating curve.
+        """Plots power-law rating curve.
 
         Parameters
         ----------
@@ -238,8 +220,7 @@ class PowerLawPlotMixin(PlotMixin):
 
     
     def plot_residuals(self, ax: Axes=None) -> None:
-        """
-        Plots power-law residuals.
+        """Plots power-law residuals.
 
         Parameters
         ----------
@@ -255,8 +236,7 @@ class PowerLawPlotMixin(PlotMixin):
 
     
     def _plot_transitions(self, ax: Axes) -> None:
-        """
-        Plot power-law transitions (breakpoints).
+        """Plot power-law transitions (breakpoints).
 
         Parameters
         ----------

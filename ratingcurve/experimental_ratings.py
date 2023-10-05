@@ -13,8 +13,7 @@ if TYPE_CHECKING:
 
 
 class ReitanRating(PowerLawRating):
-    """
-    Experimental multi-segment power law rating using the Reitan parameterization.
+    """Experimental multi-segment power law rating using the Reitan parameterization.
 
     Unlike Reitan Eq. 5, this version uses a fixed offset for each segment (ho).
     """
@@ -25,8 +24,7 @@ class ReitanRating(PowerLawRating):
     version = "0.1"
         
     def build_model(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike=None, **kwargs):
-        """
-        Creates the PyMC model.
+        """Creates the PyMC model.
 
         Parameters
         ----------
@@ -81,9 +79,7 @@ class ReitanRating(PowerLawRating):
     
     
 class LeCozRating(PowerLawRating):
-    """
-    Experimental multi-segment power law rating using the LeCoz (2014) parameterization.
-    """
+    """Experimental multi-segment power law rating using the LeCoz (2014) parameterization."""
     # Give the model a name
     _model_type = "LeCozRating"
 
@@ -91,8 +87,7 @@ class LeCozRating(PowerLawRating):
     version = "0.1"
         
     def build_model(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike=None, **kwargs):
-        """
-        Creates the PyMC model.
+        """Creates the PyMC model.
 
         Parameters
         ----------
@@ -160,9 +155,7 @@ class LeCozRating(PowerLawRating):
 
 
 class ISORating(PowerLawRating):
-    """
-    Experimental multi-segment power law rating using the ISO parameterization.
-    """
+    """Experimental multi-segment power law rating using the ISO parameterization."""
     # Give the model a name
     _model_type = "ISORating"
 
@@ -170,8 +163,7 @@ class ISORating(PowerLawRating):
     version = "0.1"
         
     def build_model(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike=None, **kwargs):
-        """
-        Creates the PyMC model.
+        """Creates the PyMC model.
 
         Parameters
         ----------
@@ -224,8 +216,7 @@ class ISORating(PowerLawRating):
 
 
 class BrokenPowerLawRating(PowerLawRating):
-    """
-    Experimental multi-segment power law rating using the standard parameterization
+    """Experimental multi-segment power law rating using the standard parameterization
     (see https://en.wikipedia.org/wiki/Power_law#Broken_power_law).
     """
     # Give the model a name
@@ -235,8 +226,7 @@ class BrokenPowerLawRating(PowerLawRating):
     version = "0.1"
         
     def build_model(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike=None, **kwargs):
-        """
-        Creates the PyMC model.
+        """Creates the PyMC model.
 
         Parameters
         ----------
@@ -299,8 +289,7 @@ class BrokenPowerLawRating(PowerLawRating):
 
 
 class SmoothlyBrokenPowerLawRating(PowerLawRating):
-    """
-    Experimental smooothly broken multi-segment power law rating using the standard parameterization
+    """Experimental smooothly broken multi-segment power law rating using the standard parameterization
     (see https://en.wikipedia.org/wiki/Power_law#Smoothly_broken_power_law).
     """
     # Give the model a name
@@ -310,8 +299,7 @@ class SmoothlyBrokenPowerLawRating(PowerLawRating):
     version = "0.1"
     
     def build_model(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike=None, **kwargs):
-        """
-        Creates the PyMC model.
+        """Creates the PyMC model.
 
         Parameters
         ----------
@@ -357,4 +345,5 @@ class SmoothlyBrokenPowerLawRating(PowerLawRating):
             sum_array = (alpha_diff * delta) * at.log(1 + ((h - hs[0])/hs[1:]) ** (1/delta))
             sums = at.sum(sum_array, axis=0)
     
-            obs = pm.Normal("model_q", a + at.log(h - hs[0]) * alpha[0, ...] + sums, sigma + q_sigma, shape=h.shape, observed=logq)
+            obs = pm.Normal("model_q", a + at.log(h - hs[0]) * alpha[0, ...] + sums,
+                            sigma + q_sigma, shape=h.shape, observed=logq)
