@@ -1,4 +1,5 @@
 pymc>=5.0.0
+pymc-experimental==0.0.12
 pandas
 pytensor
 patsy
