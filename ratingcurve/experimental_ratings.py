@@ -6,7 +6,7 @@ import numpy as np
 import pymc as pm
 import pytensor.tensor as at
 
-from .modelbuilder_ratings import PowerLawRatingModel
+from .modelbuilder_ratings import PowerLawRating
 
 if TYPE_CHECKING:
     from numpy.typing import ArrayLike
@@ -223,7 +223,7 @@ class ISORating(PowerLawRating):
 
 
 
-class BrokenPowerLawRating(PowerLawRatingModel):
+class BrokenPowerLawRating(PowerLawRating):
     """
     Experimental multi-segment power law rating using the standard parameterization
     (see https://en.wikipedia.org/wiki/Power_law#Broken_power_law).
@@ -298,7 +298,7 @@ class BrokenPowerLawRating(PowerLawRatingModel):
 
 
 
-class SmoothlyBrokenPowerLawRating(BrokenPowerLawRatingModel):
+class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
     """
     Experimental smooothly broken multi-segment power law rating using the standard parameterization
     (see https://en.wikipedia.org/wiki/Power_law#Smoothly_broken_power_law).
