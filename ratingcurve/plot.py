@@ -27,15 +27,16 @@ class RatingMixin:
         var_names : list of str, optional
             List of variables to include in summary. If no names are given,
             then a summary of all variables is returned.
-  
+
         Returns
         -------
         df : DataFrame
             DataFrame summary of rating model parameters.
         """
         if self.idata is None:
-            raise AttributeError('Summary cannot be retrieved as model has not been fit.')
-            
+            raise AttributeError('Summary cannot be retrieved as model '
+                                 'has not been fit.')
+
         return az.summary(self.idata, var_names)
 
 
@@ -43,7 +44,7 @@ class PlotMixin(RatingMixin):
     """Mixin class for plotting rating models.
     """
     @staticmethod
-    def setup_plot(ax: Axes=None):
+    def setup_plot(ax: Axes = None):
         """Sets up figure and axes for rating curve plot.
 
         Parameters
@@ -61,7 +62,7 @@ class PlotMixin(RatingMixin):
 
         return ax
 
-    def plot(self, ax: Axes=None) -> None:
+    def plot(self, ax: Axes = None) -> None:
         """Plots gagings and fit rating curve.
 
         Parameters
@@ -70,7 +71,8 @@ class PlotMixin(RatingMixin):
             Pre-defined matplotlib axes.
         """
         if self.idata is None:
-            raise AttributeError('Fitted rating curve cannot be plotted as model has not been fit.')
+            raise AttributeError('Fitted rating curve cannot be plotted as '
+                                 'model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
         self._format_rating_plot(ax)
@@ -95,7 +97,8 @@ class PlotMixin(RatingMixin):
             Pre-defined matplotlib axes.
         """
         if self.idata is None:
-            raise AttributeError('Rating curve residuals cannot be plotted as model has not been fit.')
+            raise AttributeError('Rating curve residuals cannot be plotted '
+                                 'as model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
         self._format_rating_plot(ax)
@@ -113,7 +116,7 @@ class PlotMixin(RatingMixin):
                     ecolor='black')
         self._format_residual_plot(ax)
 
-    def plot_gagings(self, ax: Axes=None) -> None:
+    def plot_gagings(self, ax: Axes = None) -> None:
         """Plot gagings with uncertainty.
 
         Parameters
@@ -122,7 +125,8 @@ class PlotMixin(RatingMixin):
             Pre-defined matplotlib axes.
         """
         if self.idata is None:
-            raise AttributeError('Observed gagings cannot be plotted as observed data is given during fitting.')
+            raise AttributeError('Observed gagings cannot be plotted as '
+                                 'observed data is given during fitting.')
 
         ax = self.setup_plot(ax=ax)
 
@@ -172,7 +176,7 @@ class PlotMixin(RatingMixin):
 class SplinePlotMixin(PlotMixin):
     """Mixin class for plotting spline rating models.
     """
-    def plot(self, ax: Axes=None) -> None:
+    def plot(self, ax: Axes = None) -> None:
         """Plots spline rating curve.
 
         Parameters
@@ -181,7 +185,8 @@ class SplinePlotMixin(PlotMixin):
             Pre-defined matplotlib axes.
         """
         if self.idata is None:
-            raise AttributeError('Fitted rating curve cannot be plotted as model has not been fit.')
+            raise AttributeError('Fitted rating curve cannot be plotted as '
+                                 'model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
         self._plot_knots(ax=ax)
@@ -195,7 +200,8 @@ class SplinePlotMixin(PlotMixin):
         ax : Axes
             Pre-defined matplotlib axes.
         """
-        [ax.axhline(k, color='lightgray', linestyle='dotted', linewidth=NARROW_LINE) for k in self._dmatrix.knots]
+        [ax.axhline(k, color='lightgray', linestyle='dotted',
+                    linewidth=NARROW_LINE) for k in self._dmatrix.knots]
 
 
 class PowerLawPlotMixin(PlotMixin):
@@ -210,7 +216,8 @@ class PowerLawPlotMixin(PlotMixin):
             Pre-defined matplotlib axes.
         """
         if self.idata is None:
-            raise AttributeError('Fitted rating curve cannot be plotted as model has not been fit.')
+            raise AttributeError('Fitted rating curve cannot be plotted as '
+                                 'model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
         self._plot_transitions(ax=ax)
@@ -225,7 +232,8 @@ class PowerLawPlotMixin(PlotMixin):
             Pre-defined matplotlib axes.
         """
         if self.idata is None:
-            raise AttributeError('Fitted rating curve cannot be plotted as model has not been fit.')
+            raise AttributeError('Fitted rating curve cannot be plotted as '
+                                 'model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
         self._plot_transitions(ax=ax)
@@ -243,8 +251,12 @@ class PowerLawPlotMixin(PlotMixin):
 
         alpha = 0.05
         hs_u = hs.mean(dim=['chain', 'draw']).data
-        hs_lower = hs.quantile(alpha/2, dim=['chain', 'draw']).data.flatten()
-        hs_upper = hs.quantile(1 - alpha/2, dim=['chain', 'draw']).data.flatten()
+        hs_lower = hs.quantile(alpha/2, dim=['chain',
+                                             'draw']).data.flatten()
+        hs_upper = hs.quantile(1 - alpha/2, dim=['chain',
+                                                 'draw']).data.flatten()
 
-        [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)]
-        [ax.axhline(u, color='lightgray', linestyle='dotted', linewidth=NARROW_LINE) for u in hs_u]
+        [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower,
+                                                              hs_upper)]
+        [ax.axhline(u, color='lightgray', linestyle='dotted',
+                    linewidth=NARROW_LINE) for u in hs_u]

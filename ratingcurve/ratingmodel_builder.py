@@ -18,11 +18,11 @@ if TYPE_CHECKING:
     from arviz import InferenceData
     from numpy.typing import ArrayLike
     from pymc.util import RandomState
-    from typing import Any
+    from typing import Any, Optional
 
 
 class RatingModelBuilder(ModelBuilder):
-    """Parent class for other rating models that sets not implemented 
+    """Parent class for other rating models that sets not implemented
     PyMC ModelBuilder class functions. Additionally, tweaks other ModelBuilder
     functions for better application in rating curve fitting.
     """
@@ -38,13 +38,16 @@ class RatingModelBuilder(ModelBuilder):
         """
         model_config = self.get_default_model_config(**kwargs)
         self.model_config = model_config  # parameters for priors etc.
-        
+
         self.model = None  # Set by build_model
-        self.idata: Optional[az.InferenceData] = None  # idata is generated during fitting
+        # idata is generated during fitting
+        self.idata: Optional[az.InferenceData] = None
         self.is_fitted_ = False
 
-
-    def _data_setter(self, h: ArrayLike, q: ArrayLike=None, q_sigma: ArrayLike=None):
+    def _data_setter(self,
+                     h: ArrayLike,
+                     q: ArrayLike = None,
+                     q_sigma: ArrayLike = None):
         """Sets new data in the model.
 
         Parameters
@@ -61,88 +64,96 @@ class RatingModelBuilder(ModelBuilder):
             if q is not None:
                 pm.set_data({"logq": np.log(np.array(q))})
             if q_sigma is not None:
-                pm.set_data({"q_sigma": np.log(1 + np.array(q_sigma)/np.array(q))})
+                pm.set_data({"q_sigma":
+                             np.log(1 + np.array(q_sigma)/np.array(q))})
 
-            # Need to update q_sigma if it was input. (If not input originally, it would
-            # be set to a numpy scalar array = 0. Therefore, it would not need to be updated.)
-            # We change it to be a zero array of length len(h) to match the h data. We use zeros
-            # as the model has already been fit and parameters estimated using the input q_sigma data.
-            # Therefore, predictions (which `_data_setter` is used for) would not need any
-            # observational uncertainty as it would already be included in the parameter estimation.
+            # Need to update q_sigma if it was input. (If not input
+            # originally, it would be set to a numpy scalar array = 0.
+            # Therefore, it would not need to be updated.) We change it to
+            # be a zero array of length len(h) to match the h data. We use
+            # zeros as the model has already been fit and parameters
+            # estimated using the input q_sigma data. Therefore, predictions
+            # (which `_data_setter` is used for) would not need any
+            # observational uncertainty as it would already be included in
+            # the parameter estimation.
             elif len(self.q_sigma.shape) != 0:
                 pm.set_data({"q_sigma": np.zeros(len(h))})
 
-    
     @property
     def output_var(self) -> str:
         """Name of the output of dependent variable."""
         return "model_q"
 
-    
     def get_default_sampler_config(self,
-                                   n: int=200_000,
-                                   abs_tol: float=2e-3,
-                                   rel_tol: float=2e-3, 
-                                   adam_learn_rate: float=0.001,
-                                   draws: int=None,
-                                   tune: int=2_000,
-                                   chains: int=4,
-                                   target_accept: float=0.95,
+                                   n: int = 200_000,
+                                   abs_tol: float = 2e-3,
+                                   rel_tol: float = 2e-3,
+                                   adam_learn_rate: float = 0.001,
+                                   draws: int = None,
+                                   tune: int = 2_000,
+                                   chains: int = 4,
+                                   target_accept: float = 0.95,
                                    **kwargs) -> dict:
-        """Returns a `sampler_config` dictionary with all the required sampler configuration parameters
-        needed to sample/fit the model. It will be passed to the class instance on
-        initialization, in case the user doesn't provide any sampler_config of their own.
+        """Returns a `sampler_config` dictionary with all the required
+        sampler configuration parameters needed to sample/fit the model. It
+        will be passed to the class instance on initialization, in case the
+        user doesn't provide any sampler_config of their own.
 
         Parameters
         ----------
         n : int
             The number of iterations. (Only used in ADVI algorithm.)
         abs_tol : float
-           Convergence criterion for algorithm. Termination of fitting occurs when the
-           absolute tolerance between two consecutive iterates is at most `abs_tol`.
-           (Only used in ADVI algorithm.)
+           Convergence criterion for algorithm. Termination of fitting
+           occurs when the absolute tolerance between two consecutive
+           iterates is at most `abs_tol`. (Only used in ADVI algorithm.)
         rel_tol : float
-           Convergence criterion for algorithm. Termination of fitting occurs when the
-           relative tolerance between two consecutive iterates is at most `rel_tol`.
-           (Only used in ADVI algorithm.)
+           Convergence criterion for algorithm. Termination of fitting
+           occurs when the relative tolerance between two consecutive
+           iterates is at most `rel_tol`. (Only used in ADVI algorithm.)
         adam_learn_rate : float
-            The learning rate for the ADAM Optimizer. (Only used in ADVI algorithm.)
+            The learning rate for the ADAM Optimizer. (Only used in ADVI
+            algorithm.)
         draws : int
             The number of samples to draw. (Used in both algorithms.)
         tune : int
-            Number of iterations to tune. Samplers adjust the step sizes, scalings or
-            similar during tuning. Tuning samples are discarded. (Only used in NUTS
-            algorithm.)
+            Number of iterations to tune. Samplers adjust the step sizes,
+            scalings or similar during tuning. Tuning samples are discarded.
+            (Only used in NUTS algorithm.)
         chains : int
             The number of chains to sample. (Only used in NUTS algorithm.)
         target_accept : float
-            The step size is tuned such that we approximate this acceptance rate.
-            (Only used in NUTS algorithm.)
+            The step size is tuned such that we approximate this acceptance
+            rate. (Only used in NUTS algorithm.)
 
         Returns
         -------
         sampler_config : dict
-            A dictionary containing all the required sampler configuration parameters.
+            A dictionary containing all the required sampler configuration
+            parameters.
         """
         if self.method == "advi":
             if draws is None:
                 draws = 10_000
-            sampler_config = {"n": n, 'abs_tol': abs_tol, 'rel_tol': rel_tol, 
-                              'adam_learn_rate': adam_learn_rate, 'draws': draws}
+            sampler_config = {"n": n, 'abs_tol': abs_tol, 'rel_tol': rel_tol,
+                              'adam_learn_rate': adam_learn_rate,
+                              'draws': draws}
         elif self.method == "nuts":
             if draws is None:
                 draws = 1_000
             sampler_config = {"draws": draws, "tune": tune,
                               "chains": chains, "target_accept": target_accept}
-         
+
         return sampler_config
 
-    
-    def _generate_and_preprocess_model_data(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike):
-        """Pre-processed the input data before fitting the model. Pre-processing
-        consists of converting inputs to flattened arrays and log normalizing
-        discharge.
-        
+    def _generate_and_preprocess_model_data(self,
+                                            h: ArrayLike,
+                                            q: ArrayLike,
+                                            q_sigma: ArrayLike):
+        """Pre-processed the input data before fitting the model.
+        Pre-processing consists of converting inputs to flattened arrays and
+        log normalizing discharge.
+
         Parameters
         ----------
         h : array_like
@@ -158,7 +169,8 @@ class RatingModelBuilder(ModelBuilder):
 
         # Make sure discharge is positive
         if np.any(self.q_obs <= 0):
-            raise ValueError('Discharge must be positive. Zero values may be allowed in a future release.')
+            raise ValueError('Discharge must be positive. Zero values may be'
+                             'allowed in a future release.')
 
         # We want to fit in log space, so do that pre-processing here.
         # Also, we want to normalize discharge
@@ -172,14 +184,14 @@ class RatingModelBuilder(ModelBuilder):
         else:
             self.q_sigma = np.log(1 + np.array(q_sigma).flatten()/self.q_obs)
 
-        # Set coordinates. Note that self.segments will need to be set in `build_model` before
-        # this function is called.
-        self.model_coords = {'obs': np.arange(len(self.q_obs)), 'splines': np.arange(self.segments)}
-
-
+        # Set coordinates. Note that self.segments will need to be set in
+        # `build_model` before this function is called.
+        self.model_coords = {'obs': np.arange(len(self.q_obs)),
+                             'splines': np.arange(self.segments)}
 
     def sample_model(self, **kwargs) -> InferenceData:
-        """Redefinition of ModelBuilder sample_model function to include other fitting algorithms.
+        """Redefinition of ModelBuilder sample_model function to include
+        other fitting algorithms.
 
         Parameters
         ----------
@@ -189,41 +201,46 @@ class RatingModelBuilder(ModelBuilder):
         Returns
         -------
         self : InferenceData
-            Arviz InferenceData object containing posterior samples of model parameters
-            of the fitted model.
+            Arviz InferenceData object containing posterior samples of model
+            parameters of the fitted model.
         """
         if self.model is None:
             raise RuntimeError(
-                "The model hasn't been built yet, call .build_model() first or call .fit() instead."
-            )
+                "The model hasn't been built yet, call .build_model() first"
+                "or call .fit() instead.")
 
         # Allow for using of the ADVI fitting algorithm
         with self.model:
             if self.method == "advi":
-                # Need to fully set up sampler configuration, since non numerical/string values
-                # (i.e., callbacks and optimizer) cannot be serialized and saved to idata
-                cb = [pm.callbacks.CheckParametersConvergence(tolerance=self.sampler_config.get('abs_tol'), 
-                                                              diff="absolute"),
-                      pm.callbacks.CheckParametersConvergence(tolerance=self.sampler_config.get('rel_tol'), 
-                                                              diff="relative"),
+                # Need to fully set up sampler configuration, since non-
+                # numerical/string values (i.e., callbacks and optimizer)
+                # cannot be serialized and saved to idata
+                cb = [pm.callbacks.CheckParametersConvergence(
+                          tolerance=self.sampler_config.get('abs_tol'),
+                          diff="absolute"),
+                      pm.callbacks.CheckParametersConvergence(
+                          tolerance=self.sampler_config.get('rel_tol'),
+                          diff="relative"),
                       ]
-    
+
                 sampler_config = {'n': self.sampler_config.get('n'),
-                                  'obj_optimizer' : pm.adam(learning_rate=self.sampler_config.get('adam_learn_rate')),
+                                  'obj_optimizer': pm.adam(
+                  learning_rate=self.sampler_config.get('adam_learn_rate')),
                                   'callbacks': cb
                                   }
                 sampler_args = {**sampler_config, **kwargs}
-                # Remove basic string keys from sampler_args dict as we do not need them now.
+                # Remove basic string keys from sampler_args dict as we do
+                #   not need them now.
                 for key in ['abs_tol', 'rel_tol', 'adam_learn_rate', 'draws']:
                     _ = sampler_args.pop(key, None)
-                    
+
                 approx = pm.fit(method=pm.ADVI(), **sampler_args)
                 idata = approx.sample(draws=self.sampler_config.get('draws'))
-                
+
             elif self.method == "nuts":
                 sampler_args = {**self.sampler_config, **kwargs}
                 idata = pm.sample(**sampler_args)
-                
+
             else:
                 raise ValueError(f"Method {self.method} not supported")
 
@@ -233,11 +250,11 @@ class RatingModelBuilder(ModelBuilder):
         idata = self.set_idata_attrs(idata)
         return idata
 
-
     @classmethod
     def load(cls, fname: str):
-        """Redefinition of ModelBuilder load function as it needed tweaking from PyMC version.
-        Creates a ModelBuilder instance from a file, and loads inference data for the model.
+        """Redefinition of ModelBuilder load function as it needed tweaking
+        from PyMC version. Creates a ModelBuilder instance from a file, and
+        loads inference data for the model.
 
         Parameters
         ----------
@@ -251,41 +268,42 @@ class RatingModelBuilder(ModelBuilder):
         filepath = Path(str(fname))
         idata = az.from_netcdf(filepath)
         # needs to be converted, because json.loads was changing tuple to list
-        model_config = cls._model_config_formatting(json.loads(idata.attrs["model_config"]))
+        model_config = cls._model_config_formatting(json.loads(
+                                               idata.attrs["model_config"]))
         model = cls(
             model_config=model_config,
             sampler_config=json.loads(idata.attrs["sampler_config"]),
         )
         model.idata = idata
         dataset = idata.fit_data.to_dataframe()
-        
+
         # Have loaded fit data include q_sigma and new names
         h = dataset['h']
         q = dataset[model.output_var]
         q_sigma = dataset['q_sigma']
         model.build_model(h, q, q_sigma=q_sigma)
-        
+
         # All previously used data is in idata.
         if model.id != idata.attrs["id"]:
             raise ValueError(
-                f"The file '{fname}' does not contain an inference data of the same model or configuration as '{cls._model_type}'"
+                f"The file '{fname}' does not contain an inference data of "
+                "the same model or configuration as '{cls._model_type}'"
             )
 
         return model
 
-    
     def fit(self,
             h: ArrayLike,
             q: ArrayLike,
-            q_sigma: ArrayLike=None,
-            method: str='advi',
-            progressbar: bool=True,
-            random_seed: RandomState=None,
+            q_sigma: ArrayLike = None,
+            method: str = 'advi',
+            progressbar: bool = True,
+            random_seed: RandomState = None,
             **kwargs: Any,
             ) -> InferenceData:
-        """Redefinition of ModelBuilder fit function as it needed updating from PyMC version.
-        Fit a model using the data and algorithm passed as a parameter. Sets attrs to
-        inference data of the model.
+        """Redefinition of ModelBuilder fit function as it needed updating
+        from PyMC version. Fit a model using the data and algorithm passed
+        as a parameter. Sets attrs to inference data of the model.
 
         Parameters
         ----------
@@ -296,19 +314,21 @@ class RatingModelBuilder(ModelBuilder):
         q_sigma : array_like, optional
             Discharge uncertainty in units of discharge.
         method : str, optional
-            The method (algorithm) used to fit the data, options are 'advi' or 'nuts'.
+            The method (algorithm) used to fit the data, options are 'advi'
+            or 'nuts'.
         progressbar : bool, optional
             Specifies whether the fit progressbar should be displayed.
         random_seed : RandomState, optional
-            Provides sampler with initial random seed for obtaining reproducible samples.
+            Provides sampler with initial random seed for obtaining
+            reproducible samples.
         **kwargs : dict
             Algorithm settings can be provided in form of keyword arguments.
 
         Returns
         -------
         self : InferenceData
-            Arviz InferenceData object containing posterior samples of model parameters
-            of the fitted model.
+            Arviz InferenceData object containing posterior samples of model
+            parameters of the fitted model.
         """
         # Save the fitting algorithm method
         self.method = method
@@ -330,7 +350,7 @@ class RatingModelBuilder(ModelBuilder):
         self.idata = self.sample_model(**sampler_config)
 
         # Have fit data include uncertainty and have appropriate names
-        h_df= pd.DataFrame({'h': h})
+        h_df = pd.DataFrame({'h': h})
         q_df = pd.DataFrame({self.output_var: q})
         if q_sigma is None:
             q_sigma_df = pd.DataFrame({'q_sigma': np.zeros(len(q))})
@@ -338,74 +358,83 @@ class RatingModelBuilder(ModelBuilder):
             q_sigma_df = pd.DataFrame({'q_sigma': q_sigma})
         combined_data = pd.concat([h_df, q_df, q_sigma_df], axis=1)
 
-        assert all(combined_data.columns), "All columns must have non-empty names"
+        assert all(combined_data.columns), "All columns must have " + \
+                                           "non-empty names"
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
                 category=UserWarning,
-                message="The group fit_data is not defined in the InferenceData scheme",
+                message="The group fit_data is not defined in "
+                        "the InferenceData scheme",
             )
-            self.idata.add_groups(fit_data=combined_data.to_xarray())  # type: ignore
+            self.idata.add_groups(fit_data=combined_data.to_xarray())
 
         return self.idata  # type: ignore
-
 
     def sample_prior_predictive(self,
                                 X_pred,
                                 y_pred=None,
-                                samples: int=None,
-                                extend_idata: bool=False,
-                                combined: bool=True,
+                                samples: int = None,
+                                extend_idata: bool = False,
+                                combined: bool = True,
                                 **kwargs,
                                 ):
         """Update of ModelBuilder `sample_prior_predicitve` function to
         output untransformed discharge (q).
         """
-        return self.q_transform.untransform(super().sample_prior_predictive(X_pred, y_pred, samples, extend_idata, combined, **kwargs))
-        
-        
-    def sample_posterior_predictive(self, X_pred, extend_idata, combined, **kwargs):
+        return self.q_transform.untransform(super().sample_prior_predictive(
+                  X_pred, y_pred, samples, extend_idata, combined, **kwargs))
+
+    def sample_posterior_predictive(self,
+                                    X_pred,
+                                    extend_idata,
+                                    combined,
+                                    **kwargs):
         """Update of ModelBuilder `sample_posterior_predicitve` function to
         output untransformed discharge (q).
         """
-        return self.q_transform.untransform(super().sample_posterior_predictive(X_pred, extend_idata, combined, **kwargs))
-
+        return self.q_transform.untransform(
+                     super().sample_posterior_predictive(X_pred, extend_idata,
+                                                         combined, **kwargs))
 
     @property
     def _serializable_model_config(self) -> dict:
-        """_serializable_model_config is a property that returns a dictionary with all the model parameters that we want to save.
-        as some of the data structures are not json serializable, we need to convert them to json serializable objects.
-        Some models will need them, others can just define them to return the model_config.
+        """_serializable_model_config is a property that returns a dictionary
+        with all the model parameters that we want to save. As some of the
+        data structures are not json serializable, we need to convert them to
+        json serializable objects. Some models will need them, others can just
+        define them to return the model_config.
         """
         return self.model_config
 
-
     def predict_posterior(self,
                           X_pred: ArrayLike,
-                          extend_idata: bool=True,
-                          combined: bool=True,
+                          extend_idata: bool = True,
+                          combined: bool = True,
                           **kwargs,
                           ) -> ArrayLike:
-        """Update of ModelBuilder predict_posterior function to remove data validation check.
-        Generate posterior predictive samples on unseen data.
+        """Update of ModelBuilder predict_posterior function to remove data
+        validation check. Generate posterior predictive samples on unseen data.
 
         Parameters
         ---------
         X_pred : array_like
             The input data used for prediction.
         extend_idata : bool, optional
-            Determines whether the predictions should be added to inference data object.
-            Defaults to True.
+            Determines whether the predictions should be added to inference
+            data object. Defaults to True.
         combined: bool, optional
-            Combine chain and draw dims into sample. Won't work if a dim named sample already exists.
-            Defaults to True.
+            Combine chain and draw dims into sample. Won't work if a dim
+            named sample already exists. Defaults to True.
         **kwargs: dict
             Additional arguments to pass to `pymc.sample_posterior_predictive`.
 
         Returns
         -------
-        y_pred : ndarray, shape (n_pred, chains * draws) if combined is True, otherwise (chains, draws, n_pred)
-            Posterior predictive samples for each input X_pred.
+        y_pred : ndarray
+            Posterior predictive samples for each input X_pred. Shape of array
+            is (n_pred, chains * draws) if combined is True, otherwise
+            (chains, draws, n_pred).
         """
         posterior_predictive_samples = self.sample_posterior_predictive(
             X_pred, extend_idata, combined, **kwargs
@@ -413,20 +442,24 @@ class RatingModelBuilder(ModelBuilder):
 
         if self.output_var not in posterior_predictive_samples:
             raise KeyError(
-                f"Output variable {self.output_var} not found in posterior predictive samples."
+                f"Output variable {self.output_var} not found in posterior "
+                "predictive samples."
             )
 
         # Have this return the data only vs idata DataSet
         return posterior_predictive_samples[self.output_var].data
 
-
-    def table(self, h: ArrayLike=None, step: float=0.01, extend: float=1.1) -> pd.DataFrame:
+    def table(self,
+              h: ArrayLike = None,
+              step: float = 0.01,
+              extend: float = 1.1) -> pd.DataFrame:
         """Return stage-discharge rating table.
 
         Parameters
         ----------
         h : array_like, optional
-            Stage values to compute rating table. If None, then use the range of observations.
+            Stage values to compute rating table. If None, then use the
+            range of observations.
         step : float, optional
             Step size for stage values.
         extend : float, optional
@@ -435,8 +468,8 @@ class RatingModelBuilder(ModelBuilder):
         Returns
         -------
         rating_table : DataFrame
-            Rating table with columns `stage`, mean `discharge`, `median` discharge, and 
-            `gse` (geometric standard error [1]).
+            Rating table with columns `stage`, mean `discharge`, `median`
+            discharge, and `gse` (geometric standard error [1]).
 
         References
         ----------
@@ -446,19 +479,21 @@ class RatingModelBuilder(ModelBuilder):
         # Generate stage values if none are input
         if h is None:
             start = self.h_obs.min() - math.remainder(self.h_obs.min(), step)
-            stop = self.h_obs.max() * extend + (step - math.remainder(self.h_obs.max() * extend, step))
+            stop = self.h_obs.max() * extend + (step - math.remainder(
+                                            self.h_obs.max() * extend, step))
             h = np.arange(start, stop, step)
-    
+
         ratingdata = self.predict_posterior(np.array(h), extend_idata=False)
         rating_table = pd.DataFrame({'stage': h,
                                      'discharge': np.mean(ratingdata, axis=1),
                                      'median': np.median(ratingdata, axis=1),
-                                     'gse': np.exp(np.std(np.log(ratingdata), axis=1))})
+                                     'gse': np.exp(np.std(np.log(ratingdata),
+                                                          axis=1))})
         # Limit discharge range
-        rating_table = rating_table[rating_table['discharge'] <= self.q_obs.max() * extend]
+        rating_table = rating_table[rating_table['discharge'] <=
+                                    self.q_obs.max() * extend]
 
         return rating_table
-
 
     def residuals(self) -> ArrayLike:
         """Compute residuals of rating model.

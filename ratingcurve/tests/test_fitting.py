@@ -4,6 +4,7 @@ import numpy as np
 from ..ratings import PowerLawRating, SplineRating
 from .. import data
 
+
 def test_nuts_fit():
     """
     Test fitting a power law by NUTS.
@@ -15,7 +16,7 @@ def test_nuts_fit():
 
     rating = PowerLawRating(method='nuts')
 
-    idata = rating.fit(df['stage'], df['q'], q_sigma=df['q_sigma'])
+    _ = rating.fit(df['stage'], df['q'], q_sigma=df['q_sigma'])
     df_model = rating.table()
 
     assert len(df_model) > 0
@@ -36,8 +37,8 @@ def test_advi_fit(ratingmodel, segments, dof):
     elif ratingmodel == 'spline':
         rating = SplineRating(df=dof)
 
-    idata = rating.fit(df['stage'], df['q'],
-                       q_sigma=df['q_sigma'], method='advi')
+    _ = rating.fit(df['stage'], df['q'],
+                   q_sigma=df['q_sigma'], method='advi')
     df_model = rating.table()
 
     assert len(df_model) > 0
@@ -54,7 +55,7 @@ def test_no_zero_flows():
 
     with pytest.raises(ValueError):
         rating = PowerLawRating()
-        idata = rating.fit(h, q)
+        _ = rating.fit(h, q)
 
 
 def test_zero_flow_prior():
@@ -66,10 +67,10 @@ def test_zero_flow_prior():
     df = data.load('green channel')
 
     q_min = df['q'].min()
-    
+
     with pytest.raises(ValueError):
         rating = PowerLawRating(segments=1,
                                 prior={'distribution': 'normal',
                                        'mu': [q_min],
                                        'sigma': [1]})
-        idata = rating.fit(df['stage'], df['q'])
+        _ = rating.fit(df['stage'], df['q'])
