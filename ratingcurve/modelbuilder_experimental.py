@@ -77,10 +77,6 @@ class RatingModelBuilder(ModelBuilder):
             elif len(self.q_sigma.shape) != 0:
                 pm.set_data({"q_sigma": np.zeros(len(h))})
 
-            # If using a spline model, need to update the design matrix to reflect new stage values.
-            if self._model_type == "SplineRatingModel":
-                pm.set_data({'B': self.d_transform(np.array(h))})
-
     
     @property
     def output_var(self) -> str:

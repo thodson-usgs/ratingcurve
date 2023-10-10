@@ -82,10 +82,13 @@ class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
         self.segments = self.model_config.get('segments')
         self._generate_and_preprocess_model_data(h, q, q_sigma)
 
+        self.q_transform = ZTransform(self.log_q)
+        self.log_q_z = self.q_transform.transform(self.log_q)
+
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q)
+            logq = pm.MutableData("logq", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
             # parameters
@@ -112,6 +115,29 @@ class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
             # likelihood
             X = pm.Deterministic('X', at.log( at.clip(h - hs, 0, np.inf) + self.ho))
             obs = pm.Normal("model_q", a + at.dot(b, X), sigma + q_sigma, shape=h.shape, observed=logq)
+
+
+    def sample_prior_predictive(self,
+                                X_pred,
+                                y_pred=None,
+                                samples: int=None,
+                                extend_idata: bool=False,
+                                combined: bool=True,
+                                **kwargs,
+                                ):
+        """
+        Update of ModelBuilder `sample_prior_predicitve` function to
+        output unlogged denormalized discharge (q).
+        """
+        return np.exp(self.q_transform.untransform(np.log(super().sample_prior_predictive(X_pred, y_pred, samples, extend_idata, combined, **kwargs))))
+        
+        
+    def sample_posterior_predictive(self, X_pred, extend_idata, combined, **kwargs):
+        """
+        Update of ModelBuilder `sample_posterior_predicitve` function to
+        output unlogged denormalized discharge (q).
+        """
+        return np.exp(self.q_transform.untransform(np.log(super().sample_posterior_predictive(X_pred, extend_idata, combined, **kwargs))))
 
     
     def set_normal_prior(self):
@@ -528,9 +554,7 @@ class SplineRatingModel(RatingModelBuilder, SplinePlotMixin):
         super()._data_setter(h, q, q_sigma)
 
         with self.model:
-            # If using a spline model, need to update the design matrix to reflect new stage values.
-            if self._model_type == "SplineRatingModel":
-                pm.set_data({'B': self.d_transform(np.array(h))})
+            pm.set_data({'B': self.d_transform(np.array(h))})
 
 
     
@@ -558,10 +582,14 @@ class SplineRatingModel(RatingModelBuilder, SplinePlotMixin):
         # Pre-process data: Converts q (and q_sigma if given) to log space
         self._generate_and_preprocess_model_data(h, q, q_sigma)
 
+        # Normalize discharge
+        self.q_transform = ZTransform(self.log_q)
+        self.log_q_z = self.q_transform.transform(self.log_q)
+
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q)
+            logq = pm.MutableData("logq", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
             B = pm.MutableData("B", self.B)
     
@@ -571,3 +599,26 @@ class SplineRatingModel(RatingModelBuilder, SplinePlotMixin):
     
             # likelihood
             obs = pm.Normal("model_q", at.dot(B, w.T), sigma + q_sigma, shape=h.shape, observed=logq)
+
+
+    def sample_prior_predictive(self,
+                                X_pred,
+                                y_pred=None,
+                                samples: int=None,
+                                extend_idata: bool=False,
+                                combined: bool=True,
+                                **kwargs,
+                                ):
+        """
+        Update of ModelBuilder `sample_prior_predicitve` function to
+        output unlogged denormalized discharge (q).
+        """
+        return np.exp(self.q_transform.untransform(np.log(super().sample_prior_predictive(X_pred, y_pred, samples, extend_idata, combined, **kwargs))))
+        
+        
+    def sample_posterior_predictive(self, X_pred, extend_idata, combined, **kwargs):
+        """
+        Update of ModelBuilder `sample_posterior_predicitve` function to
+        output unlogged denormalized discharge (q).
+        """
+        return np.exp(self.q_transform.untransform(np.log(super().sample_posterior_predictive(X_pred, extend_idata, combined, **kwargs))))
