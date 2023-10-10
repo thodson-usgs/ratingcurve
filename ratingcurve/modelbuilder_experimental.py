@@ -28,8 +28,8 @@ class RatingModelBuilder(ModelBuilder):
 
     def __init__(self,
                  method: str='advi',
-                 model_config: Dict = None,
-                 sampler_config: Dict = None,
+                 model_config: dict = None,
+                 sampler_config: dict = None,
                  ):
         """
         Updates the ModelBuilder initialization to save the input method.
@@ -183,6 +183,17 @@ class RatingModelBuilder(ModelBuilder):
                 "The model hasn't been built yet, call .build_model() first or call .fit() instead."
             )
 
+        # Check if the fitting algorithm method is specified to fit(). If so, allow for it to be changed.
+        if 'method' in kwargs:
+            # Remove old sample_config keys from kwargs
+            for key in self.sampler_config.keys():
+                _ = kwargs.pop(key)
+            self.method = kwargs['method']
+            self.sampler_config = self.get_default_sampler_config()
+            kwargs.update(self.sampler_config)
+            # Remove method key from kwargs
+            _ = kwargs.pop('method')
+
         # Allow for using of the ADVI fitting algorithm
         with self.model:
             if self.method == "advi":
@@ -209,7 +220,7 @@ class RatingModelBuilder(ModelBuilder):
                 sampler_args = {**self.sampler_config, **kwargs}
                 idata = pm.sample(**sampler_args)               
             else:
-                raise ValueError(f"Method {method} not supported")
+                raise ValueError(f"Method {self.method} not supported")
 
             idata.extend(pm.sample_prior_predictive())
             idata.extend(pm.sample_posterior_predictive(idata))
@@ -395,7 +406,7 @@ class RatingModelBuilder(ModelBuilder):
         return posterior_predictive_samples[self.output_var].data
 
 
-    def table(self, h: ArrayLike=None, step: float=0.01, extend: float=1.1) -> DataFrame:
+    def table(self, h: ArrayLike=None, step: float=0.01, extend: float=1.1) -> pd.DataFrame:
         """
         Return stage-discharge rating table.
 

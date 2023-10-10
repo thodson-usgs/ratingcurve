@@ -248,7 +248,7 @@ class PowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
             self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments, 1))
 
 
-class BrokenPowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
+class BrokenPowerLawRatingModel(PowerLawRatingModel):
     """
     Experimental multi-segment power law rating using the standard parameterization
     (see https://en.wikipedia.org/wiki/Power_law#Broken_power_law) and PyMC
@@ -260,39 +260,6 @@ class BrokenPowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
     # And a version
     version = "0.1"
         
-    @staticmethod
-    def get_default_model_config() -> dict:
-        """
-        Returns a `model_config` dictionary with all the required model configuration parameters
-        needed to build the model. It will be passed to the class instance on
-        initialization, in case the user doesn't provide any model_config of their own.
-
-        When specified by a user, `model_config` in the `BrokenPowerLawRatingModel`  must be a
-        dictionary and contain the two keys `segements` and `prior`. These two keys are formatted
-        as follows:
-
-        segments : int
-            Number of segments in the rating (i.e., number of breakpoints plus one).
-        prior : dict
-            Prior knowledge of breakpoint locations. Must contain the key `distribution`,
-            which can either be set to a uniform or normal distribution. If a normal distribution,
-            then the mean `mu` and width `sigma` must be given as well.
-
-        Examples:
-        ``model_config = {'segments': 2, 'prior': {'distribution': 'uniform'}}``
-        or
-        ``model_config = {'segments': 2, 'prior': {'distribution': 'normal', 'mu': [2], 'sigma':[1]}}``
-        or
-        ``model_config = {'segments': 4, 'prior': {'distribution': 'normal', 'mu': [2, 5, 9], 'sigma':[1, 1, 1]}}``
-
-        Note that the number of normal distribution means and widths must be one less
-        than the number of segments.
-        """
-        model_config = {'segments': 2, 'prior': {'distribution': 'uniform'}}
-
-        return model_config
-
-    
     def build_model(self, h: ArrayLike, q: ArrayLike, q_sigma: ArrayLike=None, **kwargs):
         """
         Creates the PyMC model.
@@ -310,11 +277,14 @@ class BrokenPowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
         self.segments = self.model_config.get('segments')
         self._generate_and_preprocess_model_data(h, q, q_sigma)
 
+        self.q_transform = ZTransform(self.log_q)
+        self.log_q_z = self.q_transform.transform(self.log_q)
+
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
 
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q)
+            logq = pm.MutableData("logq", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
     
             # Priors
@@ -335,108 +305,24 @@ class BrokenPowerLawRatingModel(RatingModelBuilder, PowerLawPlotMixin):
     
             # -1 gives alpha_{i-1) - alpha_i rather than alpha_i - alpha_{i-1} of diff
             alpha_diff = -1 * at.diff(alpha, axis=0)
-            sums = at.cumsum(alpha_diff * at.log(hs), axis=0)
+            sums = at.cumsum(alpha_diff * at.log(hs[1:]), axis=0)
             # Sum for first element is 0, as it does not have a summation 
             sums = at.concatenate([pm.math.constant(0, ndim=2), sums])
     
             # Create ranges for each segment
             segments_range = at.concatenate([pm.math.constant(0, ndim=2),
-                                             hs,
+                                             hs[1:],
                                              pm.math.constant(np.inf, ndim=2)])
     
             # Tensors are broadcasts for vectorized computation.
             #   Calculates function within range sets value to 0 everywhere else. 
             #   Then sum along segment dimension to collapse.
-            q = at.switch((h > segments_range[:-1]) & (h <= segments_range[1:]), 
-                           a + alpha * at.log(h) + sums, 0)
+            q = at.switch(((h - hs[0]) > segments_range[:-1]) & ((h - hs[0]) <= segments_range[1:]), 
+                           a + alpha * at.log(h - hs[0]) + sums, 0)
             q = at.sum(q, axis=0)
     
             obs = pm.Normal('model_q', q, sigma + q_sigma, shape=h.shape, observed=logq)
 
-
-    def set_normal_prior(self):
-        """
-        Normal prior for breakpoints. Sets an expected value for each
-        breakpoint (mu) with uncertainty (sigma). This can be very helpful
-        when convergence is poor. Expected breakpoint values (mu) must be
-        within the data range.
-
-        prior={'distribution': 'normal', 'mu': [], 'sigma': []}
-        """
-
-        self._init_hs = np.sort(np.array(self.model_config.get('prior').get('mu')))
-        self._init_hs = self._init_hs.reshape((self.segments - 1, 1))
-
-        prior_mu = np.array(self.model_config.get('prior').get('mu')).reshape((self.segments - 1, 1))
-        prior_sigma = np.array(self.model_config.get('prior').get('sigma')).reshape((self.segments - 1, 1))
-
-        # check that the priors are within their bounds
-        h_min = self.h_obs.min()
-        h_max = self.h_obs.max()
-
-        if np.any(prior_mu < h_min) or np.any(prior_mu > h_max):
-            raise ValueError('The prior means (mu) of the breakpoints must '
-                             'be within the bounds of the observed stage.')
-        
-        if np.any(prior_sigma < 0):
-            raise ValueError('Prior standard deviations must be positive.')
-        
-        # Built in PyMC ordered transform forces multiple priors to be in ascending
-        #   order. This means that the breakpoints will be sorted internally to PyMC.
-        hs_ = pm.TruncatedNormal('hs_',
-                                 mu=prior_mu,
-                                 sigma=prior_sigma,
-                                 lower=h_min,
-                                 upper=h_max,
-                                 shape=(self.segments - 1, 1),
-                                 initval=self._init_hs)
-
-        # Sorting reduces multimodality. The benifit increases with fewer observations.
-        hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
-        return hs
-
-    
-    def set_uniform_prior(self):
-        """
-        Uniform prior for breakpoints. Make no prior assumption about 
-        the location of the breakpoints, only the number of breaks and
-        that the breakpoints are ordered.
-
-        prior={distribution:'uniform', initval: []}
-        """
-        self.__init_hs()
-        h_min = self.h_obs.min()
-        h_max = self.h_obs.max()
-
-        # Built in PyMC ordered transform forces multiple priors to be in ascending
-        # order. This means that the breakpoints will be sorted internally to PyMC.
-        # However, this transform currently doesn't work as advertised...
-        hs_ = pm.Uniform('hs_',
-                         lower=h_min,
-                         upper=h_max,
-                         shape=(self.segments - 1, 1),
-                         initval=self._init_hs)
-
-        hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
-        return hs
-
-    
-    def __init_hs(self):
-        """
-        Initialize breakpoints by randomly selecting points within the stage data
-        range. Selected points are then sorted.
-        """
-        self._init_hs = self.model_config.get('prior').get('initval', None)
-        h_min = self.h_obs.min()
-        h_max = self.h_obs.max()
-
-        # TODO: distribute to evenly split the data
-        if self._init_hs is None:
-            self._init_hs = np.random.rand(self.segments - 1, 1) \
-                            * (h_max - h_min) + h_min
-            self._init_hs = np.sort(self._init_hs, axis=0)
-        else:
-            self._init_hs = np.sort(np.array(self._init_hs)).reshape((self.segments - 1, 1))
 
 
 class SmoothlyBrokenPowerLawRatingModel(BrokenPowerLawRatingModel):
@@ -468,12 +354,15 @@ class SmoothlyBrokenPowerLawRatingModel(BrokenPowerLawRatingModel):
         self.segments = self.model_config.get('segments')
         self._generate_and_preprocess_model_data(h, q, q_sigma)
 
+        self.q_transform = ZTransform(self.log_q)
+        self.log_q_z = self.q_transform.transform(self.log_q)
+
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q)
+            logq = pm.MutableData("logq", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
     
             # Priors
@@ -495,10 +384,10 @@ class SmoothlyBrokenPowerLawRatingModel(BrokenPowerLawRatingModel):
                 raise NotImplementedError('Prior distribution not implemented')
     
             alpha_diff = at.diff(alpha, axis=0)
-            sum_array = (alpha_diff * delta) * at.log(1 + (h/hs) ** (1/delta))
+            sum_array = (alpha_diff * delta) * at.log(1 + ((h - hs[0])/hs[1:]) ** (1/delta))
             sums = at.sum(sum_array, axis=0)
     
-            obs = pm.Normal("model_q", a + at.log(h) * alpha[0, ...] + sums, sigma + q_sigma, shape=h.shape, observed=logq)
+            obs = pm.Normal("model_q", a + at.log(h - hs[0]) * alpha[0, ...] + sums, sigma + q_sigma, shape=h.shape, observed=logq)
 
 
 
