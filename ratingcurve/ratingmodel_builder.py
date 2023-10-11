@@ -64,6 +64,7 @@ class RatingModelBuilder(ModelBuilder):
             if q is not None:
                 pm.set_data({"logq": np.log(np.array(q))})
             if q_sigma is not None:
+                # Approximate sigma as a geometric error 
                 pm.set_data({"q_sigma":
                              np.log(1 + np.array(q_sigma)/np.array(q))})
 
