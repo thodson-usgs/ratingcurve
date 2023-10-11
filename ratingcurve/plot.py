@@ -256,7 +256,5 @@ class PowerLawPlotMixin(PlotMixin):
         hs_upper = hs.quantile(1 - alpha/2, dim=['chain',
                                                  'draw']).data.flatten()
 
-        [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower,
-                                                              hs_upper)]
-        [ax.axhline(u, color='lightgray', linestyle='dotted',
-                    linewidth=NARROW_LINE) for u in hs_u]
+        [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)]
+        [ax.axhline(u, color='lightgray', linestyle='dotted', linewidth=NARROW_LINE) for u in hs_u]
