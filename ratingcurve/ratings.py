@@ -1,4 +1,4 @@
-"""Experimental streamflow rating models using PyMC ModelBuilder."""
+"""Streamflow rating models using PyMC."""
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
