@@ -68,15 +68,7 @@ class RatingModelBuilder(ModelBuilder):
                 pm.set_data({"q_sigma":
                              np.log(1 + np.array(q_sigma)/np.array(q))})
 
-            # Need to update q_sigma if it was input. (If not input
-            # originally, it would be set to a numpy scalar array = 0.
-            # Therefore, it would not need to be updated.) We change it to
-            # be a zero array of length len(h) to match the h data. We use
-            # zeros as the model has already been fit and parameters
-            # estimated using the input q_sigma data. Therefore, predictions
-            # (which `_data_setter` is used for) would not need any
-            # observational uncertainty as it would already be included in
-            # the parameter estimation.
+            # Set q_sigma = 0 by default
             elif len(self.q_sigma.shape) != 0:
                 pm.set_data({"q_sigma": np.zeros(len(h))})
 
