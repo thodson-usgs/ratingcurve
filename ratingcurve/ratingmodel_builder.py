@@ -1,4 +1,4 @@
-"""Experimental ModelBuilder Setup"""
+"""Modifies PyMC ModelBuilder to work with the Rating model class"""
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
