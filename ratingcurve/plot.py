@@ -17,7 +17,7 @@ NARROW_LINE = 1
 REGULAR_LINE = NARROW_LINE * 1.5
 
 def is_fit(func):
-    """Decorator checking whether model has been fit.
+    """Decorator checks whether model has been fit.
     """
     @functools.wraps(func)
     def inner(self, *args, **kwargs):
@@ -27,10 +27,10 @@ def is_fit(func):
         return func(*args, **kwargs)
     return inner
 
-@is_fit
 class RatingMixin:
     """Parent class for other rating-related mixins.
     """
+    @is_fit
     def summary(self, var_names: list = None) -> DataFrame:
         """Summary of rating model parameters.
 
