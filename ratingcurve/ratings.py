@@ -95,41 +95,50 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
 
             # parameters
             # taking the log of h0_offset produces the clipping boundaries
-            #   in Fig 1, from Reitan et al. 2019
+            # see Fig 1, from Reitan et al. 2019
             self.ho = np.ones((self.segments, 1))
             self.ho[0] = 0
 
             # priors
             b_mu = np.zeros(self.segments)
-            # see Le Coz 2014 for default values, but typically between
-            #   1.5 and 2.5
+            # b0 will be between 1.5 and 2.5 (Le Coz 2014)
+            # otherwise, each subsequent b_i is the slope deviation
+            # from b_{i-1}, rather than the absolute slope
             b_mu[0] = 1.6
             b = pm.Normal("b", mu=b_mu, sigma=0.5, dims="splines")
             a = pm.Normal("a", mu=0, sigma=3)
             sigma = pm.HalfCauchy("sigma", beta=0.1)
 
             # Set priors on break points
-            if self.model_config.get('prior').get('distribution',
-                                                  'uniform') == 'normal':
+            prior_distribution = self.model_config.get('prior').get('distribution')
+            if prior_distribution == 'normal':
                 hs = self.set_normal_prior()
-            elif self.model_config.get('prior').get('distribution',
-                                                    'uniform') == 'uniform':
+            elif prior_distribution =='uniform':
                 hs = self.set_uniform_prior()
             else:
                 raise NotImplementedError('Prior distribution not implemented')
 
             # likelihood
-            X = pm.Deterministic('X', at.log(at.clip(h - hs, 0,
-                                                     np.inf) + self.ho))
-            obs = pm.Normal("model_q", a + at.dot(b, X), sigma + q_sigma,
-                            shape=h.shape, observed=logq)
+            X = pm.Deterministic('X',
+                                 at.log(at.clip(h - hs, 0, np.inf) + self.ho))
+
+            obs = pm.Normal("model_q",
+                            mu=a + at.dot(b, X),
+                            sigma=sigma + q_sigma,
+                            shape=h.shape,
+                            observed=logq)
 
     def set_normal_prior(self):
-        """Normal prior for breakpoints. Sets an expected value for each
-        breakpoint (mu) with uncertainty (sigma). This can be very helpful
-        when convergence is poor.
-
-        prior={'distribution': 'normal', 'mu': [], 'sigma': []}
+        """Normal prior for breakpoints.
+        
+        Sets an expected value for each breakpoint (mu) with uncertainty
+        (sigma). This can be very helpful when convergence is poor.
+        
+        Examples
+        --------
+        >>> mu = [1,2,3]
+        >>> sigma = [1,1,1]
+        >>> prior = {'distribution': 'normal', 'mu': mu, 'sigma': sigma}
         """
         self.__set_hs_bounds()
         self._init_hs = np.sort(np.array(
@@ -325,10 +334,16 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
             B = pm.MutableData("B", self.B)
 
             # priors
-            w = pm.Normal("w", mu=self.model_config.get('mean'),
-                          sigma=self.model_config.get('sd'), dims="splines")
+            w = pm.Normal("w",
+                          mu=self.model_config.get('mean'),
+                          sigma=self.model_config.get('sd'),
+                          dims="splines")
+
             sigma = pm.HalfCauchy("sigma", beta=0.1)
 
             # likelihood
-            obs = pm.Normal("model_q", at.dot(B, w.T), sigma + q_sigma,
-                            shape=h.shape, observed=logq)
+            obs = pm.Normal("model_q",
+                            mu=at.dot(B, w.T),
+                            sigma=sigma + q_sigma,
+                            shape=h.shape,
+                            observed=logq)
