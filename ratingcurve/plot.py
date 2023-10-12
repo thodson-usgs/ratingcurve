@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+import functools
 import numpy as np
 import matplotlib.pyplot as plt
 import arviz as az
@@ -15,7 +16,18 @@ DEFAULT_FIGSIZE = (5, 5)
 NARROW_LINE = 1
 REGULAR_LINE = NARROW_LINE * 1.5
 
+def is_fit(func):
+    """Decorator checking whether model has been fit.
+    """
+    @functools.wraps(func)
+    def inner(self, *args, **kwargs):
+        if self.idata is None:
+            raise RuntimeError(
+                "The model hasn't been fit yet, call .fit().")
+        return func(*args, **kwargs)
+    return inner
 
+@is_fit
 class RatingMixin:
     """Parent class for other rating-related mixins.
     """
@@ -33,10 +45,6 @@ class RatingMixin:
         df : DataFrame
             DataFrame summary of rating model parameters.
         """
-        if self.idata is None:
-            raise AttributeError('Summary cannot be retrieved as model '
-                                 'has not been fit.')
-
         return az.summary(self.idata, var_names)
 
 
@@ -62,6 +70,7 @@ class PlotMixin(RatingMixin):
 
         return ax
 
+    @is_fit
     def plot(self, ax: Axes = None) -> None:
         """Plots gagings and fit rating curve.
 
@@ -70,10 +79,6 @@ class PlotMixin(RatingMixin):
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if self.idata is None:
-            raise AttributeError('Fitted rating curve cannot be plotted as '
-                                 'model has not been fit.')
-
         ax = self.setup_plot(ax=ax)
         self._format_rating_plot(ax)
 
@@ -82,12 +87,15 @@ class PlotMixin(RatingMixin):
         q = rating_table['discharge']
         sigma = rating_table['gse']
         ax.plot(q, h, color='black', lw=NARROW_LINE)
-        q_u = q * (sigma)**1.96  # this should be 2 sigma
+
+        # 95% confidence interval
+        q_u = q * (sigma)**1.96
         q_l = q / (sigma)**1.96
         ax.fill_betweenx(h, x1=q_u, x2=q_l, color='lightgray')
 
         self.plot_gagings(ax=ax)
 
+    @is_fit
     def plot_residuals(self, ax: Axes = None) -> None:
         """Plots residuals between model and data.
 
@@ -96,10 +104,6 @@ class PlotMixin(RatingMixin):
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if self.idata is None:
-            raise AttributeError('Rating curve residuals cannot be plotted '
-                                 'as model has not been fit.')
-
         ax = self.setup_plot(ax=ax)
         self._format_rating_plot(ax)
 
@@ -116,6 +120,7 @@ class PlotMixin(RatingMixin):
                     ecolor='black')
         self._format_residual_plot(ax)
 
+    @is_fit
     def plot_gagings(self, ax: Axes = None) -> None:
         """Plot gagings with uncertainty.
 
@@ -124,10 +129,6 @@ class PlotMixin(RatingMixin):
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if self.idata is None:
-            raise AttributeError('Observed gagings cannot be plotted as '
-                                 'observed data is given during fitting.')
-
         ax = self.setup_plot(ax=ax)
 
         sigma_2 = 1.96 * (np.exp(self.q_sigma) - 1)*np.abs(self.q_obs)
@@ -176,6 +177,7 @@ class PlotMixin(RatingMixin):
 class SplinePlotMixin(PlotMixin):
     """Mixin class for plotting spline rating models.
     """
+    @is_fit
     def plot(self, ax: Axes = None) -> None:
         """Plots spline rating curve.
 
@@ -184,9 +186,6 @@ class SplinePlotMixin(PlotMixin):
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if self.idata is None:
-            raise AttributeError('Fitted rating curve cannot be plotted as '
-                                 'model has not been fit.')
 
         ax = self.setup_plot(ax=ax)
         self._plot_knots(ax=ax)
@@ -200,13 +199,17 @@ class SplinePlotMixin(PlotMixin):
         ax : Axes
             Pre-defined matplotlib axes.
         """
-        [ax.axhline(k, color='lightgray', linestyle='dotted',
-                    linewidth=NARROW_LINE) for k in self._dmatrix.knots]
+        kwargs = {'color' : 'lightgray',
+                  'linestyle' : 'dotted',
+                  'linewidth' : NARROW_LINE}
+
+        _ = [ax.axhline(k, **kwargs) for k in self._dmatrix.knots]
 
 
 class PowerLawPlotMixin(PlotMixin):
     """Mixin class for plotting power law rating models.
     """
+    @is_fit
     def plot(self, ax: Axes = None) -> None:
         """Plots power-law rating curve.
 
@@ -215,14 +218,11 @@ class PowerLawPlotMixin(PlotMixin):
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if self.idata is None:
-            raise AttributeError('Fitted rating curve cannot be plotted as '
-                                 'model has not been fit.')
-
         ax = self.setup_plot(ax=ax)
         self._plot_transitions(ax=ax)
         super().plot(ax=ax)
 
+    @is_fit
     def plot_residuals(self, ax: Axes = None) -> None:
         """Plots power-law residuals.
 
@@ -231,14 +231,11 @@ class PowerLawPlotMixin(PlotMixin):
         ax : Axes, optional
             Pre-defined matplotlib axes.
         """
-        if self.idata is None:
-            raise AttributeError('Fitted rating curve cannot be plotted as '
-                                 'model has not been fit.')
-
         ax = self.setup_plot(ax=ax)
         self._plot_transitions(ax=ax)
         super().plot_residuals(ax=ax)
 
+    @is_fit
     def _plot_transitions(self, ax: Axes) -> None:
         """Plot power-law transitions (breakpoints).
 
@@ -251,10 +248,16 @@ class PowerLawPlotMixin(PlotMixin):
 
         alpha = 0.05
         hs_u = hs.mean(dim=['chain', 'draw']).data
-        hs_lower = hs.quantile(alpha/2, dim=['chain',
-                                             'draw']).data.flatten()
-        hs_upper = hs.quantile(1 - alpha/2, dim=['chain',
-                                                 'draw']).data.flatten()
+        hs_lower = hs.quantile(alpha/2,
+                               dim=['chain', 'draw']).data.flatten()
+        hs_upper = hs.quantile(1 - alpha/2,
+                               dim=['chain', 'draw']).data.flatten()
+        # Plot prediction interval
+        i_kwargs = {'color' : 'whitesmoke'}
+        _ = [ax.axhspan(l, u, **i_kwargs) for u, l in zip(hs_lower, hs_upper)]
 
-        [ax.axhspan(l, u, color='whitesmoke') for u, l in zip(hs_lower, hs_upper)]
-        [ax.axhline(u, color='lightgray', linestyle='dotted', linewidth=NARROW_LINE) for u in hs_u]
+        # Plot expectation
+        e_kwargs = {'color' : 'lightgray',
+                    'linestyle' : 'dotted',
+                    'linewidth' : NARROW_LINE}
+        _ = [ax.axhline(u, **e_kwargs) for u in hs_u]
