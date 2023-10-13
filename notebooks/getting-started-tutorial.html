@@ -395,101 +395,69 @@ First load the library (1) and some tutorial data (2):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 1. load modules</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">ratingcurve.ratingmodel</span> <span class="kn">import</span> <span class="n">PowerLawRating</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># 2. load tutorial data</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="n">File</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">ratingcurve</span><span class="o">/</span><span class="n">ratingcurve</span><span class="o">/</span><span class="n">ratingcurve</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">10</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
-<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">cat</span> <span class="o">=</span> <span class="n">open_catalog</span><span class="p">(</span><span class="s1">&#39;ratingcurve/data/catalog.yaml&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="k">def</span> <span class="nf">list</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span><span class="sd">     Returns a tuple of names for the tutorial datasets.</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span><span class="sd">         Tuple of names of tutorial datasets.</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span><span class="sd">     &quot;&quot;&quot;</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/__init__.py:163,</span> in <span class="ni">open_catalog</span><span class="nt">(uri, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">156</span> <span class="k">if</span> <span class="n">driver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">157</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">158</span>         <span class="sa">f</span><span class="s2">&quot;Unknown catalog driver &#39;</span><span class="si">{</span><span class="n">driver</span><span class="si">}</span><span class="s2">&#39;. &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">159</span>         <span class="s2">&quot;Do you need to install a new driver from the plugin directory? &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">160</span>         <span class="s2">&quot;https://intake.readthedocs.io/en/latest/plugin-directory.html</span><span class="se">\n</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">161</span>         <span class="sa">f</span><span class="s2">&quot;Current registry: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">registry</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">162</span>     <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">163</span> <span class="k">return</span> <span class="n">registry</span><span class="p">[</span><span class="n">driver</span><span class="p">](</span><span class="n">uri</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/catalog/local.py:549,</span> in <span class="ni">YAMLFileCatalog.__init__</span><span class="nt">(self, path, text, autoreload, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">547</span> <span class="bp">self</span><span class="o">.</span><span class="n">filesystem</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;fs&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">548</span> <span class="bp">self</span><span class="o">.</span><span class="n">access</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span>
-<span class="ne">--&gt; </span><span class="mi">549</span> <span class="nb">super</span><span class="p">(</span><span class="n">YAMLFileCatalog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/catalog/base.py:121,</span> in <span class="ni">Catalog.__init__</span><span class="nt">(self, entries, name, description, metadata, ttl, getenv, getshell, persist_mode, storage_options, user_parameters)</span>
-<span class="g g-Whitespace">    </span><span class="mi">119</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span> <span class="o">=</span> <span class="n">entries</span> <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_entries_container</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">121</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_reload</span><span class="p">()</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/catalog/base.py:179,</span> in <span class="ni">Catalog.force_reload</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">177</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Imperative reload data now&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">178</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">179</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">()</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/catalog/local.py:577,</span> in <span class="ni">YAMLFileCatalog._load</span><span class="nt">(self, reload)</span>
-<span class="g g-Whitespace">    </span><span class="mi">574</span>     <span class="n">file_open</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">575</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dir</span> <span class="o">=</span> <span class="n">get_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">577</span> <span class="k">with</span> <span class="n">file_open</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">578</span>     <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">579</span> <span class="k">if</span> <span class="s2">&quot;!template &quot;</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/core.py:100,</span> in <span class="ni">OpenFile.__enter__</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;b&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">100</span>     <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">102</span>     <span class="bp">self</span><span class="o">.</span><span class="n">fobjects</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">104</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">compression</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/spec.py:1309,</span> in <span class="ni">AbstractFileSystem.open</span><span class="nt">(self, path, mode, block_size, cache_options, compression, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1307</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1308</span>     <span class="n">ac</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;autocommit&quot;</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intrans</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1309</span>     <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1310</span>         <span class="n">path</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1311</span>         <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1312</span>         <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1313</span>         <span class="n">autocommit</span><span class="o">=</span><span class="n">ac</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1314</span>         <span class="n">cache_options</span><span class="o">=</span><span class="n">cache_options</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1315</span>         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1316</span>     <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1317</span>     <span class="k">if</span> <span class="n">compression</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1318</span>         <span class="kn">from</span> <span class="nn">fsspec.compression</span> <span class="kn">import</span> <span class="n">compr</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/implementations/local.py:180,</span> in <span class="ni">LocalFileSystem._open</span><span class="nt">(self, path, mode, block_size, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">178</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_mkdir</span> <span class="ow">and</span> <span class="s2">&quot;w&quot;</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">179</span>     <span class="bp">self</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">180</span> <span class="k">return</span> <span class="n">LocalFileOpener</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/implementations/local.py:298,</span> in <span class="ni">LocalFileOpener.__init__</span><span class="nt">(self, path, mode, autocommit, fs, compression, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">296</span> <span class="bp">self</span><span class="o">.</span><span class="n">compression</span> <span class="o">=</span> <span class="n">get_compression</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">compression</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">297</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocksize</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">DEFAULT_BUFFER_SIZE</span>
-<span class="ne">--&gt; </span><span class="mi">298</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">()</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/implementations/local.py:303,</span> in <span class="ni">LocalFileOpener._open</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">301</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">closed</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">302</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autocommit</span> <span class="ow">or</span> <span class="s2">&quot;w&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">303</span>         <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">304</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">305</span>             <span class="n">compress</span> <span class="o">=</span> <span class="n">compr</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">]</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/home/runner/work/ratingcurve/ratingcurve/docs/notebooks/ratingcurve/data/catalog.yaml&#39;
-</pre></div>
-</div>
-</div>
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>datetime</th>
+      <th>stage</th>
+      <th>q</th>
+      <th>q_sigma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-05-21 14:13:41 [UTC-07:00]</td>
+      <td>7.04</td>
+      <td>12199.342</td>
+      <td>199.172931</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-04-16 14:55:31 [UTC-07:00]</td>
+      <td>4.43</td>
+      <td>4921.953</td>
+      <td>95.425619</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-03-04 13:54:10 [UTC-07:00]</td>
+      <td>2.99</td>
+      <td>2331.665</td>
+      <td>61.860500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-03-04 13:16:51 [UTC-07:00]</td>
+      <td>2.94</td>
+      <td>2289.220</td>
+      <td>47.886745</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-01-23 11:04:32 [UTC-07:00]</td>
+      <td>2.96</td>
+      <td>2408.210</td>
+      <td>99.522964</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Now initialize a model (3), fit it to the tutorial data (4) and visualize the result (5):</p>
 <div class="cell docutils container">
@@ -509,20 +477,34 @@ First load the library (1) and some tutorial data (2):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 3. initialize the model</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">powerrating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>                              <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span>                              <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">],</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>                              <span class="n">segments</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># 4. fit the model</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">trace</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-
-<span class="ne">NameError</span>: name &#39;df&#39; is not defined
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='160298' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      80.15% [160298/200000 00:31&lt;00:07 Average Loss = -51.655]
+    </div>
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 160800
 </pre></div>
 </div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 160,799 [80%]: Average Loss = 6.1505
+</pre></div>
+</div>
+<img alt="../_images/1424c0cead3b10d54d94cc1ad404ec0be6dd559ce32312f98d74f2407ac4e089.png" src="../_images/1424c0cead3b10d54d94cc1ad404ec0be6dd559ce32312f98d74f2407ac4e089.png" />
 </div>
 </div>
 <p>On the first run, the previous cell will take a bit longer while the model compiles.
@@ -537,31 +519,74 @@ The loss with decline as the optimization proceeds and should converge after a f
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">table</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">table</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="ne">NameError</span>: name &#39;powerrating&#39; is not defined
-</pre></div>
-</div>
-</div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stage</th>
+      <th>discharge</th>
+      <th>median</th>
+      <th>gse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.21</td>
+      <td>1385.69</td>
+      <td>1385.63</td>
+      <td>1.0108</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.22</td>
+      <td>1397.83</td>
+      <td>1397.79</td>
+      <td>1.0107</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.23</td>
+      <td>1409.97</td>
+      <td>1409.92</td>
+      <td>1.0107</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.24</td>
+      <td>1422.14</td>
+      <td>1422.10</td>
+      <td>1.0107</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.25</td>
+      <td>1434.31</td>
+      <td>1434.27</td>
+      <td>1.0107</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>and saved as a CSV</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;green_rating_table.csv&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;green_rating_table.csv&#39;</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;table&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -578,95 +603,11 @@ List them by calling</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">data</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">work</span><span class="o">/</span><span class="n">ratingcurve</span><span class="o">/</span><span class="n">ratingcurve</span><span class="o">/</span><span class="n">ratingcurve</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">10</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
-<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">cat</span> <span class="o">=</span> <span class="n">open_catalog</span><span class="p">(</span><span class="s1">&#39;ratingcurve/data/catalog.yaml&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="k">def</span> <span class="nf">list</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span><span class="sd">     Returns a tuple of names for the tutorial datasets.</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span><span class="sd">         Tuple of names of tutorial datasets.</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span><span class="sd">     &quot;&quot;&quot;</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/__init__.py:163,</span> in <span class="ni">open_catalog</span><span class="nt">(uri, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">156</span> <span class="k">if</span> <span class="n">driver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">157</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">158</span>         <span class="sa">f</span><span class="s2">&quot;Unknown catalog driver &#39;</span><span class="si">{</span><span class="n">driver</span><span class="si">}</span><span class="s2">&#39;. &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">159</span>         <span class="s2">&quot;Do you need to install a new driver from the plugin directory? &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">160</span>         <span class="s2">&quot;https://intake.readthedocs.io/en/latest/plugin-directory.html</span><span class="se">\n</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">161</span>         <span class="sa">f</span><span class="s2">&quot;Current registry: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">registry</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">162</span>     <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">163</span> <span class="k">return</span> <span class="n">registry</span><span class="p">[</span><span class="n">driver</span><span class="p">](</span><span class="n">uri</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/catalog/local.py:549,</span> in <span class="ni">YAMLFileCatalog.__init__</span><span class="nt">(self, path, text, autoreload, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">547</span> <span class="bp">self</span><span class="o">.</span><span class="n">filesystem</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;fs&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">548</span> <span class="bp">self</span><span class="o">.</span><span class="n">access</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span>
-<span class="ne">--&gt; </span><span class="mi">549</span> <span class="nb">super</span><span class="p">(</span><span class="n">YAMLFileCatalog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/catalog/base.py:121,</span> in <span class="ni">Catalog.__init__</span><span class="nt">(self, entries, name, description, metadata, ttl, getenv, getshell, persist_mode, storage_options, user_parameters)</span>
-<span class="g g-Whitespace">    </span><span class="mi">119</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span> <span class="o">=</span> <span class="n">entries</span> <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_entries_container</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">121</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_reload</span><span class="p">()</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/catalog/base.py:179,</span> in <span class="ni">Catalog.force_reload</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">177</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Imperative reload data now&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">178</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">179</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">()</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/intake/catalog/local.py:577,</span> in <span class="ni">YAMLFileCatalog._load</span><span class="nt">(self, reload)</span>
-<span class="g g-Whitespace">    </span><span class="mi">574</span>     <span class="n">file_open</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filesystem</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">575</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dir</span> <span class="o">=</span> <span class="n">get_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">577</span> <span class="k">with</span> <span class="n">file_open</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">578</span>     <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">579</span> <span class="k">if</span> <span class="s2">&quot;!template &quot;</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/core.py:100,</span> in <span class="ni">OpenFile.__enter__</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;b&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">100</span>     <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">102</span>     <span class="bp">self</span><span class="o">.</span><span class="n">fobjects</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">104</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">compression</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/spec.py:1309,</span> in <span class="ni">AbstractFileSystem.open</span><span class="nt">(self, path, mode, block_size, cache_options, compression, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1307</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1308</span>     <span class="n">ac</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;autocommit&quot;</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intrans</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1309</span>     <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1310</span>         <span class="n">path</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1311</span>         <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1312</span>         <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1313</span>         <span class="n">autocommit</span><span class="o">=</span><span class="n">ac</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1314</span>         <span class="n">cache_options</span><span class="o">=</span><span class="n">cache_options</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1315</span>         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1316</span>     <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1317</span>     <span class="k">if</span> <span class="n">compression</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1318</span>         <span class="kn">from</span> <span class="nn">fsspec.compression</span> <span class="kn">import</span> <span class="n">compr</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/implementations/local.py:180,</span> in <span class="ni">LocalFileSystem._open</span><span class="nt">(self, path, mode, block_size, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">178</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_mkdir</span> <span class="ow">and</span> <span class="s2">&quot;w&quot;</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">179</span>     <span class="bp">self</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">180</span> <span class="k">return</span> <span class="n">LocalFileOpener</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/implementations/local.py:298,</span> in <span class="ni">LocalFileOpener.__init__</span><span class="nt">(self, path, mode, autocommit, fs, compression, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">296</span> <span class="bp">self</span><span class="o">.</span><span class="n">compression</span> <span class="o">=</span> <span class="n">get_compression</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">compression</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">297</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocksize</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">DEFAULT_BUFFER_SIZE</span>
-<span class="ne">--&gt; </span><span class="mi">298</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">()</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/fsspec/implementations/local.py:303,</span> in <span class="ni">LocalFileOpener._open</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">301</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">closed</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">302</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autocommit</span> <span class="ow">or</span> <span class="s2">&quot;w&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">303</span>         <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">304</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">305</span>             <span class="n">compress</span> <span class="o">=</span> <span class="n">compr</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">]</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/home/runner/work/ratingcurve/ratingcurve/docs/notebooks/ratingcurve/data/catalog.yaml&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;chalk artificial&#39;,
+ &#39;co channel&#39;,
+ &#39;green channel&#39;,
+ &#39;provo natural&#39;,
+ &#39;3-segment simulated&#39;]
 </pre></div>
 </div>
 </div>
@@ -679,12 +620,24 @@ List them by calling</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># Green River near Jensen, UT (channel control)
 
-<span class="ne">NameError</span>: name &#39;data&#39; is not defined
+## USGS Gage ID: 09261000
+
+## Control
+At the gage, the river is restricted to one channel at all stages.
+The streambed is very flat and is composed of cobbles.
+The banks consist of sand, gravel and cobbles.
+Riparian vegetation includes sage brush, willows, greasewood, and tamarisk.
+The left bank is not as steep as the right, which slopes up quite abruptly.
+Both banks are quite stable and are not subject to overflow except at extremely high stages.
+The channel is straight for several hundred yards upstream but bends sharply to the right about 2,000 feet below the station.
+Channel control prevails at all but the lowest stages when a rocky riffle 200 feet below the gage becomes effective.
+The riffle is quite stable. 
+
+## Stage Ranges
+- Reach control: &lt; 3.70 ft
+- Channel control: 3.70 to 14 ft
 </pre></div>
 </div>
 </div>
@@ -697,16 +650,286 @@ List them by calling</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">df</span>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="ne">NameError</span>: name &#39;data&#39; is not defined
-</pre></div>
-</div>
-</div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>datetime</th>
+      <th>stage</th>
+      <th>q</th>
+      <th>q_sigma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-05-21 14:13:41 [UTC-07:00]</td>
+      <td>7.04</td>
+      <td>12199.342</td>
+      <td>199.172931</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-04-16 14:55:31 [UTC-07:00]</td>
+      <td>4.43</td>
+      <td>4921.953</td>
+      <td>95.425619</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-03-04 13:54:10 [UTC-07:00]</td>
+      <td>2.99</td>
+      <td>2331.665</td>
+      <td>61.860500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-03-04 13:16:51 [UTC-07:00]</td>
+      <td>2.94</td>
+      <td>2289.220</td>
+      <td>47.886745</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-01-23 11:04:32 [UTC-07:00]</td>
+      <td>2.96</td>
+      <td>2408.210</td>
+      <td>99.522964</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2019-12-17 14:48:54 [UTC-07:00]</td>
+      <td>3.09</td>
+      <td>2533.894</td>
+      <td>51.712122</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2019-11-14 14:28:01 [UTC-07:00]</td>
+      <td>2.46</td>
+      <td>1643.082</td>
+      <td>33.532286</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2019-10-07 12:38:17 [UTC-07:00]</td>
+      <td>2.54</td>
+      <td>1827.425</td>
+      <td>45.685625</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2019-08-29 08:03:05 [UTC-07:00]</td>
+      <td>2.86</td>
+      <td>2105.019</td>
+      <td>38.663614</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2019-07-23 11:43:33 [UTC-07:00]</td>
+      <td>3.53</td>
+      <td>3173.955</td>
+      <td>66.393957</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2019-06-10 12:17:17 [UTC-07:00]</td>
+      <td>9.60</td>
+      <td>20154.349</td>
+      <td>349.616258</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2019-04-24 17:36:28 [UTC-07:00]</td>
+      <td>5.58</td>
+      <td>8000.834</td>
+      <td>159.200268</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2019-03-07 18:33:28 [UTC-07:00]</td>
+      <td>2.21</td>
+      <td>1409.271</td>
+      <td>35.231775</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2019-02-04 17:35:13 [UTC-07:00]</td>
+      <td>3.17</td>
+      <td>2561.581</td>
+      <td>54.891021</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2018-12-06 15:49:05 [UTC-07:00]</td>
+      <td>3.09</td>
+      <td>2453.631</td>
+      <td>53.829660</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2018-10-25 12:18:42 [UTC-07:00]</td>
+      <td>2.50</td>
+      <td>1795.588</td>
+      <td>35.728537</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2018-09-13 12:47:40 [UTC-07:00]</td>
+      <td>2.65</td>
+      <td>1882.085</td>
+      <td>39.370145</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2018-08-09 17:22:36 [UTC-07:00]</td>
+      <td>2.98</td>
+      <td>2318.337</td>
+      <td>49.678650</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2018-06-27 14:00:29 [UTC-07:00]</td>
+      <td>3.03</td>
+      <td>2417.105</td>
+      <td>50.561890</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2018-05-24 14:27:04 [UTC-07:00]</td>
+      <td>6.60</td>
+      <td>10706.397</td>
+      <td>240.347688</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2018-04-19 08:24:27 [UTC-07:00]</td>
+      <td>3.92</td>
+      <td>3795.702</td>
+      <td>75.526723</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2018-03-15 12:09:50 [UTC-07:00]</td>
+      <td>2.93</td>
+      <td>2315.117</td>
+      <td>42.522557</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>2018-03-15 11:27:25 [UTC-07:00]</td>
+      <td>2.92</td>
+      <td>2295.206</td>
+      <td>42.156845</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2018-01-31 14:57:47 [UTC-07:00]</td>
+      <td>3.72</td>
+      <td>3448.262</td>
+      <td>59.816790</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2017-11-13 17:01:47 [UTC-07:00]</td>
+      <td>3.50</td>
+      <td>2996.979</td>
+      <td>61.162837</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2017-10-04 17:14:01 [UTC-07:00]</td>
+      <td>3.73</td>
+      <td>3565.210</td>
+      <td>72.759388</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>2017-08-24 07:06:33 [UTC-07:00]</td>
+      <td>3.12</td>
+      <td>2587.378</td>
+      <td>46.203179</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>2017-07-18 16:03:54 [UTC-07:00]</td>
+      <td>3.66</td>
+      <td>3446.044</td>
+      <td>65.052871</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2017-06-13 08:37:46 [UTC-07:00]</td>
+      <td>8.99</td>
+      <td>18505.309</td>
+      <td>557.047567</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>2017-05-04 17:46:14 [UTC-07:00]</td>
+      <td>7.03</td>
+      <td>12173.573</td>
+      <td>403.715431</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>2017-03-24 07:53:49 [UTC-07:00]</td>
+      <td>5.72</td>
+      <td>8532.444</td>
+      <td>165.424935</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2017-02-16 08:42:52 [UTC-07:00]</td>
+      <td>3.27</td>
+      <td>2777.993</td>
+      <td>55.276391</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>2017-01-11 13:07:23 [UTC-07:00]</td>
+      <td>3.01</td>
+      <td>2416.000</td>
+      <td>48.073469</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>2016-12-02 10:12:48 [UTC-07:00]</td>
+      <td>2.49</td>
+      <td>1726.456</td>
+      <td>37.876331</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>2016-10-25 13:23:16 [UTC-07:00]</td>
+      <td>2.44</td>
+      <td>1676.239</td>
+      <td>34.208959</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>2011-06-09 09:32:15 [UTC-07:00]</td>
+      <td>12.32</td>
+      <td>29617.364</td>
+      <td>395.905580</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 </section>
