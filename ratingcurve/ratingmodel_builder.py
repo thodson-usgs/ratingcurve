@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 import pymc as pm
-from pymc_experimental.model_builder import ModelBuilder
 import arviz as az
 import pandas as pd
 from pathlib import Path
@@ -13,6 +12,7 @@ import math
 import warnings
 
 from .transform import LogZTransform
+from .model_builder import ModelBuilder
 
 if TYPE_CHECKING:
     from arviz import InferenceData
@@ -477,16 +477,15 @@ class RatingModelBuilder(ModelBuilder):
             h = np.arange(start, stop, step)
 
         ratingdata = self.predict_posterior(np.array(h), extend_idata=False)
-        rating_table = pd.DataFrame({'stage': h,
-                                     'discharge': np.mean(ratingdata, axis=1),
-                                     'median': np.median(ratingdata, axis=1),
-                                     'gse': np.exp(np.std(np.log(ratingdata),
-                                                          axis=1))})
-        # Limit discharge range
-        rating_table = rating_table[rating_table['discharge'] <=
-                                    self.q_obs.max() * extend]
 
-        return rating_table
+        df = pd.DataFrame({'stage': h,
+                           'discharge': np.mean(ratingdata, axis=1),
+                           'median': np.median(ratingdata, axis=1),
+                           'gse': np.exp(np.std(np.log(ratingdata),
+                                                axis=1))})
+
+        discharge_limit = self.q_obs.max() * extend
+        return df[df['discharge'] <= discharge_limit]
 
     def residuals(self) -> ArrayLike:
         """Compute residuals of rating model.

@@ -24,7 +24,7 @@ def is_fit(func):
         if self.idata is None:
             raise RuntimeError(
                 "The model hasn't been fit yet, call .fit().")
-        return func(*args, **kwargs)
+        return func(self, *args, **kwargs)
     return inner
 
 class RatingMixin:
