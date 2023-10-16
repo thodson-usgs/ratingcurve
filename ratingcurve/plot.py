@@ -7,6 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import arviz as az
 
+from matplotlib.ticker import FuncFormatter
+
 if TYPE_CHECKING:
     from matplotlib.pyplot import Axes
     from pandas import DataFrame
@@ -155,6 +157,7 @@ class PlotMixin(RatingMixin):
         """
         ax.set_ylabel('Stage')
         ax.set_xlabel('Discharge')
+        ax.get_xaxis().set_major_formatter(FuncFormatter(lambda x, p: format(int(x), ',')))
 
     @staticmethod
     def _format_residual_plot(ax: Axes) -> None:
