@@ -91,7 +91,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
 
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
-            h = pm.MutableData("h", self.h_obs)
+            h = pm.MutableData("h", self.h_unit)
             log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
@@ -178,7 +178,10 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
         # Sorting reduces multimodality. The benifit increases with
         #   fewer observations.
         hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
-        return hs
+
+        # Convert breakpoints to unit space
+        hs_unit = pm.Deterministic('hs_unit', self.h_transform.transform(hs))
+        return hs_unit
 
     def set_uniform_prior(self):
         """Set uniform prior for breakpoints.
@@ -200,7 +203,10 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
         # Sorting reduces multimodality. The benifit increases with
         #   fewer observations.
         hs = pm.Deterministic('hs', at.sort(hs_, axis=0))
-        return hs
+
+        # Convert breakpoints to unit space
+        hs_unit = pm.Deterministic('hs_unit', self.h_transform.transform(hs))
+        return hs_unit
 
     def __set_hs_bounds(self, n: int = 1):
         """Set upper and lower bounds for breakpoints.
@@ -323,10 +329,10 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
         """
         # Need to compute the design matrix now as we need it to get the number
         # of "segments" to include when preprocessing data for coords.
-        self.h_obs = np.array(h).flatten()
-        self._dmatrix = Dmatrix(self.h_obs, self.model_config.get('df'), 'cr')
+        self.h_unit = self.h_transform.transform(np.array(h).flatten())
+        self._dmatrix = Dmatrix(self.h_unit, self.model_config.get('df'), 'cr')
         self.d_transform = self._dmatrix.transform
-        self.B = self.d_transform(self.h_obs)
+        self.B = self.d_transform(self.h_unit)
         self.segments = self.B.shape[1]
 
         # Pre-process data: Converts q to normalized log space
@@ -335,7 +341,7 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
 
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
-            h = pm.MutableData("h", self.h_obs)
+            h = pm.MutableData("h", self.h_unit)
             log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
             B = pm.MutableData("B", self.B)

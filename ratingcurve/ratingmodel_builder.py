@@ -11,7 +11,7 @@ import json
 import math
 import warnings
 
-from .transform import LogZTransform
+from .transform import LogZTransform, UnitTransform
 from .model_builder import ModelBuilder
 
 if TYPE_CHECKING:
@@ -63,7 +63,7 @@ class RatingModelBuilder(ModelBuilder):
             Discharge uncertainty in units of discharge.
         """
         with self.model:
-            pm.set_data({"h": np.array(h)})
+            pm.set_data({"h": self.h_transform.transform(np.array(h))})
             if q is not None:
                 pm.set_data({"log_q_z": self.q_transform.transform(np.array(q))})
             if q_sigma is not None:
@@ -171,6 +171,10 @@ class RatingModelBuilder(ModelBuilder):
         if np.any(self.q_obs <= 0):
             raise ValueError('Discharge must be positive. Zero values may be'
                              'allowed in a future release.')
+
+        # We want to fit h in unit space, so do that pre-processing here.
+        self.h_transform = UnitTransform(self.h_obs)
+        self.h_unit = self.h_transform.transform(self.h_obs)
 
         # We want to fit in log space, so do that pre-processing here.
         # Also, we want to normalize discharge

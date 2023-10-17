@@ -49,7 +49,7 @@ class ReitanRating(PowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
+            h = pm.MutableData("h", self.h_unit)
             log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
@@ -127,7 +127,7 @@ class LeCozRating(PowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
+            h = pm.MutableData("h", self.h_unit)
             log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
@@ -207,7 +207,7 @@ class ISORating(PowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
+            h = pm.MutableData("h", self.h_unit)
             log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
@@ -280,7 +280,7 @@ class BrokenPowerLawRating(PowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
+            h = pm.MutableData("h", self.h_unit)
             log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
@@ -365,7 +365,7 @@ class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
+            h = pm.MutableData("h", self.h_unit)
             log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
