@@ -246,7 +246,7 @@ class ISORating(PowerLawRating):
 
 class BrokenPowerLawRating(PowerLawRating):
     """Experimental segmented power law rating with standard parameterization.
-    
+
     (See https://en.wikipedia.org/wiki/Power_law#Broken_power_law).
     """
     # Give the model a name
@@ -331,7 +331,7 @@ class BrokenPowerLawRating(PowerLawRating):
 
 class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
     """Experimental smooothly broken segmented power law rating
-    
+
     (See https://en.wikipedia.org/wiki/Power_law#Smoothly_broken_power_law).
     """
     # Give the model a name

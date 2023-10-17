@@ -27,7 +27,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
                                  prior: dict = {'distribution': 'uniform'},
                                  **kwargs) -> dict:
         """Create model configuration dictionary.
-        
+
         Generate a `model_config` dictionary with all the required model
         configuration parameters needed to build the model. It will be passed
         to the class instance on initialization, in case the user doesn't
@@ -115,7 +115,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
             prior_distribution = self.model_config.get('prior').get('distribution')
             if prior_distribution == 'normal':
                 hs = self.set_normal_prior()
-            elif prior_distribution =='uniform':
+            elif prior_distribution == 'uniform':
                 hs = self.set_uniform_prior()
             else:
                 raise NotImplementedError('Prior distribution not implemented')
@@ -132,10 +132,10 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
 
     def set_normal_prior(self):
         """Set normal prior for breakpoints.
-        
+
         Sets an expected value for each breakpoint (mu) with uncertainty
         (sigma). This can be very helpful when convergence is poor.
-        
+
         Examples
         --------
         >>> mu = [1,2,3]
@@ -182,7 +182,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
 
     def set_uniform_prior(self):
         """Set uniform prior for breakpoints.
-        
+
         Make no prior assumption about the location of the breakpoints, only
         the number of breaks and that the breakpoints are ordered.
 
@@ -229,7 +229,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
 
     def __init_hs(self):
         """Initialize breakpoints.
-        
+
         Initial points are randomly selecting within the stage data range.
         Selected points are then sorted.
         """
@@ -261,7 +261,7 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
                                  df: int = 5,
                                  **kwargs) -> dict:
         """Create model configuration dictionary.
-        
+
         Generate a `model_config` dictionary with all the required model
         configuration parameters needed to build the model. It will be passed
         to the class instance on initialization, in case the user doesn't
