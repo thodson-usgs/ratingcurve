@@ -51,7 +51,7 @@ class ReitanRating(PowerLawRating):
 
             # observations
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
+            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
             # fixed parameters
@@ -86,7 +86,7 @@ class ReitanRating(PowerLawRating):
             b = at.log(at.clip(h - hs, 0, hs1[1:] - hs) + ho)
             sigma = pm.HalfCauchy("sigma", beta=0.1)
             obs = pm.Normal('model_q', a + at.dot(w, b), sigma + q_sigma,
-                            shape=h.shape, observed=logq)
+                            shape=h.shape, observed=log_q_z)
 
 
 class LeCozRating(PowerLawRating):
@@ -130,7 +130,7 @@ class LeCozRating(PowerLawRating):
 
             # observations
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
+            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
             # fixed parameters
@@ -172,7 +172,7 @@ class LeCozRating(PowerLawRating):
 
             sigma = pm.HalfCauchy("sigma", beta=0.1)
             obs = pm.Normal('model_q', at.log(q), sigma + q_sigma,
-                            shape=h.shape, observed=logq)
+                            shape=h.shape, observed=log_q_z)
 
 
 class ISORating(PowerLawRating):
@@ -211,7 +211,7 @@ class ISORating(PowerLawRating):
 
             # observations
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
+            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
             # priors
@@ -244,7 +244,7 @@ class ISORating(PowerLawRating):
 
             sigma = pm.HalfCauchy("sigma", beta=0.1)
             obs = pm.Normal('model_q', q, sigma + q_sigma,
-                            shape=h.shape, observed=logq)
+                            shape=h.shape, observed=log_q_z)
 
 
 class BrokenPowerLawRating(PowerLawRating):
@@ -284,7 +284,7 @@ class BrokenPowerLawRating(PowerLawRating):
 
             # observations
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
+            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
             # Priors
@@ -329,7 +329,7 @@ class BrokenPowerLawRating(PowerLawRating):
             q = at.sum(q, axis=0)
 
             obs = pm.Normal('model_q', q, sigma + q_sigma,
-                            shape=h.shape, observed=logq)
+                            shape=h.shape, observed=log_q_z)
 
 
 class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
@@ -369,7 +369,7 @@ class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
 
             # observations
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
+            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
             # Priors
@@ -403,4 +403,4 @@ class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
 
             obs = pm.Normal("model_q",
                             a + at.log(h - hs[0]) * alpha[0, ...] + sums,
-                            sigma + q_sigma, shape=h.shape, observed=logq)
+                            sigma + q_sigma, shape=h.shape, observed=log_q_z)

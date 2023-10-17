@@ -90,7 +90,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
+            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
 
             # parameters
@@ -126,7 +126,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
                             mu=a + at.dot(b, X),
                             sigma=sigma + q_sigma,
                             shape=h.shape,
-                            observed=logq)
+                            observed=log_q_z)
 
     def set_normal_prior(self):
         """Normal prior for breakpoints.
@@ -329,7 +329,7 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
             h = pm.MutableData("h", self.h_obs)
-            logq = pm.MutableData("logq", self.log_q_z)
+            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
             q_sigma = pm.MutableData("q_sigma", self.q_sigma)
             B = pm.MutableData("B", self.B)
 
@@ -346,4 +346,4 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
                             mu=at.dot(B, w.T),
                             sigma=sigma + q_sigma,
                             shape=h.shape,
-                            observed=logq)
+                            observed=log_q_z)
