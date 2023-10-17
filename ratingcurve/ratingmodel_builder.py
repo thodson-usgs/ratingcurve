@@ -378,8 +378,30 @@ class RatingModelBuilder(ModelBuilder):
         """Update of ModelBuilder `sample_prior_predicitve` function to
         output untransformed discharge (q).
         """
-        return self.q_transform.untransform(super().sample_prior_predictive(
-                  X_pred, y_pred, samples, extend_idata, combined, **kwargs))
+        if y_pred is None:
+            y_pred = np.zeros(len(X_pred))
+        if samples is None:
+            samples = self.sampler_config.get("draws", 500)
+
+        if self.model is None:
+            self.build_model(X_pred, y_pred)
+
+        self._data_setter(X_pred, y_pred)
+        if self.model is not None:
+            with self.model:  # sample with new input data
+                prior_pred = pm.sample_prior_predictive(samples, **kwargs)
+                self.set_idata_attrs(prior_pred)
+                if extend_idata:
+                    if self.idata is not None:
+                        self.idata.extend(prior_pred)
+                    else:
+                        self.idata = prior_pred
+
+        prior_predictive_samples = az.extract(prior_pred,
+                                              "prior_predictive",
+                                              combined=combined)
+
+        return self.q_transform.untransform(prior_predictive_samples)
 
     def sample_posterior_predictive(self,
                                     X_pred,
@@ -389,9 +411,18 @@ class RatingModelBuilder(ModelBuilder):
         """Update of ModelBuilder `sample_posterior_predicitve` function to
         output untransformed discharge (q).
         """
-        return self.q_transform.untransform(
-                     super().sample_posterior_predictive(X_pred, extend_idata,
-                                                         combined, **kwargs))
+        self._data_setter(X_pred)
+
+        with self.model:  # sample with new input data
+            post_pred = pm.sample_posterior_predictive(self.idata, **kwargs)
+            if extend_idata:
+                self.idata.extend(post_pred)
+
+        posterior_predictive_samples = az.extract(
+            post_pred, "posterior_predictive", combined=combined
+        )
+
+        return self.q_transform.untransform(posterior_predictive_samples)
 
     @property
     def _serializable_model_config(self) -> dict:
