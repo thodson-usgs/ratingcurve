@@ -26,10 +26,12 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
     def get_default_model_config(segments: int = 2,
                                  prior: dict = {'distribution': 'uniform'},
                                  **kwargs) -> dict:
-        """Returns a `model_config` dictionary with all the required model
+        """Create model configuration dictionary.
+        
+        Generate a `model_config` dictionary with all the required model
         configuration parameters needed to build the model. It will be passed
         to the class instance on initialization, in case the user doesn't
-        provide any model_config of their own.
+        provide any model configuration settings of their own.
 
         Parameters
         ----------
@@ -129,7 +131,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
                             observed=log_q_z)
 
     def set_normal_prior(self):
-        """Normal prior for breakpoints.
+        """Set normal prior for breakpoints.
         
         Sets an expected value for each breakpoint (mu) with uncertainty
         (sigma). This can be very helpful when convergence is poor.
@@ -179,9 +181,10 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
         return hs
 
     def set_uniform_prior(self):
-        """Uniform prior for breakpoints. Make no prior assumption about
-        the location of the breakpoints, only the number of breaks and
-        that the breakpoints are ordered.
+        """Set uniform prior for breakpoints.
+        
+        Make no prior assumption about the location of the breakpoints, only
+        the number of breaks and that the breakpoints are ordered.
 
         prior={distribution:'uniform', initval: []}
         """
@@ -200,7 +203,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
         return hs
 
     def __set_hs_bounds(self, n: int = 1):
-        """Set upper and lower bounds for breakpoints
+        """Set upper and lower bounds for breakpoints.
 
         Sets the lower and upper bounds for the breakpoints. For the first
         breakpoint, the lower bound is set to 0. The upper bound is set to the
@@ -225,8 +228,10 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
         self._hs_upper_bounds = self._hs_upper_bounds.reshape((-1, 1)) - e
 
     def __init_hs(self):
-        """Initialize breakpoints by randomly selecting points within the
-        stage data range. Selected points are then sorted.
+        """Initialize breakpoints.
+        
+        Initial points are randomly selecting within the stage data range.
+        Selected points are then sorted.
         """
         self._init_hs = self.model_config.get('prior').get('initval', None)
 
@@ -255,10 +260,12 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
                                  sd: float = 1,
                                  df: int = 5,
                                  **kwargs) -> dict:
-        """Returns a `model_config` dictionary with all the required model
+        """Create model configuration dictionary.
+        
+        Generate a `model_config` dictionary with all the required model
         configuration parameters needed to build the model. It will be passed
         to the class instance on initialization, in case the user doesn't
-        provide any model_config of their own.
+        provide any model configuration settings of their own.
 
         Parameters
         ----------
@@ -282,7 +289,7 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
     def _data_setter(self, h: ArrayLike,
                      q: ArrayLike = None,
                      q_sigma: ArrayLike = None):
-        """Update _data_setter to include spline design matrix update.
+        """Update `_data_setter` to include spline design matrix update.
 
         Parameters
         ----------

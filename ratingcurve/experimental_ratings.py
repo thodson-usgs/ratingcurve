@@ -13,8 +13,7 @@ if TYPE_CHECKING:
 
 
 class ReitanRating(PowerLawRating):
-    """Experimental multi-segment power law rating using the Reitan
-    parameterization.
+    """Experimental segmented power law rating with Reitan parameterization.
 
     Unlike Reitan Eq. 5, this version uses a fixed offset for each
     segment (ho).
@@ -90,8 +89,7 @@ class ReitanRating(PowerLawRating):
 
 
 class LeCozRating(PowerLawRating):
-    """Experimental multi-segment power law rating using the LeCoz (2014)
-    parameterization.
+    """Experimental segmented power law rating with LeCoz+2014 parameterization.
     """
     # Give the model a name
     _model_type = "LeCozRating"
@@ -176,8 +174,7 @@ class LeCozRating(PowerLawRating):
 
 
 class ISORating(PowerLawRating):
-    """Experimental multi-segment power law rating using the ISO
-    parameterization.
+    """Experimental segmented power law rating with ISO parameterization.
     """
     # Give the model a name
     _model_type = "ISORating"
@@ -248,9 +245,9 @@ class ISORating(PowerLawRating):
 
 
 class BrokenPowerLawRating(PowerLawRating):
-    """Experimental multi-segment power law rating using the standard
-    parameterization
-    (see https://en.wikipedia.org/wiki/Power_law#Broken_power_law).
+    """Experimental segmented power law rating with standard parameterization.
+    
+    (See https://en.wikipedia.org/wiki/Power_law#Broken_power_law).
     """
     # Give the model a name
     _model_type = "BrokenPowerLawRating"
@@ -333,9 +330,9 @@ class BrokenPowerLawRating(PowerLawRating):
 
 
 class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
-    """Experimental smooothly broken multi-segment power law rating using
-    the standard parameterization
-    (see https://en.wikipedia.org/wiki/Power_law#Smoothly_broken_power_law).
+    """Experimental smooothly broken segmented power law rating
+    
+    (See https://en.wikipedia.org/wiki/Power_law#Smoothly_broken_power_law).
     """
     # Give the model a name
     _model_type = "SmoothlyBrokenPowerLawRating"

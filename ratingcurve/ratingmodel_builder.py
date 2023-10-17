@@ -22,19 +22,22 @@ if TYPE_CHECKING:
 
 
 class RatingModelBuilder(ModelBuilder):
-    """Parent class for other rating models that sets not implemented
-    PyMC ModelBuilder class functions. Additionally, tweaks other ModelBuilder
-    functions for better application in rating curve fitting.
+    """Parent class for other rating models.
+    
+    Sets not implemented PyMC ModelBuilder class functions. Additionally,
+    tweaks other ModelBuilder functions for better application in rating curve
+    fitting.
     """
 
     def __init__(self, **kwargs):
-        """Updates the ModelBuilder initialization to only configure the model.
-        Configuring the sampler now occurs in the `fit` call.
+        """Update `ModelBuilder.__init__` to only configure the model.
+        
+        Configuring the sampler now occurs in the `.fit()` call.
 
         Parameters
         ----------
         **kwargs : dict
-            Additional keyword arguments to pass to the model configuration.
+            Keyword arguments to pass to the model configuration.
         """
         model_config = self.get_default_model_config(**kwargs)
         self.model_config = model_config  # parameters for priors etc.
@@ -87,10 +90,13 @@ class RatingModelBuilder(ModelBuilder):
                                    chains: int = 4,
                                    target_accept: float = 0.95,
                                    **kwargs) -> dict:
-        """Returns a `sampler_config` dictionary with all the required
+        """Create sampler configuration dictionary.
+        
+        Generates a `sampler_config` dictionary with all the required
         sampler configuration parameters needed to sample/fit the model. It
-        will be passed to the class instance on initialization, in case the
-        user doesn't provide any sampler_config of their own.
+        will be passed to the class instance when fitting. Any sampler 
+        parameters not specified to the `.fit()` call, will be set to the
+        defaults.
 
         Parameters
         ----------
@@ -143,9 +149,10 @@ class RatingModelBuilder(ModelBuilder):
                                             h: ArrayLike,
                                             q: ArrayLike,
                                             q_sigma: ArrayLike):
-        """Pre-processed the input data before fitting the model.
+        """Pre-process input data before fitting the model.
+        
         Pre-processing consists of converting inputs to flattened arrays and
-        log normalizing discharge.
+        tranforming data as needed.
 
         Parameters
         ----------
@@ -167,7 +174,6 @@ class RatingModelBuilder(ModelBuilder):
 
         # We want to fit in log space, so do that pre-processing here.
         # Also, we want to normalize discharge
-        #XXX self.log_q = np.log(self.q_obs)
         self.q_transform = LogZTransform(self.q_obs)
         self.log_q_z = self.q_transform.transform(self.q_obs)
 
@@ -185,8 +191,7 @@ class RatingModelBuilder(ModelBuilder):
                              'splines': np.arange(self.segments)}
 
     def sample_model(self, **kwargs) -> InferenceData:
-        """Redefinition of ModelBuilder sample_model function to include
-        other fitting algorithms.
+        """Update `ModelBuilder.sample_model` with other fitting algorithms.
 
         Parameters
         ----------
@@ -247,9 +252,11 @@ class RatingModelBuilder(ModelBuilder):
 
     @classmethod
     def load(cls, fname: str):
-        """Redefinition of ModelBuilder load function as it needed tweaking
-        from PyMC version. Creates a ModelBuilder instance from a file, and
-        loads inference data for the model.
+        """Update `ModelBuilder.load()` to accept q_sigma.
+
+        ModelBuilder takes two inputs: x and y, so redefine it to accept sigma.
+        Creates a ModelBuilder instance from a file and loads inference data
+        for the model.
 
         Parameters
         ----------
@@ -296,9 +303,11 @@ class RatingModelBuilder(ModelBuilder):
             random_seed: RandomState = None,
             **kwargs: Any,
             ) -> InferenceData:
-        """Redefinition of ModelBuilder fit function as it needed updating
-        from PyMC version. Fit a model using the data and algorithm passed
-        as a parameter. Sets attrs to inference data of the model.
+        """Update `ModelBuilder.fit` to accept q_sigma.
+        
+        ModelBuilder takes two inputs: x and y, so redefine it to accept sigma.
+        Fit a model using the data and algorithm passed as a parameter. 
+        Sets attrs to inference data of the model.
 
         Parameters
         ----------
@@ -375,8 +384,7 @@ class RatingModelBuilder(ModelBuilder):
                                 combined: bool = True,
                                 **kwargs,
                                 ):
-        """Update of ModelBuilder `sample_prior_predicitve` function to
-        output untransformed discharge (q).
+        """Update `ModelBuilder.sample_prior_predicitve` to output untransformed q.
         """
         if y_pred is None:
             y_pred = np.zeros(len(X_pred))
@@ -408,8 +416,7 @@ class RatingModelBuilder(ModelBuilder):
                                     extend_idata,
                                     combined,
                                     **kwargs):
-        """Update of ModelBuilder `sample_posterior_predicitve` function to
-        output untransformed discharge (q).
+        """Update `ModelBuilder.sample_posterior_predicitve` to output untransformed q.
         """
         self._data_setter(X_pred)
 
@@ -426,11 +433,13 @@ class RatingModelBuilder(ModelBuilder):
 
     @property
     def _serializable_model_config(self) -> dict:
-        """_serializable_model_config is a property that returns a dictionary
+        """Return dictionary of model parameters to save.
+        
+        `_serializable_model_config` is a property that returns a dictionary
         with all the model parameters that we want to save. As some of the
         data structures are not json serializable, we need to convert them to
         json serializable objects. Some models will need them, others can just
-        define them to return the model_config.
+        define them to return the `model_config`.
         """
         return self.model_config
 
@@ -440,8 +449,10 @@ class RatingModelBuilder(ModelBuilder):
                           combined: bool = True,
                           **kwargs,
                           ) -> ArrayLike:
-        """Update of ModelBuilder predict_posterior function to remove data
-        validation check. Generate posterior predictive samples on unseen data.
+        """Update `ModelBuilder.predict_posterior` to remove data validation.
+        
+        Generate posterior predictive samples on unseen data. Exclude any
+        data validation as it requires X_pred to be a 2D array-like object.
 
         Parameters
         ---------
