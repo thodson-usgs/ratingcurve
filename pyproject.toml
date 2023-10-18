@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "ratingcurve"
 description = "A library for fitting multi-segment stage-discharge rating curves."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 keywords = ["USGS", "streamflow", "rating curve"]
 license = {file = "LICENSE.md"}
 maintainers = [
