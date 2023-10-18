@@ -1,3 +1,7 @@
+#   model_builder.py is copied from pymc_experimental v0.0.12
+#   RatingModelBuilder is coupled with ModelBuilder, so we decided to copy the
+#   whole file and include it in the ratingcurve package.
+#
 #   Copyright 2023 The PyMC Developers
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,8 +15,6 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-#
-#   model_builder.py copied from pymc_experimental v0.0.12
 
 
 import hashlib

@@ -185,8 +185,6 @@ class RatingModelBuilder(ModelBuilder):
 
         # Set coordinates. Note that self.segments will need to be set in
         # `build_model` before this function is called.
-        # XXX in model_builder _generate_and_preprocess should preceed build_model
-        # XXX so we need to set self.segments earlier in fit.
         self.model_coords = {'obs': np.arange(len(self.q_obs)),
                              'splines': np.arange(self.segments)}
 
@@ -348,7 +346,6 @@ class RatingModelBuilder(ModelBuilder):
         sampler_config.update(**kwargs)
 
         # Build rating curve models which can include discharge uncertainty
-        # XXX This is where I expect generate and preprocess call
         self.build_model(h, q, q_sigma=q_sigma)
 
         # Sample (fit) the model
@@ -540,6 +537,8 @@ class RatingModelBuilder(ModelBuilder):
         residuals : array_like
             Log residuals of rating model.
         """
+        # model_builder.ModelBuilder.predict() calls RatingModelBuilder.sample_posterior_predictive()
+        # which transforms the data back to the original scale.
         q_pred = self.predict(self.h_obs)
 
         return np.array(np.log(self.q_obs) - np.log(q_pred))
