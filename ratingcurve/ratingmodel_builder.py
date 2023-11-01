@@ -47,35 +47,7 @@ class RatingModelBuilder(ModelBuilder):
         self.idata: Optional[az.InferenceData] = None
         self.is_fitted_ = False
 
-    def _data_setter(self,
-                     h: ArrayLike,
-                     q: ArrayLike = None,
-                     q_sigma: ArrayLike = None):
-        """Sets new data in the model.
-
-        Parameters
-        ----------
-        h : array_like
-            Input training array of gage height (h) observations.
-        q : array_like, optional
-            Target discharge (q) values.
-        q_sigma : array_like, optional
-            Discharge uncertainty in units of discharge.
-        """
-        with self.model:
-            pm.set_data({"h": np.array(h)})
-            if q is not None:
-                pm.set_data({"log_q_z": self.q_transform.transform(np.array(q))})
-            if q_sigma is not None:
-                # Approximate sigma as a geometric error
-                pm.set_data({"q_sigma":
-                             np.log(1 + np.array(q_sigma)/np.array(q))})
-
-            # Set q_sigma = 0 by default
-            elif len(self.q_sigma.shape) != 0:
-                pm.set_data({"q_sigma": np.zeros(len(h))})
-
-    @property
+   @property
     def output_var(self) -> str:
         """Name of the output of dependent variable."""
         return "model_q"
