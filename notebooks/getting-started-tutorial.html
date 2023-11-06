@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -142,6 +142,7 @@ const thebe_selector_output = ".output, .cell_output"
   
 
 <a class="navbar-brand logo" href="../meta/intro.html">
+  
   
   
   
@@ -385,7 +386,7 @@ First load the library (1) and some tutorial data (2):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. load modules</span>
-<span class="kn">from</span> <span class="nn">ratingcurve.ratingmodel</span> <span class="kn">import</span> <span class="n">PowerLawRating</span>
+<span class="kn">from</span> <span class="nn">ratingcurve.ratings</span> <span class="kn">import</span> <span class="n">PowerLawRating</span>
 <span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
 
 <span class="c1"># 2. load tutorial data</span>
@@ -463,16 +464,17 @@ First load the library (1) and some tutorial data (2):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 3. initialize the model</span>
-<span class="n">powerrating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
-                             <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span> 
-                             <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">],</span>
-                             <span class="n">segments</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-                                   
-<span class="c1"># 4. fit the model</span>
-<span class="n">trace</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-
-<span class="c1"># 5. visualize the result</span>
-<span class="n">powerrating</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<span class="n">powerrating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">(</span><span class="n">segments</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 4. fit the model</span>
+<span class="n">trace</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
+                        <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span> 
+                        <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -495,16 +497,73 @@ First load the library (1) and some tutorial data (2):</p>
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='160298' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      80.15% [160298/200000 00:31&lt;00:07 Average Loss = -51.655]
+      <progress value='200000' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [200000/200000 00:55&lt;00:00 Average Loss = -51.718]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 160800
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -51.727
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 160,799 [80%]: Average Loss = 6.1505
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
 </pre></div>
 </div>
-<img alt="../_images/1424c0cead3b10d54d94cc1ad404ec0be6dd559ce32312f98d74f2407ac4e089.png" src="../_images/1424c0cead3b10d54d94cc1ad404ec0be6dd559ce32312f98d74f2407ac4e089.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [10000/10000 00:01&lt;00:00]
+    </div>
+    </div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powerrating</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [10000/10000 00:01&lt;00:00]
+    </div>
+    </div><img alt="../_images/aaa2eac21f13a372da30ece94cb18939237129e818ae8aa4eda70bab91755470.png" src="../_images/aaa2eac21f13a372da30ece94cb18939237129e818ae8aa4eda70bab91755470.png" />
 </div>
 </div>
 <p>On the first run, the previous cell will take a bit longer while the model compiles.
@@ -513,13 +572,37 @@ The loss with decline as the optimization proceeds and should converge after a f
 <p>The resulting fit can be displayed as a rating table</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">table</span><span class="p">()</span>
 <span class="n">table</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div><div class="output text_html">
+    <div>
+      <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      100.00% [10000/10000 00:01&lt;00:00]
+    </div>
+    </div><div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -547,37 +630,37 @@ The loss with decline as the optimization proceeds and should converge after a f
     <tr>
       <th>0</th>
       <td>2.21</td>
-      <td>1385.69</td>
-      <td>1385.63</td>
-      <td>1.0108</td>
+      <td>1386.754899</td>
+      <td>1386.853916</td>
+      <td>1.010424</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2.22</td>
-      <td>1397.83</td>
-      <td>1397.79</td>
-      <td>1.0107</td>
+      <td>1398.843685</td>
+      <td>1398.765895</td>
+      <td>1.010504</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2.23</td>
-      <td>1409.97</td>
-      <td>1409.92</td>
-      <td>1.0107</td>
+      <td>1411.091278</td>
+      <td>1410.989345</td>
+      <td>1.010435</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2.24</td>
-      <td>1422.14</td>
-      <td>1422.10</td>
-      <td>1.0107</td>
+      <td>1423.021234</td>
+      <td>1423.093316</td>
+      <td>1.010325</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2.25</td>
-      <td>1434.31</td>
-      <td>1434.27</td>
-      <td>1.0107</td>
+      <td>1435.334958</td>
+      <td>1435.408808</td>
+      <td>1.010492</td>
     </tr>
   </tbody>
 </table>
@@ -1045,8 +1128,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>

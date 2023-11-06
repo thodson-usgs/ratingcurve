@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -141,6 +141,7 @@ const thebe_selector_output = ".output, .cell_output"
   
 
 <a class="navbar-brand logo" href="meta/intro.html">
+  
   
   
   
@@ -367,260 +368,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="module-ratingcurve.ratingmodel">
-<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-ratingcurve.ratingmodel" title="Permalink to this heading">#</a></h1>
-<p>Streamflow rating models</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.PowerLawRating">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">PowerLawRating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#PowerLawRating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.PowerLawRating" title="Permalink to this definition">#</a></dt>
-<dd><p>Multi-segment power law rating using Heaviside parameterization.</p>
-<p>Create a multi-segment power law rating model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>q</strong> (<em>array-like</em>) – Input arrays of discharge (q) and gage height (h) observations.</p></li>
-<li><p><strong>h</strong> (<em>array-like</em>) – Input arrays of discharge (q) and gage height (h) observations.</p></li>
-<li><p><strong>q_sigma</strong> (<em>array-like</em>) – Input array of discharge uncertainty in units of discharge.</p></li>
-<li><p><strong>segments</strong> (<em>int</em>) – Number of segments in the rating.</p></li>
-<li><p><strong>prior</strong> (<em>dict</em>) – Prior knowledge of breakpoint locations.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.PowerLawRating.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ratingcurve.ratingmodel.RatingData" title="ratingcurve.ratingmodel.RatingData"><span class="pre">RatingData</span></a></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#PowerLawRating.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.PowerLawRating.predict" title="Permalink to this definition">#</a></dt>
-<dd><p>Predicts values of new data with a trained rating model</p>
-<p>This is a faster but model-specific version of the generic predict method.
-If the PowerLawRating model changes, so must this function.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – </p></li>
-<li><p><strong>h</strong> (<em>array-like</em>) – Stages at which to predict discharge.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dataframe with columns ‘stage’, ‘discharge’, and ‘sigma’ containing predicted discharge and uncertainty.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#ratingcurve.ratingmodel.RatingData" title="ratingcurve.ratingmodel.RatingData">RatingData</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.PowerLawRating.set_normal_prior">
-<span class="sig-name descname"><span class="pre">set_normal_prior</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#PowerLawRating.set_normal_prior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.PowerLawRating.set_normal_prior" title="Permalink to this definition">#</a></dt>
-<dd><p>Normal prior for breakpoints</p>
-<p>Sets an expected value for each breakpoint (mu) with uncertainty (sigma).
-This can be very helpful when convergence is poor.</p>
-<p>prior={‘distribution’: ‘normal’, ‘mu’: [], ‘sigma’: []}</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.PowerLawRating.set_uniform_prior">
-<span class="sig-name descname"><span class="pre">set_uniform_prior</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#PowerLawRating.set_uniform_prior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.PowerLawRating.set_uniform_prior" title="Permalink to this definition">#</a></dt>
-<dd><p>Uniform prior for breakpoints</p>
-<p>Make no prior assumption about the location of the breakpoints, only their number.</p>
-<p>prior={distribution:’uniform’, initval: []}</p>
-<p>TODO: clean this up</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.Rating">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">Rating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#Rating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.Rating" title="Permalink to this definition">#</a></dt>
-<dd><p>Abstract base class for rating models</p>
-<p>Initialize rating model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>q</strong> (<em>array-like</em>) – Input arrays of discharge (q) and gage height (h) observations.</p></li>
-<li><p><strong>h</strong> (<em>array-like</em>) – Input arrays of discharge (q) and gage height (h) observations.</p></li>
-<li><p><strong>name</strong> (<em>str</em>) – Name that will be used as prefix for names of all random variables defined within model</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.Rating.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ratingcurve.ratingmodel.RatingData" title="ratingcurve.ratingmodel.RatingData"><span class="pre">RatingData</span></a></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#Rating.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.Rating.predict" title="Permalink to this definition">#</a></dt>
-<dd><p>Predicts values of new data with a trained rating model</p>
-<p>This function uses PyMC’s built in posterior predictive sampling, which
-is convenient but slow. Many descendants of this class implement faster
-predict methods using numpy that are specific to each model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>arviz.InferenceData</em>) – Arviz <code class="docutils literal notranslate"><span class="pre">InferenceData</span></code> object containing posterior samples of model parameters.</p></li>
-<li><p><strong>h</strong> (<em>array-like</em>) – Stages at which to predict discharge.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><em>RatingData</em> – dataclass with stage, discharge, and sigma.</p></li>
-<li><p><strong>See</strong> (<em>https://www.pymc.io/projects/examples/en/latest/generalized_linear_models/GLM-out-of-sample-predictions.html</em>)</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.Rating.residuals">
-<span class="sig-name descname"><span class="pre">residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#Rating.residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.Rating.residuals" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute residuals of rating model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>trace</strong> (<em>arviz.InferenceData</em>) – Arviz <code class="docutils literal notranslate"><span class="pre">InferenceData</span></code> object containing posterior samples of model parameters.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>residuals</strong> – Log residuals of rating model</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>array-like</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.Rating.table">
-<span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#Rating.table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.Rating.table" title="Permalink to this definition">#</a></dt>
-<dd><p>Return stage-discharge rating table</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – Trace from MCMC sampling</p></li>
-<li><p><strong>h</strong> (<em>array-like</em>) – Stage values to compute rating table. If None, then use the range of observations.</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – Step size for stage values</p></li>
-<li><p><strong>extend</strong> (<em>float</em>) – Extend range of discharge values by this factor</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Rating table with columns ‘stage’, ‘discharge’, and ‘sigma’</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.RatingData">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">RatingData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discharge</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#RatingData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.RatingData" title="Permalink to this definition">#</a></dt>
-<dd><p>Dataclass for rating model output</p>
-<p>Input stochastic predictions</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.RatingData.gse">
-<span class="sig-name descname"><span class="pre">gse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#RatingData.gse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.RatingData.gse" title="Permalink to this definition">#</a></dt>
-<dd><p>Return geometric standard error</p>
-<p class="rubric">References</p>
-<aside class="footnote brackets" id="id1" role="note">
-<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<p>Kirkwood, T. B., “Geometric means and measures of dispersion”,
-Biometrics, vol. 35, pp. 908-909, 1979</p>
-</aside>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.RatingData.mean">
-<span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#RatingData.mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.RatingData.mean" title="Permalink to this definition">#</a></dt>
-<dd><p>Return expected (mean) discharge</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.RatingData.median">
-<span class="sig-name descname"><span class="pre">median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#RatingData.median"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.RatingData.median" title="Permalink to this definition">#</a></dt>
-<dd><p>Return median discharge</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.RatingData.prediction_interval">
-<span class="sig-name descname"><span class="pre">prediction_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ArrayLike</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ArrayLike</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#RatingData.prediction_interval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.RatingData.prediction_interval" title="Permalink to this definition">#</a></dt>
-<dd><p>Return prediction interval</p>
-<p>See Table 1 of <a href="#id4"><span class="problematic" id="id2">[1]_</span></a> for the definition of the prediction interval.</p>
-<p class="rubric">References</p>
-<aside class="footnote brackets" id="id3" role="note">
-<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<p>Limpert, E, et al., “Log-normal distributions across the sciences:
-Keys and Clues”, BioScience, vol. 51 (5), pp. 341-352, 2001.</p>
-</aside>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.RatingData.table">
-<span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#RatingData.table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.RatingData.table" title="Permalink to this definition">#</a></dt>
-<dd><p>Return a rating table</p>
-<p>Return a rating table with stage, expected discharge, median discharge,
-and gse.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.SplineRating">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">SplineRating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#SplineRating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.SplineRating" title="Permalink to this definition">#</a></dt>
-<dd><p>Natural spline rating model</p>
-<p>Create a natural spline rating model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>q</strong> (<em>array-like</em>) – Input arrays of discharge (q) and stage (h) observations.</p></li>
-<li><p><strong>h</strong> (<em>array-like</em>) – Input arrays of discharge (q) and stage (h) observations.</p></li>
-<li><p><strong>q_sigma</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Input array of discharge uncertainty in units of discharge.</p></li>
-<li><p><strong>knots</strong> (<em>array-like</em>) – Stage value locations of the spline knots.</p></li>
-<li><p><strong>mean</strong> (<em>float</em>) – Prior mean and standard deviation for the spline coefficients.</p></li>
-<li><p><strong>sd</strong> (<em>float</em>) – Prior mean and standard deviation for the spline coefficients.</p></li>
-<li><p><strong>df</strong> (<em>int</em>) – Degrees of freedom for the spline coefficients.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.SplineRating.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ratingcurve.ratingmodel.RatingData" title="ratingcurve.ratingmodel.RatingData"><span class="pre">RatingData</span></a></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#SplineRating.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.SplineRating.predict" title="Permalink to this definition">#</a></dt>
-<dd><p>Predicts values of new data with a trained rating model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – </p></li>
-<li><p><strong>h</strong> (<em>array-likea</em>) – Stages at which to predict discharge.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>dataclass with stage, discharge, and sigma.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#ratingcurve.ratingmodel.RatingData" title="ratingcurve.ratingmodel.RatingData">RatingData</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ratingcurve.ratingmodel.stage_range">
-<span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel.</span></span><span class="sig-name descname"><span class="pre">stage_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel.html#stage_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel.stage_range" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns a range of stage values</p>
-<p>To compute the range, round down (up) to the nearest step for
-the minumum (maximum).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>h_min</strong> (<em>float</em>) – Minimum and maximum stage (h) observations.</p></li>
-<li><p><strong>h_max</strong> (<em>float</em>) – Minimum and maximum stage (h) observations.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<span class="target" id="module-ratingcurve.transform"></span><p>Data transformations to improve optimization</p>
+  <section id="module-ratingcurve.transform">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-ratingcurve.transform" title="Permalink to this heading">#</a></h1>
+<p>Data transformations to improve optimization</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.transform.Dmatrix">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">Dmatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cr'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix" title="Permalink to this definition">#</a></dt>
@@ -847,24 +597,21 @@ of knots minus 1.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">PlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin" title="Permalink to this definition">#</a></dt>
-<dd><p>Mixin class for plotting rating models</p>
+<dd><p>Mixin class for plotting rating models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots rating curve</p>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots gagings and fit rating curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – </p></li>
-<li><p><strong>ax</strong> (<em>matplotlib axes</em>) – </p></li>
-</ul>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.plot_gagings">
-<span class="sig-name descname"><span class="pre">plot_gagings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_gagings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_gagings" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_gagings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_gagings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_gagings" title="Permalink to this definition">#</a></dt>
 <dd><p>Plot gagings with uncertainty.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -875,31 +622,28 @@ of knots minus 1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.plot_residuals">
-<span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_residuals" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_residuals" title="Permalink to this definition">#</a></dt>
 <dd><p>Plots residuals between model and data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>InferenceData</em><em>, </em><em>optional</em>) – ArviZ InferenceData object containing model trace.</p></li>
-<li><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.setup_plot">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.setup_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.setup_plot" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots rating curve</p>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.setup_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.setup_plot" title="Permalink to this definition">#</a></dt>
+<dd><p>Sets up figure and axes for rating curve plot.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ax</strong> (<em>matplotlib axes</em>) – </p>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ax</strong></p>
+<dd class="field-even"><p><strong>ax</strong> – Generated matplotlib axes.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>matplotlib axes</p>
+<dd class="field-odd"><p>Axes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -912,28 +656,22 @@ of knots minus 1.</p>
 <dd><p>Mixin class for plotting power law rating models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PowerLawPlotMixin.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots rating curve</p>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots power-law rating curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>InferenceData</em><em>, </em><em>optional</em>) – ArviZ InferenceData object containing model trace.</p></li>
-<li><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PowerLawPlotMixin.plot_residuals">
-<span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot_residuals" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot_residuals" title="Permalink to this definition">#</a></dt>
 <dd><p>Plots power-law residuals.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>InferenceData</em>) – ArviZ InferenceData object containing model trace.</p></li>
-<li><p><strong>ax</strong> (<em>Axes</em>) – Pre-defined matplotlib axes.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -943,37 +681,21 @@ of knots minus 1.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">RatingMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin" title="Permalink to this definition">#</a></dt>
-<dd><p>Parent class for other rating-related mixins</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin.model">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#ratingcurve.plot.RatingMixin.model" title="Permalink to this definition">#</a></dt>
-<dd><p>Not implemented.</p>
-</dd></dl>
-
+<dd><p>Parent class for other rating-related mixins.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin.summary">
-<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin.summary" title="Permalink to this definition">#</a></dt>
-<dd><p>Summary of rating model parameters</p>
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin.summary" title="Permalink to this definition">#</a></dt>
+<dd><p>Summary of rating model parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>ArviZ InferenceData</em>) – </p></li>
-<li><p><strong>var_names</strong> (<em>list of str</em>) – List of variables to include in summary</p></li>
-</ul>
+<dd class="field-odd"><p><strong>var_names</strong> (<em>list of str</em><em>, </em><em>optional</em>) – List of variables to include in summary. If no names are given,
+then a summary of all variables is returned.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame summary of rating model parameters</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>df</strong> – DataFrame summary of rating model parameters.</p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin.trace">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trace</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">InferenceData</span></em><a class="headerlink" href="#ratingcurve.plot.RatingMixin.trace" title="Permalink to this definition">#</a></dt>
-<dd><p>ArviZ InferenceData object</p>
-<dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ArviZ InferenceData object</p>
+<dd class="field-odd"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -983,88 +705,24 @@ of knots minus 1.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.plot.SplinePlotMixin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">SplinePlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#SplinePlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.SplinePlotMixin" title="Permalink to this definition">#</a></dt>
-<dd><p>Mixin class for plotting spline rating models</p>
+<dd><p>Mixin class for plotting spline rating models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.SplinePlotMixin.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InferenceData</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#SplinePlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.SplinePlotMixin.plot" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots rating curve.</p>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#SplinePlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.SplinePlotMixin.plot" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots spline rating curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> (<em>InferenceData</em><em>, </em><em>optional</em>) – ArviZ InferenceData object containing model trace.</p></li>
-<li><p><strong>ax</strong> (<em>Axes</em>) – Pre-defined matplotlib axes.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Axes</em><em>, </em><em>optional</em>) – Pre-defined matplotlib axes.</p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-ratingcurve.sklearn"></span><p>Mixins adding sklearn-like functionality.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="ratingcurve.sklearn.RegressorMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.sklearn.</span></span><span class="sig-name descname"><span class="pre">RegressorMixin</span></span><a class="reference internal" href="_modules/ratingcurve/sklearn.html#RegressorMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.sklearn.RegressorMixin" title="Permalink to this definition">#</a></dt>
-<dd><p>Mixin class adding sklearn syntax to regression models</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.sklearn.RegressorMixin.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'advi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">InferenceData</span></span></span><a class="reference internal" href="_modules/ratingcurve/sklearn.html#RegressorMixin.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.sklearn.RegressorMixin.fit" title="Permalink to this definition">#</a></dt>
-<dd><p>Fit the model to the data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>method</strong> (<em>str</em><em>, </em><em>optional</em>) – Method to use for inference, by default “advi”</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>ArviZ InferenceData object</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>InferenceData</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If method is not supported</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.sklearn.RegressorMixin.load">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Model</span></span></span><a class="reference internal" href="_modules/ratingcurve/sklearn.html#RegressorMixin.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.sklearn.RegressorMixin.load" title="Permalink to this definition">#</a></dt>
-<dd><p>Load a saved model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to saved model</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>PyMC3 model</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Model</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.sklearn.RegressorMixin.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/sklearn.html#RegressorMixin.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.sklearn.RegressorMixin.predict" title="Permalink to this definition">#</a></dt>
-<dd><p>Predict using the model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>ArrayLike</em>) – Input data</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Predicted values</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ArrayLike</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ratingcurve.sklearn.RegressorMixin.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/sklearn.html#RegressorMixin.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.sklearn.RegressorMixin.save" title="Permalink to this definition">#</a></dt>
-<dd><p>Save model to file</p>
-</dd></dl>
-
+<dl class="py function">
+<dt class="sig sig-object py" id="ratingcurve.plot.is_fit">
+<span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">is_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#is_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.is_fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Decorator checks whether model has been fit.</p>
 </dd></dl>
 
 </section>
@@ -1157,8 +815,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>
