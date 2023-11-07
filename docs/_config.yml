@@ -13,7 +13,7 @@ only_build_toc_files: True
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: force
-  timeout: 600
+  timeout: 1200
   allow_errors: True
 
 # Define the name of the latex output file for PDF builds
