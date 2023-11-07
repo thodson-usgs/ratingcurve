@@ -444,19 +444,10 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 55200
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 57700
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 55,199 [55%]: Average Loss = 47.809
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -51.771
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 57,699 [57%]: Average Loss = 88.543
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -465,7 +456,7 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.153
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -51.676
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -474,7 +465,16 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -44.212
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.232
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -44.17
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -530,11 +530,11 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
     <tr>
       <th>2 segment</th>
       <td>0</td>
-      <td>72.739994</td>
-      <td>6.695395</td>
+      <td>72.776334</td>
+      <td>6.721809</td>
       <td>0.000000</td>
       <td>1.000000e+00</td>
-      <td>3.744646</td>
+      <td>3.645298</td>
       <td>0.000000</td>
       <td>True</td>
       <td>log</td>
@@ -542,37 +542,37 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
     <tr>
       <th>3 segment</th>
       <td>1</td>
-      <td>64.728964</td>
-      <td>14.521858</td>
-      <td>8.011030</td>
+      <td>66.951884</td>
+      <td>12.520198</td>
+      <td>5.824449</td>
       <td>0.000000e+00</td>
-      <td>9.275373</td>
-      <td>7.376062</td>
-      <td>True</td>
-      <td>log</td>
-    </tr>
-    <tr>
-      <th>1 segment</th>
-      <td>2</td>
-      <td>54.208627</td>
-      <td>4.164429</td>
-      <td>18.531367</td>
-      <td>2.753353e-14</td>
-      <td>3.464001</td>
-      <td>4.410763</td>
+      <td>7.332501</td>
+      <td>5.548533</td>
       <td>True</td>
       <td>log</td>
     </tr>
     <tr>
       <th>4 segment</th>
-      <td>3</td>
-      <td>53.133698</td>
-      <td>25.755716</td>
-      <td>19.606296</td>
-      <td>2.220446e-14</td>
-      <td>15.380002</td>
-      <td>13.696273</td>
+      <td>2</td>
+      <td>61.683219</td>
+      <td>17.191629</td>
+      <td>11.093114</td>
+      <td>0.000000e+00</td>
+      <td>11.080209</td>
+      <td>9.476633</td>
       <td>True</td>
+      <td>log</td>
+    </tr>
+    <tr>
+      <th>1 segment</th>
+      <td>3</td>
+      <td>54.598162</td>
+      <td>3.745239</td>
+      <td>18.178171</td>
+      <td>1.286082e-12</td>
+      <td>3.393778</td>
+      <td>4.600776</td>
+      <td>False</td>
       <td>log</td>
     </tr>
   </tbody>
@@ -618,10 +618,13 @@ Here is a demonstration of how.</p>
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='200000' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [200000/200000 01:05&lt;00:00 Average Loss = -51.541]
+      <progress value='118210' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      59.10% [118210/200000 00:55&lt;00:38 Average Loss = -51.653]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -51.539
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 118600
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 118,599 [59%]: Average Loss = -14.485
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -691,7 +694,7 @@ Here is a demonstration of how.</p>
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:01&lt;00:00]
+      100.00% [10000/10000 00:02&lt;00:00]
     </div>
     </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
@@ -720,7 +723,7 @@ Here is a demonstration of how.</p>
     </div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;&#39;)
 </pre></div>
 </div>
-<img alt="../_images/6cf877f53d636f06c34ccf86c923494aaf5ed74e19c654db2f436ef23859b6a7.png" src="../_images/6cf877f53d636f06c34ccf86c923494aaf5ed74e19c654db2f436ef23859b6a7.png" />
+<img alt="../_images/edcb0129d0b22ac20b1d2e75bb5586011c3cb1c42ee76befb3d5ee8a514fdc9d.png" src="../_images/edcb0129d0b22ac20b1d2e75bb5586011c3cb1c42ee76befb3d5ee8a514fdc9d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -740,10 +743,10 @@ IPython version      : 8.17.2
 pytensor: 2.17.3
 xarray  : 2023.10.1
 
+ratingcurve: 0.1.dev1+g58f0347
+arviz      : 0.16.1
 matplotlib : 3.8.1
 pymc       : 5.9.1
-arviz      : 0.16.1
-ratingcurve: 0.1.dev1+g882369c
 
 Watermark: 2.4.3
 </pre></div>
