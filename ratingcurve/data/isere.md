@@ -3,6 +3,7 @@
 ## Control
 
 This site has a single, stabilized slope channel control over the entire range of the data.
+Stage and discharge in units of meters and m^3/s, respectively.
 
 The rating curve has changed at this station due to the occurrence of
 a major flood (16 October 2000) and in-channel gravel mining downstream of the

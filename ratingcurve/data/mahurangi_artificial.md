@@ -11,6 +11,8 @@ For each gauging, the expected gauging uncertainty (±5% or ± 7%) was provided
 based on the measurement method (acoustic Doppler current profiler or current
 meter, respectively).
 
+Stage and discharge in units of meters and m^3/s, respectively.
+
 ## Data Source
 
 Kiang, J. E., Gazoorian, C., McMillan, H. Coxon, G., Le Coz, J., Westerberg, I. K., et al. (2018).

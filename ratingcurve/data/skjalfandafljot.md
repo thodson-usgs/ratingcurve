@@ -4,6 +4,7 @@
 
 The data source does not describe the control or measurement uncertainty.
 Inspection of the data indicates two controls with a transition at ~4.6m.
+Stage and discharge in units of meters and m^3/s, respectively.
 
 The data were collected by the Icelandic Meteorological Office (IMO) from rivers
 with quite diverse conditions. The Skjalfandafljot River, which has a source in
