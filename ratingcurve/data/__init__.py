@@ -16,7 +16,11 @@ DATASETS = {
     'co channel': 'co_channel',
     'green channel': 'green_channel',
     'provo natural': 'provo_natural',
-    '3-segment simulated': 'simulated_rating'
+    '3-segment simulated': 'simulated_rating',
+    'mahurangi artificial': 'mahurangi_artificial',
+    'nodura': 'nodura',
+    'skjalfandafljot': 'skjalfandafljot',
+    'isere': 'isere',
 }
 
 
@@ -44,7 +48,7 @@ def load(name: str) -> DataFrame:
     """
     if name not in DATASETS.keys():
         raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
-    
+
     filename = DATASETS.get(name) + '.csv'
     stream = pkg_resources.resource_stream(__name__, filename)
     return read_csv(stream)
