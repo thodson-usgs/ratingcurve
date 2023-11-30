@@ -18,7 +18,7 @@ DATASETS = {
     'provo natural': 'provo_natural',
     '3-segment simulated': 'simulated_rating',
     'mahurangi artificial': 'mahurangi_artificial',
-    'nodura': 'nodura',
+    'nordura': 'nordura',
     'skjalfandafljot': 'skjalfandafljot',
     'isere': 'isere',
 }
