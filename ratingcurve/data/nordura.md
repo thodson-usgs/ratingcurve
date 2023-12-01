@@ -1,4 +1,4 @@
-# Skajalfandafljot River, Iceland
+# Nordura River, Iceland
 
 ## Control
 
