@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -139,6 +139,7 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../meta/intro.html">
@@ -327,6 +328,7 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -336,6 +338,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -409,11 +412,18 @@ As a result, natural splines may produce strange results, particularly with smal
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (pytensor.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+</pre></div>
+</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;chalk artificial&#39;,
  &#39;co channel&#39;,
  &#39;green channel&#39;,
  &#39;provo natural&#39;,
- &#39;3-segment simulated&#39;]
+ &#39;3-segment simulated&#39;,
+ &#39;mahurangi artificial&#39;,
+ &#39;nordura&#39;,
+ &#39;skjalfandafljot&#39;,
+ &#39;isere&#39;]
 </pre></div>
 </div>
 </div>
@@ -467,9 +477,9 @@ Here is an example showing a natural spline fit to the Green River dataset.</p>
 </div><div class="output text_html">
     <div>
       <progress value='70000' class='' max='70000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [70000/70000 00:13&lt;00:00 Average Loss = -38.661]
+      100.00% [70000/70000 00:07&lt;00:00 Average Loss = -38.791]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -38.672
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -38.786
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q, sigma, w]
@@ -497,7 +507,7 @@ Here is an example showing a natural spline fit to the Green River dataset.</p>
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:01&lt;00:00]
+      100.00% [10000/10000 00:00&lt;00:00]
     </div>
     </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/patsy/util.py:672: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
   return _pandas_is_categorical_dtype(dt)
@@ -525,7 +535,7 @@ Sampling: [model_q]
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
       100.00% [10000/10000 00:01&lt;00:00]
     </div>
-    </div><img alt="../_images/98aa10895a05cabac2f241e714b91a5d96493e3a86f527156c8b744dd4446ee9.png" src="../_images/98aa10895a05cabac2f241e714b91a5d96493e3a86f527156c8b744dd4446ee9.png" />
+    </div><img alt="../_images/0ac06a0558bf946ddc6933eaf70a1b80424c2c1509ce06bc61ee5848294a8dc4.png" src="../_images/0ac06a0558bf946ddc6933eaf70a1b80424c2c1509ce06bc61ee5848294a8dc4.png" />
 </div>
 </div>
 </section>
@@ -550,7 +560,7 @@ Sampling: [model_q]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Stage (ft)&#39;)
 </pre></div>
 </div>
-<img alt="../_images/eb6cdaf1c5e26f4bfbdb189708ddfea0b13196f60ae30e9cd42c6b27172b6a82.png" src="../_images/eb6cdaf1c5e26f4bfbdb189708ddfea0b13196f60ae30e9cd42c6b27172b6a82.png" />
+<img alt="../_images/29b01b952a8923931ede02005c1796373f635bf7353a3cdd84ffc5deaf9a9f26.png" src="../_images/29b01b952a8923931ede02005c1796373f635bf7353a3cdd84ffc5deaf9a9f26.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -594,9 +604,9 @@ Sampling: [model_q]
 </div><div class="output text_html">
     <div>
       <progress value='100000' class='' max='100000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [100000/100000 00:18&lt;00:00 Average Loss = -2.765]
+      100.00% [100000/100000 00:10&lt;00:00 Average Loss = -2.7741]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -2.7707
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -2.7703
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q, sigma, w]
@@ -624,13 +634,11 @@ Sampling: [model_q]
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:01&lt;00:00]
+      100.00% [10000/10000 00:00&lt;00:00]
     </div>
     </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/patsy/util.py:672: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
   return _pandas_is_categorical_dtype(dt)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
+Sampling: [model_q]
 </pre></div>
 </div>
 <div class="output text_html">
@@ -652,9 +660,9 @@ Sampling: [model_q]
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:01&lt;00:00]
+      100.00% [10000/10000 00:00&lt;00:00]
     </div>
-    </div><img alt="../_images/9879f0eeead91fb12e19b501e56166dc374baa5d688d1377a9edb24d3b97445f.png" src="../_images/9879f0eeead91fb12e19b501e56166dc374baa5d688d1377a9edb24d3b97445f.png" />
+    </div><img alt="../_images/4cb52b5fba034cef7a85f925dff9e7c3ea5f12a46239066750ab25e65d662f14.png" src="../_images/4cb52b5fba034cef7a85f925dff9e7c3ea5f12a46239066750ab25e65d662f14.png" />
 </div>
 </div>
 <section id="excercise">
@@ -674,19 +682,19 @@ Experiment with the following:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Tue Nov 07 2023
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Fri Dec 01 2023
 
 Python implementation: CPython
 Python version       : 3.9.18
-IPython version      : 8.17.2
+IPython version      : 8.18.1
 
-pytensor: 2.17.3
-xarray  : 2023.10.1
+pytensor: 2.18.1
+xarray  : 2023.11.0
 
-pymc       : 5.9.1
-numpy      : 1.25.2
+pymc       : 5.10.0
+numpy      : 1.26.2
 arviz      : 0.16.1
-ratingcurve: 0.1.dev1+g58f0347
+ratingcurve: 0.1.dev1+g2b046ee
 
 Watermark: 2.4.3
 </pre></div>
@@ -725,7 +733,7 @@ Watermark: 2.4.3
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="segmented-power-law-tutorial.html"
@@ -786,6 +794,7 @@ By Timothy Hodson
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright CC0.
@@ -812,8 +821,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -139,6 +139,7 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../meta/intro.html">
@@ -327,6 +328,7 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -336,6 +338,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -418,6 +421,9 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception reporting mode: Minimal
 </pre></div>
 </div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (pytensor.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+</pre></div>
+</div>
 </div>
 </div>
 <section id="fit-the-data">
@@ -444,19 +450,10 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 57700
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 39600
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 57,699 [57%]: Average Loss = 88.543
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -51.676
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 39,599 [39%]: Average Loss = 60.038
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -465,7 +462,10 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.232
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 95000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 94,999 [94%]: Average Loss = -9.0402
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -474,7 +474,16 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -44.17
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.264
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -44.124
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -530,11 +539,11 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
     <tr>
       <th>2 segment</th>
       <td>0</td>
-      <td>72.776334</td>
-      <td>6.721809</td>
+      <td>72.879682</td>
+      <td>5.848013</td>
       <td>0.000000</td>
       <td>1.000000e+00</td>
-      <td>3.645298</td>
+      <td>3.116689</td>
       <td>0.000000</td>
       <td>True</td>
       <td>log</td>
@@ -542,36 +551,36 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
     <tr>
       <th>3 segment</th>
       <td>1</td>
-      <td>66.951884</td>
-      <td>12.520198</td>
-      <td>5.824449</td>
-      <td>0.000000e+00</td>
-      <td>7.332501</td>
-      <td>5.548533</td>
+      <td>64.323993</td>
+      <td>14.882096</td>
+      <td>8.555689</td>
+      <td>1.893596e-12</td>
+      <td>8.656301</td>
+      <td>8.480624</td>
       <td>True</td>
       <td>log</td>
     </tr>
     <tr>
       <th>4 segment</th>
       <td>2</td>
-      <td>61.683219</td>
-      <td>17.191629</td>
-      <td>11.093114</td>
-      <td>0.000000e+00</td>
-      <td>11.080209</td>
-      <td>9.476633</td>
+      <td>54.164636</td>
+      <td>24.540761</td>
+      <td>18.715046</td>
+      <td>1.467271e-12</td>
+      <td>15.966572</td>
+      <td>16.032743</td>
       <td>True</td>
       <td>log</td>
     </tr>
     <tr>
       <th>1 segment</th>
       <td>3</td>
-      <td>54.598162</td>
-      <td>3.745239</td>
-      <td>18.178171</td>
-      <td>1.286082e-12</td>
-      <td>3.393778</td>
-      <td>4.600776</td>
+      <td>52.361411</td>
+      <td>4.140975</td>
+      <td>20.518271</td>
+      <td>0.000000e+00</td>
+      <td>3.398569</td>
+      <td>4.235095</td>
       <td>False</td>
       <td>log</td>
     </tr>
@@ -618,13 +627,13 @@ Here is a demonstration of how.</p>
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='118210' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      59.10% [118210/200000 00:55&lt;00:38 Average Loss = -51.653]
+      <progress value='54599' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      27.30% [54599/200000 00:13&lt;00:34 Average Loss = -51.306]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 118600
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 55100
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 118,599 [59%]: Average Loss = -14.485
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 55,099 [27%]: Average Loss = 20.575
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -694,7 +703,7 @@ Here is a demonstration of how.</p>
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:02&lt;00:00]
+      100.00% [10000/10000 00:01&lt;00:00]
     </div>
     </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
@@ -723,7 +732,7 @@ Here is a demonstration of how.</p>
     </div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;&#39;)
 </pre></div>
 </div>
-<img alt="../_images/edcb0129d0b22ac20b1d2e75bb5586011c3cb1c42ee76befb3d5ee8a514fdc9d.png" src="../_images/edcb0129d0b22ac20b1d2e75bb5586011c3cb1c42ee76befb3d5ee8a514fdc9d.png" />
+<img alt="../_images/54795b178df02b9a6b229db84bb75b6381bb348eaf976d15c9eb88575a399a15.png" src="../_images/54795b178df02b9a6b229db84bb75b6381bb348eaf976d15c9eb88575a399a15.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -734,19 +743,19 @@ Here is a demonstration of how.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Tue Nov 07 2023
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Fri Dec 01 2023
 
 Python implementation: CPython
 Python version       : 3.9.18
-IPython version      : 8.17.2
+IPython version      : 8.18.1
 
-pytensor: 2.17.3
-xarray  : 2023.10.1
+pytensor: 2.18.1
+xarray  : 2023.11.0
 
-ratingcurve: 0.1.dev1+g58f0347
+matplotlib : 3.8.2
 arviz      : 0.16.1
-matplotlib : 3.8.1
-pymc       : 5.9.1
+pymc       : 5.10.0
+ratingcurve: 0.1.dev1+g2b046ee
 
 Watermark: 2.4.3
 </pre></div>
@@ -784,7 +793,7 @@ Watermark: 2.4.3
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="spline-tutorial.html"
@@ -842,6 +851,7 @@ By Timothy Hodson
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright CC0.
@@ -868,8 +878,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

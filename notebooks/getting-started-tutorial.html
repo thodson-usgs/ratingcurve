@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -139,6 +139,7 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../meta/intro.html">
@@ -327,6 +328,7 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -336,6 +338,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -396,6 +399,9 @@ First load the library (1) and some tutorial data (2):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (pytensor.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -497,10 +503,13 @@ First load the library (1) and some tutorial data (2):</p>
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='200000' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [200000/200000 01:30&lt;00:00 Average Loss = -41.939]
+      <progress value='176329' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      88.16% [176329/200000 00:43&lt;00:05 Average Loss = -51.774]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -41.936
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 177000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 176,999 [88%]: Average Loss = -11.201
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -561,9 +570,9 @@ First load the library (1) and some tutorial data (2):</p>
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:02&lt;00:00]
+      100.00% [10000/10000 00:01&lt;00:00]
     </div>
-    </div><img alt="../_images/aaf941b596e0af6ece271a6a4b7132e3f7eac3e0c3c6424be35cb34c804bb15a.png" src="../_images/aaf941b596e0af6ece271a6a4b7132e3f7eac3e0c3c6424be35cb34c804bb15a.png" />
+    </div><img alt="../_images/5b15e14c8cbe8c983ee76e0e247a0ab6fc1be726bfeaaf0f9bfc507c345dffc5.png" src="../_images/5b15e14c8cbe8c983ee76e0e247a0ab6fc1be726bfeaaf0f9bfc507c345dffc5.png" />
 </div>
 </div>
 <p>On the first run, the previous cell will take a bit longer while the model compiles.
@@ -600,7 +609,7 @@ The loss with decline as the optimization proceeds and should converge after a f
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:02&lt;00:00]
+      100.00% [10000/10000 00:01&lt;00:00]
     </div>
     </div><div class="output text_html"><div>
 <style scoped>
@@ -630,37 +639,37 @@ The loss with decline as the optimization proceeds and should converge after a f
     <tr>
       <th>0</th>
       <td>2.21</td>
-      <td>1339.634124</td>
-      <td>1339.712191</td>
-      <td>1.019359</td>
+      <td>1385.180863</td>
+      <td>1385.077784</td>
+      <td>1.010806</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2.22</td>
-      <td>1351.442637</td>
-      <td>1351.309377</td>
-      <td>1.019286</td>
+      <td>1397.366743</td>
+      <td>1397.317725</td>
+      <td>1.010688</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2.23</td>
-      <td>1362.352966</td>
-      <td>1362.306204</td>
-      <td>1.019279</td>
+      <td>1409.427508</td>
+      <td>1409.188284</td>
+      <td>1.010621</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2.24</td>
-      <td>1374.224425</td>
-      <td>1374.419027</td>
-      <td>1.019267</td>
+      <td>1421.447755</td>
+      <td>1421.478884</td>
+      <td>1.010617</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2.25</td>
-      <td>1386.001502</td>
-      <td>1386.181260</td>
-      <td>1.019423</td>
+      <td>1433.667889</td>
+      <td>1433.433636</td>
+      <td>1.010568</td>
     </tr>
   </tbody>
 </table>
@@ -690,7 +699,11 @@ List them by calling</p>
  &#39;co channel&#39;,
  &#39;green channel&#39;,
  &#39;provo natural&#39;,
- &#39;3-segment simulated&#39;]
+ &#39;3-segment simulated&#39;,
+ &#39;mahurangi artificial&#39;,
+ &#39;nordura&#39;,
+ &#39;skjalfandafljot&#39;,
+ &#39;isere&#39;]
 </pre></div>
 </div>
 </div>
@@ -1045,7 +1058,7 @@ The riffle is quite stable.
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="../meta/installation.html"
@@ -1102,6 +1115,7 @@ By Timothy Hodson
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright CC0.
@@ -1128,8 +1142,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

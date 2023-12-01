@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -139,6 +139,7 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../meta/intro.html">
@@ -327,6 +328,7 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -336,6 +338,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -407,6 +410,11 @@ which uses a segmented power law.</p>
 <span class="kn">import</span> <span class="nn">pymc</span> <span class="k">as</span> <span class="nn">pm</span>
 <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 <span class="kn">from</span> <span class="nn">ratingcurve.ratings</span> <span class="kn">import</span> <span class="n">PowerLawRating</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (pytensor.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
 </pre></div>
 </div>
 </div>
@@ -500,7 +508,7 @@ which uses a segmented power law.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Stage (ft)&#39;)
 </pre></div>
 </div>
-<img alt="../_images/3b8ae67bde3ac34ca514be726eb125cad75ec16f510700cc30d0ea7eef477894.png" src="../_images/3b8ae67bde3ac34ca514be726eb125cad75ec16f510700cc30d0ea7eef477894.png" />
+<img alt="../_images/7a81f1a6fa241b8b9cae5413201a9ca51f0611ad765d58ab85a340fa90877fac.png" src="../_images/7a81f1a6fa241b8b9cae5413201a9ca51f0611ad765d58ab85a340fa90877fac.png" />
 </div>
 </div>
 </section>
@@ -547,13 +555,13 @@ though the model should coverge well before that.</p>
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='66328' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      33.16% [66328/200000 00:31&lt;01:02 Average Loss = -51.428]
+      <progress value='141054' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      70.53% [141054/200000 00:34&lt;00:14 Average Loss = -51.399]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 66500
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 141400
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 66,499 [33%]: Average Loss = 24.817
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 141,399 [70%]: Average Loss = -18.919
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -615,9 +623,9 @@ though the model should coverge well before that.</p>
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:02&lt;00:00]
+      100.00% [10000/10000 00:01&lt;00:00]
     </div>
-    </div><img alt="../_images/346fe05483679f12a06a05a8a57de2019b849ed4601f646f3ead55118aca2b6a.png" src="../_images/346fe05483679f12a06a05a8a57de2019b849ed4601f646f3ead55118aca2b6a.png" />
+    </div><img alt="../_images/d11cc1c44d7f5a9495525621dc24867a1867242752cb12587916f26a3ecf1c4a.png" src="../_images/d11cc1c44d7f5a9495525621dc24867a1867242752cb12587916f26a3ecf1c4a.png" />
 </div>
 </div>
 <p>or as a table of stage-discharge values.</p>
@@ -651,7 +659,7 @@ though the model should coverge well before that.</p>
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:02&lt;00:00]
+      100.00% [10000/10000 00:01&lt;00:00]
     </div>
     </div><div class="output text_html"><div>
 <style scoped>
@@ -681,37 +689,37 @@ though the model should coverge well before that.</p>
     <tr>
       <th>0</th>
       <td>2.21</td>
-      <td>1383.072547</td>
-      <td>1383.093217</td>
-      <td>1.010492</td>
+      <td>1386.196012</td>
+      <td>1386.089603</td>
+      <td>1.010391</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2.22</td>
-      <td>1395.188885</td>
-      <td>1394.990833</td>
-      <td>1.010529</td>
+      <td>1398.436860</td>
+      <td>1398.313179</td>
+      <td>1.010262</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2.23</td>
-      <td>1407.367585</td>
-      <td>1407.457954</td>
-      <td>1.010482</td>
+      <td>1410.546054</td>
+      <td>1410.421834</td>
+      <td>1.010491</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2.24</td>
-      <td>1419.652686</td>
-      <td>1419.610139</td>
-      <td>1.010296</td>
+      <td>1422.799043</td>
+      <td>1422.521341</td>
+      <td>1.010341</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2.25</td>
-      <td>1432.027978</td>
-      <td>1432.051307</td>
-      <td>1.010431</td>
+      <td>1434.886998</td>
+      <td>1434.834316</td>
+      <td>1.010347</td>
     </tr>
   </tbody>
 </table>
@@ -752,7 +760,7 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n_s
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/eb6cdaf1c5e26f4bfbdb189708ddfea0b13196f60ae30e9cd42c6b27172b6a82.png" src="../_images/eb6cdaf1c5e26f4bfbdb189708ddfea0b13196f60ae30e9cd42c6b27172b6a82.png" />
+<img alt="../_images/29b01b952a8923931ede02005c1796373f635bf7353a3cdd84ffc5deaf9a9f26.png" src="../_images/29b01b952a8923931ede02005c1796373f635bf7353a3cdd84ffc5deaf9a9f26.png" />
 </div>
 </div>
 <p>Setup a rating model with 3 segments</p>
@@ -796,9 +804,9 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n_s
 </div><div class="output text_html">
     <div>
       <progress value='200000' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [200000/200000 01:31&lt;00:00 Average Loss = -48.482]
+      100.00% [200000/200000 00:48&lt;00:00 Average Loss = -48.438]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.485
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.444
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -865,12 +873,12 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n_s
 </div><div class="output text_html">
     <div>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:02&lt;00:00]
+      100.00% [10000/10000 00:01&lt;00:00]
     </div>
     </div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;q&#39;, ylabel=&#39;Stage&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/c651ae4e9f1c2c9a8b6ec6fd753869db2383050ec2cef2686bff97e2d7f2ad74.png" src="../_images/c651ae4e9f1c2c9a8b6ec6fd753869db2383050ec2cef2686bff97e2d7f2ad74.png" />
+<img alt="../_images/f3d53533b48d39a40533db50dbe49253cff4bacab1a19e15cc3cf7e3bfa57334.png" src="../_images/f3d53533b48d39a40533db50dbe49253cff4bacab1a19e15cc3cf7e3bfa57334.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -915,98 +923,98 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n_s
   <tbody>
     <tr>
       <th>b[0]</th>
-      <td>0.981</td>
-      <td>0.002</td>
-      <td>0.978</td>
       <td>0.985</td>
+      <td>0.002</td>
+      <td>0.981</td>
+      <td>0.989</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9873.0</td>
-      <td>9455.0</td>
+      <td>9920.0</td>
+      <td>10049.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>b[1]</th>
-      <td>0.352</td>
+      <td>0.354</td>
       <td>0.008</td>
-      <td>0.337</td>
-      <td>0.367</td>
+      <td>0.340</td>
+      <td>0.369</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9891.0</td>
-      <td>9651.0</td>
+      <td>10185.0</td>
+      <td>9962.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>b[2]</th>
-      <td>0.043</td>
-      <td>0.058</td>
-      <td>-0.066</td>
-      <td>0.151</td>
+      <td>0.056</td>
+      <td>0.056</td>
+      <td>-0.050</td>
+      <td>0.159</td>
       <td>0.001</td>
       <td>0.000</td>
-      <td>10036.0</td>
-      <td>9525.0</td>
+      <td>10409.0</td>
+      <td>9829.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>a</th>
-      <td>-1.007</td>
+      <td>-1.006</td>
       <td>0.003</td>
-      <td>-1.012</td>
-      <td>-1.001</td>
+      <td>-1.011</td>
+      <td>-1.000</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9731.0</td>
-      <td>8937.0</td>
+      <td>10103.0</td>
+      <td>10002.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>sigma</th>
-      <td>0.015</td>
+      <td>0.016</td>
       <td>0.002</td>
       <td>0.012</td>
-      <td>0.019</td>
+      <td>0.020</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9586.0</td>
-      <td>9794.0</td>
+      <td>9792.0</td>
+      <td>9711.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[0, 0]</th>
       <td>4.928</td>
       <td>0.001</td>
-      <td>4.925</td>
+      <td>4.926</td>
       <td>4.930</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9662.0</td>
-      <td>9782.0</td>
+      <td>9899.0</td>
+      <td>9493.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[1, 0]</th>
-      <td>10.549</td>
+      <td>10.540</td>
       <td>0.032</td>
-      <td>10.487</td>
-      <td>10.609</td>
+      <td>10.481</td>
+      <td>10.600</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>10125.0</td>
-      <td>9745.0</td>
+      <td>10160.0</td>
+      <td>9927.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[2, 0]</th>
-      <td>12.318</td>
-      <td>0.163</td>
-      <td>12.027</td>
-      <td>12.534</td>
+      <td>12.310</td>
+      <td>0.174</td>
+      <td>12.006</td>
+      <td>12.533</td>
       <td>0.002</td>
       <td>0.001</td>
-      <td>9967.0</td>
-      <td>9608.0</td>
+      <td>10095.0</td>
+      <td>9919.0</td>
       <td>NaN</td>
     </tr>
   </tbody>
@@ -1030,19 +1038,19 @@ A fix is under development, but for now, try</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Tue Nov 07 2023
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Fri Dec 01 2023
 
 Python implementation: CPython
 Python version       : 3.9.18
-IPython version      : 8.17.2
+IPython version      : 8.18.1
 
-pytensor: 2.17.3
-xarray  : 2023.10.1
+pytensor: 2.18.1
+xarray  : 2023.11.0
 
-pymc       : 5.9.1
-matplotlib : 3.8.1
+ratingcurve: 0.1.dev1+g2b046ee
+pymc       : 5.10.0
 arviz      : 0.16.1
-ratingcurve: 0.1.dev1+g58f0347
+matplotlib : 3.8.2
 
 Watermark: 2.4.3
 </pre></div>
@@ -1080,7 +1088,7 @@ Watermark: 2.4.3
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="../meta/tutorials.html"
@@ -1140,6 +1148,7 @@ By Timothy Hodson
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright CC0.
@@ -1166,8 +1175,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
