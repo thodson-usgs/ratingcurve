@@ -19,7 +19,7 @@ DATASETS = {
     '3-segment simulated': 'simulated_rating',
     'mahurangi artificial': 'mahurangi_artificial',
     'nordura': 'nordura',
-    'skjalfandafljot': 'skjalfandafljot',
+    'skajalfandafljot': 'skajalfandafljot',
     'isere': 'isere',
 }
 
