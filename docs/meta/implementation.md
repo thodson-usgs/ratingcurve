@@ -36,7 +36,7 @@ As stage increases, new segments are activated, but their effect never drowns ou
 each successive $w_i$ term makes cumulative adjustments to the base slope $w_1$.
 
 The current priors and optimizer settings are documented in the package;
-in general, they do not need to modified.
+in general, they do not need to be modified.
 Besides selecting the number of segments, the user can specify a prior distribution on the breakpoints.
 The default assumes the breakpoints are uniformly distributed, which works well for general use.
 Alternatively, the user can specify the approximate location of each breakpoint using a normal distribution,
