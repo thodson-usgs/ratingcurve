@@ -22,7 +22,7 @@ Background information for reviewers [here](https://www.usgs.gov/products/softwa
 
 ### Adherence to Fundamental Science Practices
 
-- [ ] I confirm that I read and will adhere to the [Federal Source Code Policy for Scientific Software](https://www.usgs.gov/survey-manual/im-osqi-2019-01-review-and-approval-scientific-software-release) and relevant federal guidelines for approved software release as outlined in [SM502.1](https://code.usgs.gov/cmwsc/shwa/dataretrieval) and [SM502.4](https://www.usgs.gov/survey-manual/5024-fundamental-science-practices-review-approval-and-release-information-products).
+- [ ] I confirm that I read and will adhere to the [Federal Source Code Policy for Scientific Software](https://www.usgs.gov/survey-manual/im-osqi-2019-01-review-and-approval-scientific-software-release) and relevant federal guidelines for approved software release as outlined in [SM502.1](https://www.usgs.gov/survey-manual/5021-fundamental-science-practices-foundation-policy) and [SM502.4](https://www.usgs.gov/survey-manual/5024-fundamental-science-practices-review-approval-and-release-information-products).
 
 ### Security Review
 
