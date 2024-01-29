@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Segmented Power Law &#8212; ratingcurve</title>
   
@@ -19,49 +18,53 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=afe5de03"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/segmented-power-law-tutorial';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -76,10 +79,9 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -120,11 +122,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -152,7 +157,18 @@ const thebe_selector_output = ".output, .cell_output"
     <p class="title logo__title">ratingcurve</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -383,10 +399,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="segmented-power-law">
-<h1>Segmented Power Law<a class="headerlink" href="#segmented-power-law" title="Permalink to this heading">#</a></h1>
+<h1>Segmented Power Law<a class="headerlink" href="#segmented-power-law" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-demo.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>There are several approaches to fitting a stage-discharge rating curve.
 This notebook demonstrates an simple way to approximate the classic approach,
@@ -420,7 +436,7 @@ which uses a segmented power law.</p>
 </div>
 </div>
 <section id="load-data">
-<h2>Load Data<a class="headerlink" href="#load-data" title="Permalink to this heading">#</a></h2>
+<h2>Load Data<a class="headerlink" href="#load-data" title="Link to this heading">#</a></h2>
 <p>Begin by loading the Green Channel dataset</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -513,7 +529,7 @@ which uses a segmented power law.</p>
 </div>
 </section>
 <section id="setup-model">
-<h2>Setup model<a class="headerlink" href="#setup-model" title="Permalink to this heading">#</a></h2>
+<h2>Setup model<a class="headerlink" href="#setup-model" title="Link to this heading">#</a></h2>
 <p>Now, setup the rating model.
 This make take a minute the first time while the model compiles but will be faster on subsequent runs.</p>
 <div class="cell docutils container">
@@ -555,13 +571,13 @@ though the model should coverge well before that.</p>
 </style>
 </div><div class="output text_html">
     <div>
-      <progress value='161247' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      80.62% [161247/200000 00:38&lt;00:09 Average Loss = -51.708]
+      <progress value='95593' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      47.80% [95593/200000 00:24&lt;00:26 Average Loss = -52.077]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 161900
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 96100
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 161,899 [80%]: Average Loss = -16.274
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 96,099 [48%]: Average Loss = 37.441
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -625,7 +641,7 @@ though the model should coverge well before that.</p>
       <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
       100.00% [10000/10000 00:01&lt;00:00]
     </div>
-    </div><img alt="../_images/93905166cb3a367ae5fc2d2d406f924fdadded1640b10cdda49f5593a6f4f049.png" src="../_images/93905166cb3a367ae5fc2d2d406f924fdadded1640b10cdda49f5593a6f4f049.png" />
+    </div><img alt="../_images/621422f641426568abbfd2143d28dbf8f073905388107582d9ad608129adfa05.png" src="../_images/621422f641426568abbfd2143d28dbf8f073905388107582d9ad608129adfa05.png" />
 </div>
 </div>
 <p>or as a table of stage-discharge values.</p>
@@ -689,37 +705,37 @@ though the model should coverge well before that.</p>
     <tr>
       <th>0</th>
       <td>2.21</td>
-      <td>1382.923796</td>
-      <td>1382.850642</td>
-      <td>1.010836</td>
+      <td>1387.919099</td>
+      <td>1387.984697</td>
+      <td>1.017343</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2.22</td>
-      <td>1395.075518</td>
-      <td>1395.121550</td>
-      <td>1.010742</td>
+      <td>1399.656750</td>
+      <td>1399.532443</td>
+      <td>1.017565</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2.23</td>
-      <td>1406.887788</td>
-      <td>1406.775849</td>
-      <td>1.010794</td>
+      <td>1411.829366</td>
+      <td>1411.672356</td>
+      <td>1.017871</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2.24</td>
-      <td>1419.326447</td>
-      <td>1419.068626</td>
-      <td>1.010640</td>
+      <td>1424.547670</td>
+      <td>1424.344031</td>
+      <td>1.017539</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2.25</td>
-      <td>1431.422692</td>
-      <td>1431.340653</td>
-      <td>1.010690</td>
+      <td>1436.296351</td>
+      <td>1436.078995</td>
+      <td>1.017519</td>
     </tr>
   </tbody>
 </table>
@@ -727,14 +743,14 @@ though the model should coverge well before that.</p>
 </div>
 </section>
 <section id="exercise">
-<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h2>
+<h2>Exercise<a class="headerlink" href="#exercise" title="Link to this heading">#</a></h2>
 <p>What happens if we choose the wrong number of segments?
 Increase the number of segments by one and rerun the model.
 In fact, we can use this to select the correct number of segments,
 which is demonstrated in the <a class="reference external" href="https://github.com/thodson-usgs/ratingcurve/blob/main/docs/notebooks/model-selection-tutorial.ipynb">model evaluation notebook</a>.</p>
 </section>
 <section id="simulated-example">
-<h2>Simulated Example<a class="headerlink" href="#simulated-example" title="Permalink to this heading">#</a></h2>
+<h2>Simulated Example<a class="headerlink" href="#simulated-example" title="Link to this heading">#</a></h2>
 <p>This example uses a simulated rating curve, which allows you to test how changing the number of segments affects the rating curve.</p>
 <p>First, load the ‘3-segment simulated’ tutorial dataset.</p>
 <div class="cell docutils container">
@@ -804,9 +820,9 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n_s
 </div><div class="output text_html">
     <div>
       <progress value='200000' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [200000/200000 00:47&lt;00:00 Average Loss = -57.055]
+      100.00% [200000/200000 00:48&lt;00:00 Average Loss = -48.434]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -57.073
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -48.432
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -878,7 +894,7 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n_s
     </div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;q&#39;, ylabel=&#39;Stage&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/8395774994ff6bd2d89957fa0049b08f68f0d2652b21ee39aef81c342df6d381.png" src="../_images/8395774994ff6bd2d89957fa0049b08f68f0d2652b21ee39aef81c342df6d381.png" />
+<img alt="../_images/f5764521240c7291e98a001923c858cc719c504d144dbbf3475a1c0f175cf984.png" src="../_images/f5764521240c7291e98a001923c858cc719c504d144dbbf3475a1c0f175cf984.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -923,98 +939,98 @@ Try sampling to <code class="docutils literal notranslate"><span class="pre">n_s
   <tbody>
     <tr>
       <th>b[0]</th>
-      <td>0.969</td>
-      <td>0.001</td>
-      <td>0.967</td>
-      <td>0.971</td>
+      <td>0.983</td>
+      <td>0.002</td>
+      <td>0.979</td>
+      <td>0.987</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>10044.0</td>
-      <td>9716.0</td>
+      <td>9963.0</td>
+      <td>9562.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>b[1]</th>
-      <td>0.077</td>
-      <td>0.003</td>
-      <td>0.071</td>
-      <td>0.083</td>
+      <td>0.353</td>
+      <td>0.008</td>
+      <td>0.338</td>
+      <td>0.367</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>10054.0</td>
-      <td>9762.0</td>
+      <td>9305.0</td>
+      <td>9658.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>b[2]</th>
-      <td>0.307</td>
-      <td>0.006</td>
-      <td>0.296</td>
-      <td>0.317</td>
+      <td>0.051</td>
+      <td>0.057</td>
+      <td>-0.055</td>
+      <td>0.158</td>
+      <td>0.001</td>
       <td>0.000</td>
-      <td>0.000</td>
-      <td>10283.0</td>
-      <td>9706.0</td>
+      <td>9568.0</td>
+      <td>8828.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>a</th>
-      <td>-0.999</td>
-      <td>0.002</td>
-      <td>-1.003</td>
-      <td>-0.996</td>
+      <td>-1.007</td>
+      <td>0.003</td>
+      <td>-1.012</td>
+      <td>-1.002</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>10230.0</td>
-      <td>9838.0</td>
+      <td>9938.0</td>
+      <td>9755.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>sigma</th>
-      <td>0.010</td>
-      <td>0.001</td>
-      <td>0.007</td>
+      <td>0.016</td>
+      <td>0.002</td>
       <td>0.012</td>
+      <td>0.020</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9277.0</td>
-      <td>9766.0</td>
+      <td>10166.0</td>
+      <td>9400.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[0, 0]</th>
-      <td>4.932</td>
+      <td>4.928</td>
       <td>0.001</td>
+      <td>4.926</td>
       <td>4.930</td>
-      <td>4.933</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>9806.0</td>
-      <td>9516.0</td>
+      <td>10191.0</td>
+      <td>9798.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[1, 0]</th>
-      <td>9.539</td>
-      <td>0.086</td>
-      <td>9.376</td>
-      <td>9.701</td>
-      <td>0.001</td>
-      <td>0.001</td>
-      <td>10136.0</td>
-      <td>9841.0</td>
+      <td>10.544</td>
+      <td>0.031</td>
+      <td>10.485</td>
+      <td>10.604</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>9733.0</td>
+      <td>9810.0</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>hs[2, 0]</th>
-      <td>10.759</td>
-      <td>0.028</td>
-      <td>10.706</td>
-      <td>10.811</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>9915.0</td>
-      <td>9838.0</td>
+      <td>12.313</td>
+      <td>0.171</td>
+      <td>12.015</td>
+      <td>12.538</td>
+      <td>0.002</td>
+      <td>0.001</td>
+      <td>10025.0</td>
+      <td>9875.0</td>
       <td>NaN</td>
     </tr>
   </tbody>
@@ -1038,19 +1054,19 @@ A fix is under development, but for now, try</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Fri Dec 01 2023
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Mon Jan 29 2024
 
 Python implementation: CPython
 Python version       : 3.9.18
 IPython version      : 8.18.1
 
-pytensor: 2.18.1
-xarray  : 2023.11.0
+pytensor: 2.18.6
+xarray  : 2024.1.1
 
-arviz      : 0.16.1
-ratingcurve: 0.1.dev1+g2146dfd
+ratingcurve: 0.1.dev1+gb5a5926
+arviz      : 0.17.0
+pymc       : 5.10.3
 matplotlib : 3.8.2
-pymc       : 5.10.0
 
 Watermark: 2.4.3
 </pre></div>
@@ -1117,6 +1133,7 @@ Watermark: 2.4.3
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
@@ -1175,8 +1192,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

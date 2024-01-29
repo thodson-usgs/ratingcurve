@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>API Reference &#8212; ratingcurve</title>
   
@@ -19,49 +18,53 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="_static/sphinx-thebe.js?v=afe5de03"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -75,10 +78,9 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -119,11 +121,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -151,7 +156,18 @@ const thebe_selector_output = ".output, .cell_output"
     <p class="title logo__title">ratingcurve</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -346,7 +362,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -362,6 +380,86 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.fit"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.get_default_sampler_config"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.get_default_sampler_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.load"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.load()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.output_var"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.output_var</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.predict_posterior"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.predict_posterior()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.residuals"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.residuals()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_model"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.sample_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_posterior_predictive"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.sample_posterior_predictive()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_prior_predictive"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.sample_prior_predictive()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.table"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.table()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating"><code class="docutils literal notranslate"><span class="pre">PowerLawRating</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating.build_model"><code class="docutils literal notranslate"><span class="pre">PowerLawRating.build_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating.get_default_model_config"><code class="docutils literal notranslate"><span class="pre">PowerLawRating.get_default_model_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating.set_normal_prior"><code class="docutils literal notranslate"><span class="pre">PowerLawRating.set_normal_prior()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating.set_uniform_prior"><code class="docutils literal notranslate"><span class="pre">PowerLawRating.set_uniform_prior()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.SplineRating"><code class="docutils literal notranslate"><span class="pre">SplineRating</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.SplineRating.build_model"><code class="docutils literal notranslate"><span class="pre">SplineRating.build_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.SplineRating.get_default_model_config"><code class="docutils literal notranslate"><span class="pre">SplineRating.get_default_model_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin"><code class="docutils literal notranslate"><span class="pre">PlotMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin.plot"><code class="docutils literal notranslate"><span class="pre">PlotMixin.plot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin.plot_gagings"><code class="docutils literal notranslate"><span class="pre">PlotMixin.plot_gagings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin.plot_residuals"><code class="docutils literal notranslate"><span class="pre">PlotMixin.plot_residuals()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin.setup_plot"><code class="docutils literal notranslate"><span class="pre">PlotMixin.setup_plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PowerLawPlotMixin"><code class="docutils literal notranslate"><span class="pre">PowerLawPlotMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PowerLawPlotMixin.plot"><code class="docutils literal notranslate"><span class="pre">PowerLawPlotMixin.plot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PowerLawPlotMixin.plot_residuals"><code class="docutils literal notranslate"><span class="pre">PowerLawPlotMixin.plot_residuals()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.RatingMixin"><code class="docutils literal notranslate"><span class="pre">RatingMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.RatingMixin.summary"><code class="docutils literal notranslate"><span class="pre">RatingMixin.summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.SplinePlotMixin"><code class="docutils literal notranslate"><span class="pre">SplinePlotMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.SplinePlotMixin.plot"><code class="docutils literal notranslate"><span class="pre">SplinePlotMixin.plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.is_fit"><code class="docutils literal notranslate"><span class="pre">is_fit()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.Dmatrix"><code class="docutils literal notranslate"><span class="pre">Dmatrix</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.Dmatrix.transform"><code class="docutils literal notranslate"><span class="pre">Dmatrix.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.LogZTransform"><code class="docutils literal notranslate"><span class="pre">LogZTransform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.LogZTransform.transform"><code class="docutils literal notranslate"><span class="pre">LogZTransform.transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.LogZTransform.untransform"><code class="docutils literal notranslate"><span class="pre">LogZTransform.untransform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.Transform"><code class="docutils literal notranslate"><span class="pre">Transform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.Transform.transform"><code class="docutils literal notranslate"><span class="pre">Transform.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.UnitTransform"><code class="docutils literal notranslate"><span class="pre">UnitTransform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.UnitTransform.transform"><code class="docutils literal notranslate"><span class="pre">UnitTransform.transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.UnitTransform.untransform"><code class="docutils literal notranslate"><span class="pre">UnitTransform.untransform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.ZTransform"><code class="docutils literal notranslate"><span class="pre">ZTransform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.ZTransform.transform"><code class="docutils literal notranslate"><span class="pre">ZTransform.transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.ZTransform.untransform"><code class="docutils literal notranslate"><span class="pre">ZTransform.untransform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.compute_knots"><code class="docutils literal notranslate"><span class="pre">compute_knots()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.data.describe"><code class="docutils literal notranslate"><span class="pre">describe()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.data.list"><code class="docutils literal notranslate"><span class="pre">list()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.data.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -369,14 +467,14 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="module-ratingcurve.ratingmodel_builder">
-<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-ratingcurve.ratingmodel_builder" title="Permalink to this heading">#</a></h1>
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-ratingcurve.ratingmodel_builder" title="Link to this heading">#</a></h1>
 <p>Modifies PyMC ModelBuilder to work with the Rating model class</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel_builder.</span></span><span class="sig-name descname"><span class="pre">RatingModelBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratingmodel_builder.</span></span><span class="sig-name descname"><span class="pre">RatingModelBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder" title="Link to this definition">#</a></dt>
 <dd><p>Parent class for other rating models.</p>
 <p>Sets not implemented PyMC ModelBuilder class functions. Additionally,
 tweaks other ModelBuilder functions for better application in rating curve
@@ -390,7 +488,7 @@ fitting.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q_sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'advi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RandomState</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">InferenceData</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.fit" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q_sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'advi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RandomState</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">InferenceData</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.fit" title="Link to this definition">#</a></dt>
 <dd><p>Update <cite>ModelBuilder.fit</cite> to accept q_sigma.</p>
 <p>ModelBuilder takes two inputs: x and y, so redefine it to accept sigma.
 Fit a model using the data and algorithm passed as a parameter.
@@ -421,7 +519,7 @@ parameters of the fitted model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.get_default_sampler_config">
-<span class="sig-name descname"><span class="pre">get_default_sampler_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abs_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.002</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.002</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adam_learn_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draws</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tune</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chains</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_accept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.get_default_sampler_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.get_default_sampler_config" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_default_sampler_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abs_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.002</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.002</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adam_learn_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draws</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tune</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chains</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_accept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.get_default_sampler_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.get_default_sampler_config" title="Link to this definition">#</a></dt>
 <dd><p>Create sampler configuration dictionary.</p>
 <p>Generates a <cite>sampler_config</cite> dictionary with all the required
 sampler configuration parameters needed to sample/fit the model. It
@@ -461,7 +559,7 @@ parameters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.load">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.load" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.load" title="Link to this definition">#</a></dt>
 <dd><p>Update <cite>ModelBuilder.load()</cite> to accept q_sigma.</p>
 <p>ModelBuilder takes two inputs: x and y, so redefine it to accept sigma.
 Creates a ModelBuilder instance from a file and loads inference data
@@ -478,13 +576,13 @@ for the model.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.output_var">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_var</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.output_var" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_var</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.output_var" title="Link to this definition">#</a></dt>
 <dd><p>Name of the output of dependent variable.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.predict_posterior">
-<span class="sig-name descname"><span class="pre">predict_posterior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend_idata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.predict_posterior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.predict_posterior" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict_posterior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend_idata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.predict_posterior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.predict_posterior" title="Link to this definition">#</a></dt>
 <dd><p>Update <cite>ModelBuilder.predict_posterior</cite> to remove data validation.</p>
 <p>Generate posterior predictive samples on unseen data. Exclude any
 data validation as it requires X_pred to be a 2D array-like object.</p>
@@ -512,7 +610,7 @@ is (n_pred, chains * draws) if combined is True, otherwise
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.residuals">
-<span class="sig-name descname"><span class="pre">residuals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.residuals" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">residuals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.residuals" title="Link to this definition">#</a></dt>
 <dd><p>Compute residuals of rating model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -526,7 +624,7 @@ is (n_pred, chains * draws) if combined is True, otherwise
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_model">
-<span class="sig-name descname"><span class="pre">sample_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">InferenceData</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.sample_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_model" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sample_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">InferenceData</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.sample_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_model" title="Link to this definition">#</a></dt>
 <dd><p>Update <cite>ModelBuilder.sample_model</cite> with other fitting algorithms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -544,19 +642,19 @@ parameters of the fitted model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_posterior_predictive">
-<span class="sig-name descname"><span class="pre">sample_posterior_predictive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend_idata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.sample_posterior_predictive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_posterior_predictive" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sample_posterior_predictive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend_idata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.sample_posterior_predictive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_posterior_predictive" title="Link to this definition">#</a></dt>
 <dd><p>Update <cite>ModelBuilder.sample_posterior_predicitve</cite> to output untransformed q.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_prior_predictive">
-<span class="sig-name descname"><span class="pre">sample_prior_predictive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend_idata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.sample_prior_predictive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_prior_predictive" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sample_prior_predictive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend_idata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.sample_prior_predictive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_prior_predictive" title="Link to this definition">#</a></dt>
 <dd><p>Update <cite>ModelBuilder.sample_prior_predicitve</cite> to output untransformed q.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratingmodel_builder.RatingModelBuilder.table">
-<span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pd.DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.table" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pd.DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratingmodel_builder.html#RatingModelBuilder.table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.table" title="Link to this definition">#</a></dt>
 <dd><p>Return stage-discharge rating table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -576,19 +674,21 @@ discharge, and <cite>gse</cite> (geometric standard error [1]).</p>
 </dd>
 </dl>
 <p class="rubric">References</p>
-<aside class="footnote brackets" id="id1" role="note">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id1" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
 <p>Kirkwood, T. B., “Geometric means and measures of dispersion”,
 Biometrics, vol. 35, pp. 908-909, 1979</p>
+</aside>
 </aside>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-ratingcurve.ratings"></span><p>Streamflow rating models using PyMC.</p>
+<p id="module-ratingcurve.ratings">Streamflow rating models using PyMC.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.ratings.PowerLawRating">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratings.</span></span><span class="sig-name descname"><span class="pre">PowerLawRating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratings.</span></span><span class="sig-name descname"><span class="pre">PowerLawRating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating" title="Link to this definition">#</a></dt>
 <dd><p>Multi-segment power law rating using Heaviside parameterization.</p>
 <p>Update <cite>ModelBuilder.__init__</cite> to only configure the model.</p>
 <p>Configuring the sampler now occurs in the <cite>.fit()</cite> call.</p>
@@ -599,7 +699,7 @@ Biometrics, vol. 35, pp. 908-909, 1979</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratings.PowerLawRating.build_model">
-<span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q_sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating.build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating.build_model" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q_sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating.build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating.build_model" title="Link to this definition">#</a></dt>
 <dd><p>Creates the PyMC model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -614,7 +714,7 @@ Biometrics, vol. 35, pp. 908-909, 1979</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratings.PowerLawRating.get_default_model_config">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default_model_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'distribution':</span> <span class="pre">'uniform'}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating.get_default_model_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating.get_default_model_config" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default_model_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'distribution':</span> <span class="pre">'uniform'}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating.get_default_model_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating.get_default_model_config" title="Link to this definition">#</a></dt>
 <dd><p>Create model configuration dictionary.</p>
 <p>Generate a <cite>model_config</cite> dictionary with all the required model
 configuration parameters needed to build the model. It will be passed
@@ -660,7 +760,7 @@ parameters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratings.PowerLawRating.set_normal_prior">
-<span class="sig-name descname"><span class="pre">set_normal_prior</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating.set_normal_prior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating.set_normal_prior" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_normal_prior</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating.set_normal_prior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating.set_normal_prior" title="Link to this definition">#</a></dt>
 <dd><p>Set normal prior for breakpoints.</p>
 <p>Sets an expected value for each breakpoint (mu) with uncertainty
 (sigma). This can be very helpful when convergence is poor.</p>
@@ -674,7 +774,7 @@ parameters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratings.PowerLawRating.set_uniform_prior">
-<span class="sig-name descname"><span class="pre">set_uniform_prior</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating.set_uniform_prior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating.set_uniform_prior" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_uniform_prior</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#PowerLawRating.set_uniform_prior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.PowerLawRating.set_uniform_prior" title="Link to this definition">#</a></dt>
 <dd><p>Set uniform prior for breakpoints.</p>
 <p>Make no prior assumption about the location of the breakpoints, only
 the number of breaks and that the breakpoints are ordered.</p>
@@ -685,7 +785,7 @@ the number of breaks and that the breakpoints are ordered.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.ratings.SplineRating">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratings.</span></span><span class="sig-name descname"><span class="pre">SplineRating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#SplineRating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.SplineRating" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.ratings.</span></span><span class="sig-name descname"><span class="pre">SplineRating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#SplineRating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.SplineRating" title="Link to this definition">#</a></dt>
 <dd><p>Natural spline rating.</p>
 <p>Update <cite>ModelBuilder.__init__</cite> to only configure the model.</p>
 <p>Configuring the sampler now occurs in the <cite>.fit()</cite> call.</p>
@@ -696,7 +796,7 @@ the number of breaks and that the breakpoints are ordered.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratings.SplineRating.build_model">
-<span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q_sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#SplineRating.build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.SplineRating.build_model" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q_sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/ratings.html#SplineRating.build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.SplineRating.build_model" title="Link to this definition">#</a></dt>
 <dd><p>Creates the PyMC model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -711,7 +811,7 @@ the number of breaks and that the breakpoints are ordered.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.ratings.SplineRating.get_default_model_config">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default_model_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratings.html#SplineRating.get_default_model_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.SplineRating.get_default_model_config" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default_model_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/ratingcurve/ratings.html#SplineRating.get_default_model_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.ratings.SplineRating.get_default_model_config" title="Link to this definition">#</a></dt>
 <dd><p>Create model configuration dictionary.</p>
 <p>Generate a <cite>model_config</cite> dictionary with all the required model
 configuration parameters needed to build the model. It will be passed
@@ -737,14 +837,14 @@ parameters.</p>
 
 </dd></dl>
 
-<span class="target" id="module-ratingcurve.plot"></span><p>Plotting functions</p>
+<p id="module-ratingcurve.plot">Plotting functions</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">PlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">PlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin" title="Link to this definition">#</a></dt>
 <dd><p>Mixin class for plotting rating models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot" title="Link to this definition">#</a></dt>
 <dd><p>Plots gagings and fit rating curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -755,7 +855,7 @@ parameters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.plot_gagings">
-<span class="sig-name descname"><span class="pre">plot_gagings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_gagings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_gagings" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_gagings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_gagings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_gagings" title="Link to this definition">#</a></dt>
 <dd><p>Plot gagings with uncertainty.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -766,7 +866,7 @@ parameters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.plot_residuals">
-<span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_residuals" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.plot_residuals" title="Link to this definition">#</a></dt>
 <dd><p>Plots residuals between model and data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -777,7 +877,7 @@ parameters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PlotMixin.setup_plot">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.setup_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.setup_plot" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#PlotMixin.setup_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PlotMixin.setup_plot" title="Link to this definition">#</a></dt>
 <dd><p>Sets up figure and axes for rating curve plot.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -796,11 +896,11 @@ parameters.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.plot.PowerLawPlotMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">PowerLawPlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">PowerLawPlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin" title="Link to this definition">#</a></dt>
 <dd><p>Mixin class for plotting power law rating models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PowerLawPlotMixin.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot" title="Link to this definition">#</a></dt>
 <dd><p>Plots power-law rating curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -811,7 +911,7 @@ parameters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.PowerLawPlotMixin.plot_residuals">
-<span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot_residuals" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#PowerLawPlotMixin.plot_residuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.PowerLawPlotMixin.plot_residuals" title="Link to this definition">#</a></dt>
 <dd><p>Plots power-law residuals.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -824,15 +924,15 @@ parameters.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">RatingMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">RatingMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin" title="Link to this definition">#</a></dt>
 <dd><p>Parent class for other rating-related mixins.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.RatingMixin.summary">
-<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin.summary" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#RatingMixin.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.RatingMixin.summary" title="Link to this definition">#</a></dt>
 <dd><p>Summary of rating model parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>var_names</strong> (<em>list of str</em><em>, </em><em>optional</em>) – List of variables to include in summary. If no names are given,
+<dd class="field-odd"><p><strong>var_names</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of variables to include in summary. If no names are given,
 then a summary of all variables is returned.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -848,11 +948,11 @@ then a summary of all variables is returned.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.plot.SplinePlotMixin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">SplinePlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#SplinePlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.SplinePlotMixin" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">SplinePlotMixin</span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#SplinePlotMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.SplinePlotMixin" title="Link to this definition">#</a></dt>
 <dd><p>Mixin class for plotting spline rating models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.plot.SplinePlotMixin.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#SplinePlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.SplinePlotMixin.plot" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ratingcurve/plot.html#SplinePlotMixin.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.SplinePlotMixin.plot" title="Link to this definition">#</a></dt>
 <dd><p>Plots spline rating curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -865,14 +965,14 @@ then a summary of all variables is returned.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ratingcurve.plot.is_fit">
-<span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">is_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#is_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.is_fit" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ratingcurve.plot.</span></span><span class="sig-name descname"><span class="pre">is_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/plot.html#is_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.plot.is_fit" title="Link to this definition">#</a></dt>
 <dd><p>Decorator checks whether model has been fit.</p>
 </dd></dl>
 
-<span class="target" id="module-ratingcurve.transform"></span><p>Data transformations to improve optimization</p>
+<p id="module-ratingcurve.transform">Data transformations to improve optimization</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.transform.Dmatrix">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">Dmatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cr'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">Dmatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cr'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix" title="Link to this definition">#</a></dt>
 <dd><p>Transform for spline design matrix</p>
 <p>Create a Dmatrix object.</p>
 <p>Create a design matrix for a natural cubic spline, which is a cubic
@@ -890,7 +990,7 @@ of knots minus 1.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.Dmatrix.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix.transform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#Dmatrix.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Dmatrix.transform" title="Link to this definition">#</a></dt>
 <dd><p>Transform stage using spline design matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -909,7 +1009,7 @@ of knots minus 1.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.transform.LogZTransform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">LogZTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#LogZTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.LogZTransform" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">LogZTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#LogZTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.LogZTransform" title="Link to this definition">#</a></dt>
 <dd><p>Log transform then takes z-score.</p>
 <p>Create a LogZTransform for x.</p>
 <dl class="field-list simple">
@@ -919,7 +1019,7 @@ of knots minus 1.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.LogZTransform.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#LogZTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.LogZTransform.transform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#LogZTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.LogZTransform.transform" title="Link to this definition">#</a></dt>
 <dd><p>Transform to log z-score</p>
 <p>Logs the data then standardizes to zero mean and unit variance.</p>
 <dl class="field-list simple">
@@ -937,7 +1037,7 @@ of knots minus 1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.LogZTransform.untransform">
-<span class="sig-name descname"><span class="pre">untransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#LogZTransform.untransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.LogZTransform.untransform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">untransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#LogZTransform.untransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.LogZTransform.untransform" title="Link to this definition">#</a></dt>
 <dd><p>Reverse log z-score transformation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -956,13 +1056,13 @@ of knots minus 1.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.transform.Transform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">Transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#Transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Transform" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">Transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#Transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Transform" title="Link to this definition">#</a></dt>
 <dd><p>Transformation class</p>
 <p>All children of Transform must have transfom and untransform methods</p>
 <p>Create empty Transform object</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.Transform.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#Transform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Transform.transform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#Transform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.Transform.transform" title="Link to this definition">#</a></dt>
 <dd><p>Transform data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -981,7 +1081,7 @@ of knots minus 1.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.transform.UnitTransform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">UnitTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">UnitTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform" title="Link to this definition">#</a></dt>
 <dd><p>Transforms data to the unit (0 to 1) interval.</p>
 <p>Create UnitTransform of array</p>
 <dl class="field-list simple">
@@ -991,7 +1091,7 @@ of knots minus 1.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.UnitTransform.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform.transform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform.transform" title="Link to this definition">#</a></dt>
 <dd><p>Transform to unit interval</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1008,7 +1108,7 @@ of knots minus 1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.UnitTransform.untransform">
-<span class="sig-name descname"><span class="pre">untransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform.untransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform.untransform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">untransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#UnitTransform.untransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.UnitTransform.untransform" title="Link to this definition">#</a></dt>
 <dd><p>Transform from unit interval back to original units</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1027,7 +1127,7 @@ of knots minus 1.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ratingcurve.transform.ZTransform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">ZTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#ZTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.ZTransform" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">ZTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ratingcurve/transform.html#ZTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.ZTransform" title="Link to this definition">#</a></dt>
 <dd><p>Z-transforms data to have zero mean and unit variance</p>
 <p>Create a ZTransform object</p>
 <dl class="field-list simple">
@@ -1037,7 +1137,7 @@ of knots minus 1.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.ZTransform.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#ZTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.ZTransform.transform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#ZTransform.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.ZTransform.transform" title="Link to this definition">#</a></dt>
 <dd><p>Transform to z score (standardize x)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1054,7 +1154,7 @@ of knots minus 1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ratingcurve.transform.ZTransform.untransform">
-<span class="sig-name descname"><span class="pre">untransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#ZTransform.untransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.ZTransform.untransform" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">untransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ArrayLike</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#ZTransform.untransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.ZTransform.untransform" title="Link to this definition">#</a></dt>
 <dd><p>Transform from z score back to original units.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1073,7 +1173,7 @@ of knots minus 1.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ratingcurve.transform.compute_knots">
-<span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">compute_knots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#compute_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.compute_knots" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ratingcurve.transform.</span></span><span class="sig-name descname"><span class="pre">compute_knots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ArrayLike</span></span></span><a class="reference internal" href="_modules/ratingcurve/transform.html#compute_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.transform.compute_knots" title="Link to this definition">#</a></dt>
 <dd><p>Return list of spline knots</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1092,10 +1192,10 @@ of knots minus 1.</p>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-ratingcurve.data"></span><p>Example datasets for rating curve analysis.</p>
+<p id="module-ratingcurve.data">Example datasets for rating curve analysis.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ratingcurve.data.describe">
-<span class="sig-prename descclassname"><span class="pre">ratingcurve.data.</span></span><span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ratingcurve/data.html#describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.data.describe" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ratingcurve.data.</span></span><span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/ratingcurve/data.html#describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.data.describe" title="Link to this definition">#</a></dt>
 <dd><p>Describes a tutorial dataset</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1113,7 +1213,7 @@ e.g., ‘green channel’</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ratingcurve.data.list">
-<span class="sig-prename descclassname"><span class="pre">ratingcurve.data.</span></span><span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/ratingcurve/data.html#list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.data.list" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ratingcurve.data.</span></span><span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/ratingcurve/data.html#list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.data.list" title="Link to this definition">#</a></dt>
 <dd><p>Returns a list of tutorial datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -1127,7 +1227,7 @@ e.g., ‘green channel’</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ratingcurve.data.load">
-<span class="sig-prename descclassname"><span class="pre">ratingcurve.data.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/data.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.data.load" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ratingcurve.data.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/ratingcurve/data.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ratingcurve.data.load" title="Link to this definition">#</a></dt>
 <dd><p>Opens a tutorial dataset</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1188,6 +1288,93 @@ e.g., ‘green channel’</p></li>
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.fit"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.get_default_sampler_config"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.get_default_sampler_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.load"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.load()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.output_var"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.output_var</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.predict_posterior"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.predict_posterior()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.residuals"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.residuals()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_model"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.sample_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_posterior_predictive"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.sample_posterior_predictive()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.sample_prior_predictive"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.sample_prior_predictive()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratingmodel_builder.RatingModelBuilder.table"><code class="docutils literal notranslate"><span class="pre">RatingModelBuilder.table()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating"><code class="docutils literal notranslate"><span class="pre">PowerLawRating</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating.build_model"><code class="docutils literal notranslate"><span class="pre">PowerLawRating.build_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating.get_default_model_config"><code class="docutils literal notranslate"><span class="pre">PowerLawRating.get_default_model_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating.set_normal_prior"><code class="docutils literal notranslate"><span class="pre">PowerLawRating.set_normal_prior()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.PowerLawRating.set_uniform_prior"><code class="docutils literal notranslate"><span class="pre">PowerLawRating.set_uniform_prior()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.SplineRating"><code class="docutils literal notranslate"><span class="pre">SplineRating</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.SplineRating.build_model"><code class="docutils literal notranslate"><span class="pre">SplineRating.build_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.ratings.SplineRating.get_default_model_config"><code class="docutils literal notranslate"><span class="pre">SplineRating.get_default_model_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin"><code class="docutils literal notranslate"><span class="pre">PlotMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin.plot"><code class="docutils literal notranslate"><span class="pre">PlotMixin.plot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin.plot_gagings"><code class="docutils literal notranslate"><span class="pre">PlotMixin.plot_gagings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin.plot_residuals"><code class="docutils literal notranslate"><span class="pre">PlotMixin.plot_residuals()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PlotMixin.setup_plot"><code class="docutils literal notranslate"><span class="pre">PlotMixin.setup_plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PowerLawPlotMixin"><code class="docutils literal notranslate"><span class="pre">PowerLawPlotMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PowerLawPlotMixin.plot"><code class="docutils literal notranslate"><span class="pre">PowerLawPlotMixin.plot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.PowerLawPlotMixin.plot_residuals"><code class="docutils literal notranslate"><span class="pre">PowerLawPlotMixin.plot_residuals()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.RatingMixin"><code class="docutils literal notranslate"><span class="pre">RatingMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.RatingMixin.summary"><code class="docutils literal notranslate"><span class="pre">RatingMixin.summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.SplinePlotMixin"><code class="docutils literal notranslate"><span class="pre">SplinePlotMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.SplinePlotMixin.plot"><code class="docutils literal notranslate"><span class="pre">SplinePlotMixin.plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.plot.is_fit"><code class="docutils literal notranslate"><span class="pre">is_fit()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.Dmatrix"><code class="docutils literal notranslate"><span class="pre">Dmatrix</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.Dmatrix.transform"><code class="docutils literal notranslate"><span class="pre">Dmatrix.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.LogZTransform"><code class="docutils literal notranslate"><span class="pre">LogZTransform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.LogZTransform.transform"><code class="docutils literal notranslate"><span class="pre">LogZTransform.transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.LogZTransform.untransform"><code class="docutils literal notranslate"><span class="pre">LogZTransform.untransform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.Transform"><code class="docutils literal notranslate"><span class="pre">Transform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.Transform.transform"><code class="docutils literal notranslate"><span class="pre">Transform.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.UnitTransform"><code class="docutils literal notranslate"><span class="pre">UnitTransform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.UnitTransform.transform"><code class="docutils literal notranslate"><span class="pre">UnitTransform.transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.UnitTransform.untransform"><code class="docutils literal notranslate"><span class="pre">UnitTransform.untransform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.ZTransform"><code class="docutils literal notranslate"><span class="pre">ZTransform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.ZTransform.transform"><code class="docutils literal notranslate"><span class="pre">ZTransform.transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.ZTransform.untransform"><code class="docutils literal notranslate"><span class="pre">ZTransform.untransform()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.transform.compute_knots"><code class="docutils literal notranslate"><span class="pre">compute_knots()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.data.describe"><code class="docutils literal notranslate"><span class="pre">describe()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.data.list"><code class="docutils literal notranslate"><span class="pre">list()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ratingcurve.data.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -1231,8 +1418,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
