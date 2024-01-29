@@ -84,7 +84,7 @@ class ReitanRating(PowerLawRating):
             # best but suspect ho is accumulating (ho added to each segment)
             b = at.log(at.clip(h - hs, 0, hs1[1:] - hs) + ho)
             sigma = pm.HalfCauchy("sigma", beta=0.1)
-            obs = pm.Normal('model_q', a + at.dot(w, b), sigma + q_sigma,
+            obs = pm.Normal('model_q', a + at.dot(w, b), np.sqrt(sigma**2 + q_sigma**2),
                             shape=h.shape, observed=log_q_z)
 
 
@@ -169,7 +169,7 @@ class LeCozRating(PowerLawRating):
             q = at.sum(i * at.dot(self.m, b.T), axis=0)
 
             sigma = pm.HalfCauchy("sigma", beta=0.1)
-            obs = pm.Normal('model_q', at.log(q), sigma + q_sigma,
+            obs = pm.Normal('model_q', at.log(q), np.sqrt(sigma**2 + q_sigma**2),
                             shape=h.shape, observed=log_q_z)
 
 
@@ -240,7 +240,7 @@ class ISORating(PowerLawRating):
             q = at.log(at.sum(b, axis=1))
 
             sigma = pm.HalfCauchy("sigma", beta=0.1)
-            obs = pm.Normal('model_q', q, sigma + q_sigma,
+            obs = pm.Normal('model_q', q, np.sqrt(sigma**2 + q_sigma**2),
                             shape=h.shape, observed=log_q_z)
 
 
@@ -325,7 +325,7 @@ class BrokenPowerLawRating(PowerLawRating):
                           a + alpha * at.log(h - hs[0]) + sums, 0)
             q = at.sum(q, axis=0)
 
-            obs = pm.Normal('model_q', q, sigma + q_sigma,
+            obs = pm.Normal('model_q', q, np.sqrt(sigma**2 + q_sigma**2),
                             shape=h.shape, observed=log_q_z)
 
 
@@ -400,4 +400,4 @@ class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
 
             obs = pm.Normal("model_q",
                             a + at.log(h - hs[0]) * alpha[0, ...] + sums,
-                            sigma + q_sigma, shape=h.shape, observed=log_q_z)
+                            np.sqrt(sigma**2 + q_sigma**2), shape=h.shape, observed=log_q_z)

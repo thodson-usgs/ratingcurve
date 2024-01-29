@@ -126,7 +126,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
 
             obs = pm.Normal("model_q",
                             mu=a + at.dot(b, X),
-                            sigma=sigma + q_sigma,
+                            sigma=np.sqrt(sigma**2 + q_sigma**2),
                             shape=h.shape,
                             observed=log_q_z)
 
@@ -351,6 +351,6 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
             # likelihood
             obs = pm.Normal("model_q",
                             mu=at.dot(B, w.T),
-                            sigma=sigma + q_sigma,
+                            sigma=np.sqrt(sigma**2 + q_sigma**2),
                             shape=h.shape,
                             observed=log_q_z)
