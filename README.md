@@ -28,9 +28,10 @@ conda install -c conda-forge ratingcurve
 ```
 
 ## Basic Usage
-This [`tutorial`](https://github.com/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-tutorial.ipynb) demonstrates basic usage of the package
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-tutorial.ipynb).
-Here's a simple example that fits and plots a rating curve.
+This [`tutorial`](https://github.com/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-tutorial.ipynb) demonstrates basic usage of fitting and plottig a rating curve
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/thodson-usgs/ratingcurve/blob/main/docs/notebooks/segmented-power-law-tutorial.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thodson-usgs/ratingcurve/main?urlpath=docs%2Fnotebooks%2Fsegmented-power-law-tutorial.ipynb)
 
 ```python
 from ratingcurve.ratings import PowerLawRating
