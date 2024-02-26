@@ -53,18 +53,10 @@
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=afe5de03"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'meta/implementation';</script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -415,8 +407,8 @@ and more accurate Hamiltonian Monte Carlo with the No-U-Turn Sampler (NUTS) <spa
 <p>Our rating curve model is functionally equivalent to that of <span id="id4">Reitan and Petersen-Øverleir [<a class="reference internal" href="background.html#id24" title="Trond Reitan and Asgeir Petersen-Øverleir. Bayesian methods for estimating multi-segment discharge rating curves. Stochastic Environmental Research and Risk Assessment, 23(5):627–642, Jun 2008. URL: http://dx.doi.org/10.1007/s00477-008-0248-0, doi:10.1007/s00477-008-0248-0.">RP08</a>]</span>
 but adapts the parameterization used by <span id="id5">Muggeo [<a class="reference internal" href="background.html#id20" title="Vito M. R. Muggeo. Estimating regression models with unknown break-points. Statistics in Medicine, 22(19):3055-3071, 2003. URL: https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1545, arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1002/sim.1545, doi:https://doi.org/10.1002/sim.1545.">Mug03</a>]</span> for piecewise regression.</p>
 <p>Streamflow or discharge $Q$ is a function of stage $h$ and parameterized as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cb854a92-1311-4756-b4c8-a77cf04086eb">
-<span class="eqno">(2)<a class="headerlink" href="#equation-cb854a92-1311-4756-b4c8-a77cf04086eb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-372068c2-1ed0-442c-86fc-093698a4b45c">
+<span class="eqno">(2)<a class="headerlink" href="#equation-372068c2-1ed0-442c-86fc-093698a4b45c" title="Permalink to this equation">#</a></span>\[\begin{align}
     B &amp;= \ln(\max(h - h_s, 0) + h_o) \\
     \ln(Q) &amp;= a + w^T B + \epsilon
 \end{align}\]</div>
