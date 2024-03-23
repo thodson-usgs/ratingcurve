@@ -66,3 +66,21 @@ It is being provided to meet the need for timely best science.
 The software has not received final approval by the U.S. Geological Survey (USGS).
 No warranty, expressed or implied, is made by the USGS or the U.S. Government as to the functionality of the software and related material nor shall the fact of release constitute any such warranty. 
 The software is provided on the condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from the authorized or unauthorized use of the software.
+
+## Citation
+Hodson, T.O., Doore, K.J., Kenney, T.A., Over T.M., and Yeheyis, M.B., 2024, Ratingcurve: A Python Package for Fitting Streamflow Rating Curves, Hydrology 11, no. 2: 14. https://doi.org/10.3390/hydrology11020014
+
+```
+@Article{hydrology11020014,
+AUTHOR = {Hodson, Timothy O. and Doore, Keith J. and Kenney, Terry A. and Over, Thomas M. and Yeheyis, Muluken B.},
+TITLE = {Ratingcurve: A Python Package for Fitting Streamflow Rating Curves},
+JOURNAL = {Hydrology},
+VOLUME = {11},
+YEAR = {2024},
+NUMBER = {2},
+ARTICLE-NUMBER = {14},
+URL = {https://www.mdpi.com/2306-5338/11/2/14},
+ISSN = {2306-5338},
+DOI = {10.3390/hydrology11020014}
+}
+```
