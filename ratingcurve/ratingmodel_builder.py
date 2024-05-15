@@ -498,7 +498,7 @@ class RatingModelBuilder(ModelBuilder):
         step : float, optional
             Step size for stage values.
         extend : float, optional
-            Extend range of discharge values by this factor.
+            Extend range of stage values by this factor.
 
         Returns
         -------
@@ -526,8 +526,9 @@ class RatingModelBuilder(ModelBuilder):
                            'gse': np.exp(np.std(np.log(ratingdata),
                                                 axis=1))})
 
-        discharge_limit = self.q_obs.max() * extend
-        return df[df['discharge'] <= discharge_limit]
+        # discharge_limit = self.q_obs.max() * extend
+        # return df[df['discharge'] <= discharge_limit]
+        return df
 
     def residuals(self) -> ArrayLike:
         """Compute residuals of rating model.
