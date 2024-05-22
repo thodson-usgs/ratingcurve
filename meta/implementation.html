@@ -42,7 +42,7 @@
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -407,8 +407,8 @@ and more accurate Hamiltonian Monte Carlo with the No-U-Turn Sampler (NUTS) <spa
 <p>Our rating curve model is functionally equivalent to that of <span id="id4">Reitan and Petersen-Øverleir [<a class="reference internal" href="background.html#id24" title="Trond Reitan and Asgeir Petersen-Øverleir. Bayesian methods for estimating multi-segment discharge rating curves. Stochastic Environmental Research and Risk Assessment, 23(5):627–642, Jun 2008. URL: http://dx.doi.org/10.1007/s00477-008-0248-0, doi:10.1007/s00477-008-0248-0.">RP08</a>]</span>
 but adapts the parameterization used by <span id="id5">Muggeo [<a class="reference internal" href="background.html#id20" title="Vito M. R. Muggeo. Estimating regression models with unknown break-points. Statistics in Medicine, 22(19):3055-3071, 2003. URL: https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1545, arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1002/sim.1545, doi:https://doi.org/10.1002/sim.1545.">Mug03</a>]</span> for piecewise regression.</p>
 <p>Streamflow or discharge $Q$ is a function of stage $h$ and parameterized as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7674585e-98fb-4cfb-a58d-3bd5e34a1f77">
-<span class="eqno">(2)<a class="headerlink" href="#equation-7674585e-98fb-4cfb-a58d-3bd5e34a1f77" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dfe7bdf7-a9ae-436d-ba0c-d74e7e3de9a9">
+<span class="eqno">(2)<a class="headerlink" href="#equation-dfe7bdf7-a9ae-436d-ba0c-d74e7e3de9a9" title="Permalink to this equation">#</a></span>\[\begin{align}
     B &amp;= \ln(\max(h - h_s, 0) + h_o) \\
     \ln(Q) &amp;= a + w^T B + \epsilon
 \end{align}\]</div>
@@ -427,7 +427,7 @@ Our parameterization is simpler though less physical.
 As stage increases, new segments are activated, but their effect never drowns out:
 each successive $w_i$ term makes cumulative adjustments to the base slope $w_1$.</p>
 <p>The current priors and optimizer settings are documented in the package;
-in general, they do not need to modified.
+in general, they do not need to be modified.
 Besides selecting the number of segments, the user can specify a prior distribution on the breakpoints.
 The default assumes the breakpoints are uniformly distributed, which works well for general use.
 Alternatively, the user can specify the approximate location of each breakpoint using a normal distribution,

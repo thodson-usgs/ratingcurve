@@ -42,7 +42,7 @@
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -432,6 +432,9 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (pytensor.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
 </pre></div>
 </div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">ImportError</span>: cannot import name &#39;gaussian&#39; from &#39;scipy.signal&#39; (/opt/hostedtoolcache/Python/3.9.19/x64/lib/python3.9/site-packages/scipy/signal/__init__.py)
+</pre></div>
+</div>
 </div>
 </div>
 <section id="fit-the-data">
@@ -458,43 +461,7 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 41200
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 41,199 [41%]: Average Loss = 118.31
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -52.227
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -49.005
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished [100%]: Average Loss = -44.664
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">NameError</span>: name &#39;PowerLawRating&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -511,87 +478,10 @@ We fit the rating with 1, 2, 3, and 4 segments, then use information criteria to
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>rank</th>
-      <th>elpd_loo</th>
-      <th>p_loo</th>
-      <th>elpd_diff</th>
-      <th>weight</th>
-      <th>se</th>
-      <th>dse</th>
-      <th>warning</th>
-      <th>scale</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2 segment</th>
-      <td>0</td>
-      <td>73.090231</td>
-      <td>6.770635</td>
-      <td>0.000000</td>
-      <td>1.000000e+00</td>
-      <td>3.783620</td>
-      <td>0.000000</td>
-      <td>True</td>
-      <td>log</td>
-    </tr>
-    <tr>
-      <th>3 segment</th>
-      <td>1</td>
-      <td>63.184386</td>
-      <td>16.499415</td>
-      <td>9.905845</td>
-      <td>9.343637e-13</td>
-      <td>10.271521</td>
-      <td>8.694056</td>
-      <td>True</td>
-      <td>log</td>
-    </tr>
-    <tr>
-      <th>4 segment</th>
-      <td>2</td>
-      <td>60.008283</td>
-      <td>19.180830</td>
-      <td>13.081948</td>
-      <td>7.247536e-13</td>
-      <td>12.572826</td>
-      <td>11.086770</td>
-      <td>True</td>
-      <td>log</td>
-    </tr>
-    <tr>
-      <th>1 segment</th>
-      <td>3</td>
-      <td>53.310690</td>
-      <td>3.700598</td>
-      <td>19.779542</td>
-      <td>0.000000e+00</td>
-      <td>3.148274</td>
-      <td>4.486721</td>
-      <td>False</td>
-      <td>log</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">IndexError</span>: list index out of range
+</pre></div>
+</div>
+</div>
 </div>
 <p>As expected, the 2-segment model ranked highest.</p>
 </section>
@@ -614,61 +504,10 @@ Here is a demonstration of how.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-</div><div class="output text_html">
-    <div>
-      <progress value='132839' class='' max='200000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      66.42% [132839/200000 00:33&lt;00:16 Average Loss = -52.225]
-    </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 133300
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">NameError</span>: name &#39;PowerLawRating&#39; is not defined
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 133,299 [66%]: Average Loss = 10.009
-</pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
-</pre></div>
-</div>
-<div class="output text_html">
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-</div><div class="output text_html">
-    <div>
-      <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:01&lt;00:00]
-    </div>
-    </div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -686,58 +525,10 @@ Here is a demonstration of how.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">NameError</span>: name &#39;powerrating&#39; is not defined
 </pre></div>
 </div>
-<div class="output text_html">
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-</div><div class="output text_html">
-    <div>
-      <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:01&lt;00:00]
-    </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
-</pre></div>
-</div>
-<div class="output text_html">
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-</div><div class="output text_html">
-    <div>
-      <progress value='10000' class='' max='10000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [10000/10000 00:01&lt;00:00]
-    </div>
-    </div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;&#39;)
-</pre></div>
-</div>
-<img alt="../_images/d63f4ee780e369e1bb137c5690d19a3c324d4d8b6f6e635124269a1a1b4eb8f4.png" src="../_images/d63f4ee780e369e1bb137c5690d19a3c324d4d8b6f6e635124269a1a1b4eb8f4.png" />
+<img alt="../_images/f1c173de8579e0b8bc989db16144be6bafb983a6280f4240c801ee28537873ec.png" src="../_images/f1c173de8579e0b8bc989db16144be6bafb983a6280f4240c801ee28537873ec.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -748,19 +539,17 @@ Here is a demonstration of how.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Sat Mar 23 2024
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Wed May 22 2024
 
 Python implementation: CPython
-Python version       : 3.9.18
+Python version       : 3.9.19
 IPython version      : 8.18.1
 
-pytensor: 2.18.6
-xarray  : 2024.2.0
+pytensor: 2.19.0
+xarray  : 2024.5.0
 
-matplotlib : 3.8.3
-pymc       : 5.11.0
-ratingcurve: 0.1.dev1+g8f054e9
-arviz      : 0.17.1
+matplotlib : 3.9.0
+ratingcurve: 0.1.dev1+g1bb2bc8
 
 Watermark: 2.4.3
 </pre></div>
