@@ -49,9 +49,9 @@ class ReitanRating(PowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
-            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+            h = pm.Data("h", self.h_obs)
+            log_q_z = pm.Data("log_q_z", self.log_q_z)
+            q_sigma = pm.Data("q_sigma", self.q_sigma)
 
             # fixed parameters
             # taking the log of h0_offset produces the clipping boundaries
@@ -127,9 +127,9 @@ class LeCozRating(PowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
-            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+            h = pm.Data("h", self.h_obs)
+            log_q_z = pm.Data("log_q_z", self.log_q_z)
+            q_sigma = pm.Data("q_sigma", self.q_sigma)
 
             # fixed parameters
             # taking the log of h0_offset produces the clipping boundaries
@@ -207,9 +207,9 @@ class ISORating(PowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
-            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+            h = pm.Data("h", self.h_obs)
+            log_q_z = pm.Data("log_q_z", self.log_q_z)
+            q_sigma = pm.Data("q_sigma", self.q_sigma)
 
             # priors
             # see Le Coz 2014 for default values, but typically between
@@ -280,9 +280,9 @@ class BrokenPowerLawRating(PowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
-            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+            h = pm.Data("h", self.h_obs)
+            log_q_z = pm.Data("log_q_z", self.log_q_z)
+            q_sigma = pm.Data("q_sigma", self.q_sigma)
 
             # Priors
             # alpha, the power law slopes
@@ -365,9 +365,9 @@ class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
         with pm.Model(coords=self.model_coords) as self.model:
 
             # observations
-            h = pm.MutableData("h", self.h_obs)
-            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+            h = pm.Data("h", self.h_obs)
+            log_q_z = pm.Data("log_q_z", self.log_q_z)
+            q_sigma = pm.Data("q_sigma", self.q_sigma)
 
             # Priors
             # alpha, the power law slopes

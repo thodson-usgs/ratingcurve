@@ -91,9 +91,9 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
 
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
-            h = pm.MutableData("h", self.h_obs)
-            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
+            h = pm.Data("h", self.h_obs)
+            log_q_z = pm.Data("log_q_z", self.log_q_z)
+            q_sigma = pm.Data("q_sigma", self.q_sigma)
 
             # parameters
             # taking the log of h0_offset produces the clipping boundaries
@@ -335,10 +335,10 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
 
         # Create the model
         with pm.Model(coords=self.model_coords) as self.model:
-            h = pm.MutableData("h", self.h_obs)
-            log_q_z = pm.MutableData("log_q_z", self.log_q_z)
-            q_sigma = pm.MutableData("q_sigma", self.q_sigma)
-            B = pm.MutableData("B", self.B)
+            h = pm.Data("h", self.h_obs)
+            log_q_z = pm.Data("log_q_z", self.log_q_z)
+            q_sigma = pm.Data("q_sigma", self.q_sigma)
+            B = pm.Data("B", self.B)
 
             # priors
             w = pm.Normal("w",
