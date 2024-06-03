@@ -494,10 +494,6 @@ First load the library (1) and some tutorial data (2):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/pymc/data.py:304: FutureWarning: MutableData is deprecated. All Data variables are now mutable. Use Data instead.
-  warnings.warn(
-</pre></div>
-</div>
 <div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/rich/live.py:231: UserWarning: install 
 "ipywidgets" for Jupyter support
   warnings.warn('install "ipywidgets" for Jupyter support')
@@ -505,10 +501,10 @@ First load the library (1) and some tutorial data (2):</p>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
 </pre>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 56800
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 68200
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 56,799 [28%]: Average Loss = 84.849
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 68,199 [34%]: Average Loss = 52.283
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -543,7 +539,7 @@ First load the library (1) and some tutorial data (2):</p>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
 </pre>
-</div><img alt="../_images/68fa364ad4083d9ab47d7eb14e276aab7bc0275554e20ab1cdfb2e398dc9a708.png" src="../_images/68fa364ad4083d9ab47d7eb14e276aab7bc0275554e20ab1cdfb2e398dc9a708.png" />
+</div><img alt="../_images/6989bf179d40116392d87540ae586663bc95b952c164f528e9da0c7353fca438.png" src="../_images/6989bf179d40116392d87540ae586663bc95b952c164f528e9da0c7353fca438.png" />
 </div>
 </div>
 <p>On the first run, the previous cell will take a bit longer while the model compiles.
@@ -596,37 +592,37 @@ The loss with decline as the optimization proceeds and should converge after a f
     <tr>
       <th>0</th>
       <td>2.21</td>
-      <td>1380.131381</td>
-      <td>1379.725312</td>
-      <td>1.017491</td>
+      <td>1386.161885</td>
+      <td>1385.822962</td>
+      <td>1.017524</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2.22</td>
-      <td>1392.544376</td>
-      <td>1392.350768</td>
-      <td>1.017435</td>
+      <td>1398.829289</td>
+      <td>1398.440252</td>
+      <td>1.017546</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2.23</td>
-      <td>1404.465502</td>
-      <td>1404.598510</td>
-      <td>1.017635</td>
+      <td>1410.518818</td>
+      <td>1410.305647</td>
+      <td>1.017854</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2.24</td>
-      <td>1417.201345</td>
-      <td>1417.195673</td>
-      <td>1.017137</td>
+      <td>1422.800582</td>
+      <td>1422.809894</td>
+      <td>1.017698</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2.25</td>
-      <td>1429.373578</td>
-      <td>1429.210447</td>
-      <td>1.017565</td>
+      <td>1434.791051</td>
+      <td>1434.754949</td>
+      <td>1.017506</td>
     </tr>
   </tbody>
 </table>
@@ -636,6 +632,21 @@ The loss with decline as the optimization proceeds and should converge after a f
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;green_rating_table.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once a model is fit, it can be saved and reloaded for future use.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powerrating</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./green_rating_fit.nc&#39;</span><span class="p">)</span>
+<span class="n">loaded_rating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./green_rating_fit.nc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/arviz/data/inference_data.py:157: UserWarning: fit_data group is not defined in the InferenceData scheme
+  warnings.warn(
 </pre></div>
 </div>
 </div>
