@@ -1,4 +1,4 @@
 pymc>=5.26.0
 pandas
-pytensor
+pytensor>=2.35.0,<2.36
 patsy

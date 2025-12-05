@@ -3,5 +3,5 @@ channels:
   - conda-forge
 dependencies:
   - pymc>=5.26.0
-  - pytensor
+  - pytensor>=2.35.0,<2.36
   - patsy
