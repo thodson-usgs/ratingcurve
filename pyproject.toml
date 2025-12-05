@@ -17,7 +17,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "pymc >= 5.0.0",
+    "pymc >= 5.26.0",
     "patsy",
 ]
 
