@@ -74,4 +74,4 @@ def describe(name) -> str:
 
     filename = DATASETS.get(name) + '.md'
     source = resources.files(__package__).joinpath(filename)
-    print(source.read_text(encoding='utf-8'))
+    return source.read_text(encoding='utf-8')
