@@ -1,1 +1,2 @@
 include ratingcurve/data/*.csv
+include ratingcurve/data/*.md
