@@ -3,7 +3,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-import pkg_resources
+from importlib import resources
 
 from pandas import read_csv
 
@@ -50,8 +50,9 @@ def load(name: str) -> DataFrame:
         raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
 
     filename = DATASETS.get(name) + '.csv'
-    stream = pkg_resources.resource_stream(__name__, filename)
-    return read_csv(stream)
+    source = resources.files(__package__).joinpath(filename)
+    with resources.as_file(source) as path:
+        return read_csv(path)
 
 
 def describe(name) -> str:
@@ -72,5 +73,5 @@ def describe(name) -> str:
         raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
 
     filename = DATASETS.get(name) + '.md'
-    stream = pkg_resources.resource_stream(__name__, filename)
-    print(stream.read().decode('utf-8'))
+    source = resources.files(__package__).joinpath(filename)
+    print(source.read_text(encoding='utf-8'))
