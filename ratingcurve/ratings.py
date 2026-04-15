@@ -7,7 +7,7 @@ import pymc as pm
 import pytensor.tensor as at
 
 from .transform import Dmatrix
-from .plot import PowerLawPlotMixin, SplinePlotMixin
+from .plot import PowerLawPlotMixin, SplinePlotMixin, is_fit
 from .ratingmodel_builder import RatingModelBuilder
 
 if TYPE_CHECKING:
@@ -129,6 +129,39 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
                             sigma=np.sqrt(sigma**2 + q_sigma**2),
                             shape=h.shape,
                             observed=log_q_z)
+
+    @is_fit
+    def equation(self):
+        """Return denormalized power-law equation parameters.
+
+        Transforms the fitted model parameters from normalized log-space
+        back to the standard power-law form::
+
+            ln(q) = a + sum(b[i] * ln(max(h - hs[i], 0) + ho[i]))
+
+        where ``ho[0] = 0`` and ``ho[i] = 1`` for ``i > 0``.
+
+        Returns
+        -------
+        params : dict
+            Dictionary with keys:
+            - ``'a'`` : float, intercept
+            - ``'b'`` : ndarray, exponents for each segment
+            - ``'hs'`` : ndarray, breakpoint stages
+        """
+        posterior = self.idata.posterior
+        a_z = posterior['a'].mean().item()
+        b_z = posterior['b'].mean(dim=['chain', 'draw']).values.flatten()
+        hs = posterior['hs'].mean(dim=['chain', 'draw']).values.flatten()
+
+        mu = self.q_transform.mean_
+        std = self.q_transform.std_
+
+        return {
+            'a': mu + std * a_z,
+            'b': std * b_z,
+            'hs': hs,
+        }
 
     def set_normal_prior(self):
         """Set normal prior for breakpoints.

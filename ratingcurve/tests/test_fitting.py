@@ -58,6 +58,41 @@ def test_no_zero_flows():
         _ = rating.fit(h, q)
 
 
+def test_equation():
+    """Test that equation() returns denormalized parameters that reproduce
+    the rating table."""
+    df = data.load('green channel')
+    rating = PowerLawRating(segments=2)
+    rating.fit(df['stage'], df['q'], q_sigma=df['q_sigma'])
+
+    params = rating.equation()
+
+    assert 'a' in params
+    assert 'b' in params
+    assert 'hs' in params
+    assert len(params['b']) == 2
+    assert len(params['hs']) == 2
+
+    # Verify equation reproduces table output
+    table = rating.table()
+    h = table['stage'].values
+
+    ho = np.ones(2)
+    ho[0] = 0
+
+    log_q = params['a']
+    for i in range(2):
+        log_q = log_q + params['b'][i] * np.log(
+            np.clip(h - params['hs'][i], 0, np.inf) + ho[i]
+        )
+
+    q_eq = np.exp(log_q)
+
+    # The equation with posterior means should approximate the table median.
+    # Use a loose tolerance since mean of posterior != exact median prediction.
+    np.testing.assert_allclose(q_eq, table['median'].values, rtol=0.15)
+
+
 def test_zero_flow_prior():
     """
     Test the zero-flow prior.
