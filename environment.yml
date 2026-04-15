@@ -2,6 +2,6 @@ name: ratingcurve
 channels:
   - conda-forge
 dependencies:
-  - pymc>=5.0.0
+  - pymc>=5.21
   - pytensor
   - patsy
