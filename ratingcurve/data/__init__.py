@@ -1,12 +1,11 @@
 """Example datasets for rating curve analysis.
 """
 from __future__ import annotations
-from typing import TYPE_CHECKING
 
 from importlib import resources
+from typing import TYPE_CHECKING
 
 from pandas import read_csv
-
 
 if TYPE_CHECKING:
     from pandas import DataFrame
@@ -32,7 +31,7 @@ def list() -> list:
     list
         List of tutorial datasets
     """
-    return [key for key in DATASETS.keys()]
+    return [*DATASETS]
 
 
 def load(name: str) -> DataFrame:
@@ -46,7 +45,7 @@ def load(name: str) -> DataFrame:
 
     Returns
     """
-    if name not in DATASETS.keys():
+    if name not in DATASETS:
         raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
 
     filename = DATASETS.get(name) + '.csv'
@@ -69,7 +68,7 @@ def describe(name) -> str:
     str
         Description of the dataset
     """
-    if name not in DATASETS.keys():
+    if name not in DATASETS:
         raise ValueError(f'Dataset "{name}" does not exist. Valid values are: {list()}')
 
     filename = DATASETS.get(name) + '.md'

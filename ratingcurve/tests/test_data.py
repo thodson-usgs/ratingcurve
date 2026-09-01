@@ -2,6 +2,7 @@ import pytest
 
 from .. import data
 
+
 @pytest.mark.parametrize('idx', list(range(len(data.list()))))
 def test_data_load(idx):
     data_list = data.list()

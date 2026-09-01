@@ -3,9 +3,8 @@
 Demonstrates how to extract and display the parametric equation
 for a multi-segment power-law rating curve.
 """
-import numpy as np
-from ratingcurve.ratings import PowerLawRating
 from ratingcurve import data
+from ratingcurve.ratings import PowerLawRating
 
 # Load sample data and fit a 2-segment model
 df = data.load('green channel')

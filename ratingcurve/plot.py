@@ -1,12 +1,12 @@
 """Plotting functions"""
 from __future__ import annotations
-from typing import TYPE_CHECKING
 
 import functools
-import numpy as np
-import matplotlib.pyplot as plt
-import arviz as az
+from typing import TYPE_CHECKING
 
+import arviz as az
+import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.ticker import FuncFormatter
 
 if TYPE_CHECKING:
@@ -257,7 +257,8 @@ class PowerLawPlotMixin(PlotMixin):
                                dim=['chain', 'draw']).data.flatten()
         # Plot prediction interval
         i_kwargs = {'color' : 'whitesmoke'}
-        _ = [ax.axhspan(l, u, **i_kwargs) for u, l in zip(hs_lower, hs_upper)]
+        for lower, upper in zip(hs_lower, hs_upper, strict=True):
+            ax.axhspan(lower, upper, **i_kwargs)
 
         # Plot expectation
         e_kwargs = {'color' : 'lightgray',

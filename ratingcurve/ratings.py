@@ -1,14 +1,15 @@
 """Streamflow rating models using PyMC."""
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 import numpy as np
 import pymc as pm
 import pytensor.tensor as at
 
-from .transform import Dmatrix
 from .plot import PowerLawPlotMixin, SplinePlotMixin, is_fit
 from .ratingmodel_builder import RatingModelBuilder
+from .transform import Dmatrix
 
 if TYPE_CHECKING:
     from numpy.typing import ArrayLike
@@ -24,7 +25,7 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
 
     @staticmethod
     def get_default_model_config(segments: int = 2,
-                                 prior: dict = {'distribution': 'uniform'},
+                                 prior: dict | None = None,
                                  **kwargs) -> dict:
         """Create model configuration dictionary.
 
@@ -37,8 +38,9 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
         ----------
         segments : int
             Number of segments in the rating.
-        prior : dict
-            Prior knowledge of breakpoint locations. Must contain the key
+        prior : dict, optional
+            Prior knowledge of breakpoint locations, defaulting to
+            ``{'distribution': 'uniform'}``. Must contain the key
             `distribution`, which can either be set to a `'uniform'` or
             `'normal'` distribution. If a normal distribution, then the
             mean `mu` and width `sigma` must be given as well.
@@ -64,6 +66,9 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
             A dictionary containing all the required model configuration
             parameters.
         """
+        if prior is None:
+            prior = {'distribution': 'uniform'}
+
         model_config = {'segments': segments, 'prior': prior}
 
         return model_config
@@ -124,11 +129,11 @@ class PowerLawRating(RatingModelBuilder, PowerLawPlotMixin):
             X = pm.Deterministic('X',
                                  at.log(at.clip(h - hs, 0, np.inf) + self.ho))
 
-            obs = pm.Normal("model_q",
-                            mu=a + at.dot(b, X),
-                            sigma=np.sqrt(sigma**2 + q_sigma**2),
-                            shape=h.shape,
-                            observed=log_q_z)
+            pm.Normal("model_q",
+                      mu=a + at.dot(b, X),
+                      sigma=np.sqrt(sigma**2 + q_sigma**2),
+                      shape=h.shape,
+                      observed=log_q_z)
 
     @is_fit
     def equation(self):
@@ -382,8 +387,8 @@ class SplineRating(RatingModelBuilder, SplinePlotMixin):
             sigma = pm.HalfCauchy("sigma", beta=0.1)
 
             # likelihood
-            obs = pm.Normal("model_q",
-                            mu=at.dot(B, w.T),
-                            sigma=np.sqrt(sigma**2 + q_sigma**2),
-                            shape=h.shape,
-                            observed=log_q_z)
+            pm.Normal("model_q",
+                      mu=at.dot(B, w.T),
+                      sigma=np.sqrt(sigma**2 + q_sigma**2),
+                      shape=h.shape,
+                      observed=log_q_z)
