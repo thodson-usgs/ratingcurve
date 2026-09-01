@@ -191,6 +191,19 @@ class RatingModelBuilder(ModelBuilder):
         self.model_coords = {'obs': np.arange(len(self.q_obs)),
                              'splines': np.arange(self.segments)}
 
+    def _clear_initial_values(self) -> None:
+        """Drop the breakpoint seeds once the model no longer needs them.
+
+        `build_model` seeds the breakpoints with `initval`, which is only
+        needed to start sampling. PyMC refuses to convert a model that carries
+        explicit initial values, so leaving them in place would make
+        `pm.compute_log_likelihood`, and the model comparison built on it,
+        unavailable. Both entry points that build a model call this once the
+        model is ready to use.
+        """
+        for rv in self.model.rvs_to_initial_values:
+            self.model.rvs_to_initial_values[rv] = None
+
     def sample_model(self, **kwargs) -> InferenceData:
         """Update `ModelBuilder.sample_model` with other fitting algorithms.
 
@@ -285,6 +298,7 @@ class RatingModelBuilder(ModelBuilder):
         q = dataset[model.output_var]
         q_sigma = dataset['q_sigma']
         model.build_model(h, q, q_sigma=q_sigma)
+        model._clear_initial_values()
 
         # All previously used data is in idata.
         if model.id != idata.attrs["id"]:
@@ -353,6 +367,8 @@ class RatingModelBuilder(ModelBuilder):
 
         # Sample (fit) the model
         self.idata = self.sample_model(**sampler_config)
+
+        self._clear_initial_values()
 
         # Have fit data include uncertainty and have appropriate names
         h_df = pd.DataFrame({'h': h})
