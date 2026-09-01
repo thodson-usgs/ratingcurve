@@ -16,41 +16,44 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -58,40 +61,37 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/getting-started-tutorial';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorials" href="../meta/tutorials.html" />
     <link rel="prev" title="Installation" href="../meta/installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -99,7 +99,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -107,15 +106,59 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
     </header>
   
 
@@ -124,7 +167,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -139,6 +183,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="../meta/intro.html">
   
@@ -152,15 +198,11 @@
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -192,9 +234,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -213,9 +260,9 @@
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -324,7 +371,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -338,27 +385,19 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -378,7 +417,7 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-datasets">Demo datasets</a></li>
 </ul>
             </nav>
@@ -398,19 +437,16 @@ First load the library (1) and some tutorial data (2):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. load modules</span>
-<span class="kn">from</span> <span class="nn">ratingcurve.ratings</span> <span class="kn">import</span> <span class="n">PowerLawRating</span>
-<span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ratingcurve</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ratingcurve.ratings</span><span class="w"> </span><span class="kn">import</span> <span class="n">PowerLawRating</span>
 
 <span class="c1"># 2. load tutorial data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'green channel'</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (pytensor.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
-</pre></div>
-</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -487,24 +523,862 @@ First load the library (1) and some tutorial data (2):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 4. fit the model</span>
-<span class="n">trace</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">],</span>
-                        <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stage&#39;</span><span class="p">],</span> 
-                        <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;q_sigma&#39;</span><span class="p">])</span>
+<span class="n">trace</span> <span class="o">=</span> <span class="n">powerrating</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">'q'</span><span class="p">],</span>
+                        <span class="n">h</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">'stage'</span><span class="p">],</span>
+                        <span class="n">q_sigma</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">'q_sigma'</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/rich/live.py:231: UserWarning: install 
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
 "ipywidgets" for Jupyter support
   warnings.warn('install "ipywidgets" for Jupyter support')
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
-</pre>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 68200
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Convergence achieved at 110000
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 68,199 [34%]: Average Loss = 52.283
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interrupted at 109,999 [54%]: Average Loss = 86.503
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [a, b, hs_, model_q, sigma]
@@ -513,13 +1387,19 @@ First load the library (1) and some tutorial data (2):</p>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
 </div>
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/rich/live.py:231: UserWarning: install 
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
 "ipywidgets" for Jupyter support
   warnings.warn('install "ipywidgets" for Jupyter support')
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
-</pre>
 </div></div>
 </div>
 <div class="cell docutils container">
@@ -532,14 +1412,32 @@ First load the library (1) and some tutorial data (2):</p>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
 </div>
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/rich/live.py:231: UserWarning: install 
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
+"ipywidgets" for Jupyter support
+  warnings.warn('install "ipywidgets" for Jupyter support')
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
 "ipywidgets" for Jupyter support
   warnings.warn('install "ipywidgets" for Jupyter support')
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
-</pre>
-</div><img alt="../_images/6989bf179d40116392d87540ae586663bc95b952c164f528e9da0c7353fca438.png" src="../_images/6989bf179d40116392d87540ae586663bc95b952c164f528e9da0c7353fca438.png" />
+</div><img alt="../_images/db0bcca1e258dbcd5db91f433aa9174ce3642bdcd66887dad13b113a388c1d78.png" src="../_images/db0bcca1e258dbcd5db91f433aa9174ce3642bdcd66887dad13b113a388c1d78.png" />
 </div>
 </div>
 <p>On the first run, the previous cell will take a bit longer while the model compiles.
@@ -557,13 +1455,11 @@ The loss with decline as the optimization proceeds and should converge after a f
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling: [model_q]
 </pre></div>
 </div>
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/rich/live.py:231: UserWarning: install 
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/rich/live.py:260: UserWarning: install 
 "ipywidgets" for Jupyter support
   warnings.warn('install "ipywidgets" for Jupyter support')
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
-</pre>
 </div><div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -592,37 +1488,37 @@ The loss with decline as the optimization proceeds and should converge after a f
     <tr>
       <th>0</th>
       <td>2.21</td>
-      <td>1386.161885</td>
-      <td>1385.822962</td>
-      <td>1.017524</td>
+      <td>1386.029288</td>
+      <td>1385.709507</td>
+      <td>1.017295</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2.22</td>
-      <td>1398.829289</td>
-      <td>1398.440252</td>
-      <td>1.017546</td>
+      <td>1398.242759</td>
+      <td>1398.034602</td>
+      <td>1.017563</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2.23</td>
-      <td>1410.518818</td>
-      <td>1410.305647</td>
-      <td>1.017854</td>
+      <td>1410.273066</td>
+      <td>1409.921204</td>
+      <td>1.017250</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2.24</td>
-      <td>1422.800582</td>
-      <td>1422.809894</td>
-      <td>1.017698</td>
+      <td>1422.363938</td>
+      <td>1422.099265</td>
+      <td>1.017792</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2.25</td>
-      <td>1434.791051</td>
-      <td>1434.754949</td>
-      <td>1.017506</td>
+      <td>1434.540876</td>
+      <td>1434.487968</td>
+      <td>1.017193</td>
     </tr>
   </tbody>
 </table>
@@ -631,7 +1527,7 @@ The loss with decline as the optimization proceeds and should converge after a f
 <p>and saved as a CSV</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;green_rating_table.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'green_rating_table.csv'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -639,14 +1535,8 @@ The loss with decline as the optimization proceeds and should converge after a f
 <p>Once a model is fit, it can be saved and reloaded for future use.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powerrating</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./green_rating_fit.nc&#39;</span><span class="p">)</span>
-<span class="n">loaded_rating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./green_rating_fit.nc&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/arviz/data/inference_data.py:157: UserWarning: fit_data group is not defined in the InferenceData scheme
-  warnings.warn(
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">powerrating</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">'./green_rating_fit.nc'</span><span class="p">)</span>
+<span class="n">loaded_rating</span> <span class="o">=</span> <span class="n">PowerLawRating</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'./green_rating_fit.nc'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -657,21 +1547,22 @@ The loss with decline as the optimization proceeds and should converge after a f
 List them by calling</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ratingcurve</span> <span class="kn">import</span> <span class="n">data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ratingcurve</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
 <span class="n">data</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;chalk artificial&#39;,
- &#39;co channel&#39;,
- &#39;green channel&#39;,
- &#39;provo natural&#39;,
- &#39;3-segment simulated&#39;,
- &#39;mahurangi artificial&#39;,
- &#39;nordura&#39;,
- &#39;skajalfandafljot&#39;,
- &#39;isere&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>['chalk artificial',
+ 'co channel',
+ 'green channel',
+ 'provo natural',
+ '3-segment simulated',
+ 'mahurangi artificial',
+ 'nordura',
+ 'skajalfandafljot',
+ 'isere']
 </pre></div>
 </div>
 </div>
@@ -679,36 +1570,19 @@ List them by calling</p>
 <p>Each dataset includes a description and is loaded as a DataFrame.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="s1">'green channel'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># Green River near Jensen, UT (channel control)
-
-## USGS Gage ID: 09261000
-
-## Control
-At the gage, the river is restricted to one channel at all stages.
-The streambed is very flat and is composed of cobbles.
-The banks consist of sand, gravel and cobbles.
-Riparian vegetation includes sage brush, willows, greasewood, and tamarisk.
-The left bank is not as steep as the right, which slopes up quite abruptly.
-Both banks are quite stable and are not subject to overflow except at extremely high stages.
-The channel is straight for several hundred yards upstream but bends sharply to the right about 2,000 feet below the station.
-Channel control prevails at all but the lowest stages when a rocky riffle 200 feet below the gage becomes effective.
-The riffle is quite stable. 
-
-## Stage Ranges
-- Reach control: &lt; 3.70 ft
-- Channel control: 3.70 to 14 ft
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>'# Green River near Jensen, UT (channel control)\n\n## USGS Gage ID: 09261000\n\n## Control\nAt the gage, the river is restricted to one channel at all stages.\nThe streambed is very flat and is composed of cobbles.\nThe banks consist of sand, gravel and cobbles.\nRiparian vegetation includes sage brush, willows, greasewood, and tamarisk.\nThe left bank is not as steep as the right, which slopes up quite abruptly.\nBoth banks are quite stable and are not subject to overflow except at extremely high stages.\nThe channel is straight for several hundred yards upstream but bends sharply to the right about 2,000 feet below the station.\nChannel control prevails at all but the lowest stages when a rocky riffle 200 feet below the gage becomes effective.\nThe riffle is quite stable. \n\n## Stage Ranges\n- Reach control: &lt; 3.70 ft\n- Channel control: 3.70 to 14 ft'
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;green channel&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'green channel'</span><span class="p">)</span>
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -1053,15 +1927,17 @@ The riffle is quite stable.
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo-datasets">Demo datasets</a></li>
 </ul>
   </nav></div>
@@ -1111,8 +1987,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
   </footer>

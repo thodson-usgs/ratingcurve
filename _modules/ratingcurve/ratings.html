@@ -15,41 +15,44 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
-  
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -57,38 +60,35 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/ratingcurve/ratings';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -96,7 +96,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -104,15 +103,55 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
     </header>
   
 
@@ -123,7 +162,8 @@
       
         
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -138,6 +178,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="../../meta/intro.html">
   
@@ -151,15 +193,11 @@
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -191,9 +229,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -212,9 +255,9 @@
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -275,7 +318,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -289,24 +332,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -333,64 +368,66 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for ratingcurve.ratings</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Streamflow rating models using PyMC.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span></span><span class="sd">"""Streamflow rating models using PyMC."""</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pymc</span> <span class="k">as</span> <span class="nn">pm</span>
-<span class="kn">import</span> <span class="nn">pytensor.tensor</span> <span class="k">as</span> <span class="nn">at</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">from</span> <span class="nn">.transform</span> <span class="kn">import</span> <span class="n">Dmatrix</span>
-<span class="kn">from</span> <span class="nn">.plot</span> <span class="kn">import</span> <span class="n">PowerLawPlotMixin</span><span class="p">,</span> <span class="n">SplinePlotMixin</span>
-<span class="kn">from</span> <span class="nn">.ratingmodel_builder</span> <span class="kn">import</span> <span class="n">RatingModelBuilder</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pymc</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytensor.tensor</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">at</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">PowerLawPlotMixin</span><span class="p">,</span> <span class="n">SplinePlotMixin</span><span class="p">,</span> <span class="n">is_fit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ratingmodel_builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">RatingModelBuilder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dmatrix</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">ArrayLike</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span>
 
 
 <div class="viewcode-block" id="PowerLawRating">
 <a class="viewcode-back" href="../../api.html#ratingcurve.ratings.PowerLawRating">[docs]</a>
-<span class="k">class</span> <span class="nc">PowerLawRating</span><span class="p">(</span><span class="n">RatingModelBuilder</span><span class="p">,</span> <span class="n">PowerLawPlotMixin</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Multi-segment power law rating using Heaviside parameterization.&quot;&quot;&quot;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PowerLawRating</span><span class="p">(</span><span class="n">RatingModelBuilder</span><span class="p">,</span> <span class="n">PowerLawPlotMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Multi-segment power law rating using Heaviside parameterization."""</span>
     <span class="c1"># Give the model a name</span>
-    <span class="n">_model_type</span> <span class="o">=</span> <span class="s2">&quot;PowerLawRating&quot;</span>
+    <span class="n">_model_type</span> <span class="o">=</span> <span class="s2">"PowerLawRating"</span>
 
     <span class="c1"># And a version</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;0.1&quot;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s2">"0.1"</span>
 
 <div class="viewcode-block" id="PowerLawRating.get_default_model_config">
 <a class="viewcode-back" href="../../api.html#ratingcurve.ratings.PowerLawRating.get_default_model_config">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_default_model_config</span><span class="p">(</span><span class="n">segments</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-                                 <span class="n">prior</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;distribution&#39;</span><span class="p">:</span> <span class="s1">&#39;uniform&#39;</span><span class="p">},</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_default_model_config</span><span class="p">(</span><span class="n">segments</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+                                 <span class="n">prior</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create model configuration dictionary.</span>
+<span class="w">        </span><span class="sd">"""Create model configuration dictionary.</span>
 
 <span class="sd">        Generate a `model_config` dictionary with all the required model</span>
 <span class="sd">        configuration parameters needed to build the model. It will be passed</span>
-<span class="sd">        to the class instance on initialization, in case the user doesn&#39;t</span>
+<span class="sd">        to the class instance on initialization, in case the user doesn't</span>
 <span class="sd">        provide any model configuration settings of their own.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        segments : int</span>
 <span class="sd">            Number of segments in the rating.</span>
-<span class="sd">        prior : dict</span>
-<span class="sd">            Prior knowledge of breakpoint locations. Must contain the key</span>
-<span class="sd">            `distribution`, which can either be set to a `&#39;uniform&#39;` or</span>
-<span class="sd">            `&#39;normal&#39;` distribution. If a normal distribution, then the</span>
+<span class="sd">        prior : dict, optional</span>
+<span class="sd">            Prior knowledge of breakpoint locations, defaulting to</span>
+<span class="sd">            ``{'distribution': 'uniform'}``. Must contain the key</span>
+<span class="sd">            `distribution`, which can either be set to a `'uniform'` or</span>
+<span class="sd">            `'normal'` distribution. If a normal distribution, then the</span>
 <span class="sd">            mean `mu` and width `sigma` must be given as well.</span>
 
 <span class="sd">            Examples:</span>
 <span class="sd">            (with any segment value)</span>
-<span class="sd">            ``prior = {&#39;distribution&#39;: &#39;uniform&#39;}``</span>
+<span class="sd">            ``prior = {'distribution': 'uniform'}``</span>
 <span class="sd">            or (with `segments = 2`)</span>
-<span class="sd">            ``prior = {&#39;distribution&#39;: &#39;normal&#39;, &#39;mu&#39;: [1, 2],</span>
-<span class="sd">                       &#39;sigma&#39;:[1, 1]}``</span>
+<span class="sd">            ``prior = {'distribution': 'normal', 'mu': [1, 2],</span>
+<span class="sd">                       'sigma':[1, 1]}``</span>
 <span class="sd">            or (with `segments = 4`)</span>
-<span class="sd">            ``prior = {&#39;distribution&#39;: &#39;normal&#39;, &#39;mu&#39;: [1, 2, 5, 9],</span>
-<span class="sd">                       &#39;sigma&#39;:[1, 1, 1, 1]}``</span>
+<span class="sd">            ``prior = {'distribution': 'normal', 'mu': [1, 2, 5, 9],</span>
+<span class="sd">                       'sigma':[1, 1, 1, 1]}``</span>
 
 <span class="sd">            Note that the number of normal distribution means and widths</span>
 <span class="sd">            must be the same as the number of segments. Additionally, the</span>
@@ -402,20 +439,23 @@ document.write(`
 <span class="sd">        model_config : dict</span>
 <span class="sd">            A dictionary containing all the required model configuration</span>
 <span class="sd">            parameters.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">model_config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;segments&#39;</span><span class="p">:</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">&#39;prior&#39;</span><span class="p">:</span> <span class="n">prior</span><span class="p">}</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">prior</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">prior</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'distribution'</span><span class="p">:</span> <span class="s1">'uniform'</span><span class="p">}</span>
+
+        <span class="n">model_config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'segments'</span><span class="p">:</span> <span class="n">segments</span><span class="p">,</span> <span class="s1">'prior'</span><span class="p">:</span> <span class="n">prior</span><span class="p">}</span>
 
         <span class="k">return</span> <span class="n">model_config</span></div>
 
 
 <div class="viewcode-block" id="PowerLawRating.build_model">
 <a class="viewcode-back" href="../../api.html#ratingcurve.ratings.PowerLawRating.build_model">[docs]</a>
-    <span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                     <span class="n">h</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
                     <span class="n">q</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
                     <span class="n">q_sigma</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates the PyMC model.</span>
+<span class="w">        </span><span class="sd">"""Creates the PyMC model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -425,17 +465,17 @@ document.write(`
 <span class="sd">            Input array of discharge (q) observations.</span>
 <span class="sd">        q_sigma : array_like, optional</span>
 <span class="sd">            Input array of discharge uncertainty in units of discharge.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Pre-process data: Converts q to normalized log space</span>
         <span class="c1"># (and q_sigma to log space if given)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;segments&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'segments'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_generate_and_preprocess_model_data</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">q_sigma</span><span class="p">)</span>
 
         <span class="c1"># Create the model</span>
         <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_coords</span><span class="p">)</span> <span class="k">as</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
-            <span class="n">h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">)</span>
-            <span class="n">log_q_z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">&quot;log_q_z&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_q_z</span><span class="p">)</span>
-            <span class="n">q_sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">&quot;q_sigma&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_sigma</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">"h"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">)</span>
+            <span class="n">log_q_z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">"log_q_z"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_q_z</span><span class="p">)</span>
+            <span class="n">q_sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">"q_sigma"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_sigma</span><span class="p">)</span>
 
             <span class="c1"># parameters</span>
             <span class="c1"># taking the log of h0_offset produces the clipping boundaries</span>
@@ -449,34 +489,70 @@ document.write(`
             <span class="c1"># otherwise, each subsequent b_i is the slope deviation</span>
             <span class="c1"># from b_{i-1}, rather than the absolute slope</span>
             <span class="n">b_mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.6</span>
-            <span class="n">b</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">b_mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="s2">&quot;splines&quot;</span><span class="p">)</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-            <span class="n">sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s2">&quot;sigma&quot;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">"b"</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">b_mu</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="s2">"splines"</span><span class="p">)</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s2">"sigma"</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
             <span class="c1"># Set priors on break points</span>
-            <span class="n">prior_distribution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prior&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;distribution&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">prior_distribution</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+            <span class="n">prior_distribution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'prior'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'distribution'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">prior_distribution</span> <span class="o">==</span> <span class="s1">'normal'</span><span class="p">:</span>
                 <span class="n">hs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_normal_prior</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="n">prior_distribution</span> <span class="o">==</span> <span class="s1">&#39;uniform&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">prior_distribution</span> <span class="o">==</span> <span class="s1">'uniform'</span><span class="p">:</span>
                 <span class="n">hs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_uniform_prior</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Prior distribution not implemented&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">'Prior distribution not implemented'</span><span class="p">)</span>
 
             <span class="c1"># likelihood</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">'X'</span><span class="p">,</span>
                                  <span class="n">at</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">at</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">hs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ho</span><span class="p">))</span>
 
-            <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;model_q&quot;</span><span class="p">,</span>
-                            <span class="n">mu</span><span class="o">=</span><span class="n">a</span> <span class="o">+</span> <span class="n">at</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span>
-                            <span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">q_sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
-                            <span class="n">shape</span><span class="o">=</span><span class="n">h</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                            <span class="n">observed</span><span class="o">=</span><span class="n">log_q_z</span><span class="p">)</span></div>
+            <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">"model_q"</span><span class="p">,</span>
+                      <span class="n">mu</span><span class="o">=</span><span class="n">a</span> <span class="o">+</span> <span class="n">at</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span>
+                      <span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">q_sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+                      <span class="n">shape</span><span class="o">=</span><span class="n">h</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                      <span class="n">observed</span><span class="o">=</span><span class="n">log_q_z</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PowerLawRating.equation">
+<a class="viewcode-back" href="../../api.html#ratingcurve.ratings.PowerLawRating.equation">[docs]</a>
+    <span class="nd">@is_fit</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">equation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return denormalized power-law equation parameters.</span>
+
+<span class="sd">        Transforms the fitted model parameters from normalized log-space</span>
+<span class="sd">        back to the standard power-law form::</span>
+
+<span class="sd">            ln(q) = a + sum(b[i] * ln(max(h - hs[i], 0) + ho[i]))</span>
+
+<span class="sd">        where ``ho[0] = 0`` and ``ho[i] = 1`` for ``i &gt; 0``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        params : dict</span>
+<span class="sd">            Dictionary with keys:</span>
+<span class="sd">            - ``'a'`` : float, intercept</span>
+<span class="sd">            - ``'b'`` : ndarray, exponents for each segment</span>
+<span class="sd">            - ``'hs'`` : ndarray, breakpoint stages</span>
+<span class="sd">        """</span>
+        <span class="n">posterior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">idata</span><span class="o">.</span><span class="n">posterior</span>
+        <span class="n">a_z</span> <span class="o">=</span> <span class="n">posterior</span><span class="p">[</span><span class="s1">'a'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">b_z</span> <span class="o">=</span> <span class="n">posterior</span><span class="p">[</span><span class="s1">'b'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s1">'chain'</span><span class="p">,</span> <span class="s1">'draw'</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">hs</span> <span class="o">=</span> <span class="n">posterior</span><span class="p">[</span><span class="s1">'hs'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s1">'chain'</span><span class="p">,</span> <span class="s1">'draw'</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+        <span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_transform</span><span class="o">.</span><span class="n">mean_</span>
+        <span class="n">std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_transform</span><span class="o">.</span><span class="n">std_</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">'a'</span><span class="p">:</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">std</span> <span class="o">*</span> <span class="n">a_z</span><span class="p">,</span>
+            <span class="s1">'b'</span><span class="p">:</span> <span class="n">std</span> <span class="o">*</span> <span class="n">b_z</span><span class="p">,</span>
+            <span class="s1">'hs'</span><span class="p">:</span> <span class="n">hs</span><span class="p">,</span>
+        <span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="PowerLawRating.set_normal_prior">
 <a class="viewcode-back" href="../../api.html#ratingcurve.ratings.PowerLawRating.set_normal_prior">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_normal_prior</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set normal prior for breakpoints.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_normal_prior</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Set normal prior for breakpoints.</span>
 
 <span class="sd">        Sets an expected value for each breakpoint (mu) with uncertainty</span>
 <span class="sd">        (sigma). This can be very helpful when convergence is poor.</span>
@@ -485,34 +561,34 @@ document.write(`
 <span class="sd">        --------</span>
 <span class="sd">        &gt;&gt;&gt; mu = [1,2,3]</span>
 <span class="sd">        &gt;&gt;&gt; sigma = [1,1,1]</span>
-<span class="sd">        &gt;&gt;&gt; prior = {&#39;distribution&#39;: &#39;normal&#39;, &#39;mu&#39;: mu, &#39;sigma&#39;: sigma}</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; prior = {'distribution': 'normal', 'mu': mu, 'sigma': sigma}</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__set_hs_bounds</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                             <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prior&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">)))</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'prior'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'mu'</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="n">prior_mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                             <span class="s1">&#39;prior&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+                             <span class="s1">'prior'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'mu'</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">prior_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                             <span class="s1">&#39;prior&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sigma&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+                             <span class="s1">'prior'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'sigma'</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="c1"># check that the priors are within their bounds</span>
         <span class="n">h_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
         <span class="n">h_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">prior_mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">h_min</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The prior mean (mu) of the first breakpoint &#39;</span>
-                             <span class="s1">&#39;represents the stage of zero-flow, so must be &#39;</span>
-                             <span class="s1">&#39;below the lowest observed stage.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'The prior mean (mu) of the first breakpoint '</span>
+                             <span class="s1">'represents the stage of zero-flow, so must be '</span>
+                             <span class="s1">'below the lowest observed stage.'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">prior_mu</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">&lt;</span> <span class="n">h_min</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">prior_mu</span> <span class="o">&gt;</span> <span class="n">h_max</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The prior means (mu) of subsequent breakpoints &#39;</span>
-                             <span class="s1">&#39;must be within the bounds of the observed &#39;</span>
-                             <span class="s1">&#39;stage.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'The prior means (mu) of subsequent breakpoints '</span>
+                             <span class="s1">'must be within the bounds of the observed '</span>
+                             <span class="s1">'stage.'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">prior_sigma</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Prior standard deviations must be positive.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Prior standard deviations must be positive.'</span><span class="p">)</span>
 
-        <span class="n">hs_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(</span><span class="s1">&#39;hs_&#39;</span><span class="p">,</span>
+        <span class="n">hs_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TruncatedNormal</span><span class="p">(</span><span class="s1">'hs_'</span><span class="p">,</span>
                                  <span class="n">mu</span><span class="o">=</span><span class="n">prior_mu</span><span class="p">,</span>
                                  <span class="n">sigma</span><span class="o">=</span><span class="n">prior_sigma</span><span class="p">,</span>
                                  <span class="n">lower</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_hs_lower_bounds</span><span class="p">,</span>
@@ -522,24 +598,24 @@ document.write(`
 
         <span class="c1"># Sorting reduces multimodality. The benifit increases with</span>
         <span class="c1">#   fewer observations.</span>
-        <span class="n">hs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;hs&#39;</span><span class="p">,</span> <span class="n">at</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">hs_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">hs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">'hs'</span><span class="p">,</span> <span class="n">at</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">hs_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">hs</span></div>
 
 
 <div class="viewcode-block" id="PowerLawRating.set_uniform_prior">
 <a class="viewcode-back" href="../../api.html#ratingcurve.ratings.PowerLawRating.set_uniform_prior">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_uniform_prior</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set uniform prior for breakpoints.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_uniform_prior</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Set uniform prior for breakpoints.</span>
 
 <span class="sd">        Make no prior assumption about the location of the breakpoints, only</span>
 <span class="sd">        the number of breaks and that the breakpoints are ordered.</span>
 
-<span class="sd">        prior={distribution:&#39;uniform&#39;, initval: []}</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        prior={distribution:'uniform', initval: []}</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__set_hs_bounds</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__init_hs</span><span class="p">()</span>
 
-        <span class="n">hs_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">&#39;hs_&#39;</span><span class="p">,</span>
+        <span class="n">hs_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">'hs_'</span><span class="p">,</span>
                          <span class="n">lower</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_hs_lower_bounds</span><span class="p">,</span>
                          <span class="n">upper</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_hs_upper_bounds</span><span class="p">,</span>
                          <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
@@ -547,12 +623,12 @@ document.write(`
 
         <span class="c1"># Sorting reduces multimodality. The benifit increases with</span>
         <span class="c1">#   fewer observations.</span>
-        <span class="n">hs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;hs&#39;</span><span class="p">,</span> <span class="n">at</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">hs_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">hs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">'hs'</span><span class="p">,</span> <span class="n">at</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">hs_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">hs</span></div>
 
 
-    <span class="k">def</span> <span class="nf">__set_hs_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set upper and lower bounds for breakpoints.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__set_hs_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Set upper and lower bounds for breakpoints.</span>
 
 <span class="sd">        Sets the lower and upper bounds for the breakpoints. For the first</span>
 <span class="sd">        breakpoint, the lower bound is set to 0. The upper bound is set to the</span>
@@ -564,7 +640,7 @@ document.write(`
 <span class="sd">        ----------</span>
 <span class="sd">        n : int, optional</span>
 <span class="sd">            Number of observations to exlude from each segment, by default 1</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">e</span> <span class="o">=</span> <span class="mf">1e-6</span>
         <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hs_lower_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">)</span>
@@ -576,13 +652,13 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">_hs_upper_bounds</span><span class="p">[:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="o">-</span><span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hs_upper_bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hs_upper_bounds</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="n">e</span>
 
-    <span class="k">def</span> <span class="nf">__init_hs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize breakpoints.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__init_hs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Initialize breakpoints.</span>
 
 <span class="sd">        Initial points are randomly selecting within the stage data range.</span>
 <span class="sd">        Selected points are then sorted.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prior&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;initval&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'prior'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'initval'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="c1"># TODO: distribute to evenly split the data</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_hs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -599,26 +675,26 @@ document.write(`
 
 <div class="viewcode-block" id="SplineRating">
 <a class="viewcode-back" href="../../api.html#ratingcurve.ratings.SplineRating">[docs]</a>
-<span class="k">class</span> <span class="nc">SplineRating</span><span class="p">(</span><span class="n">RatingModelBuilder</span><span class="p">,</span> <span class="n">SplinePlotMixin</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Natural spline rating.&quot;&quot;&quot;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SplineRating</span><span class="p">(</span><span class="n">RatingModelBuilder</span><span class="p">,</span> <span class="n">SplinePlotMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Natural spline rating."""</span>
     <span class="c1"># Give the model a name</span>
-    <span class="n">_model_type</span> <span class="o">=</span> <span class="s2">&quot;SplineRating&quot;</span>
+    <span class="n">_model_type</span> <span class="o">=</span> <span class="s2">"SplineRating"</span>
 
     <span class="c1"># And a version</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;0.1&quot;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s2">"0.1"</span>
 
 <div class="viewcode-block" id="SplineRating.get_default_model_config">
 <a class="viewcode-back" href="../../api.html#ratingcurve.ratings.SplineRating.get_default_model_config">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_default_model_config</span><span class="p">(</span><span class="n">mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_default_model_config</span><span class="p">(</span><span class="n">mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
                                  <span class="n">sd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
                                  <span class="n">df</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create model configuration dictionary.</span>
+<span class="w">        </span><span class="sd">"""Create model configuration dictionary.</span>
 
 <span class="sd">        Generate a `model_config` dictionary with all the required model</span>
 <span class="sd">        configuration parameters needed to build the model. It will be passed</span>
-<span class="sd">        to the class instance on initialization, in case the user doesn&#39;t</span>
+<span class="sd">        to the class instance on initialization, in case the user doesn't</span>
 <span class="sd">        provide any model configuration settings of their own.</span>
 
 <span class="sd">        Parameters</span>
@@ -635,16 +711,16 @@ document.write(`
 <span class="sd">        model_config : dict</span>
 <span class="sd">            A dictionary containing all the required model configuration</span>
 <span class="sd">            parameters.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">model_config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span> <span class="n">sd</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">}</span>
+<span class="sd">        """</span>
+        <span class="n">model_config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'mean'</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span> <span class="s1">'sd'</span><span class="p">:</span> <span class="n">sd</span><span class="p">,</span> <span class="s1">'df'</span><span class="p">:</span> <span class="n">df</span><span class="p">}</span>
 
         <span class="k">return</span> <span class="n">model_config</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_data_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_data_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
                      <span class="n">q</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                      <span class="n">q_sigma</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update `_data_setter` to include spline design matrix update.</span>
+<span class="w">        </span><span class="sd">"""Update `_data_setter` to include spline design matrix update.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -654,20 +730,20 @@ document.write(`
 <span class="sd">            Target discharge (q) values.</span>
 <span class="sd">        q_sigma : array_like, optional</span>
 <span class="sd">            Discharge uncertainty in units of discharge.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_data_setter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">q_sigma</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
-            <span class="n">pm</span><span class="o">.</span><span class="n">set_data</span><span class="p">({</span><span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_transform</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">h</span><span class="p">))})</span>
+            <span class="n">pm</span><span class="o">.</span><span class="n">set_data</span><span class="p">({</span><span class="s1">'B'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_transform</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">h</span><span class="p">))})</span>
 
 <div class="viewcode-block" id="SplineRating.build_model">
 <a class="viewcode-back" href="../../api.html#ratingcurve.ratings.SplineRating.build_model">[docs]</a>
-    <span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                     <span class="n">h</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
                     <span class="n">q</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
                     <span class="n">q_sigma</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates the PyMC model.</span>
+<span class="w">        </span><span class="sd">"""Creates the PyMC model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -677,11 +753,11 @@ document.write(`
 <span class="sd">            Input array of discharge (q) observations.</span>
 <span class="sd">        q_sigma : array_like, optional</span>
 <span class="sd">            Input array of discharge uncertainty in units of discharge.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Need to compute the design matrix now as we need it to get the number</span>
-        <span class="c1"># of &quot;segments&quot; to include when preprocessing data for coords.</span>
+        <span class="c1"># of "segments" to include when preprocessing data for coords.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dmatrix</span> <span class="o">=</span> <span class="n">Dmatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;df&#39;</span><span class="p">),</span> <span class="s1">&#39;cr&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dmatrix</span> <span class="o">=</span> <span class="n">Dmatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'df'</span><span class="p">),</span> <span class="s1">'cr'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">d_transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dmatrix</span><span class="o">.</span><span class="n">transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -692,25 +768,25 @@ document.write(`
 
         <span class="c1"># Create the model</span>
         <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_coords</span><span class="p">)</span> <span class="k">as</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
-            <span class="n">h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">)</span>
-            <span class="n">log_q_z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">&quot;log_q_z&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_q_z</span><span class="p">)</span>
-            <span class="n">q_sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">&quot;q_sigma&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_sigma</span><span class="p">)</span>
-            <span class="n">B</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">"h"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_obs</span><span class="p">)</span>
+            <span class="n">log_q_z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">"log_q_z"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_q_z</span><span class="p">)</span>
+            <span class="n">q_sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">"q_sigma"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_sigma</span><span class="p">)</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s2">"B"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">)</span>
 
             <span class="c1"># priors</span>
-            <span class="n">w</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
-                          <span class="n">mu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
-                          <span class="n">sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sd&#39;</span><span class="p">),</span>
-                          <span class="n">dims</span><span class="o">=</span><span class="s2">&quot;splines&quot;</span><span class="p">)</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span>
+                          <span class="n">mu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'mean'</span><span class="p">),</span>
+                          <span class="n">sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'sd'</span><span class="p">),</span>
+                          <span class="n">dims</span><span class="o">=</span><span class="s2">"splines"</span><span class="p">)</span>
 
-            <span class="n">sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s2">&quot;sigma&quot;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s2">"sigma"</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
             <span class="c1"># likelihood</span>
-            <span class="n">obs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;model_q&quot;</span><span class="p">,</span>
-                            <span class="n">mu</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
-                            <span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">q_sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
-                            <span class="n">shape</span><span class="o">=</span><span class="n">h</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                            <span class="n">observed</span><span class="o">=</span><span class="n">log_q_z</span><span class="p">)</span></div>
+            <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">"model_q"</span><span class="p">,</span>
+                      <span class="n">mu</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
+                      <span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">q_sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+                      <span class="n">shape</span><span class="o">=</span><span class="n">h</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                      <span class="n">observed</span><span class="o">=</span><span class="n">log_q_z</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
@@ -775,8 +851,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -16,41 +16,44 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -59,40 +62,37 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'meta/background';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Implementation" href="implementation.html" />
     <link rel="prev" title="Model selection" href="../notebooks/model-selection-tutorial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -100,7 +100,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -108,15 +107,55 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
     </header>
   
 
@@ -125,7 +164,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -140,6 +180,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="intro.html">
   
@@ -153,15 +195,11 @@
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -193,9 +231,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -214,9 +257,9 @@
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -325,7 +368,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -339,24 +382,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -390,36 +425,36 @@ In nearly all timeseries applications, streamflow is estimated from rating curve
 The shape of the rating is specific to each streamgage and is governed by channel conditions at or downstream from the gage, referred to as controls.
 Section controls, like riffles or weirs, occur downstream of the gage, whereas channel controls, like the geometry of the banks, occur at the gage.
 Regardless of the type, the behavior of each control is often well-approximated with standard hydrologic equations that take the general form of a power law with a location parameter</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0f69e0eb-c617-4586-95cf-1d9e755ecfed">
-<span class="eqno">(1)<a class="headerlink" href="#equation-0f69e0eb-c617-4586-95cf-1d9e755ecfed" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-62625cd0-024d-4653-9657-70ed5a10fb39">
+<span class="eqno">(1)<a class="headerlink" href="#equation-62625cd0-024d-4653-9657-70ed5a10fb39" title="Permalink to this equation">#</a></span>\[\begin{equation}
     Q = C(h - h_0)^{b}
 \end{equation}\]</div>
 <p>where $Q$ is the discharge (streamflow);
 $h$ is the height of the water above some datum (stage);
 $h_0$ is the stage of zero flow (the location or offset parameter);
-$(h-h_0)$ is the hydraulic head <span id="id1">[<a class="reference internal" href="#id14" title="ISO 18320:2020. Hydrometry–Measurement of Liquid Flow in Open Channels—Determination of the Stage–Discharge Relationship. International Organization for Standardization, 2020.">ISO18320202020</a>]</span>;
+$(h-h_0)$ is the hydraulic head <span class="bibtex-citation" id="id1">[<a class="reference internal" href="#id14" title="ISO 18320:2020. Hydrometry–Measurement of Liquid Flow in Open Channels—Determination of the Stage–Discharge Relationship. International Organization for Standardization, 2020.">ISO18320202020</a>]</span>;
 $b$ is the slope of the rating curve when plotted in log-log space;
 $C$ is a scale factor equal to the discharge when the head is equal to one;
 When multiple controls are present, the rating curve is divided into segments
 with one power-law corresponding to each control resulting in a multi-segment or compound rating.</p>
 <p>Though several automated methods exist, most ratings are still fit by hand using a graphical method of plotting stage and discharge in log-log space.
-With the appropriate location parameter, each control can be fit to a straight-line segment in log space <span id="id2">[<a class="reference internal" href="#id15" title="Edward J Kennedy. Discharge ratings at gaging stations. Department of the Interior, US Geological Survey, 1984.">Ken84</a>, <a class="reference internal" href="#id14" title="ISO 18320:2020. Hydrometry–Measurement of Liquid Flow in Open Channels—Determination of the Stage–Discharge Relationship. International Organization for Standardization, 2020.">ISO18320202020</a>]</span>.
+With the appropriate location parameter, each control can be fit to a straight-line segment in log space <span class="bibtex-citation" id="id2">[<a class="reference internal" href="#id15" title="Edward J Kennedy. Discharge ratings at gaging stations. Department of the Interior, US Geological Survey, 1984.">Ken84</a>, <a class="reference internal" href="#id14" title="ISO 18320:2020. Hydrometry–Measurement of Liquid Flow in Open Channels—Determination of the Stage–Discharge Relationship. International Organization for Standardization, 2020.">ISO18320202020</a>]</span>.
 Variants of this method have been used for decades,
 first with pencil and log paper
 and now with computer-aided software, though fitting is still done by manually adjusting parameters until an acceptable fit is achieved.</p>
-<p>While single-segment ratings are relatively easy to fit by automated methods <span id="id3">[<a class="reference internal" href="#id26" title="C. Venetis. A note on the estimation of the parameters in logarithmic stage-discharge relationships with estimates of their error. International Association of Scientific Hydrology. Bulletin, 15(2):105–111, jun 1970. URL: https://doi.org/10.1080%2F02626667009493957, doi:10.1080/02626667009493957.">Ven70</a>]</span>,
+<p>While single-segment ratings are relatively easy to fit by automated methods <span class="bibtex-citation" id="id3">[<a class="reference internal" href="#id26" title="C. Venetis. A note on the estimation of the parameters in logarithmic stage-discharge relationships with estimates of their error. International Association of Scientific Hydrology. Bulletin, 15(2):105–111, jun 1970. URL: https://doi.org/10.1080%2F02626667009493957, doi:10.1080/02626667009493957.">Ven70</a>]</span>,
 compound ratings are more challenging, because their solution is multimodal,
-meaning it has multiple optima <span id="id4">[<a class="reference internal" href="#id23" title="Trond Reitan and Asgeir Petersen-Øverleir. Existence of the frequentistic estimate for power-law regression with a location parameter, with applications for making discharge rating curves. Stochastic Environmental Research and Risk Assessment, 20(6):445–453, jul 2006. URL: https://doi.org/10.1007%2Fs00477-006-0037-6, doi:10.1007/s00477-006-0037-6.">RPOverleir06</a>]</span>.
+meaning it has multiple optima <span class="bibtex-citation" id="id4">[<a class="reference internal" href="#id23" title="Trond Reitan and Asgeir Petersen-Øverleir. Existence of the frequentistic estimate for power-law regression with a location parameter, with applications for making discharge rating curves. Stochastic Environmental Research and Risk Assessment, 20(6):445–453, jul 2006. URL: https://doi.org/10.1007%2Fs00477-006-0037-6, doi:10.1007/s00477-006-0037-6.">RPOverleir06</a>]</span>.
 As a result, standard optimization algorithms can become stuck in local optima and fail to converge to the global optimum.
-General function approximators, such as natural splines <span id="id5">[<a class="reference internal" href="#id11" title="John D. Fenton. On the generation of stream rating curves. Journal of Hydrology, 564:748–757, sep 2018. URL: https://doi.org/10.1016%2Fj.jhydrol.2018.07.025, doi:10.1016/j.jhydrol.2018.07.025.">Fen18</a>]</span> or neural networks,
+General function approximators, such as natural splines <span class="bibtex-citation" id="id5">[<a class="reference internal" href="#id11" title="John D. Fenton. On the generation of stream rating curves. Journal of Hydrology, 564:748–757, sep 2018. URL: https://doi.org/10.1016%2Fj.jhydrol.2018.07.025, doi:10.1016/j.jhydrol.2018.07.025.">Fen18</a>]</span> or neural networks,
 can be easier to fit but their generality comes at a cost.
 The form of the power law matches that of the hydrologic equations governing uniform open-channel flow,
-like the Manning equation <span id="id6">[<a class="reference internal" href="#id18" title="R. Manning. On the flow of water in open channels and pipes. Transactions of the Institution of Civil Engineers of Ireland, 20:179–207, 1891.">Man91</a>]</span>.
+like the Manning equation <span class="bibtex-citation" id="id6">[<a class="reference internal" href="#id18" title="R. Manning. On the flow of water in open channels and pipes. Transactions of the Institution of Civil Engineers of Ireland, 20:179–207, 1891.">Man91</a>]</span>.
 Due to that physical basis, power laws are potentially more robust than other generic curve-fitting functions:
 requiring less data to achieve the same fit and being less prone to overfitting.</p>
 <p>This paper describes a basic algorithm for fitting compound ratings and compares its performance against a natural spline.
-Similar algorithms already exist, notably those of <span id="id7">Le Coz <em>et al.</em> [<a class="reference internal" href="#id17" title="J. Le Coz, B. Renard, L. Bonnifait, F. Branger, and R. Le Boursicaud. Combining hydraulic knowledge and uncertain gaugings in the estimation of hydrometric rating curves: a bayesian approach. Journal of Hydrology, 509:573–587, Feb 2014. URL: http://dx.doi.org/10.1016/j.jhydrol.2013.11.016, doi:10.1016/j.jhydrol.2013.11.016.">LCRB+14</a>], Reitan and Petersen-Øverleir [<a class="reference internal" href="#id24" title="Trond Reitan and Asgeir Petersen-Øverleir. Bayesian methods for estimating multi-segment discharge rating curves. Stochastic Environmental Research and Risk Assessment, 23(5):627–642, Jun 2008. URL: http://dx.doi.org/10.1007/s00477-008-0248-0, doi:10.1007/s00477-008-0248-0.">RP08</a>]</span>,
-as well as the so-called generalized power law <span id="id8">[<a class="reference internal" href="#id13" title="Birgir Hrafnkelsson, Helgi Sigurdarson, Sölvi Rögnvaldsson, Axel Örn Jansson, Rafael Dan\'ıel Vias, and Sigurdur M. Gardarsson. Generalization of the power-law rating curve using hydrodynamic theory and bayesian hierarchical modeling. Environmetrics, dec 2021. URL: https://doi.org/10.1002%2Fenv.2711, doi:10.1002/env.2711.">HSR+21</a>]</span>.
+Similar algorithms already exist, notably those of <span class="bibtex-citation" id="id7">Le Coz <em>et al.</em> [<a class="reference internal" href="#id17" title="J. Le Coz, B. Renard, L. Bonnifait, F. Branger, and R. Le Boursicaud. Combining hydraulic knowledge and uncertain gaugings in the estimation of hydrometric rating curves: a bayesian approach. Journal of Hydrology, 509:573–587, Feb 2014. URL: http://dx.doi.org/10.1016/j.jhydrol.2013.11.016, doi:10.1016/j.jhydrol.2013.11.016.">LCRB+14</a>], Reitan and Petersen-Øverleir [<a class="reference internal" href="#id24" title="Trond Reitan and Asgeir Petersen-Øverleir. Bayesian methods for estimating multi-segment discharge rating curves. Stochastic Environmental Research and Risk Assessment, 23(5):627–642, Jun 2008. URL: http://dx.doi.org/10.1007/s00477-008-0248-0, doi:10.1007/s00477-008-0248-0.">RP08</a>]</span>,
+as well as the so-called generalized power law <span class="bibtex-citation" id="id8">[<a class="reference internal" href="#id13" title="Birgir Hrafnkelsson, Helgi Sigurdarson, Sölvi Rögnvaldsson, Axel Örn Jansson, Rafael Dan\'ıel Vias, and Sigurdur M. Gardarsson. Generalization of the power-law rating curve using hydrodynamic theory and bayesian hierarchical modeling. Environmetrics, dec 2021. URL: https://doi.org/10.1002%2Fenv.2711, doi:10.1002/env.2711.">HSR+21</a>]</span>.
 Like the algorithm described here, each of these examples is Bayesian, meaning they can utilize prior information to help constrain the solution space and reduce multimodality.
 Simple examples of priors include constraining the exponent $b$ to a narrow range around the value of 5/3,
 or constraining the number of rating segments,
@@ -595,8 +630,8 @@ By Timothy Hodson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
   </footer>
