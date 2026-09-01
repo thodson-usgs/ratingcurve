@@ -18,7 +18,7 @@ def test_transform(length, range):
 def test_ztransform(length, range):
     x = np.random.rand(length) * range
     zt = ZTransform(x)
-    assert np.allclose(zt.transform(x), (x - np.mean(x))/ np.std(x))
+    assert np.allclose(zt.transform(x), (x - np.mean(x)) / np.std(x))
     assert np.allclose(zt.untransform(zt.transform(x)), x)
 
 
@@ -28,7 +28,7 @@ def test_logztransform(length, range):
     x = np.random.rand(length) * range
 
     lzt = LogZTransform(x)
-    assert np.allclose(lzt.transform(x), (np.log(x) - np.mean(np.log(x)))/ np.std(np.log(x)))
+    assert np.allclose(lzt.transform(x), (np.log(x) - np.mean(np.log(x))) / np.std(np.log(x)))
     assert np.allclose(lzt.untransform(lzt.transform(x)), x)
 
 
@@ -41,9 +41,8 @@ def test_unittransform(length, range):
     assert np.allclose(ut.untransform(ut.transform(x)), x)
 
 
-@pytest.mark.parametrize('minimum, maximum', [(0, 1e2), (0, 1e4),
-                                             (10, 1e2), (10, 1e4),
-                                             (1e3, 1e4)])
+@pytest.mark.parametrize('minimum, maximum',
+                         [(0, 1e2), (0, 1e4), (10, 1e2), (10, 1e4), (1e3, 1e4)])
 @pytest.mark.parametrize('n', [1, 5, 10, 50, 1000])
 def test_compute_knots(minimum, maximum, n):
     knots = compute_knots(minimum, maximum, n)

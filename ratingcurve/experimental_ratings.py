@@ -396,7 +396,7 @@ class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
 
             alpha_diff = at.diff(alpha, axis=0)
             sum_array = (alpha_diff * delta) * \
-                at.log(1 + ((h - hs[0])/hs[1:]) ** (1/delta))
+                at.log(1 + ((h - hs[0]) / hs[1:]) ** (1 / delta))
             sums = at.sum(sum_array, axis=0)
 
             pm.Normal("model_q",

@@ -18,6 +18,7 @@ DEFAULT_FIGSIZE = (5, 5)
 NARROW_LINE = 1
 REGULAR_LINE = NARROW_LINE * 1.5
 
+
 def is_fit(func):
     """Decorator checks whether model has been fit.
     """
@@ -28,6 +29,7 @@ def is_fit(func):
                 "The model hasn't been fit yet, call .fit().")
         return func(self, *args, **kwargs)
     return inner
+
 
 class RatingMixin:
     """Parent class for other rating-related mixins.
@@ -113,7 +115,7 @@ class PlotMixin(RatingMixin):
         residuals = self.residuals() * 100
         ax.errorbar(y=self.h_obs,
                     x=residuals,
-                    xerr=self.q_sigma*2*100,
+                    xerr=self.q_sigma * 2 * 100,
                     fmt="o",
                     lw=NARROW_LINE,
                     markersize=4,
@@ -133,7 +135,7 @@ class PlotMixin(RatingMixin):
         """
         ax = self.setup_plot(ax=ax)
 
-        sigma_2 = 1.96 * (np.exp(self.q_sigma) - 1)*np.abs(self.q_obs)
+        sigma_2 = 1.96 * (np.exp(self.q_sigma) - 1) * np.abs(self.q_obs)
 
         ax.errorbar(y=self.h_obs,
                     x=self.q_obs,
@@ -202,9 +204,9 @@ class SplinePlotMixin(PlotMixin):
         ax : Axes
             Pre-defined matplotlib axes.
         """
-        kwargs = {'color' : 'lightgray',
-                  'linestyle' : 'dotted',
-                  'linewidth' : NARROW_LINE}
+        kwargs = {'color': 'lightgray',
+                  'linestyle': 'dotted',
+                  'linewidth': NARROW_LINE}
 
         _ = [ax.axhline(k, **kwargs) for k in self._dmatrix.knots]
 
@@ -251,17 +253,17 @@ class PowerLawPlotMixin(PlotMixin):
 
         alpha = 0.05
         hs_u = hs.mean(dim=['chain', 'draw']).data
-        hs_lower = hs.quantile(alpha/2,
+        hs_lower = hs.quantile(alpha / 2,
                                dim=['chain', 'draw']).data.flatten()
-        hs_upper = hs.quantile(1 - alpha/2,
+        hs_upper = hs.quantile(1 - alpha / 2,
                                dim=['chain', 'draw']).data.flatten()
         # Plot prediction interval
-        i_kwargs = {'color' : 'whitesmoke'}
+        i_kwargs = {'color': 'whitesmoke'}
         for lower, upper in zip(hs_lower, hs_upper, strict=True):
             ax.axhspan(lower, upper, **i_kwargs)
 
         # Plot expectation
-        e_kwargs = {'color' : 'lightgray',
-                    'linestyle' : 'dotted',
-                    'linewidth' : NARROW_LINE}
+        e_kwargs = {'color': 'lightgray',
+                    'linestyle': 'dotted',
+                    'linewidth': NARROW_LINE}
         _ = [ax.axhline(u, **e_kwargs) for u in hs_u]
