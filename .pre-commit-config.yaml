@@ -1,0 +1,26 @@
+# Install with `pip install -e ".[dev]"` then `pre-commit install`.
+repos:
+  # Strip notebook outputs and execution counts before they are committed.
+  # docs/_config.yml sets `execute_notebooks: force`, so the book runs the
+  # notebooks itself and stored output is never read. Committing it produces
+  # large binary-ish diffs on every run and, for the fits here, a diff on
+  # every run even when nothing changed.
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.1
+    hooks:
+      - id: nbstripout
+
+  # Checks that report rather than rewrite.
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+
+  # Rules and the matching pin live in pyproject.toml.
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.5
+    hooks:
+      - id: ruff-check
+        args: [--fix]

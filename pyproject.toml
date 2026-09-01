@@ -68,3 +68,24 @@ repository = "https://github.com/thodson-usgs/ratingcurve.git"
 
 [tool.setuptools_scm]
 write_to = "ratingcurve/_version.py"
+
+[dependency-groups]
+# Ruff is a self-contained binary that needs none of the package's
+# dependencies, so it is a group rather than an extra: `pip install --group
+# lint` installs it alone. Keep in step with the ruff-pre-commit rev in
+# .pre-commit-config.yaml.
+lint = ["ruff==0.16.5"]
+
+[tool.ruff]
+# ruff takes target-version from requires-python. 127 is the width the
+# workflow's previous flake8 invocation allowed, kept so that switching
+# linters is not also a change of threshold; only the vendored
+# model_builder.py needs more than 100.
+line-length = 127
+
+[tool.ruff.lint]
+# Pyflakes (F), pycodestyle (E, W), isort (I), pyupgrade (UP),
+# flake8-bugbear (B), flake8-simplify (SIM), mccabe (C90).
+# flake8-quotes is deliberately absent: CONTRIBUTING.md asks for single quotes
+# on symbol-like strings and double on prose, which no single setting encodes.
+select = ["F", "E", "W", "I", "UP", "B", "SIM", "C90"]
