@@ -10,32 +10,59 @@ on:
     branches: [ "main" ]
 
 jobs:
+  lint:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install ruff
+      # the pin lives in pyproject.toml's lint group. Installing the group
+      # rather than an extra keeps the package, and so pymc and the rest of
+      # the stack, out of a job that only runs a standalone binary.
+      run: |
+        python -m pip install --upgrade pip
+        pip install --group lint
+    - name: Lint with ruff
+      # rules live in [tool.ruff] in pyproject.toml
+      run: ruff check . --output-format=github
+
   build:
 
-    runs-on: ${{ matrix.os }}
+    name: python ${{ matrix.python-version }}, pymc ${{ matrix.pymc-version }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.10", "3.11", "3.12"]
+        # ratingcurve supports PyMC 5 (ArviZ 0.x) and PyMC 6 (ArviZ 1.x),
+        # which use different inference data APIs, so cover both at each end
+        # of the supported Python range rather than every combination. PyMC 6
+        # requires Python >= 3.12, so the floor is PyMC 5 only.
+        include:
+          - {python-version: "3.11", pymc-version: "5"}
+          - {python-version: "3.12", pymc-version: "6"}
+          - {python-version: "3.14", pymc-version: "5"}
+          - {python-version: "3.14", pymc-version: "6"}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+        cache: pip
+        cache-dependency-path: pyproject.toml
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest coverage
-        pip install -r requirements.txt
-    - name: Lint with flake8
+        # install the package itself, so that its declared dependencies are
+        # exercised rather than assumed
+        pip install -e ".[test]" "pymc==${{ matrix.pymc-version }}.*"
+    - name: Report installed versions
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        python -c "import pymc, arviz; print('pymc', pymc.__version__, '| arviz', arviz.__version__)"
     - name: Test with pytest
       run: |
         pytest
