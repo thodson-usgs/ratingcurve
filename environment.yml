@@ -16,7 +16,7 @@ dependencies:
   - patsy
   # `pytensor` is a compiler metapackage on conda-forge. On Windows it adds
   # GCC/G++, whose current MinGW sysroot cannot link PyTensor extensions.
-  # `pytensor-base` provides the same Python package and uses PyTensor's
-  # supported no-C fallback without installing a broken compiler toolchain.
+  # `pytensor-base` provides the same Python package without forcing that
+  # compiler; PyTensor can use its supported no-C fallback when none exists.
   - pytensor-base
   - xarray
