@@ -67,7 +67,6 @@ jobs:
       run: |
         pytest
 
-
   windows-conda:
     name: windows conda, python 3.14
     runs-on: windows-latest
@@ -90,46 +89,9 @@ jobs:
       run: |
         conda list
         python -c "import pymc, pytensor; print('pymc', pymc.__version__, '| pytensor', pytensor.__version__, '| cxx', repr(pytensor.config.cxx))"
-    - name: Initialize and fit the README model
-      run: |
-        python - <<'PY'
-        from ratingcurve import data
-        from ratingcurve.ratings import PowerLawRating
-
-        df = data.load('green channel')
-        rating = PowerLawRating(segments=2)
-        rating.build_model(df['stage'], df['q'], q_sigma=df['q_sigma'])
-        assert rating.model.initial_point()
-        rating.fit(
-            q=df['q'],
-            h=df['stage'],
-            q_sigma=df['q_sigma'],
-            n=10,
-            draws=10,
-            progressbar=False,
-            random_seed=0,
-        )
-        PY
+    - name: Fit the README model
+      run: python .github/scripts/smoke_readme_fit.py
     - name: Fit the README model without a C++ compiler
       env:
         PYTENSOR_FLAGS: cxx=
-      run: |
-        python - <<'PY'
-        import pytensor
-
-        from ratingcurve import data
-        from ratingcurve.ratings import PowerLawRating
-
-        assert pytensor.config.cxx == ''
-        df = data.load('green channel')
-        rating = PowerLawRating(segments=2)
-        rating.fit(
-            q=df['q'],
-            h=df['stage'],
-            q_sigma=df['q_sigma'],
-            n=10,
-            draws=10,
-            progressbar=False,
-            random_seed=0,
-        )
-        PY
+      run: python .github/scripts/smoke_readme_fit.py --expect-no-cxx
