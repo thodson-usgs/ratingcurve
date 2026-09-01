@@ -1,24 +1,38 @@
 [build-system]
-requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools>=77", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "ratingcurve"
 description = "A library for fitting multi-segment stage-discharge rating curves."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 keywords = ["USGS", "streamflow", "rating curve"]
-license = {file = "LICENSE.md"}
+license = "CC0-1.0"
+license-files = ["LICENSE.md"]
 maintainers = [
   {name = "Timothy Hodson", email = "thodson@usgs.gov"},
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 dependencies = [
-    "pymc >= 5.21",
+    # 5.28.1 is the first release to cap arviz<1.0; earlier releases resolve
+    # to arviz 1.x, which pymc 5 cannot import
+    "pymc >= 5.28.1",
+    "arviz",
+    "matplotlib",
+    "netCDF4",
+    "numpy",
+    "pandas",
     "patsy",
+    "pytensor",
+    "xarray",
 ]
 
 dynamic = ["version"]
@@ -29,7 +43,23 @@ packages = ["ratingcurve","ratingcurve.data"]
 [project.optional-dependencies]
 test = [
   "pytest > 5.0.0",
-  "pytest-cov[all]"
+  "pytest-cov",
+]
+docs = [
+  # docs/_config.yml and docs/_toc.yml are jupyter-book 1.x files, and its
+  # sphinx.extra_extensions block is what builds the API reference. Version 2
+  # is a rewrite around MyST that reads neither.
+  "jupyter-book <2",
+  "watermark",
+  # ArviZ summary tables render through pandas' Styler, an optional pandas
+  # feature that needs jinja2. jupyter-book no longer pulls it in, and
+  # without it the notebooks publish a traceback instead of the table.
+  "jinja2",
+]
+dev = [
+  "ratingcurve[test,docs]",
+  "pre-commit",
+  "ipykernel",
 ]
 
 [project.urls]
