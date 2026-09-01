@@ -13,26 +13,27 @@ on:
       # - some-subfolder/**
 
 # This job installs dependencies, build the book, and pushes it to `gh-pages`
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy-book:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.11]
+        python-version: ["3.12"]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     # Install dependencies
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip install -r docs/requirements-doc.txt
-        pip install -r requirements.txt
-        pip install -e .
+        pip install -e ".[docs]"
 
     # Build the book
     - name: Build the book
@@ -41,7 +42,7 @@ jobs:
 
     # Deploy the book's HTML to gh-pages branch
     - name: GitHub Pages action
-      uses: peaceiris/actions-gh-pages@v3.6.1
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: docs/_build/html
