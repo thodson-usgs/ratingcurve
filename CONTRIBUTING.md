@@ -92,9 +92,10 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ### Coding Standards and Style
 
-Note that coding standards and style as described below are strong suggestions,
-the `ratingcurve` project does not strictly lint or enforce style guidelines
-via any automated processes or pipelines.
+Note that the standards described below are enforced only in part. Ruff runs
+in CI and as a pre-commit hook, with its rules configured in `pyproject.toml`,
+so the rules it covers do gate a pull request. The rest, notably the quoting
+convention, remains a strong suggestion that no tool checks.
 
 #### Style
 
