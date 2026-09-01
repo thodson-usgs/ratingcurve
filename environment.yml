@@ -2,15 +2,21 @@ name: ratingcurve
 channels:
   - conda-forge
 dependencies:
-  # Keep in sync with the dependencies in pyproject.toml.
+  # Keep in sync with the dependencies in pyproject.toml. Conda-forge's
+  # `*-base` packages provide the Python distributions named there without
+  # the optional compiler and graphviz metapackages.
   # pymc 5.28.1 is the first release to cap arviz<1.0; earlier releases
   # resolve to arviz 1.x, which pymc 5 cannot import.
-  - pymc>=5.28.1
+  - pymc-base>=5.28.1
   - arviz
   - matplotlib
   - netcdf4
   - numpy
   - pandas
   - patsy
-  - pytensor
+  # `pytensor` is a compiler metapackage on conda-forge. On Windows it adds
+  # GCC/G++, whose current MinGW sysroot cannot link PyTensor extensions.
+  # `pytensor-base` provides the same Python package and uses PyTensor's
+  # supported no-C fallback without installing a broken compiler toolchain.
+  - pytensor-base
   - xarray
