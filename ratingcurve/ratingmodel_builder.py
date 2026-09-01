@@ -1,24 +1,27 @@
 """Modifies PyMC ModelBuilder to work with the Rating model class"""
 from __future__ import annotations
-from typing import TYPE_CHECKING
 
-import numpy as np
-import pymc as pm
-import arviz as az
-import pandas as pd
-from pathlib import Path
 import json
 import math
-import warnings
+from pathlib import Path
+from typing import TYPE_CHECKING
 
-from .transform import LogZTransform
+import arviz as az
+import numpy as np
+import pandas as pd
+import pymc as pm
+from pymc.variational.callbacks import CheckParametersConvergence
+
+from ._compat import merge_idata, to_dataset
 from .model_builder import ModelBuilder
+from .transform import LogZTransform
 
 if TYPE_CHECKING:
+    from typing import Any
+
     from arviz import InferenceData
     from numpy.typing import ArrayLike
     from pymc.util import RandomState
-    from typing import Any, Optional
 
 
 class RatingModelBuilder(ModelBuilder):
@@ -44,7 +47,7 @@ class RatingModelBuilder(ModelBuilder):
 
         self.model = None  # Set by build_model
         # idata is generated during fitting
-        self.idata: Optional[az.InferenceData] = None
+        self.idata: az.InferenceData | None = None
         self.is_fitted_ = False
 
     def _data_setter(self,
@@ -169,8 +172,8 @@ class RatingModelBuilder(ModelBuilder):
 
         # Make sure discharge is positive
         if np.any(self.q_obs <= 0):
-            raise ValueError('Discharge must be positive. Zero values may be'
-                             'allowed in a future release.')
+            raise ValueError('Discharge must be positive. Zero values may '
+                             'be allowed in a future release.')
 
         # We want to fit in log space, so do that pre-processing here.
         # Also, we want to normalize discharge
@@ -213,10 +216,10 @@ class RatingModelBuilder(ModelBuilder):
                 # Need to fully set up sampler configuration, since non-
                 # numerical/string values (i.e., callbacks and optimizer)
                 # cannot be serialized and saved to idata
-                cb = [pm.callbacks.CheckParametersConvergence(
+                cb = [CheckParametersConvergence(
                           tolerance=self.sampler_config.get('abs_tol'),
                           diff="absolute"),
-                      pm.callbacks.CheckParametersConvergence(
+                      CheckParametersConvergence(
                           tolerance=self.sampler_config.get('rel_tol'),
                           diff="relative"),
                       ]
@@ -242,8 +245,8 @@ class RatingModelBuilder(ModelBuilder):
             else:
                 raise ValueError(f"Method {self.method} not supported")
 
-            idata.extend(pm.sample_prior_predictive())
-            idata.extend(pm.sample_posterior_predictive(idata))
+            merge_idata(idata, pm.sample_prior_predictive())
+            merge_idata(idata, pm.sample_posterior_predictive(idata))
 
         idata = self.set_idata_attrs(idata)
         return idata
@@ -275,7 +278,7 @@ class RatingModelBuilder(ModelBuilder):
             sampler_config=json.loads(idata.attrs["sampler_config"]),
         )
         model.idata = idata
-        dataset = idata.fit_data.to_dataframe()
+        dataset = to_dataset(idata.fit_data).to_dataframe()
 
         # Have loaded fit data include q_sigma and new names
         h = dataset['h']
@@ -354,22 +357,13 @@ class RatingModelBuilder(ModelBuilder):
         # Have fit data include uncertainty and have appropriate names
         h_df = pd.DataFrame({'h': h})
         q_df = pd.DataFrame({self.output_var: q})
-        if q_sigma is None:
-            q_sigma_df = pd.DataFrame({'q_sigma': np.zeros(len(q))})
-        else:
-            q_sigma_df = pd.DataFrame({'q_sigma': q_sigma})
+        sigma = np.zeros(len(q)) if q_sigma is None else q_sigma
+        q_sigma_df = pd.DataFrame({'q_sigma': sigma})
         combined_data = pd.concat([h_df, q_df, q_sigma_df], axis=1)
 
         assert all(combined_data.columns), "All columns must have " + \
                                            "non-empty names"
-        with warnings.catch_warnings():
-            warnings.filterwarnings(
-                "ignore",
-                category=UserWarning,
-                message="The group fit_data is not defined in "
-                        "the InferenceData scheme",
-            )
-            self.idata.add_groups(fit_data=combined_data.to_xarray())
+        self.idata["fit_data"] = combined_data.to_xarray()
 
         return self.idata  # type: ignore
 
@@ -398,13 +392,14 @@ class RatingModelBuilder(ModelBuilder):
                 self.set_idata_attrs(prior_pred)
                 if extend_idata:
                     if self.idata is not None:
-                        self.idata.extend(prior_pred)
+                        merge_idata(self.idata, prior_pred)
                     else:
                         self.idata = prior_pred
 
         prior_predictive_samples = az.extract(prior_pred,
                                               "prior_predictive",
-                                              combined=combined)
+                                              combined=combined,
+                                              keep_dataset=True)
 
         return self.q_transform.untransform(prior_predictive_samples)
 
@@ -420,10 +415,11 @@ class RatingModelBuilder(ModelBuilder):
         with self.model:  # sample with new input data
             post_pred = pm.sample_posterior_predictive(self.idata, **kwargs)
             if extend_idata:
-                self.idata.extend(post_pred)
+                merge_idata(self.idata, post_pred)
 
         posterior_predictive_samples = az.extract(
-            post_pred, "posterior_predictive", combined=combined
+            post_pred, "posterior_predictive", combined=combined,
+            keep_dataset=True
         )
 
         return self.q_transform.untransform(posterior_predictive_samples)

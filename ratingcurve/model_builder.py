@@ -17,12 +17,15 @@
 #   limitations under the License.
 
 
+# defer annotation evaluation so ``az.InferenceData``, which ArviZ 1.x
+# removed, is never resolved at runtime
+from __future__ import annotations
+
 import hashlib
 import json
-import warnings
 from abc import abstractmethod
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import arviz as az
 import numpy as np
@@ -30,6 +33,8 @@ import pandas as pd
 import pymc as pm
 import xarray as xr
 from pymc.util import RandomState
+
+from ._compat import merge_idata, to_dataset
 
 # If scikit-learn is available, use its data validator
 try:
@@ -55,8 +60,8 @@ class ModelBuilder:
 
     def __init__(
         self,
-        model_config: Dict = None,
-        sampler_config: Dict = None,
+        model_config: dict = None,
+        sampler_config: dict = None,
     ):
         """
         Initializes model configuration and sampler configuration for the model
@@ -66,9 +71,11 @@ class ModelBuilder:
         data : Dictionary, optional
             It is the data we need to train the model on.
         model_config : Dictionary, optional
-            dictionary of parameters that initialise model configuration. Class-default defined by the user default_model_config method.
+            dictionary of parameters that initialise model configuration.
+            Class-default defined by the user default_model_config method.
         sampler_config : Dictionary, optional
-            dictionary of parameters that initialise sampler configuration. Class-default defined by the user default_sampler_config method.
+            dictionary of parameters that initialise sampler configuration.
+            Class-default defined by the user default_sampler_config method.
         Examples
         --------
         >>> class MyModel(ModelBuilder):
@@ -83,7 +90,7 @@ class ModelBuilder:
 
         self.model_config = model_config  # parameters for priors etc.
         self.model = None  # Set by build_model
-        self.idata: Optional[az.InferenceData] = None  # idata is generated during fitting
+        self.idata: az.InferenceData | None = None  # idata is generated during fitting
         self.is_fitted_ = False
 
     def _validate_data(self, X, y=None):
@@ -95,8 +102,8 @@ class ModelBuilder:
     @abstractmethod
     def _data_setter(
         self,
-        X: Union[np.ndarray, pd.DataFrame],
-        y: Union[np.ndarray, pd.DataFrame, List] = None,
+        X: np.ndarray | pd.DataFrame,
+        y: np.ndarray | pd.DataFrame | list = None,
     ) -> None:
         """
         Sets new data in the model.
@@ -141,7 +148,7 @@ class ModelBuilder:
 
     @staticmethod
     @abstractmethod
-    def get_default_model_config() -> Dict:
+    def get_default_model_config() -> dict:
         """
         Returns a class default config dict for model builder if no model_config is provided on class initialization
         Useful for understanding structure of required model_config to allow its customization by users
@@ -170,7 +177,7 @@ class ModelBuilder:
 
     @staticmethod
     @abstractmethod
-    def get_default_sampler_config(self) -> Dict:
+    def get_default_sampler_config(self) -> dict:
         """
         Returns a class default sampler dict for model builder if no sampler_config is provided on class initialization
         Useful for understanding structure of required sampler_config to allow its customization by users
@@ -194,7 +201,7 @@ class ModelBuilder:
 
     @abstractmethod
     def _generate_and_preprocess_model_data(
-        self, X: Union[pd.DataFrame, pd.Series], y: pd.Series
+        self, X: pd.DataFrame | pd.Series, y: pd.Series
     ) -> None:
         """
         Applies preprocessing to the data before fitting the model.
@@ -303,8 +310,8 @@ class ModelBuilder:
         with self.model:
             sampler_args = {**self.sampler_config, **kwargs}
             idata = pm.sample(**sampler_args)
-            idata.extend(pm.sample_prior_predictive())
-            idata.extend(pm.sample_posterior_predictive(idata))
+            merge_idata(idata, pm.sample_prior_predictive())
+            merge_idata(idata, pm.sample_posterior_predictive(idata))
 
         idata = self.set_idata_attrs(idata)
         return idata
@@ -389,7 +396,7 @@ class ModelBuilder:
             raise RuntimeError("The model hasn't been fit yet, call .fit() first")
 
     @classmethod
-    def _model_config_formatting(cls, model_config: Dict) -> Dict:
+    def _model_config_formatting(cls, model_config: dict) -> dict:
         """
         Because of json serialization, model_config values that were originally tuples or numpy are being encoded as lists.
         This function converts them back to tuples and numpy arrays to ensure correct id encoding.
@@ -441,7 +448,7 @@ class ModelBuilder:
             sampler_config=json.loads(idata.attrs["sampler_config"]),
         )
         model.idata = idata
-        dataset = idata.fit_data.to_dataframe()
+        dataset = to_dataset(idata.fit_data).to_dataframe()
         X = dataset.drop(columns=[model.output_var])
         y = dataset[model.output_var]
         model.build_model(X, y)
@@ -449,7 +456,8 @@ class ModelBuilder:
 
         if model.id != idata.attrs["id"]:
             raise ValueError(
-                f"The file '{fname}' does not contain an inference data of the same model or configuration as '{cls._model_type}'"
+                f"The file '{fname}' does not contain an inference data "
+                f"of the same model or configuration as '{cls._model_type}'"
             )
 
         return model
@@ -457,9 +465,9 @@ class ModelBuilder:
     def fit(
         self,
         X: pd.DataFrame,
-        y: Optional[pd.Series] = None,
+        y: pd.Series | None = None,
         progressbar: bool = True,
-        predictor_names: List[str] = None,
+        predictor_names: list[str] = None,
         random_seed: RandomState = None,
         **kwargs: Any,
     ) -> az.InferenceData:
@@ -478,7 +486,9 @@ class ModelBuilder:
             Specifies whether the fit progressbar should be displayed
         predictor_names: List[str] = None,
             Allows for custom naming of predictors given in a form of 2dArray
-            allows for naming of predictors when given in a form of np.ndarray, if not provided the predictors will be named like predictor1, predictor2...
+            allows for naming of predictors when given in a form of
+            np.ndarray, if not provided the predictors will be named like
+            predictor1, predictor2...
         random_seed : RandomState
             Provides sampler with initial random seed for obtaining reproducible samples
         **kwargs : Any
@@ -512,19 +522,13 @@ class ModelBuilder:
         X_df = pd.DataFrame(X, columns=X.columns)
         combined_data = pd.concat([X_df, y], axis=1)
         assert all(combined_data.columns), "All columns must have non-empty names"
-        with warnings.catch_warnings():
-            warnings.filterwarnings(
-                "ignore",
-                category=UserWarning,
-                message="The group fit_data is not defined in the InferenceData scheme",
-            )
-            self.idata.add_groups(fit_data=combined_data.to_xarray())  # type: ignore
+        self.idata["fit_data"] = combined_data.to_xarray()  # type: ignore
 
         return self.idata  # type: ignore
 
     def predict(
         self,
-        X_pred: Union[np.ndarray, pd.DataFrame, pd.Series],
+        X_pred: np.ndarray | pd.DataFrame | pd.Series,
         extend_idata: bool = True,
         **kwargs,
     ) -> np.ndarray:
@@ -572,7 +576,7 @@ class ModelBuilder:
         self,
         X_pred,
         y_pred=None,
-        samples: Optional[int] = None,
+        samples: int | None = None,
         extend_idata: bool = False,
         combined: bool = True,
         **kwargs,
@@ -613,11 +617,13 @@ class ModelBuilder:
                 self.set_idata_attrs(prior_pred)
                 if extend_idata:
                     if self.idata is not None:
-                        self.idata.extend(prior_pred)
+                        merge_idata(self.idata, prior_pred)
                     else:
                         self.idata = prior_pred
 
-        prior_predictive_samples = az.extract(prior_pred, "prior_predictive", combined=combined)
+        prior_predictive_samples = az.extract(
+            prior_pred, "prior_predictive", combined=combined, keep_dataset=True
+        )
 
         return prior_predictive_samples
 
@@ -645,10 +651,11 @@ class ModelBuilder:
         with self.model:  # sample with new input data
             post_pred = pm.sample_posterior_predictive(self.idata, **kwargs)
             if extend_idata:
-                self.idata.extend(post_pred)
+                merge_idata(self.idata, post_pred)
 
         posterior_predictive_samples = az.extract(
-            post_pred, "posterior_predictive", combined=combined
+            post_pred, "posterior_predictive", combined=combined,
+            keep_dataset=True
         )
 
         return posterior_predictive_samples
@@ -671,7 +678,7 @@ class ModelBuilder:
 
     @property
     @abstractmethod
-    def _serializable_model_config(self) -> Dict[str, Union[int, float, Dict]]:
+    def _serializable_model_config(self) -> dict[str, int | float | dict]:
         """
         Converts non-serializable values from model_config to their serializable reversable equivalent.
         Data types like pandas DataFrame, Series or datetime aren't JSON serializable,
@@ -684,7 +691,7 @@ class ModelBuilder:
 
     def predict_proba(
         self,
-        X_pred: Union[np.ndarray, pd.DataFrame, pd.Series],
+        X_pred: np.ndarray | pd.DataFrame | pd.Series,
         extend_idata: bool = True,
         combined: bool = False,
         **kwargs,
@@ -694,7 +701,7 @@ class ModelBuilder:
 
     def predict_posterior(
         self,
-        X_pred: Union[np.ndarray, pd.DataFrame, pd.Series],
+        X_pred: np.ndarray | pd.DataFrame | pd.Series,
         extend_idata: bool = True,
         combined: bool = True,
         **kwargs,
