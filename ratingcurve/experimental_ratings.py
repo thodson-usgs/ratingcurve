@@ -1,5 +1,6 @@
 """Experimental streamflow rating models using PyMC ModelBuilder."""
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -84,8 +85,8 @@ class ReitanRating(PowerLawRating):
             # best but suspect ho is accumulating (ho added to each segment)
             b = at.log(at.clip(h - hs, 0, hs1[1:] - hs) + ho)
             sigma = pm.HalfCauchy("sigma", beta=0.1)
-            obs = pm.Normal('model_q', a + at.dot(w, b), np.sqrt(sigma**2 + q_sigma**2),
-                            shape=h.shape, observed=log_q_z)
+            pm.Normal('model_q', a + at.dot(w, b), np.sqrt(sigma**2 + q_sigma**2),
+                      shape=h.shape, observed=log_q_z)
 
 
 class LeCozRating(PowerLawRating):
@@ -169,8 +170,8 @@ class LeCozRating(PowerLawRating):
             q = at.sum(i * at.dot(self.m, b.T), axis=0)
 
             sigma = pm.HalfCauchy("sigma", beta=0.1)
-            obs = pm.Normal('model_q', at.log(q), np.sqrt(sigma**2 + q_sigma**2),
-                            shape=h.shape, observed=log_q_z)
+            pm.Normal('model_q', at.log(q), np.sqrt(sigma**2 + q_sigma**2),
+                      shape=h.shape, observed=log_q_z)
 
 
 class ISORating(PowerLawRating):
@@ -240,8 +241,8 @@ class ISORating(PowerLawRating):
             q = at.log(at.sum(b, axis=1))
 
             sigma = pm.HalfCauchy("sigma", beta=0.1)
-            obs = pm.Normal('model_q', q, np.sqrt(sigma**2 + q_sigma**2),
-                            shape=h.shape, observed=log_q_z)
+            pm.Normal('model_q', q, np.sqrt(sigma**2 + q_sigma**2),
+                      shape=h.shape, observed=log_q_z)
 
 
 class BrokenPowerLawRating(PowerLawRating):
@@ -325,8 +326,8 @@ class BrokenPowerLawRating(PowerLawRating):
                           a + alpha * at.log(h - hs[0]) + sums, 0)
             q = at.sum(q, axis=0)
 
-            obs = pm.Normal('model_q', q, np.sqrt(sigma**2 + q_sigma**2),
-                            shape=h.shape, observed=log_q_z)
+            pm.Normal('model_q', q, np.sqrt(sigma**2 + q_sigma**2),
+                      shape=h.shape, observed=log_q_z)
 
 
 class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
@@ -398,6 +399,6 @@ class SmoothlyBrokenPowerLawRating(BrokenPowerLawRating):
                 at.log(1 + ((h - hs[0])/hs[1:]) ** (1/delta))
             sums = at.sum(sum_array, axis=0)
 
-            obs = pm.Normal("model_q",
-                            a + at.log(h - hs[0]) * alpha[0, ...] + sums,
-                            np.sqrt(sigma**2 + q_sigma**2), shape=h.shape, observed=log_q_z)
+            pm.Normal("model_q",
+                      a + at.log(h - hs[0]) * alpha[0, ...] + sums,
+                      np.sqrt(sigma**2 + q_sigma**2), shape=h.shape, observed=log_q_z)
