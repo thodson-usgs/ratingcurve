@@ -1,8 +1,13 @@
-import pytest
 import numpy as np
+import pymc as pm
+import pytest
 
-from ..ratings import PowerLawRating, SplineRating
 from .. import data
+from .._compat import merge_idata
+from ..ratings import PowerLawRating, SplineRating
+
+# these tests assert on structure, not convergence, so they fit briefly
+SHORT_FIT = 20_000
 
 
 def test_nuts_fit():
@@ -109,3 +114,71 @@ def test_zero_flow_prior():
                                        'mu': [q_min],
                                        'sigma': [1]})
         _ = rating.fit(df['stage'], df['q'])
+
+
+@pytest.fixture(params=['uniform', 'normal'])
+def rating(request):
+    """A two-segment power law rating under each supported breakpoint prior."""
+    if request.param == 'uniform':
+        return PowerLawRating(segments=2)
+
+    return PowerLawRating(segments=2,
+                          prior={'distribution': 'normal',
+                                 'mu': [2.0, 8.0],
+                                 'sigma': [0.5, 1.0]})
+
+
+def test_save_and_load(tmp_path):
+    """
+    Test that a fitted rating survives a save/load round trip.
+
+    Exercises the inference data groups, which are an `arviz.InferenceData`
+    on ArviZ 0.x and an `xarray.DataTree` on ArviZ 1.x.
+    """
+    df = data.load('green channel')
+
+    rating = PowerLawRating(segments=2)
+    _ = rating.fit(df['stage'], df['q'], q_sigma=df['q_sigma'], n=SHORT_FIT)
+    file = tmp_path / 'rating.nc'
+    rating.save(file)
+
+    loaded = PowerLawRating.load(file)
+
+    # the posterior is stored, so it must survive the round trip exactly
+    for var in rating.idata.posterior.data_vars:
+        np.testing.assert_allclose(loaded.idata.posterior[var].values,
+                                   rating.idata.posterior[var].values)
+
+    # `load` rebuilds the model, so it must clear the seeds too
+    with loaded.model:
+        assert 'log_likelihood' in pm.compute_log_likelihood(loaded.idata,
+                                                             progressbar=False)
+
+    # the loaded model must still be usable; the table is resampled, so
+    # compare its shape rather than its (stochastic) values
+    table = loaded.table(h=np.array([3.0, 6.0, 9.0]))
+    assert len(table) > 0
+    assert all(table.stage >= 0)
+    assert all(table.discharge >= 0)
+
+
+def test_merge_idata_keeps_existing_groups():
+    """
+    Test that merging leaves groups that are already present alone.
+
+    `InferenceData.extend` joins 'left' and keeps them, whereas
+    `DataTree.update` lets the incoming group win, so the two ArviZ versions
+    would otherwise disagree about what a re-prediction writes into idata.
+    """
+    with pm.Model():
+        x = pm.Normal('x', 0, 1)
+        pm.Normal('y', mu=x, sigma=1, observed=[1.0, 2.0])
+
+        idata = pm.sample_prior_predictive(draws=20, random_seed=0)
+        before = np.asarray(idata['prior']['x']).ravel()[0]
+
+        # a second, different prior sample must not displace the first
+        merge_idata(idata, pm.sample_prior_predictive(draws=20, random_seed=1))
+        after = np.asarray(idata['prior']['x']).ravel()[0]
+
+    assert before == after
