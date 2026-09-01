@@ -110,3 +110,26 @@ jobs:
             random_seed=0,
         )
         PY
+    - name: Fit the README model without a C++ compiler
+      env:
+        PYTENSOR_FLAGS: cxx=
+      run: |
+        python - <<'PY'
+        import pytensor
+
+        from ratingcurve import data
+        from ratingcurve.ratings import PowerLawRating
+
+        assert pytensor.config.cxx == ''
+        df = data.load('green channel')
+        rating = PowerLawRating(segments=2)
+        rating.fit(
+            q=df['q'],
+            h=df['stage'],
+            q_sigma=df['q_sigma'],
+            n=10,
+            draws=10,
+            progressbar=False,
+            random_seed=0,
+        )
+        PY
