@@ -162,6 +162,50 @@ def test_save_and_load(tmp_path):
     assert all(table.discharge >= 0)
 
 
+def test_fitted_model_has_default_initial_values():
+    """
+    Test that a fitted model works with PyMC's graph transformations.
+
+    PyMC refuses to convert a model whose variables carry explicit initial
+    values, which breaks `pm.compute_log_likelihood` and, in turn, the model
+    comparison in the tutorials. The breakpoint seeds are cleared once the
+    model no longer needs them. Clearing does not depend on the prior, so one
+    is enough here; `test_breakpoints_are_seeded` covers both.
+    """
+    df = data.load('green channel')
+
+    rating = PowerLawRating(segments=2)
+    _ = rating.fit(df['stage'], df['q'], q_sigma=df['q_sigma'], n=SHORT_FIT)
+
+    initial_values = rating.model.rvs_to_initial_values
+    assert all(v is None for v in initial_values.values())
+
+    with rating.model:
+        idata = pm.compute_log_likelihood(rating.idata, progressbar=False)
+
+    assert 'log_likelihood' in idata
+
+
+def test_breakpoints_are_seeded(rating):
+    """
+    Test that the breakpoints are seeded on the variable when the model is
+    built.
+
+    The seeds are cleared once the model is ready, so guard the build: losing
+    them still fits and still produces a plausible rating, silently starting
+    the sampler from the midpoint of the breakpoint bounds instead.
+    """
+    df = data.load('green channel')
+
+    rating.build_model(df['stage'], df['q'], q_sigma=df['q_sigma'])
+
+    initial_values = rating.model.rvs_to_initial_values
+    seeded = {rv.name: v for rv, v in initial_values.items() if v is not None}
+
+    assert 'hs_' in seeded, 'breakpoints were not seeded'
+    np.testing.assert_allclose(seeded['hs_'], rating._init_hs)
+
+
 def test_merge_idata_keeps_existing_groups():
     """
     Test that merging leaves groups that are already present alone.
