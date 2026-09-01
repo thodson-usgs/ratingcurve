@@ -72,7 +72,7 @@ class RatingModelBuilder(ModelBuilder):
             if q_sigma is not None:
                 # Approximate sigma as a geometric error
                 pm.set_data({"q_sigma":
-                             np.log(1 + np.array(q_sigma)/np.array(q))})
+                             np.log(1 + np.array(q_sigma) / np.array(q))})
 
             # Set q_sigma = 0 by default
             elif len(self.q_sigma.shape) != 0:
@@ -184,7 +184,7 @@ class RatingModelBuilder(ModelBuilder):
         if q_sigma is None:
             self.q_sigma = np.array(0)
         else:
-            self.q_sigma = np.log(1 + np.array(q_sigma).flatten()/self.q_obs)
+            self.q_sigma = np.log(1 + np.array(q_sigma).flatten() / self.q_obs)
 
         # Set coordinates. Note that self.segments will need to be set in
         # `build_model` before this function is called.

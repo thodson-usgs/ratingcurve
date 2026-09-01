@@ -84,6 +84,11 @@ lint = ["ruff==0.16.5"]
 line-length = 127
 
 [tool.ruff.lint]
+# Ruff gates the pycodestyle whitespace and blank-line rules (E1, E2, E3)
+# behind preview, so without this the E-prefixed selection below is narrower
+# than the flake8 invocation it replaces. Ruff is pinned, so the preview set
+# only moves when that pin does.
+preview = true
 # Pyflakes (F), pycodestyle (E, W), isort (I), pyupgrade (UP),
 # flake8-bugbear (B), flake8-simplify (SIM), mccabe (C90).
 # flake8-quotes is deliberately absent: CONTRIBUTING.md asks for single quotes

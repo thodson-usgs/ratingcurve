@@ -173,7 +173,7 @@ class UnitTransform(Transform):
         ArrayLike
             Original data transformed to unit interval
         """
-        return x/self.max_
+        return x / self.max_
 
     def untransform(self, z: ArrayLike) -> ArrayLike:
         """Transform from unit interval back to original units
@@ -188,7 +188,7 @@ class UnitTransform(Transform):
         ArrayLike
             Unit interval transformed back to original units.
         """
-        return z*self.max_
+        return z * self.max_
 
 
 class Dmatrix:
