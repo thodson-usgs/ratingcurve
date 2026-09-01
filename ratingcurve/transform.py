@@ -1,10 +1,10 @@
 """Data transformations to improve optimization"""
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 import numpy as np
-
-from patsy import dmatrix, build_design_matrices
+from patsy import build_design_matrices, dmatrix
 
 if TYPE_CHECKING:
     from numpy.typing import ArrayLike
@@ -97,8 +97,18 @@ class LogZTransform(ZTransform):
         Parameters
         ----------
         x : array_like
-          Data that defines the transform.
+          Data that defines the transform. Must be positive.
+
+        Raises
+        ------
+        ValueError
+            If any value is not positive. The log of one is undefined, and
+            it would carry into the mean and standard deviation, leaving
+            every transformed value nan.
         """
+        if np.any(np.asarray(x) <= 0):
+            raise ValueError('LogZTransform requires positive values')
+
         log_x = np.log(x)
         super().__init__(log_x)
 
@@ -157,7 +167,7 @@ class UnitTransform(Transform):
         ----------
         x : array_like
             Data to be transformed.
-        
+
         Returns
         -------
         ArrayLike
@@ -181,7 +191,7 @@ class UnitTransform(Transform):
         return z*self.max_
 
 
-class Dmatrix():
+class Dmatrix:
     """Transform for spline design matrix
     """
     def __init__(self, stage: ArrayLike, df: int, form: str = 'cr') -> None:
@@ -191,7 +201,7 @@ class Dmatrix():
         spline that is additionally constrained to be linear at the boundaries.
         Due to this constraint, the total degrees of freedom equals the number
         of knots minus 1.
-        
+
         Parameters
         ----------
         stage : array_like
@@ -209,7 +219,7 @@ class Dmatrix():
 
     def transform(self, stage: ArrayLike) -> ArrayLike:
         """Transform stage using spline design matrix.
- 
+
         Parameters
         ----------
         stage : array-like
@@ -237,5 +247,15 @@ def compute_knots(minimum: float, maximum: float, n: int) -> ArrayLike:
     -------
     ArrayLike
         List of spline knots.
+
+    Raises
+    ------
+    ValueError
+        If `minimum` is not less than `maximum`. `np.linspace` accepts an
+        unordered pair and returns knots that descend or repeat.
     """
+    if minimum >= maximum:
+        raise ValueError(f'minimum ({minimum}) must be less than '
+                         f'maximum ({maximum})')
+
     return np.linspace(minimum, maximum, n)
