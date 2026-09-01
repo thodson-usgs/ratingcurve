@@ -128,3 +128,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Artifacts written by the tutorial notebooks when the book is built
+docs/notebooks/*.nc
+docs/notebooks/*.csv
